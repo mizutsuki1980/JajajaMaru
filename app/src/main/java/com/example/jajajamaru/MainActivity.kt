@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
         val display: Display = this.windowManager.defaultDisplay
         val point = Point()
         display.getSize(point)
+        custom = findViewById<MyCustomView>(R.id.mycustom)
+        custom.post { custom.beginAnimation() }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
