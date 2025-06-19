@@ -26,7 +26,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tsugiNoSyori()  //最初に一回だけ呼ばれる
     }
 
-    fun tsugiNoSyori(){
+    fun tsugiNoSyori() {
+        frame += 1  //繰り返し処理はここでやってる
+        invalidate()
+        handler.postDelayed({ tsugiNoSyori() }, 100)
 
     }
 
