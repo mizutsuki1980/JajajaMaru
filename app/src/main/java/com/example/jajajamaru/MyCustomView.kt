@@ -32,6 +32,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         handler.postDelayed({ tsugiNoSyori() }, 100)
 
     }
+    override fun onDraw(canvas: Canvas) {
+    //        gameover(canvas) //canvasっていう何かが勝手に作られているんだろうか。varとかしてない。
+
+    }
 
 }
 
