@@ -33,15 +33,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
         handler.postDelayed({ tsugiNoSyori() }, 100)
-
     }
+
     override fun onDraw(canvas: Canvas) {
         //仮にここに置いておく色の設定
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
-
-
-    //        gameover(canvas) //canvasっていう何かが勝手に作られているんだろうか。varとかしてない。
+        // canvasっていう何かが勝手に作られているんだろうか。varとかしてない。
         canvas.drawCircle((300).toFloat(),(400).toFloat(),(20).toFloat(),iro) //自機の描画
 
     }
