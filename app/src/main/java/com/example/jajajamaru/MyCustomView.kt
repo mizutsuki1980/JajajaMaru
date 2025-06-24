@@ -22,6 +22,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickX = initialJikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
+    var jiki =Jiki(initialJikiX, initialJikiY)
 
     val iro = Paint()
 
@@ -36,11 +37,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     override fun onDraw(canvas: Canvas) {
-        //仮にここに置いておく色の設定
-        iro.style = Paint.Style.FILL
-        iro.color = argb(255, 255, 255, 150)
-        // canvasっていう何かが勝手に作られているんだろうか。varとかしてない。
-        canvas.drawCircle((300).toFloat(),(400).toFloat(),(20).toFloat(),iro) //自機の描画
+      jiki.draw(canvas)
 
     }
 

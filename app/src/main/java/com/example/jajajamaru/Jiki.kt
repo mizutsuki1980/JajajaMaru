@@ -1,6 +1,20 @@
 package com.example.jajajamaru
 
-class Jiki(var x:Int, var y:Int) {
+import android.graphics.Canvas
+import android.graphics.Color.argb
+import android.graphics.Paint
 
-    
+class Jiki(var x:Int, var y:Int) {
+    val ookisa = 200
+    val iro = Paint()
+
+    init{
+        iro.style = Paint.Style.FILL
+        iro.color = argb(255, 255, 255, 150)
+    }
+
+    fun draw(canvas: Canvas){
+        canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa/2).toFloat(),iro) //自機の描画
+    }
+
 }
