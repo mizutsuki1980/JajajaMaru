@@ -30,6 +30,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tsugiNoSyori()  //最初に一回だけ呼ばれる
     }
 
+    fun migiIdo(){
+        jiki.x += 20
+    }
+    fun hdiariIdo(){
+        jiki.x -= 20
+    }
+
     fun tsugiNoSyori() {
         frame += 1  //繰り返し処理はここでやってる
         invalidate()

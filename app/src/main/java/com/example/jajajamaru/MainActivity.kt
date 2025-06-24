@@ -31,6 +31,13 @@ class MainActivity : AppCompatActivity() {
         custom = findViewById<MyCustomView>(R.id.mycustom)
         custom.post { custom.beginAnimation() }
 
+        findViewById<Button>(R.id.migiButton).setOnClickListener{
+            custom.post { custom.migiIdo() }
+        }
+        findViewById<Button>(R.id.hidariButton).setOnClickListener{
+            custom.post { custom.hdiariIdo() }
+        }
+
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
