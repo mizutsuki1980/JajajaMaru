@@ -47,6 +47,31 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
       jiki.draw(canvas)
 
     }
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            isFirstMove = true
+            clickX = event.x.toInt()
+            clickY = event.y.toInt()
+            return true // 処理した場合はtrueを返す約束
+        }
+
+
+
+        if (event.action == MotionEvent.ACTION_UP) {
+            isFirstMove = true
+            clickX = event.x.toInt()
+            clickY = event.y.toInt()
+            return true // 処理した場合はtrueを返す約束
+        }
+
+        if (event.action == MotionEvent.ACTION_MOVE) {
+            isFirstMove = true
+            clickX = event.x.toInt()
+            clickY = event.y.toInt()
+            return true // 処理した場合はtrueを返す約束
+        }
+        return super.onTouchEvent(event)
+    }
 
 }
 
