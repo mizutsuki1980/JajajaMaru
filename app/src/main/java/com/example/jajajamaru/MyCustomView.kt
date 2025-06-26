@@ -55,8 +55,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             return true // 処理した場合はtrueを返す約束
         }
 
-
-
         if (event.action == MotionEvent.ACTION_UP) {
             isFirstMove = true
             clickX = event.x.toInt()
@@ -72,6 +70,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         return super.onTouchEvent(event)
     }
-
+    //isFirstMoveとかいるんかな？clickXとclickYの初期値も。
+    
+    //押され続けている、っていうのは、ｘ、ｙが動かなかったら、という判定にすればいいのか
+    //というか、今押されているいるｘｙがどこなのか？で左右上を決めればいいのでは。
 }
 
