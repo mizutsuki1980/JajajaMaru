@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     val handler = Handler()
     lateinit var custom : MyCustomView
+    lateinit var controller : MyController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +31,10 @@ class MainActivity : AppCompatActivity() {
         display.getSize(point)
         custom = findViewById<MyCustomView>(R.id.mycustom)
         custom.post { custom.beginAnimation() }
+
+         controller = findViewById<MyController>(R.id.mycontroller)
+
+        //controller.post { custom.beginAnimation() }
 
         findViewById<Button>(R.id.migiButton).setOnClickListener{
             custom.post { custom.migiIdo() }
