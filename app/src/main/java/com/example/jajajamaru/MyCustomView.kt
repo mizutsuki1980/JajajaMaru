@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Color.argb
 import android.graphics.Paint
+import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -45,8 +46,25 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     override fun onDraw(canvas: Canvas) {
       jiki.draw(canvas)
+        val iroCont = Paint()
+        iroCont.style = Paint.Style.FILL
+        iroCont.color = argb(100, 255, 255, 150)
+
+        canvas.drawRect(shikakuRectXYSub(250.toInt() ,250.toInt(),250), iroCont)   //
+        //中心点からつくっているようだ
 
     }
+
+    fun shikakuRectXYSub(xxx:Int,yyy:Int,ooookisa:Int): Rect {
+        val left = xxx  - ooookisa / 2
+        val right = xxx  + ooookisa / 2
+        val top = yyy  - ooookisa / 2
+        val bottom = yyy + ooookisa / 2
+        val m = Rect(left, top, right,bottom)
+        return m
+    }
+
+
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
             isFirstMove = true

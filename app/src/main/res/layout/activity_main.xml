@@ -11,7 +11,7 @@
     <com.example.jajajamaru.MyCustomView
         android:id="@+id/mycustom"
         android:layout_width="match_parent"
-        android:layout_height="621dp"
+        android:layout_height="700dp"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -24,32 +24,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.977" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/hidariButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="左" />
-
-        <Button
-            android:id="@+id/ueButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="上" />
-
-        <Button
-            android:id="@+id/migiButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="右" />
-    </LinearLayout>
 
 </LinearLayout>
