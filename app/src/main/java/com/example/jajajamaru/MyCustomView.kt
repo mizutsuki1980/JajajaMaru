@@ -50,7 +50,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         iroCont.style = Paint.Style.FILL
         iroCont.color = argb(100, 255, 255, 150)
 
-        canvas.drawRect(shikakuRectXYSub(250.toInt() ,250.toInt(),250), iroCont)   //
+        canvas.drawRect(shikakuRectXYSub(75.toInt() ,1000.toInt(),150), iroCont)   //
+        canvas.drawRect(shikakuRectXYSub(75+150+30.toInt() ,1000.toInt(),150), iroCont)   //
+        canvas.drawRect(shikakuRectXYSub(75+150+30+180.toInt() ,1000.toInt(),150), iroCont)   //
+        canvas.drawRect(shikakuRectXYSub(75+150+20+360.toInt() ,1000.toInt(),150), iroCont)   //
         //中心点からつくっているようだ
 
     }
