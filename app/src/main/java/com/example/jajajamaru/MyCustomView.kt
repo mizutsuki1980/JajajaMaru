@@ -24,8 +24,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
     var jiki =Jiki(initialJikiX, initialJikiY)
-
-    val iro = Paint()
+    var controller = Controller()
 
     fun beginAnimation() {
         tsugiNoSyori()  //最初に一回だけ呼ばれる
@@ -45,27 +44,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     override fun onDraw(canvas: Canvas) {
-      jiki.draw(canvas)
-        val iroCont = Paint()
-        iroCont.style = Paint.Style.FILL
-        iroCont.color = argb(100, 255, 255, 150)
-
-        canvas.drawRect(shikakuRectXYSub(75.toInt() ,1000.toInt(),150), iroCont)   //
-        canvas.drawRect(shikakuRectXYSub(75+150+30.toInt() ,1000.toInt(),150), iroCont)   //
-        canvas.drawRect(shikakuRectXYSub(75+150+30+180.toInt() ,1000.toInt(),150), iroCont)   //
-        canvas.drawRect(shikakuRectXYSub(75+150+20+360.toInt() ,1000.toInt(),150), iroCont)   //
-        //中心点からつくっているようだ
-
+        jiki.draw(canvas)
+        controller.draw(canvas)
     }
 
-    fun shikakuRectXYSub(xxx:Int,yyy:Int,ooookisa:Int): Rect {
-        val left = xxx  - ooookisa / 2
-        val right = xxx  + ooookisa / 2
-        val top = yyy  - ooookisa / 2
-        val bottom = yyy + ooookisa / 2
-        val m = Rect(left, top, right,bottom)
-        return m
-    }
 
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
