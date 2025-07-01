@@ -32,15 +32,8 @@ class MainActivity : AppCompatActivity() {
         custom = findViewById<MyCustomView>(R.id.mycustom)
         custom.post { custom.beginAnimation() }
 
-        controller = findViewById<MyCustomView>(R.id.mycontroller)
-        controller.post { custom.beginAnimation() }
 
-        findViewById<Button>(R.id.migiButton).setOnClickListener{
-            custom.post { custom.migiIdo() }
-        }
-        findViewById<Button>(R.id.hidariButton).setOnClickListener{
-            custom.post { custom.hdiariIdo() }
-        }
+
 
 
 
@@ -55,6 +48,10 @@ class MainActivity : AppCompatActivity() {
 
 
     fun mainTsugiNoSyori() {
+        findViewById<TextView>(R.id.textLabelX).text=custom.clickX.toString()
+        findViewById<TextView>(R.id.textLabelY).text=custom.clickY.toString()
+        findViewById<TextView>(R.id.clickJohoLabel).text=custom.clickState.toString()
+
         handler.postDelayed( { mainTsugiNoSyori() }, 100)
     }
 

@@ -1,0 +1,92 @@
+package com.example.jajajamaru
+
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Color.argb
+import android.graphics.Paint
+import android.graphics.Rect
+
+class Controller {
+    var houkou = "nashi"
+
+    fun draw(canvas: Canvas,clickX:Int,clickY:Int,clickState:String){
+        houkou = "nashi"
+        val hidariButtonIro = Paint()
+        hidariButtonIro.style = Paint.Style.FILL
+        hidariButtonIro.color = argb(200, 0, 0, 150)
+
+        val migiButtonIro = Paint()
+        migiButtonIro.style = Paint.Style.FILL
+        migiButtonIro.color = argb(200, 0, 0, 150)
+
+
+        val buttonIro = Paint()
+        buttonIro.style = Paint.Style.FILL
+        buttonIro.color = argb(200, 0, 0, 150)
+
+        val buttonPushIro = Paint()
+        buttonPushIro.style = Paint.Style.FILL
+        buttonPushIro.color = argb(100, 0, 0, 150)
+        //plphaを下げると暗くなる
+
+
+        val hyoujiIro =  Paint()
+        hyoujiIro.style = Paint.Style.FILL
+        hyoujiIro.color = Color.BLUE
+        hyoujiIro.textSize = 100.toFloat()
+
+        //xが50～150の間で
+        //ｙが920～1070の間で
+        //onTouchEventが押してる状態だったら
+        //色を変える
+
+        if(clickX > 50 && clickX <150){
+            if(clickY > 920 && clickY <1070) {
+                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
+                    houkou = "hidari"
+                    hidariButtonIro.color = argb(100, 100, 100, 200)
+                }
+            }
+        }
+
+
+        if(clickX > (30+170+170+170) && clickX <(30+170+170+170+150)){
+            if(clickY > 920 && clickY < 1070) {
+                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
+                    houkou = "migi"
+                    migiButtonIro.color = argb(100, 100, 100, 200)
+                }
+            }
+        }
+
+
+        canvas.drawRect(shikakuRectButton(30.toInt() ,920.toInt(),150), hidariButtonIro)   //
+
+        canvas.drawText("←",(50).toFloat(),(1035).toFloat(),hyoujiIro)
+        //canvas.drawRect(shikakuRectButton(30+170.toInt() ,920.toInt(),150), buttonIro)   //
+
+        canvas.drawRect(shikakuRectButton(30+170+170+170.toInt() ,920.toInt(),150), migiButtonIro)   //
+        canvas.drawText("→",(570).toFloat(),(1035).toFloat(),hyoujiIro)
+    }
+
+
+    fun shikakuRectButton(xxx:Int,yyy:Int,ooookisa:Int): Rect {
+        val left = xxx
+        val right = xxx  + ooookisa
+        val top = yyy
+        val bottom = yyy + ooookisa
+        val m = Rect(left, top, right,bottom)
+        return m
+    }
+
+    //中心をｘｙとしてookisaの四角を描画する
+    fun shikakuRectXYSub(xxx:Int,yyy:Int,ooookisa:Int): Rect {
+        val left = xxx  - ooookisa / 2
+        val right = xxx  + ooookisa / 2
+        val top = yyy  - ooookisa / 2
+        val bottom = yyy + ooookisa / 2
+        val m = Rect(left, top, right,bottom)
+        return m
+    }
+
+}

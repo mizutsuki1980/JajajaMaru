@@ -11,8 +11,9 @@
     <com.example.jajajamaru.MyCustomView
         android:id="@+id/mycustom"
         android:layout_width="match_parent"
-        android:layout_height="621dp"
+        android:layout_height="700dp"
         tools:ignore="MissingConstraints" />
+
 
     <com.example.jajajamaru.MyController
         android:id="@+id/mycontroller"
@@ -20,31 +21,32 @@
         android:layout_height="77dp"
         tools:ignore="MissingConstraints" />
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/hidariButton"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/textLabelX"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="左" />
+            android:text="123456" />
 
-        <Button
-            android:id="@+id/ueButton"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/textLabelY"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="上" />
+            android:text="78910" />
 
-        <Button
-            android:id="@+id/migiButton"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/clickJohoLabel"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="右" />
+            android:text="TextView" />
     </LinearLayout>
 
 </LinearLayout>
