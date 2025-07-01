@@ -47,7 +47,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     override fun onDraw(canvas: Canvas) {
         jiki.draw(canvas)
-        controller.draw(canvas)
+        controller.draw(canvas,clickX,clickY,clickState)
     }
 
 
@@ -75,9 +75,5 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         return super.onTouchEvent(event)
     }
-    //isFirstMoveとかいるんかな？clickXとclickYの初期値も。
-    
-    //押され続けている、っていうのは、ｘ、ｙが動かなかったら、という判定にすればいいのか
-    //というか、今押されているいるｘｙがどこなのか？で左右上を決めればいいのでは。
 }
 

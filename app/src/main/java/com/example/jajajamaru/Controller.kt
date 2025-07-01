@@ -9,7 +9,16 @@ import android.graphics.Rect
 class Controller {
 
 
-    fun draw(canvas: Canvas){
+    fun draw(canvas: Canvas,clickX:Int,clickY:Int,clickState:String){
+        val hidariButtonIro = Paint()
+        hidariButtonIro.style = Paint.Style.FILL
+        hidariButtonIro.color = argb(200, 0, 0, 150)
+
+        val migiButtonIro = Paint()
+        migiButtonIro.style = Paint.Style.FILL
+        migiButtonIro.color = argb(200, 0, 0, 150)
+
+
         val buttonIro = Paint()
         buttonIro.style = Paint.Style.FILL
         buttonIro.color = argb(200, 0, 0, 150)
@@ -25,12 +34,35 @@ class Controller {
         hyoujiIro.color = Color.BLUE
         hyoujiIro.textSize = 100.toFloat()
 
-        canvas.drawRect(shikakuRectButton(30.toInt() ,920.toInt(),150), buttonPushIro)   //
+        //xが50～150の間で
+        //ｙが920～1070の間で
+        //onTouchEventが押してる状態だったら
+        //色を変える
+
+        if(clickX > 50 && clickX <150){
+            if(clickY > 920 && clickY <1070) {
+                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
+                    hidariButtonIro.color = argb(100, 100, 100, 200)
+                }
+            }
+        }
+
+
+        if(clickX > (30+170+170+170) && clickX <(30+170+170+170+150)){
+            if(clickY > 920 && clickY < 1070) {
+                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
+                    migiButtonIro.color = argb(100, 100, 100, 200)
+                }
+            }
+        }
+
+
+        canvas.drawRect(shikakuRectButton(30.toInt() ,920.toInt(),150), hidariButtonIro)   //
+
         canvas.drawText("←",(50).toFloat(),(1035).toFloat(),hyoujiIro)
+        //canvas.drawRect(shikakuRectButton(30+170.toInt() ,920.toInt(),150), buttonIro)   //
 
-        canvas.drawRect(shikakuRectButton(30+170.toInt() ,920.toInt(),150), buttonIro)   //
-
-        canvas.drawRect(shikakuRectButton(30+170+170+170.toInt() ,920.toInt(),150), buttonIro)   //
+        canvas.drawRect(shikakuRectButton(30+170+170+170.toInt() ,920.toInt(),150), migiButtonIro)   //
         canvas.drawText("→",(570).toFloat(),(1035).toFloat(),hyoujiIro)
     }
 
