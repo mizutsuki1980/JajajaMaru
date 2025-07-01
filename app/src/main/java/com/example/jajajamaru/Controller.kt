@@ -7,9 +7,10 @@ import android.graphics.Paint
 import android.graphics.Rect
 
 class Controller {
-
+    var houkou = "nashi"
 
     fun draw(canvas: Canvas,clickX:Int,clickY:Int,clickState:String){
+        houkou = "nashi"
         val hidariButtonIro = Paint()
         hidariButtonIro.style = Paint.Style.FILL
         hidariButtonIro.color = argb(200, 0, 0, 150)
@@ -42,6 +43,7 @@ class Controller {
         if(clickX > 50 && clickX <150){
             if(clickY > 920 && clickY <1070) {
                 if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
+                    houkou = "hidari"
                     hidariButtonIro.color = argb(100, 100, 100, 200)
                 }
             }
@@ -51,6 +53,7 @@ class Controller {
         if(clickX > (30+170+170+170) && clickX <(30+170+170+170+150)){
             if(clickY > 920 && clickY < 1070) {
                 if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
+                    houkou = "migi"
                     migiButtonIro.color = argb(100, 100, 100, 200)
                 }
             }

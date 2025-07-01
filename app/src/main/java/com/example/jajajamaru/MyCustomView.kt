@@ -19,8 +19,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     val jikiIchiTyousei = 120 //クリックした位置よりちょっと上にくる。そうしないと指に隠れて見えない。
 
-    val initialJikiX = 300 //初期位置
-    val initialJikiY = 800 //初期位置
+    val initialJikiX = 360 //初期位置
+    val initialJikiY = 500 //初期位置
 
     var clickX = initialJikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
@@ -40,6 +40,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun tsugiNoSyori() {
+        if (controller.houkou == "migi"){
+            jiki.x += 5
+        }
+
+        if (controller.houkou == "hidari"){
+            jiki.x -= 5
+        }
+
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
         handler.postDelayed({ tsugiNoSyori() }, 100)
