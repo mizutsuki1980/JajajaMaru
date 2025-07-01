@@ -15,6 +15,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var dgCount = 0
     var scoreCount = 0
     var isFirstMove = false //動きだしたら弾も出るようにする
+    var clickState = "nashi"
+
     val jikiIchiTyousei = 120 //クリックした位置よりちょっと上にくる。そうしないと指に隠れて見えない。
 
     val initialJikiX = 300 //初期位置
@@ -52,21 +54,21 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
-            isFirstMove = true
+            clickState = "ACTION_DOWN"
             clickX = event.x.toInt()
             clickY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
         }
 
         if (event.action == MotionEvent.ACTION_UP) {
-            isFirstMove = true
+            clickState = "ACTION_UP"
             clickX = event.x.toInt()
             clickY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束
         }
 
         if (event.action == MotionEvent.ACTION_MOVE) {
-            isFirstMove = true
+            clickState = "ACTION_MOVE"
             clickX = event.x.toInt()
             clickY = event.y.toInt()
             return true // 処理した場合はtrueを返す約束

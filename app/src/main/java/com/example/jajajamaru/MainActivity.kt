@@ -45,6 +45,10 @@ class MainActivity : AppCompatActivity() {
 
 
     fun mainTsugiNoSyori() {
+        findViewById<TextView>(R.id.textLabelX).text=custom.clickX.toString()
+        findViewById<TextView>(R.id.textLabelY).text=custom.clickY.toString()
+        findViewById<TextView>(R.id.clickJohoLabel).text=custom.clickState.toString()
+
         handler.postDelayed( { mainTsugiNoSyori() }, 100)
     }
 
