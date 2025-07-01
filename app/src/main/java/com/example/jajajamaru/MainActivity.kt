@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
 
     val handler = Handler()
     lateinit var custom : MyCustomView
-    lateinit var controller : MyCustomView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +30,6 @@ class MainActivity : AppCompatActivity() {
         display.getSize(point)
         custom = findViewById<MyCustomView>(R.id.mycustom)
         custom.post { custom.beginAnimation() }
-
-
 
 
 
