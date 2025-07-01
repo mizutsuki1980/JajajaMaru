@@ -14,14 +14,6 @@
         android:layout_height="700dp"
         tools:ignore="MissingConstraints" />
 
-
-    <com.example.jajajamaru.MyController
-        android:id="@+id/mycontroller"
-        android:layout_width="match_parent"
-        android:layout_height="77dp"
-        tools:ignore="MissingConstraints" />
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
