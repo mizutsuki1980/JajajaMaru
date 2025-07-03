@@ -1,6 +1,7 @@
 package com.example.jajajamaru
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Color.argb
@@ -54,6 +55,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     override fun onDraw(canvas: Canvas) {
+        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.tosu, BitmapFactory.Options())
+        canvas.drawBitmap(bitmap, 50.0F, 200.0F, null)
+
+
         jiki.draw(canvas)
         controller.draw(canvas,clickX,clickY,clickState)
     }
