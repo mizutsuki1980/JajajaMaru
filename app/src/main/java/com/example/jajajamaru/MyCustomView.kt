@@ -60,7 +60,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawBitmap(bitmap, 50.0F+(background.x.toFloat()), 200.0F, null)
 
         if(controller.isFirstJump) {
-            jiki.jumpdraw(canvas, controller.jumpFrame)
+            jiki.jumpdraw(canvas,50)
         }else{
             jiki.draw(canvas)
         }

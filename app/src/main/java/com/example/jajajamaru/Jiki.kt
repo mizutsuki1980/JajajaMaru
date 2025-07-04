@@ -17,7 +17,7 @@ class Jiki(var x:Int, var y:Int) {
         canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa/2).toFloat(),iro) //自機の描画
     }
     fun jumpdraw(canvas: Canvas,jumpFrame:Int){
-        canvas.drawCircle(x.toFloat(),(y+jumpFrame).toFloat(),(ookisa/2).toFloat(),iro) //自機の描画
+        canvas.drawCircle(x.toFloat(),(y-jumpFrame).toFloat(),(ookisa/2).toFloat(),iro) //自機の描画
     }
 
 }
