@@ -70,11 +70,10 @@ class Controller {
                     isFirstJump = true
                     jumpButtonIro.color = argb(100, 100, 100, 200)
                 }
-                if (clickState == "ACTION_UP") {
-                    isFirstJump = false
-                }
             }
         }
+        //とりあず「指が離れたら」でジャンプはfalseにしていいと思う
+        if (clickState == "ACTION_UP") { isFirstJump = false }
 
         canvas.drawRect(shikakuRectButton(30.toInt() ,920.toInt(),150), hidariButtonIro)   //
         canvas.drawText("←",(50).toFloat(),(1035).toFloat(),hyoujiIro)
