@@ -74,11 +74,12 @@ class Controller {
             }
         }
         //ここで一回だけジャンプしてるかチェックしたらいいのでは？
+        //んーなんかここの条件付けが失敗している
         if (isJump){
-            if(jumpFrame>= 0){
-                jumpFrame = 10
+            if(jumpFrame == 0){
+                jumpFrame = 100
             }else{
-                jumpFrame --
+                jumpFrame -=3
             }
             if(jumpFrame>0){
                 isJump = false
