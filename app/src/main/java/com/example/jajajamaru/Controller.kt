@@ -73,6 +73,17 @@ class Controller {
                 }
             }
         }
+        //ここで一回だけジャンプしてるかチェックしたらいいのでは？
+        if (isJump){
+            if(jumpFrame>= 0){
+                jumpFrame = 10
+            }else{
+                jumpFrame --
+            }
+            if(jumpFrame>0){
+                isJump = false
+            }
+        }
 
         canvas.drawRect(shikakuRectButton(30.toInt() ,920.toInt(),150), hidariButtonIro)   //
         canvas.drawText("←",(50).toFloat(),(1035).toFloat(),hyoujiIro)
