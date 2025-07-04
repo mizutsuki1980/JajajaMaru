@@ -8,8 +8,8 @@ import android.graphics.Rect
 
 class Controller {
     var houkou = "nashi"
-    var isJump = false
-    var jumpFrame = 0
+    var isFirstJump = false
+    var jumpFrame = 1
     var jumpTakasa = 0
 
     fun draw(canvas: Canvas,clickX:Int,clickY:Int,clickState:String){
@@ -68,25 +68,23 @@ class Controller {
         if(clickX > (170) && clickX <(30+170+320)){
             if(clickY > 920 && clickY < 1070) {
                 if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
-                    isJump = true
+                    isFirstJump = true
                     jumpButtonIro.color = argb(100, 100, 100, 200)
                 }
             }
         }
         //ここで一回だけジャンプしてるかチェックしたらいいのでは？
         //んーなんかここの条件付けが失敗している
-        if (isJump){
-            if(jumpFrame == 0){
+        if (isFirstJump){
+            if(jumpFrame == 1){
                 jumpFrame = 100
             }else{
-                jumpFrame -=3
-            }
-            if(jumpFrame>0){
-                isJump = false
+                jumpFrame -=5
             }
         }
+        if(jumpFrame>=0) { isFirstJump = false }
 
-        canvas.drawRect(shikakuRectButton(30.toInt() ,920.toInt(),150), hidariButtonIro)   //
+            canvas.drawRect(shikakuRectButton(30.toInt() ,920.toInt(),150), hidariButtonIro)   //
         canvas.drawText("←",(50).toFloat(),(1035).toFloat(),hyoujiIro)
         //canvas.drawRect(shikakuRectButton(30+170.toInt() ,920.toInt(),150), buttonIro)   //
 

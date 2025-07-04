@@ -29,6 +29,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jiki =Jiki(initialJikiX, initialJikiY)
     var controller = Controller()
     var background = BackGround()
+
     fun beginAnimation() {
         tsugiNoSyori()  //最初に一回だけ呼ばれる
     }
@@ -55,7 +56,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.tosu, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, 50.0F+(background.x.toFloat()), 200.0F, null)
 
-        if(controller.isJump) {
+        if(controller.isFirstJump) {
             jiki.draw(canvas)
         }else{
             jiki.jumpdraw(canvas, controller.jumpFrame)
