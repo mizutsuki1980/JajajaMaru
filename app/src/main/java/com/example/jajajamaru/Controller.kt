@@ -8,9 +8,8 @@ import android.graphics.Rect
 
 class Controller {
     var houkou = "nashi"
-    var isJump = false
-    var jumpFrame = 0
-    var jumpTakasa = 0
+    var isFirstJump = false
+
 
     fun draw(canvas: Canvas,clickX:Int,clickY:Int,clickState:String){
         houkou = "nashi"
@@ -68,15 +67,18 @@ class Controller {
         if(clickX > (170) && clickX <(30+170+320)){
             if(clickY > 920 && clickY < 1070) {
                 if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
-                    isJump = true
+                    isFirstJump = true
                     jumpButtonIro.color = argb(100, 100, 100, 200)
+                }
+                if (clickState == "ACTION_UP") {
+                    isFirstJump = false
                 }
             }
         }
 
         canvas.drawRect(shikakuRectButton(30.toInt() ,920.toInt(),150), hidariButtonIro)   //
         canvas.drawText("←",(50).toFloat(),(1035).toFloat(),hyoujiIro)
-        //canvas.drawRect(shikakuRectButton(30+170.toInt() ,920.toInt(),150), buttonIro)   //
+
 
         canvas.drawRect(shikakuYokonagaRectButton(30+170.toInt() ,920.toInt(),320,150
         ), jumpButtonIro)
@@ -101,16 +103,6 @@ class Controller {
         val right = xxx  + ooookisa
         val top = yyy
         val bottom = yyy + ooookisa
-        val m = Rect(left, top, right,bottom)
-        return m
-    }
-
-    //中心をｘｙとしてookisaの四角を描画する
-    fun shikakuRectXYSub(xxx:Int,yyy:Int,ooookisa:Int): Rect {
-        val left = xxx  - ooookisa / 2
-        val right = xxx  + ooookisa / 2
-        val top = yyy  - ooookisa / 2
-        val bottom = yyy + ooookisa / 2
         val m = Rect(left, top, right,bottom)
         return m
     }
