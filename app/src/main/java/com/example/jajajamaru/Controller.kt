@@ -83,14 +83,13 @@ class Controller {
         }
         //ここで一回だけジャンプしてるかチェックしたらいいのでは？
         //んーなんかここの条件付けが失敗している
-        if (isFirstJump) { jumpFrame -=5 }
-            //          if(jumpFrame == 1){ jumpFrame = 100}
-   //     }
-    //    jumpFrame -=5
-      //  if(jumpFrame>=0) {
-        //    isFirstJump = false
-          //  jumpFrame = 1
-//        }
+        if (isFirstJump) {
+            jumpFrame -=5
+            if(jumpFrame>0){
+                isFirstJump = false
+                jumpFrame = 1
+            }
+        }
 
             canvas.drawRect(shikakuRectButton(30.toInt() ,920.toInt(),150), hidariButtonIro)   //
         canvas.drawText("←",(50).toFloat(),(1035).toFloat(),hyoujiIro)
