@@ -47,6 +47,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             background.x  -= 15
         }
 
+        if (controller.isFirstJump ){
+        }
+
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
         handler.postDelayed({ tsugiNoSyori() }, 100)
@@ -57,6 +60,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawBitmap(bitmap, 50.0F+(background.x.toFloat()), 200.0F, null)
 
         if(controller.isFirstJump) {
+            jiki.y -= 5
             jiki.draw(canvas)
         }else{
             jiki.jumpdraw(canvas, controller.jumpFrame)

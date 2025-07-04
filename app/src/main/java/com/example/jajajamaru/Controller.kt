@@ -8,9 +8,13 @@ import android.graphics.Rect
 
 class Controller {
     var houkou = "nashi"
-    var isFirstJump = false
+    var isFirstJump :Boolean
     var jumpFrame = 1
     var jumpTakasa = 0
+
+    init{
+     isFirstJump = false
+    }
 
     fun draw(canvas: Canvas,clickX:Int,clickY:Int,clickState:String){
         houkou = "nashi"
@@ -70,19 +74,23 @@ class Controller {
                 if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
                     isFirstJump = true
                     jumpButtonIro.color = argb(100, 100, 100, 200)
+                }else{
+                    isFirstJump = false
                 }
+                //なるほど、tureになったらAction_UP？になってもtrueになりつづけてるのか
+
             }
         }
         //ここで一回だけジャンプしてるかチェックしたらいいのでは？
         //んーなんかここの条件付けが失敗している
-        if (isFirstJump){
-            if(jumpFrame == 1){
-                jumpFrame = 100
-            }else{
-                jumpFrame -=5
-            }
-        }
-        if(jumpFrame>=0) { isFirstJump = false }
+        if (isFirstJump) { jumpFrame -=5 }
+            //          if(jumpFrame == 1){ jumpFrame = 100}
+   //     }
+    //    jumpFrame -=5
+      //  if(jumpFrame>=0) {
+        //    isFirstJump = false
+          //  jumpFrame = 1
+//        }
 
             canvas.drawRect(shikakuRectButton(30.toInt() ,920.toInt(),150), hidariButtonIro)   //
         canvas.drawText("←",(50).toFloat(),(1035).toFloat(),hyoujiIro)
