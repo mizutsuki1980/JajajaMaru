@@ -8,6 +8,9 @@ import android.graphics.Rect
 
 class Controller {
     var houkou = "nashi"
+    var isJump = false
+    var jumpFrame = 0
+    var jumpTakasa = 0
 
     fun draw(canvas: Canvas,clickX:Int,clickY:Int,clickState:String){
         houkou = "nashi"
@@ -19,6 +22,9 @@ class Controller {
         migiButtonIro.style = Paint.Style.FILL
         migiButtonIro.color = argb(200, 0, 0, 150)
 
+        val jumpButtonIro = Paint()
+        jumpButtonIro.style = Paint.Style.FILL
+        jumpButtonIro.color = argb(200, 0, 0, 150)
 
         val buttonIro = Paint()
         buttonIro.style = Paint.Style.FILL
@@ -59,16 +65,36 @@ class Controller {
             }
         }
 
+        if(clickX > (170) && clickX <(30+170+320)){
+            if(clickY > 920 && clickY < 1070) {
+                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
+                    isJump = true
+                    jumpButtonIro.color = argb(100, 100, 100, 200)
+                }
+            }
+        }
 
         canvas.drawRect(shikakuRectButton(30.toInt() ,920.toInt(),150), hidariButtonIro)   //
-
         canvas.drawText("←",(50).toFloat(),(1035).toFloat(),hyoujiIro)
         //canvas.drawRect(shikakuRectButton(30+170.toInt() ,920.toInt(),150), buttonIro)   //
+
+        canvas.drawRect(shikakuYokonagaRectButton(30+170.toInt() ,920.toInt(),320,150
+        ), jumpButtonIro)
+        canvas.drawText("Jump!",(50+170).toFloat(),(1035).toFloat(),hyoujiIro)
+
 
         canvas.drawRect(shikakuRectButton(30+170+170+170.toInt() ,920.toInt(),150), migiButtonIro)   //
         canvas.drawText("→",(570).toFloat(),(1035).toFloat(),hyoujiIro)
     }
 
+    fun shikakuYokonagaRectButton(xxx:Int,yyy:Int,yokoooookisa:Int,tateooookisa:Int): Rect {
+        val left = xxx
+        val right = xxx  + yokoooookisa
+        val top = yyy
+        val bottom = yyy + tateooookisa
+        val m = Rect(left, top, right,bottom)
+        return m
+    }
 
     fun shikakuRectButton(xxx:Int,yyy:Int,ooookisa:Int): Rect {
         val left = xxx

@@ -7,8 +7,8 @@ class BackGround {
     var x = 0
     var y = 0
     fun draw(canvas: Canvas){
-        //        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.tosu, BitmapFactory.Options())
-        //      canvas.drawBitmap(bitmap, 50.0F, 200.0F, null)
+    //        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.tosu, BitmapFactory.Options())
+     //      canvas.drawBitmap(bitmap, 50.0F, 200.0F, null)
         //なるほど、ダメなのね。書いてあった通りだ
 
 
