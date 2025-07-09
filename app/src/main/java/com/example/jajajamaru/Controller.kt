@@ -9,7 +9,7 @@ import android.graphics.Rect
 class Controller {
     var houkou = "nashi"
     var isFirstJump = false
-
+    var junpFrame = 0
 
     fun draw(canvas: Canvas,clickX:Int,clickY:Int,clickState:String){
         houkou = "nashi"
@@ -74,6 +74,19 @@ class Controller {
         }
         //とりあず「指が離れたら」でジャンプはfalseにしていいと思う
         if (clickState == "ACTION_UP") { isFirstJump = false }
+
+        //一度着地しないと次のジャンプは出来ないようにしたい。
+        //逆に、ジャンプを押し続けていたらジャンプし続けたい。
+        //着地判定のonoffが必要？
+        if(isFirstJump) {
+
+        }else {
+            junpFrame--
+        }
+
+        if(junpFrame>0){ isFirstJump = false }
+
+
 
         canvas.drawRect(shikakuRectButton(30.toInt() ,920.toInt(),150), hidariButtonIro)   //
         canvas.drawText("←",(50).toFloat(),(1035).toFloat(),hyoujiIro)
