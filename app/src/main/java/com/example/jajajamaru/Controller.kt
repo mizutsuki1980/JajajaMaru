@@ -8,10 +8,7 @@ import android.graphics.Rect
 
 class Controller {
     var houkou = "nashi"
-    var isFirstJump = false
-    var isJump = false
-    var jumpFrame = 0
-    var jumpTakasa = 0
+    var isJumpButton = false
 
 
     fun draw(canvas: Canvas,clickX:Int,clickY:Int,clickState:String){
@@ -70,22 +67,16 @@ class Controller {
         if(clickX > (170) && clickX <(30+170+320)){
             if(clickY > 920 && clickY < 1070) {
                 if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
-                    isJump = true
-                    jumpFrame = 50
-                    jumpTakasa = 50
+                    isJumpButton = true
                     jumpButtonIro.color = argb(100, 100, 100, 200)
                 }
                 if (clickState == "ACTION_UP") {
-                    isJump = false
+                    isJumpButton = false
                 }
             }
         }
 
 
-        if(jumpFrame>=10){
-            jumpFrame --
-
-        }
 
 
 

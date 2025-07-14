@@ -47,7 +47,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             background.x  -= 15
         }
 
-        if (controller.isFirstJump ){
+        if (controller.isJumpButton ){
+            jiki.isJump = true
         }
 
         frame += 1  //繰り返し処理はここでやってる
@@ -59,8 +60,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.tosu, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, 50.0F+(background.x.toFloat()), 200.0F, null)
 
-        if(controller.isJump) {
-            jiki.jumpdraw(canvas,controller.jumpTakasa)
+        if(jiki.isJump) {
+            jiki.jumpdraw(canvas,jiki.jumpTakasa)
         }else{
             jiki.draw(canvas)
         }

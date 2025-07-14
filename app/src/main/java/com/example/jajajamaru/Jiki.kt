@@ -8,6 +8,12 @@ class Jiki(var x:Int, var y:Int) {
     val ookisa = 200
     val iro = Paint()
 
+    var isJump = false
+    var jumpFrame = 0
+    var jumpTakasa = 0
+
+
+
     init{
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
