@@ -59,8 +59,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.tosu, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, 50.0F+(background.x.toFloat()), 200.0F, null)
 
-        if(controller.isFirstJump) {
-            jiki.jumpdraw(canvas,50)
+        if(controller.isJump) {
+            jiki.jumpdraw(canvas,-controller.junpFrame)
         }else{
             jiki.draw(canvas)
         }

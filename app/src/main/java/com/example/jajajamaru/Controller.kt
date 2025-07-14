@@ -9,6 +9,7 @@ import android.graphics.Rect
 class Controller {
     var houkou = "nashi"
     var isFirstJump = false
+    var isJump = false
     var junpFrame = 0
 
     fun draw(canvas: Canvas,clickX:Int,clickY:Int,clickState:String){
@@ -68,23 +69,23 @@ class Controller {
             if(clickY > 920 && clickY < 1070) {
                 if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
                     isFirstJump = true
+                    isJump = true
                     jumpButtonIro.color = argb(100, 100, 100, 200)
                 }
             }
         }
-        //とりあず「指が離れたら」でジャンプはfalseにしていいと思う
-        if (clickState == "ACTION_UP") { isFirstJump = false }
 
-        //一度着地しないと次のジャンプは出来ないようにしたい。
-        //逆に、ジャンプを押し続けていたらジャンプし続けたい。
-        //着地判定のonoffが必要？
-        if(isFirstJump) {
+        if (clickState == "ACTION_UP") { isFirstJump = false }  //離れたらfalse
+        if (clickState == "ACTION_UP") { isJump = false }  //離れたらfalse
+
+        //離れてもjumpFrameが発生していたら、そのままジャンプ継続
+        if(junpFrame>0) {
 
         }else {
             junpFrame--
         }
 
-        if(junpFrame>0){ isFirstJump = false }
+        if(junpFrame<0){ isFirstJump = false }
 
 
 
