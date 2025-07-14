@@ -12,11 +12,11 @@ class Jiki(var x:Int, var y:Int) {
     var jumpFrame = 0
     var jumpTakasa = 0
 
-    val TAMA_NASI_STATE = 1
-    val NORMAL_STATE = 2
-    val TAMA_HIT_STATE = 3
-    val TAMA_HIT_END_STATE = 4
-    var status = TAMA_NASI_STATE // 最初は玉が画面内に無い状態
+    val NORMAL_STATE = 1
+    val JUMP_UP_STATE = 2
+    val JUMP_TOP_STATE = 3
+    val JUMP_DOWN_STATE = 4
+    var jumpStatus = NORMAL_STATE // 最初はNORMAL_STATE
 
 
     init{
@@ -25,24 +25,24 @@ class Jiki(var x:Int, var y:Int) {
     }
 
     fun jumpSyori(){
-        when (status) {
-            TAMA_NASI_STATE -> {
+        when (jumpStatus) {
+            NORMAL_STATE -> {
 
             }
 
-            NORMAL_STATE -> {
+            JUMP_UP_STATE -> {
 
 
                 if (y < 5) {
-                    status = TAMA_NASI_STATE
+                    jumpStatus = JUMP_TOP_STATE
                 } // 画面外に出たら無しの状態に一旦遷移
             }
 
-            TAMA_HIT_STATE -> {
+            JUMP_TOP_STATE -> {
 
             }
 
-            TAMA_HIT_END_STATE -> {
+            JUMP_DOWN_STATE -> {
 
             }
         }
