@@ -10,7 +10,9 @@ class Controller {
     var houkou = "nashi"
     var isFirstJump = false
     var isJump = false
-    var junpFrame = 0
+    var jumpFrame = 0
+    var jumpTakasa = 0
+
 
     fun draw(canvas: Canvas,clickX:Int,clickY:Int,clickState:String){
         houkou = "nashi"
@@ -68,25 +70,20 @@ class Controller {
         if(clickX > (170) && clickX <(30+170+320)){
             if(clickY > 920 && clickY < 1070) {
                 if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
-                    isFirstJump = true
                     isJump = true
+                    jumpFrame = 50
+                    jumpTakasa = 50
                     jumpButtonIro.color = argb(100, 100, 100, 200)
                 }
             }
         }
+        if (clickState == "ACTION_UP") {
+            isJump = false
+            jumpFrame = 0
+            jumpTakasa = 0
+        }  //離れたらfalse
 
-        if (clickState == "ACTION_UP") { isFirstJump = false }  //離れたらfalse
-        if (clickState == "ACTION_UP") { isJump = false }  //離れたらfalse
 
-        //離れてもjumpFrameが発生していたら、そのままジャンプ継続
-        if(junpFrame>0) {
-
-        }else {
-            junpFrame--
-        }
-
-        if(junpFrame<0){ isFirstJump = false }
-        if(junpFrame<0){ isJump = false }
 
         //上にいくのだから、ｙは－になる
         //ジャンプの「高さ」と考えるから、ジャンプは＋にしたい
