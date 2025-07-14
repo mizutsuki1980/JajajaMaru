@@ -75,19 +75,17 @@ class Controller {
                     jumpTakasa = 50
                     jumpButtonIro.color = argb(100, 100, 100, 200)
                 }
+                if (clickState == "ACTION_UP") {
+                    isJump = false
+                }
             }
         }
-        if (clickState == "ACTION_UP") {
-            isJump = false
-            jumpFrame = 0
-            jumpTakasa = 0
-        }  //離れたらfalse
 
 
+        if(jumpFrame>=10){
+            jumpFrame --
 
-        //上にいくのだから、ｙは－になる
-        //ジャンプの「高さ」と考えるから、ジャンプは＋にしたい
-        //なんでどこかでプラスとマイナスを逆にするのだけれど、どこでするのがいいのか？
+        }
 
 
 
