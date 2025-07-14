@@ -86,6 +86,11 @@ class Controller {
         }
 
         if(junpFrame<0){ isFirstJump = false }
+        if(junpFrame<0){ isJump = false }
+
+        //上にいくのだから、ｙは－になる
+        //ジャンプの「高さ」と考えるから、ジャンプは＋にしたい
+        //なんでどこかでプラスとマイナスを逆にするのだけれど、どこでするのがいいのか？
 
 
 
