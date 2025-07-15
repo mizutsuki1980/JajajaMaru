@@ -10,7 +10,7 @@ class Jiki(var x:Int, var y:Int) {
 
     var isJump = false
     var jumpFrame = 0
-    var jumpTakasa = 50
+    var jumpTakasa = 200
 
     val NORMAL_STATE = 1
     val JUMP_UP_STATE = 2
