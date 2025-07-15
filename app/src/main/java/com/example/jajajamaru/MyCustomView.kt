@@ -47,13 +47,26 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             background.x  -= 15
         }
 
-        jiki.jumpTakasa -= 12
+
+
+        //問題はここ以降だ
 
         if (controller.isJumpButton ){
+            jiki.jumpTakasa -= 12
+
             jiki.isJump = true
+
+            if(jiki.jumpTakasa>0 && jiki.jumpTakasa<200){
+            }else {
+                jiki.isJump = false
+                jiki.jumpTakasa = 200
+            }
+
         }else{
+
             //もし下降中だったら、isJumpはfalseにしない
             if(jiki.jumpTakasa>0 && jiki.jumpTakasa<200){
+                jiki.jumpTakasa -= 12
             }else {
                 jiki.isJump = false
                 jiki.jumpTakasa = 200
