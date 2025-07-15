@@ -48,13 +48,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
     }
 
-    fun JumpCheckIdo(){
-
-        //問題はここ以降だ
+    fun jumpCheckIdo(){
 
         if (controller.isJumpButton ){
             jiki.jumpTakasa -= 28
-
             jiki.isJump = true
 
             if(jiki.jumpTakasa>0 && jiki.jumpTakasa<200){
@@ -72,13 +69,16 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 jiki.isJump = false
                 jiki.jumpTakasa = 200
             }
+
+            if(jiki.jumpTakasa<=0){ jiki.isJump = false }   //マイナスの高さならジャンプはしない
+
         }
 
     }
     fun tsugiNoSyori() {
         migiIdo()
         hidariIdo()
-        JumpCheckIdo()
+        jumpCheckIdo()
 
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
