@@ -49,6 +49,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         if (controller.isJumpButton ){
             jiki.isJump = true
+        }else{
+            jiki.isJump = false
         }
 
         frame += 1  //繰り返し処理はここでやってる
