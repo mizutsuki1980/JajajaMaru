@@ -53,6 +53,16 @@ class Jiki(var x:Int, var y:Int) {
     fun draw(canvas: Canvas){
         canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa/2).toFloat(),iro) //自機の描画
     }
+    fun jikiJumpDraw(canvas: Canvas){
+        if(isJump) {
+            jumpdraw(canvas,jumpTakasa)
+        }else{
+            draw(canvas)
+        }
+
+    }
+
+
     fun jumpdraw(canvas: Canvas,jumpTakasa:Int){
         canvas.drawCircle(x.toFloat(),(y-jumpTakasa).toFloat(),(ookisa/2).toFloat(),iro) //自機の描画
     }

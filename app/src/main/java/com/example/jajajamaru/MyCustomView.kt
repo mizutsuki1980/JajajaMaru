@@ -35,24 +35,25 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
 
-
-    fun tsugiNoSyori() {
+    fun migiIdo(){
         if (controller.houkou == "migi"){
             jiki.x += 5
             background.x  += 15
         }
-
+    }
+    fun hidariIdo(){
         if (controller.houkou == "hidari"){
             jiki.x -= 5
             background.x  -= 15
         }
+    }
 
-
+    fun JumpCheckIdo(){
 
         //問題はここ以降だ
 
         if (controller.isJumpButton ){
-            jiki.jumpTakasa -= 12
+            jiki.jumpTakasa -= 28
 
             jiki.isJump = true
 
@@ -66,12 +67,18 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
             //もし下降中だったら、isJumpはfalseにしない
             if(jiki.jumpTakasa>0 && jiki.jumpTakasa<200){
-                jiki.jumpTakasa -= 12
+                jiki.jumpTakasa -= 28
             }else {
                 jiki.isJump = false
                 jiki.jumpTakasa = 200
             }
         }
+
+    }
+    fun tsugiNoSyori() {
+        migiIdo()
+        hidariIdo()
+        JumpCheckIdo()
 
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
@@ -82,11 +89,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.tosu, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, 50.0F+(background.x.toFloat()), 200.0F, null)
 
-        if(jiki.isJump) {
-            jiki.jumpdraw(canvas,jiki.jumpTakasa)
-        }else{
-            jiki.draw(canvas)
-        }
+        jiki.jikiJumpDraw(canvas)
         controller.draw(canvas,clickX,clickY,clickState)
     }
 
