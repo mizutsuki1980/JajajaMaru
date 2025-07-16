@@ -16,6 +16,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var dgCount = 0
     var scoreCount = 0
     var isFirstMove = false //動きだしたら弾も出るようにする
+    var isFirstJump = false
     var clickState = "nashi"
 
     val jikiIchiTyousei = 120 //クリックした位置よりちょっと上にくる。そうしないと指に隠れて見えない。
@@ -48,9 +49,19 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
     }
 
+
     fun jumpCheckIdo(){
 
+        if(isFirstJump){
+            if (controller.isJumpButton ) {
+                jiki.jumpTakasa += 28 //ずーとマイナスされているから、プラスすると滞空時間が増える
+
+            }
+        }
+
         if (controller.isJumpButton ){
+            isFirstJump = true
+
             jiki.jumpTakasa -= 28
             jiki.isJump = true
 
@@ -70,7 +81,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 jiki.jumpTakasa = 200
             }
 
-            if(jiki.jumpTakasa<=0){ jiki.isJump = false }   //マイナスの高さならジャンプはしない
+            if(jiki.jumpTakasa<=0){  //マイナスの高さならジャンプは終了
+                jiki.isJump = false
+                isFirstJump = false
+            }
 
         }
 
