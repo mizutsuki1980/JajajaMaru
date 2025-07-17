@@ -51,7 +51,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun jumpCheckIdo(){
-
+        //着地の瞬間にジャンプボタンが押されている、二度とボタンを押しても反応しなくなる
         if(isFirstJump){
             if (controller.isJumpButton ) {
                 jiki.jumpTakasa += 28 //ずーとマイナスされているから、プラスすると滞空時間が増える
