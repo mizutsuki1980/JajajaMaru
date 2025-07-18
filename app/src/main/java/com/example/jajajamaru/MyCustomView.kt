@@ -55,7 +55,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(isFirstJump){
             if (controller.isJumpButton ) {
                 jiki.jumpTakasa += 28 //ずーとマイナスされているから、プラスすると滞空時間が増える
-
             }
         }
 
@@ -74,14 +73,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }else{
 
             //もし下降中だったら、isJumpはfalseにしない
-            if(jiki.jumpTakasa>0 && jiki.jumpTakasa<200){
+            if(jiki.jumpTakasa>=0 && jiki.jumpTakasa<=200){
                 jiki.jumpTakasa -= 28
             }else {
                 jiki.isJump = false
                 jiki.jumpTakasa = 200
             }
 
-            if(jiki.jumpTakasa<=0){  //マイナスの高さならジャンプは終了
+            if(jiki.jumpTakasa<0){  //マイナスの高さならジャンプは終了
                 jiki.isJump = false
                 isFirstJump = false
             }
