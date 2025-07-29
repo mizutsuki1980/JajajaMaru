@@ -58,48 +58,23 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //キャラｘは小さな座標を持つ（現在の画面の範囲内だけなので）
         //ジャンプとかっていう動作じゃなくて
         //ｘ、ｙが動く、という単純なもので一回作ってみようか
+        //ジャンプっていうのは、それの強制移動版？みたいのものでは
 
         //時間がたちすぎて、何をすればいいんだっけ？
         //とりあえずジャンプを作る、か
 
         //直ったけど、なんかちがう
         //着地の瞬間にジャンプボタンが押されている、二度とボタンを押しても反応しなくなる
-        if(isFirstJump){
+
             if (controller.isJumpButton ) {
                 jiki.jumpTakasa += 28 //ずーとマイナスされているから、プラスすると滞空時間が増える
             }
-        }
 
-        if (controller.isJumpButton ){
-            isFirstJump = true
-
-            jiki.jumpTakasa -= 28
-            jiki.isJump = true
-
-            if(jiki.jumpTakasa>0 && jiki.jumpTakasa<200){
-            }else {
-                jiki.isJump = false
-                jiki.jumpTakasa = 200
-            }
-
-        }else{
-
-            //もし下降中だったら、isJumpはfalseにしない
-            if(jiki.jumpTakasa>=0 && jiki.jumpTakasa<=200){
-                jiki.jumpTakasa -= 28
-            }else {
-                jiki.isJump = false
-                jiki.jumpTakasa = 200
-            }
-
-            if(jiki.jumpTakasa<0){  //マイナスの高さならジャンプは終了
-                jiki.isJump = false
-                isFirstJump = false
-            }
-
-        }
 
     }
+
+
+
     fun tsugiNoSyori() {
         migiIdo()
         hidariIdo()

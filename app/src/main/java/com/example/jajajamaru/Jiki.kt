@@ -10,7 +10,7 @@ class Jiki(var x:Int, var y:Int) {
 
     var isJump = false
     var jumpFrame = 0
-    var jumpTakasa = 200
+    var jumpTakasa = 0
 
     val NORMAL_STATE = 1
     val JUMP_UP_STATE = 2
@@ -54,11 +54,7 @@ class Jiki(var x:Int, var y:Int) {
         canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa/2).toFloat(),iro) //自機の描画
     }
     fun jikiJumpDraw(canvas: Canvas){
-        if(isJump) {
             jumpdraw(canvas,jumpTakasa)
-        }else{
-            draw(canvas)
-        }
 
     }
 
