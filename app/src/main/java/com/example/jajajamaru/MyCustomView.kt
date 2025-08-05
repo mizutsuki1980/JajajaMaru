@@ -52,20 +52,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun jumpCheckIdo(){
 
-
-        //ワールドｘとキャラｘがあって
-        //ワールドｘは大きな座標を持つ
-        //キャラｘは小さな座標を持つ（現在の画面の範囲内だけなので）
-        //ジャンプとかっていう動作じゃなくて
-        //ｘ、ｙが動く、という単純なもので一回作ってみようか
-        //ジャンプっていうのは、それの強制移動版？みたいのものでは
-
-        //時間がたちすぎて、何をすればいいんだっけ？
-        //とりあえずジャンプを作る、か
-
-        //直ったけど、なんかちがう
-        //着地の瞬間にジャンプボタンが押されている、二度とボタンを押しても反応しなくなる
-
             if (controller.isJumpButton ) {
                 jiki.jumpTakasa += 28 //ずーとマイナスされているから、プラスすると滞空時間が増える
             }
@@ -80,6 +66,33 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //Controllerのfun drawでなにか設定している
         //これはわかる場所に置きたいなー
 
+        if(clickX > 50 && clickX <150){
+            if(clickY > 920 && clickY <1070) {
+                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
+                    controller.houkou = "hidari"
+                }
+            }
+        }
+
+
+        if(clickX > (30+170+170+170) && clickX <(30+170+170+170+150)){
+            if(clickY > 920 && clickY < 1070) {
+                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
+                    controller.houkou = "migi"
+                }
+            }
+        }
+
+        if(clickX > (170) && clickX <(30+170+320)){
+            if(clickY > 920 && clickY < 1070) {
+                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
+                    controller.houkou = "jump"
+                }
+                if (clickState == "ACTION_UP") {
+                    controller.houkou = "jump"
+                }
+            }
+        }
 
 
         when (controller.houkou) {
