@@ -9,36 +9,41 @@ import android.graphics.Rect
 class Controller {
     var houkou = "nashi"
     var isJumpButton = false
+    var hidariButtonIro = Paint()
+    var migiButtonIro = Paint()
+    var jumpButtonIro = Paint()
+    var buttonIro = Paint()
+    var buttonPushIro = Paint()
+    var hyoujiIro =  Paint()
 
-
-    fun draw(canvas: Canvas,clickX:Int,clickY:Int,clickState:String){
+    init{
         houkou = "nashi"
-        val hidariButtonIro = Paint()
         hidariButtonIro.style = Paint.Style.FILL
         hidariButtonIro.color = argb(200, 0, 0, 150)
 
-        val migiButtonIro = Paint()
         migiButtonIro.style = Paint.Style.FILL
         migiButtonIro.color = argb(200, 0, 0, 150)
 
-        val jumpButtonIro = Paint()
         jumpButtonIro.style = Paint.Style.FILL
         jumpButtonIro.color = argb(200, 0, 0, 150)
 
-        val buttonIro = Paint()
         buttonIro.style = Paint.Style.FILL
         buttonIro.color = argb(200, 0, 0, 150)
 
-        val buttonPushIro = Paint()
         buttonPushIro.style = Paint.Style.FILL
         buttonPushIro.color = argb(100, 0, 0, 150)
         //plphaを下げると暗くなる
 
 
-        val hyoujiIro =  Paint()
         hyoujiIro.style = Paint.Style.FILL
         hyoujiIro.color = Color.BLUE
         hyoujiIro.textSize = 100.toFloat()
+
+    }
+
+
+
+    fun draw(canvas: Canvas,clickX:Int,clickY:Int,clickState:String){
 
 
         if(houkou == "hidari"){ hidariButtonIro.color = argb(100, 100, 100, 200) }
