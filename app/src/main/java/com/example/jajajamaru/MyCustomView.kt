@@ -77,6 +77,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun tsugiNoSyori() {
 
+        //Controllerのfun drawでなにか設定している
+        //これはわかる場所に置きたいなー
+
+
+
         when (controller.houkou) {
             "migi" -> { migiIdo() }
             "hidari" -> {hidariIdo()}
