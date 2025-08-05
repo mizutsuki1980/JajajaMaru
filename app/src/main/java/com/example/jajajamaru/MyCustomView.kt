@@ -61,10 +61,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
 
-    fun tsugiNoSyori() {
+    fun clickCheck(){
 
-        //Controllerのfun drawでなにか設定している
-        //これはわかる場所に置きたいなー
+        //最初にリセット
+        controller.houkou = "nashi"
 
         if(clickX > 50 && clickX <150){
             if(clickY > 920 && clickY <1070) {
@@ -95,12 +95,18 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
 
 
+    }
+
+    fun tsugiNoSyori() {
+
+        clickCheck()
+
         when (controller.houkou) {
-            "migi" -> { migiIdo() }
+            "migi" -> {migiIdo()}
             "hidari" -> {hidariIdo()}
+            "jump" -> {jumpCheckIdo()}
         }
 
-        jumpCheckIdo()
 
 
 

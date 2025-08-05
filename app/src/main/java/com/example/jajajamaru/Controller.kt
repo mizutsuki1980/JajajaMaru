@@ -50,10 +50,6 @@ class Controller {
         if(houkou == "migi"){migiButtonIro.color = argb(100, 100, 100, 200) }
         if(houkou == "jump"){jumpButtonIro.color = argb(100, 100, 100, 200) }
 
-
-
-
-
         canvas.drawRect(shikakuRectButton(30.toInt() ,920.toInt(),150), hidariButtonIro)   //
         canvas.drawText("←",(50).toFloat(),(1035).toFloat(),hyoujiIro)
 
