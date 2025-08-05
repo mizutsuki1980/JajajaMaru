@@ -76,9 +76,16 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun tsugiNoSyori() {
-        migiIdo()
-        hidariIdo()
+
+        when (controller.houkou) {
+            "migi" -> { migiIdo() }
+            "hidari" -> {hidariIdo()}
+        }
+
         jumpCheckIdo()
+
+
+
 
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
