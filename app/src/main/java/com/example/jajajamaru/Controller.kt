@@ -7,22 +7,22 @@ import android.graphics.Paint
 import android.graphics.Rect
 
 class Controller {
+
     var houkou = "nashi"
     var isJumpButton = false
+
+    //ここにボタンが増えただけ色の設定も置かなきゃいけないのかー、面倒だなぁ
     var hidariButtonIro = Paint()
     var migiButtonIro = Paint()
+    var ueButtonIro = Paint()
+    var shitaButtonIro = Paint()
     var jumpButtonIro = Paint()
     var buttonIro = Paint()
     var buttonPushIro = Paint()
     var hyoujiIro =  Paint()
 
     init{
-        houkou = "nashi"
-        hidariButtonIro.style = Paint.Style.FILL
-        hidariButtonIro.color = argb(200, 0, 0, 150)
-
-        migiButtonIro.style = Paint.Style.FILL
-        migiButtonIro.color = argb(200, 0, 0, 150)
+        buttonSyokika()
 
         jumpButtonIro.style = Paint.Style.FILL
         jumpButtonIro.color = argb(200, 0, 0, 150)
@@ -32,7 +32,7 @@ class Controller {
 
         buttonPushIro.style = Paint.Style.FILL
         buttonPushIro.color = argb(100, 0, 0, 150)
-        //plphaを下げると暗くなる
+
 
 
         hyoujiIro.style = Paint.Style.FILL
@@ -40,30 +40,41 @@ class Controller {
         hyoujiIro.textSize = 100.toFloat()
 
     }
+    fun buttonSyokika(){
+        hidariButtonIro.style = Paint.Style.FILL
+        hidariButtonIro.color = argb(200, 0, 0, 150)
 
+        migiButtonIro.style = Paint.Style.FILL
+        migiButtonIro.color = argb(200, 0, 0, 150)
+
+        ueButtonIro.style = Paint.Style.FILL
+        ueButtonIro.color = argb(200, 0, 0, 150)
+
+        shitaButtonIro.style = Paint.Style.FILL
+        shitaButtonIro.color = argb(200, 0, 0, 150)
+
+    }
 
 
     fun draw(canvas: Canvas,clickX:Int,clickY:Int,clickState:String){
 
+        buttonSyokika()
 
         if(houkou == "hidari"){ hidariButtonIro.color = argb(100, 100, 100, 200) }
         if(houkou == "migi"){migiButtonIro.color = argb(100, 100, 100, 200) }
-        if(houkou == "jump"){jumpButtonIro.color = argb(100, 100, 100, 200) }
+        if(houkou == "ue"){ueButtonIro.color = argb(100, 100, 100, 200) }
+        if(houkou == "shita"){shitaButtonIro.color = argb(100, 100, 100, 200) }
 
         //ボタンの追加・修正方法、まず範囲を決める。ClickPointCheckでどこを触ったかを調べる。範囲内なら色を変える（押したことにする）
         //ボタンの描画スタート
         canvas.drawRect(shikakuRectButton(30.toInt() ,920.toInt(),150), hidariButtonIro)   //
         canvas.drawText("←",(50).toFloat(),(1035).toFloat(),hyoujiIro)
 
-        canvas.drawRect(shikakuRectButton(30+170.toInt() ,920.toInt(),150), hidariButtonIro)   //
+        canvas.drawRect(shikakuRectButton(30+170.toInt() ,920.toInt(),150), ueButtonIro)   //
         canvas.drawText("↑",(50+170).toFloat(),(1035).toFloat(),hyoujiIro)
 
-        canvas.drawRect(shikakuRectButton(30+170+170.toInt() ,920.toInt(),150), hidariButtonIro)   //
+        canvas.drawRect(shikakuRectButton(30+170+170.toInt() ,920.toInt(),150), shitaButtonIro)   //
         canvas.drawText("↓",(50+170+170).toFloat(),(1035).toFloat(),hyoujiIro)
-
-
-       // canvas.drawRect(shikakuYokonagaRectButton(30+170.toInt() ,920.toInt(),320,150 ), jumpButtonIro)
-        //canvas.drawText("Jump!",(50+170).toFloat(),(1035).toFloat(),hyoujiIro)
 
 
         canvas.drawRect(shikakuRectButton(30+170+170+170.toInt() ,920.toInt(),150), migiButtonIro)   //

@@ -30,16 +30,20 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun migiIdo(){
-        if (controller.houkou == "migi"){
             jiki.x += 5
             background.x  += 15
-        }
     }
     fun hidariIdo(){
-        if (controller.houkou == "hidari"){
             jiki.x -= 5
             background.x  -= 15
-        }
+    }
+    fun ueIdo(){
+        jiki.y -= 5
+        background.y  -= 15
+    }
+    fun shitaIdo(){
+        jiki.y += 5
+        background.y  += 15
     }
 
 
@@ -61,6 +65,20 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 }
             }
         }
+        if(clickX > (30+170) && clickX <(30+170+150)){
+            if(clickY > 920 && clickY < 1070) {
+                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
+                    controller.houkou = "ue"
+                }
+            }
+        }
+        if(clickX > (30+170+170) && clickX <(30+170+170+150)){
+            if(clickY > 920 && clickY < 1070) {
+                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
+                    controller.houkou = "shita"
+                }
+            }
+        }
         if(clickX > (30+170+170+170) && clickX <(30+170+170+170+150)){
             if(clickY > 920 && clickY < 1070) {
                 if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
@@ -69,16 +87,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             }
         }
 
-        if(clickX > (170) && clickX <(30+170+320)){
-            if(clickY > 920 && clickY < 1070) {
-                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
-                    controller.houkou = "jump"
-                }
-                if (clickState == "ACTION_UP") {
-                    controller.houkou = "jump"
-                }
-            }
-        }
+
+
+
     }
 
     fun tsugiNoSyori() {
@@ -87,7 +98,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         when (controller.houkou) {
             "migi" -> {migiIdo()}
             "hidari" -> {hidariIdo()}
-            "jump" -> {jumpCheckIdo()}
+            "ue" -> {ueIdo()}
+            "shita" -> {shitaIdo()}
         }
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
@@ -96,7 +108,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     override fun onDraw(canvas: Canvas) {
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.tosu, BitmapFactory.Options())
-        canvas.drawBitmap(bitmap, 50.0F+(background.x.toFloat()), 200.0F, null)
+        canvas.drawBitmap(bitmap, 50.0F+(background.x.toFloat()), 200.0F+(background.y.toFloat()), null)
         jiki.jikiJumpDraw(canvas)
         controller.draw(canvas,clickX,clickY,clickState)
     }
