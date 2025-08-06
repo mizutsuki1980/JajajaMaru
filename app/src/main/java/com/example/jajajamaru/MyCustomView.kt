@@ -24,6 +24,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var controller = Controller()
     var background = BackGround()
 
+
+
     fun beginAnimation() {
         tsugiNoSyori()  //最初に一回だけ呼ばれる
     }
@@ -46,12 +48,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         background.y  += 15
     }
 
-
-    fun jumpCheckIdo(){
-            if (controller.isJumpButton ) {
-                jiki.jumpTakasa += 28 //ずーとマイナスされているから、プラスすると滞空時間が増える
-            }
-    }
 
 
 
@@ -107,8 +103,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     override fun onDraw(canvas: Canvas) {
+        //resourcesは移せない、よってこのまま↓↓↓↓
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.tosu, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, 50.0F+(background.x.toFloat()), 200.0F+(background.y.toFloat()), null)
+        //え、これって動かせないの？↑↑↑↑　drawBitmapが赤線になってしまう
+
         jiki.jikiJumpDraw(canvas)
         controller.draw(canvas,clickX,clickY,clickState)
     }
