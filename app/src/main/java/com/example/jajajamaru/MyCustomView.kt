@@ -13,14 +13,7 @@ import android.view.View
 
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     var frame = 0
-    var dgCount = 0
-    var scoreCount = 0
-    var isFirstMove = false //動きだしたら弾も出るようにする
-    var isFirstJump = false
     var clickState = "nashi"
-
-    val jikiIchiTyousei = 120 //クリックした位置よりちょっと上にくる。そうしないと指に隠れて見えない。
-
     val initialJikiX = 360 //初期位置
     val initialJikiY = 500 //初期位置
 
@@ -61,11 +54,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
 
-    fun clickCheck(){
-
+    fun clickPointCheck(){
         //最初にリセット
         controller.houkou = "nashi"
-
         if(clickX > 50 && clickX <150){
             if(clickY > 920 && clickY <1070) {
                 if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
@@ -73,8 +64,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 }
             }
         }
-
-
         if(clickX > (30+170+170+170) && clickX <(30+170+170+170+150)){
             if(clickY > 920 && clickY < 1070) {
                 if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
@@ -93,24 +82,16 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 }
             }
         }
-
-
     }
 
     fun tsugiNoSyori() {
 
-        clickCheck()
-
+        clickPointCheck()
         when (controller.houkou) {
             "migi" -> {migiIdo()}
             "hidari" -> {hidariIdo()}
             "jump" -> {jumpCheckIdo()}
         }
-
-
-
-
-
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
         handler.postDelayed({ tsugiNoSyori() }, 100)
@@ -119,11 +100,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     override fun onDraw(canvas: Canvas) {
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.tosu, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, 50.0F+(background.x.toFloat()), 200.0F, null)
-
         jiki.jikiJumpDraw(canvas)
         controller.draw(canvas,clickX,clickY,clickState)
     }
-
 
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
