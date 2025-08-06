@@ -55,7 +55,6 @@ class Jiki(var x:Int, var y:Int) {
     }
     fun jikiJumpDraw(canvas: Canvas){
             jumpdraw(canvas,jumpTakasa)
-
     }
 
 

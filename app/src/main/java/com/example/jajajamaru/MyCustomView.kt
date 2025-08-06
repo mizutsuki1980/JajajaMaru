@@ -44,12 +44,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun jumpCheckIdo(){
-
             if (controller.isJumpButton ) {
                 jiki.jumpTakasa += 28 //ずーとマイナスされているから、プラスすると滞空時間が増える
             }
-
-
     }
 
 

@@ -50,17 +50,26 @@ class Controller {
         if(houkou == "migi"){migiButtonIro.color = argb(100, 100, 100, 200) }
         if(houkou == "jump"){jumpButtonIro.color = argb(100, 100, 100, 200) }
 
+        //ボタンの追加・修正方法、まず範囲を決める。ClickPointCheckでどこを触ったかを調べる。範囲内なら色を変える（押したことにする）
+        //ボタンの描画スタート
         canvas.drawRect(shikakuRectButton(30.toInt() ,920.toInt(),150), hidariButtonIro)   //
         canvas.drawText("←",(50).toFloat(),(1035).toFloat(),hyoujiIro)
 
+        canvas.drawRect(shikakuRectButton(30+170.toInt() ,920.toInt(),150), hidariButtonIro)   //
+        canvas.drawText("↑",(50+170).toFloat(),(1035).toFloat(),hyoujiIro)
 
-        canvas.drawRect(shikakuYokonagaRectButton(30+170.toInt() ,920.toInt(),320,150
-        ), jumpButtonIro)
-        canvas.drawText("Jump!",(50+170).toFloat(),(1035).toFloat(),hyoujiIro)
+        canvas.drawRect(shikakuRectButton(30+170+170.toInt() ,920.toInt(),150), hidariButtonIro)   //
+        canvas.drawText("↓",(50+170+170).toFloat(),(1035).toFloat(),hyoujiIro)
+
+
+       // canvas.drawRect(shikakuYokonagaRectButton(30+170.toInt() ,920.toInt(),320,150 ), jumpButtonIro)
+        //canvas.drawText("Jump!",(50+170).toFloat(),(1035).toFloat(),hyoujiIro)
 
 
         canvas.drawRect(shikakuRectButton(30+170+170+170.toInt() ,920.toInt(),150), migiButtonIro)   //
         canvas.drawText("→",(570).toFloat(),(1035).toFloat(),hyoujiIro)
+         //ボタンの描画終了
+
     }
 
     fun shikakuYokonagaRectButton(xxx:Int,yyy:Int,yokoooookisa:Int,tateooookisa:Int): Rect {
