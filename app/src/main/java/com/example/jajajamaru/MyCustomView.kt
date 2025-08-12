@@ -52,6 +52,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun clickPointCheck(){
+    // 押しっぱなししにして、右から左とかボタンが移った場合に、右ボタンのままになってしまう問題
+
         //最初にリセット
         controller.houkou = "nashi"
         if(clickX > 50 && clickX <150){
