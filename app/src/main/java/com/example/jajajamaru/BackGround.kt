@@ -10,7 +10,7 @@ class BackGround {
     var y = 300
 var ookisa = 500
     val iro = Paint()
-
+//コメント修正
     init{
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 155, 155, 150)

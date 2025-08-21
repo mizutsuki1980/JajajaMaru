@@ -53,9 +53,26 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun clickPointCheck(){
     // 押しっぱなししにして、右から左とかボタンが移った場合に、右ボタンのままになってしまう問題
+    //なるほど"ACTION_DOWN"が続いてるときは、クリックｘ、ｙは動いてないのかな
+        // いや、違うか、左を押しっぱなしにしても、上とか下はできる
+        //なんか「引きずる」みたいなのがあるんじゃないかな"ACTION_DOWN"みたいなので。onTouchEventで。
+
+        //        if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
+        //     この部分だけとってみたけどダメだった。
+
+        //if (clickState == "ACTION_UP"){controller.houkou = "nashi"}
+        //アクションアップになったら方向をなしにした。気休め程度
+
+        //上下、左右がとくに機敏に反応しないとアクションゲームではだめだろう。
+        //右おしっぱですぐ左おして右、みたいな。
 
         //最初にリセット
+
+
         controller.houkou = "nashi"
+
+        if (clickState == "ACTION_UP"){controller.houkou = "nashi"}
+
         if(clickX > 50 && clickX <150){
             if(clickY > 920 && clickY <1070) {
                 if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
