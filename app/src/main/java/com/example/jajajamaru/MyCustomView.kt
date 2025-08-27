@@ -32,19 +32,19 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun migiIdo(){
-            jiki.x += 5
-            background.x  += 15
+        jiki.migiIdo()
+        background.x  += 15
     }
     fun hidariIdo(){
-            jiki.x -= 5
-            background.x  -= 15
+        jiki.hidariIdo()
+        background.x  -= 15
     }
     fun ueIdo(){
-        jiki.y -= 5
+        jiki.ueIdo()
         background.y  -= 15
     }
     fun shitaIdo(){
-        jiki.y += 5
+        jiki.shitaIdo()
         background.y  += 15
     }
 

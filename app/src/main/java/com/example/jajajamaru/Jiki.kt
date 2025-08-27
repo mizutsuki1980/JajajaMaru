@@ -49,6 +49,19 @@ class Jiki(var x:Int, var y:Int) {
 
     }
 
+    fun migiIdo(){
+        x += 5
+    }
+    fun hidariIdo(){
+       x -= 5
+
+    }
+    fun ueIdo(){
+       y -= 5
+    }
+    fun shitaIdo(){
+        y += 5
+    }
 
     fun draw(canvas: Canvas){
         canvas.drawCircle(x.toFloat(),y.toFloat(),(ookisa/2).toFloat(),iro) //自機の描画
