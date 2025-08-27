@@ -6,8 +6,8 @@ import android.graphics.Color.argb
 import android.graphics.Paint
 
 class BackGround {
-    var x = 300
-    var y = 300
+    var x = 100
+    var y = 100
 var ookisa = 500
     val iro = Paint()
 //コメント修正
@@ -19,6 +19,24 @@ var ookisa = 500
     fun draw(canvas: Canvas){
         //なんかできないっぽい
         //canvas.drawBitmap(bitmap, 50.0F+(background.x.toFloat()), 200.0F+(background.y.toFloat()), null)
-        canvas.drawCircle(x.toFloat(),(y).toFloat(),(ookisa).toFloat(),iro) //自機の描画
+        //canvas.drawCircle(x.toFloat(),(y).toFloat(),(ookisa).toFloat(),iro) //自機の描画
+        canvas.drawRect(x.toFloat(),y.toFloat(),(x+200).toFloat(),(y+500).toFloat(),iro)
+
     }
+
+    fun migiIdo(){
+        x += 100
+    }
+
+    fun hidariIdo(){
+        x -= 100
+    }
+    fun ueIdo(){
+        y-= 100
+    }
+    fun shitaIdo(){
+        y+=100
+    }
+
+
 }

@@ -5,7 +5,8 @@ import android.graphics.Color.argb
 import android.graphics.Paint
 
 class Jiki(var x:Int, var y:Int) {
-    val ookisa = 200
+    val ookisa = 100
+
     val iro = Paint()
 
     var isJump = false
@@ -47,6 +48,20 @@ class Jiki(var x:Int, var y:Int) {
             }
         }
 
+    }
+
+    fun migiIdo(){
+        x += 20
+    }
+
+    fun hidariIdo(){
+        x -= 20
+    }
+    fun ueIdo(){
+        y-= 20
+    }
+    fun shitaIdo(){
+        y+=20
     }
 
 
