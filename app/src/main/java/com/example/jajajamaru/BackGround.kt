@@ -7,9 +7,9 @@ import android.graphics.Paint
 import android.graphics.Rect
 
 class BackGround {
-    var x = 300
-    var y = 300
-var ookisa = 500
+    var x = 100
+    var y = 500
+var ookisa = 100
     val iro = Paint()
 //コメント修正
     init{
@@ -21,10 +21,34 @@ var ookisa = 500
         var itemList = mutableListOf<Int>(1,2,3,4,5,6,7)
 
         for (i in itemList) {
+            iro.color = argb((155-(i*20)), 155, 155, 150)
+            canvas.drawRect(shikakuRectKakezanXY(i,0),iro) //自機の描画
         }
-            canvas.drawRect(shikakuRectXY(),iro) //自機の描画
+        for (i in itemList) {
+            iro.color = argb(155, (155-(i*20)), 155, 150)
+            canvas.drawRect(shikakuRectKakezanXY(i,1),iro) //自機の描画
+        }
+
+        for (i in itemList) {
+            iro.color = argb(155, 155, (155-(i*20)), 150)
+            canvas.drawRect(shikakuRectKakezanXY(i,2),iro) //自機の描画
+        }
+        for (i in itemList) {
+            iro.color = argb(155, 155, 155, (155-(i*20)))
+            canvas.drawRect(shikakuRectKakezanXY(i,3),iro) //自機の描画
+        }
+
+
     }
 
+    fun shikakuRectKakezanXY(kakezan:Int,gyoukan:Int): Rect {
+        val left = x+ookisa*kakezan  - ookisa / 2
+        val right = x+ookisa*kakezan  + ookisa / 2
+        val top = y+ookisa*gyoukan  - ookisa / 2
+        val bottom = y+ookisa*gyoukan + ookisa / 2
+        val m = Rect(left, top, right,bottom)
+        return m
+    }
     fun shikakuRectXY(): Rect {
         val left = x  - ookisa / 2
         val right = x  + ookisa / 2
