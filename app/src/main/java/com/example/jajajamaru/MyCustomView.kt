@@ -48,7 +48,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         background.shitaIdo()
     }
 
-
+    fun jumpIdo(){
+//jumpボタンを押すと、一定時間操作を受け付けなくなって、キャラクターだけが浮き上がるような感じにしたい
+    }
 
 
     fun clickPointCheck(){
@@ -86,6 +88,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 }
             }
         }
+        if(clickX > (30+170) && clickX <(30+170+150+150)){
+            if(clickY > 920+170 && clickY < 1070+170) {
+                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
+                    controller.houkou = "jump"
+                }
+            }
+        }
 
 
 
@@ -100,6 +109,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             "hidari" -> {hidariIdo()}
             "ue" -> {ueIdo()}
             "shita" -> {shitaIdo()}
+            "jump" -> {jumpIdo()}
         }
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
@@ -115,6 +125,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         background.draw(canvas)
         jiki.jikiJumpDraw(canvas)
         controller.draw(canvas,clickX,clickY,clickState)
+
+        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusan, BitmapFactory.Options())
+        canvas.drawBitmap(bitmap, jiki.x.toFloat()-50, jiki.y.toFloat()-50, null)
+
+
     }
 
 
