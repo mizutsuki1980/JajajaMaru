@@ -9,7 +9,7 @@ import android.graphics.Rect
 class BackGround {
     var x = 100
     var y = 500
-var ookisa = 100
+    var ookisa = 100
     val iro = Paint()
 //コメント修正
     init{
@@ -18,6 +18,7 @@ var ookisa = 100
 
     }
     fun draw(canvas: Canvas){
+
         var itemList = mutableListOf<Int>(1,2,3,4,5,6,7)
 
         for (i in itemList) {
@@ -57,4 +58,20 @@ var ookisa = 100
         val m = Rect(left, top, right,bottom)
         return m
     }
+
+    fun migiIdo(){
+        x += 100
+    }
+
+    fun hidariIdo(){
+        x -= 100
+    }
+    fun ueIdo(){
+        y-= 100
+    }
+    fun shitaIdo(){
+        y+=100
+    }
+
+
 }

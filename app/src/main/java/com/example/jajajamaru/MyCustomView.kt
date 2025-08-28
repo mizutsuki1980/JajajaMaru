@@ -33,40 +33,25 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun migiIdo(){
         jiki.migiIdo()
-        background.x  += 15
+        background.migiIdo()
     }
     fun hidariIdo(){
         jiki.hidariIdo()
-        background.x  -= 15
+        background.hidariIdo()
     }
     fun ueIdo(){
         jiki.ueIdo()
-        background.y  -= 15
+        background.ueIdo()
     }
     fun shitaIdo(){
         jiki.shitaIdo()
-        background.y  += 15
+        background.shitaIdo()
     }
 
 
 
 
     fun clickPointCheck(){
-    // 押しっぱなししにして、右から左とかボタンが移った場合に、右ボタンのままになってしまう問題
-    //なるほど"ACTION_DOWN"が続いてるときは、クリックｘ、ｙは動いてないのかな
-        // いや、違うか、左を押しっぱなしにしても、上とか下はできる
-        //なんか「引きずる」みたいなのがあるんじゃないかな"ACTION_DOWN"みたいなので。onTouchEventで。
-
-        //        if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
-        //     この部分だけとってみたけどダメだった。
-
-        //if (clickState == "ACTION_UP"){controller.houkou = "nashi"}
-        //アクションアップになったら方向をなしにした。気休め程度
-
-        //上下、左右がとくに機敏に反応しないとアクションゲームではだめだろう。
-        //右おしっぱですぐ左おして右、みたいな。
-
-        //最初にリセット
 
 
         controller.houkou = "nashi"
@@ -122,11 +107,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     override fun onDraw(canvas: Canvas) {
-        //resourcesは移せない、よってこのまま↓↓↓↓
-        //val bitmap = BitmapFactory.decodeResource(resources, R.drawable.tosu, BitmapFactory.Options())
-        //canvas.drawBitmap(bitmap, 100.0F+(background.x.toFloat()), 100.0F+(background.y.toFloat()), null)
-        //え、これって動かせないの？↑↑↑↑　drawBitmapが赤線になってしまう
-
         background.draw(canvas)
         jiki.jikiJumpDraw(canvas)
         controller.draw(canvas,clickX,clickY,clickState)

@@ -51,5 +51,5 @@ class MainActivity : AppCompatActivity() {
 
         handler.postDelayed( { mainTsugiNoSyori() }, 100)
     }
-
+//コメント修正
 }
