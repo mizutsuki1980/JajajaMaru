@@ -24,6 +24,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var controller = Controller()
     var background = BackGround()
 
+    var clickMotionVent1 = ""
+    var clickMotionVent2 = ""
+    var clickMotionVent3 = ""
 
 
     fun beginAnimation() {
@@ -97,6 +100,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     //落下、というステイツができるのか？
 
     fun tsugiNoSyori() {
+
         clickPointCheck()
         if(jiki.isJump){
         //jump状態　右と左だけは行ける
@@ -156,6 +160,25 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        when (event.actionMasked) {
+            MotionEvent.ACTION_DOWN,
+            MotionEvent.ACTION_POINTER_DOWN,
+            MotionEvent.ACTION_MOVE -> {
+                // 画面に触れている指の数
+                val pointerCount = event.pointerCount
+                clickMotionVent1 = pointerCount.toString()
+                if (pointerCount >= 2) {
+                    // 2本目の指のインデックスは 1
+                    val x2 = event.getX(1)
+                    val y2 = event.getY(1)
+                    clickMotionVent2 =  x2.toString()
+                    clickMotionVent3 =  y2.toString()
+
+//                    Log.d("Touch", "2本目の指: x=$x2, y=$y2")
+                }
+            }
+        }
+
         if (event.action == MotionEvent.ACTION_DOWN) {
             clickState = "ACTION_DOWN"
             clickX = event.x.toInt()

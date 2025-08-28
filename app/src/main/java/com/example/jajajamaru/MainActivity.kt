@@ -48,6 +48,9 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.textLabelX).text=custom.clickX.toString()
         findViewById<TextView>(R.id.textLabelY).text=custom.clickY.toString()
         findViewById<TextView>(R.id.clickJohoLabel).text=custom.clickState.toString()
+        findViewById<TextView>(R.id.motionEventLabel1).text=custom.clickMotionVent1.toString()
+        findViewById<TextView>(R.id.motionEventLabel2).text=custom.clickMotionVent2.toString()
+        findViewById<TextView>(R.id.motionEventLabel3).text=custom.clickMotionVent3.toString()
 
         handler.postDelayed( { mainTsugiNoSyori() }, 100)
     }
