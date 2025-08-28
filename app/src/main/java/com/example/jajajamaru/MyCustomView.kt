@@ -145,19 +145,27 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         invalidate()
         handler.postDelayed({ tsugiNoSyori() }, 100)
     }
-
+    val map = Map()
     override fun onDraw(canvas: Canvas) {
         val bgPaint = Paint()
         bgPaint.color = Color.argb(255, 0, 0, 255)   // 背景色
         bgPaint.style = Paint.Style.FILL
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bgPaint)
         background.draw(canvas)
+        mapCreate(canvas)
         jiki.draw(canvas)
         controller.draw(canvas,clickX,clickY,clickState)
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusan, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, jiki.x.toFloat()-50, jiki.y.toFloat()-50-jiki.jumpTakasa, null)
     }
 
+    fun mapCreate(canvas:Canvas){
+        for (row in map.listrow) {
+            for (col in map.listcol) {
+                map.drawMap(canvas,row,col,map.masShurui(row,col))
+            }
+        }
+    }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.actionMasked) {
