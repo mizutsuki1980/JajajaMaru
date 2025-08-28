@@ -93,6 +93,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             }
         }
     }
+    //段々をつけてみる
+    //落下、というステイツができるのか？
 
     fun tsugiNoSyori() {
         clickPointCheck()
