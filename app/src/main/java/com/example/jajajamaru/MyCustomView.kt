@@ -28,6 +28,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickMotionVent2 = ""
     var clickMotionVent3 = ""
 
+    var worldOffsetX = 0
+    var worldOffsetY = 0
 
     fun beginAnimation() {
         tsugiNoSyori()  //最初に一回だけ呼ばれる
@@ -37,10 +39,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun migiIdo(){
         jiki.migiIdo()
         background.migiIdo()
+        worldOffsetX -= map.MASU_SIZE
     }
     fun hidariIdo(){
         jiki.hidariIdo()
         background.hidariIdo()
+        worldOffsetX += map.MASU_SIZE
     }
     fun ueIdo(){
         jiki.ueIdo()
@@ -162,7 +166,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun mapCreate(canvas:Canvas){
         for (row in map.listrow) {
             for (col in map.listcol) {
-                map.drawMap(canvas,row,col,map.masShurui(row,col))
+                map.drawMap(canvas,row,col,map.masShurui(row,col),worldOffsetX)
             }
         }
     }

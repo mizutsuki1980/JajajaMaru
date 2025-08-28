@@ -51,11 +51,15 @@ class Jiki(var x:Int, var y:Int) {
     }
 
     fun migiIdo(){
-        x += 50
+    //    x += 32
+        x += 0
     }
 
+
+
     fun hidariIdo(){
-        x -= 50
+        //x -= 32
+        x -= 0
     }
     fun ueIdo(){
         y-= 0
