@@ -143,8 +143,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             "jump" -> {jumpIdo()}
             }
         }
-
-
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
         handler.postDelayed({ tsugiNoSyori() }, 100)
@@ -164,9 +162,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun mapCreate(canvas:Canvas){
-        for (row in map.listrow) {
-            for (col in map.listcol) {
-                map.drawMap(canvas,row,col,map.masShurui(row,col),worldOffsetX)
+        for (i in 0 until map.masu.size) {
+            // 内側のリスト（列数）
+            for (j in 0 until map.masu[i].size) {
+                map.drawMap(canvas,i,j,map.masShurui(i,j),worldOffsetX)
             }
         }
     }
