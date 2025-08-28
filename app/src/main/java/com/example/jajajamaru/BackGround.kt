@@ -2,6 +2,7 @@ package com.example.jajajamaru
 
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Color.argb
 import android.graphics.Paint
 import android.graphics.Rect
@@ -18,6 +19,7 @@ class BackGround {
 
     }
     fun draw(canvas: Canvas){
+//        canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bgPaint)
 
         var itemList = mutableListOf<Int>(1,2,3,4,5,6,7)
 

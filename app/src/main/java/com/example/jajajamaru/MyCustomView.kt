@@ -107,6 +107,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     override fun onDraw(canvas: Canvas) {
+        val bgPaint = Paint()
+        bgPaint.color = Color.argb(255, 0, 0, 255)   // 背景色
+        bgPaint.style = Paint.Style.FILL
+        canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bgPaint)
+
         background.draw(canvas)
         jiki.jikiJumpDraw(canvas)
         controller.draw(canvas,clickX,clickY,clickState)
