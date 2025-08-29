@@ -10,6 +10,7 @@ import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import kotlin.coroutines.Continuation
 
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     var frame = 0
@@ -164,7 +165,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun tsugiNoSyori() {
-        clickPointCheck()
+//        clickPointCheck()
+        controller.clickPointCheck(clickX,clickY,clickState)
         if(lowcalCheck()) {  ido() }
         frame += 1  //繰り返し処理はここでやってる
         invalidate()

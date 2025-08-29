@@ -78,6 +78,33 @@ class Controller {
     val buttonJumpRect = buttonRect(buttonJumpX.toInt() ,buttonJumpY.toInt(),buttonJumpOokisa,2)
 
 
+    fun clickPointCheck(clickX:Int,clickY:Int,clickState:String){
+        houkou = "nashi"
+        if (clickState == "ACTION_UP"){houkou = "nashi"}
+        if(clickX > 50 && clickX <150){
+            if(clickY > 920 && clickY <1070) {
+                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
+                    houkou = "hidari"
+                }
+            }
+        }
+        if(clickX > (30+170+170+170) && clickX <(30+170+170+170+150)){
+            if(clickY > 920 && clickY < 1070) {
+                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
+                    houkou = "migi"
+                }
+            }
+        }
+        if(clickX > (30+170) && clickX <(30+170+170+150)){
+            if(clickY > 920+170 && clickY < 1070+170) {
+                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
+                    houkou = "jump"
+                }
+            }
+        }
+    }
+
+
     fun pushButtonCheck() {
         if(houkou == "hidari"){ hidariButtonIro.color = argb(100, 100, 100, 200) }
         if(houkou == "migi"){migiButtonIro.color = argb(100, 100, 100, 200) }
