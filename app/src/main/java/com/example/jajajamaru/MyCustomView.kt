@@ -20,7 +20,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickX = initialJikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
 
-    var jiki =Jiki(initialJikiX, initialJikiY)
+    var jiki = Jiki(initialJikiX, initialJikiY)
     var controller = Controller()
     var background = BackGround()
 
@@ -31,9 +31,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var worldOffsetX = 0
     var worldOffsetY = 0
 
+    val map = Map()
+
     //見えないけど、これをもとに障害物にあたってるか判定するキャラクターのｘ、ｙ
-    var worldOffsetCharacterX =32 * 7
-    var worldOffsetCharacterY =0
+    var worldOffsetCharacterX = map.MASU_SIZE * 7
+    var worldOffsetCharacterY = 0
 
     fun beginAnimation() {
         tsugiNoSyori()  //最初に一回だけ呼ばれる
@@ -42,7 +44,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     //たぶん、ここに障害物の行き止まりを書く
     //worldOffsetCharaXとｙで、Ｍａｐを元につくる
 
-     //キャラと世界のoffsettは得られた
+    //キャラと世界のoffsettは得られた
     //じゃぁどうする？のか　衝突判定？
 
     //Mapのrow、cal調べて、岩のポジションだったらｘをプラスできない、とか？
@@ -50,7 +52,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     //自分のキャラはどのマスにいるのか？って考えたらいいのかな？
     //ｘ、ｙだけじゃなくて。
 
-    fun migiIdo(){
+    fun migiIdo() {
         if (worldOffsetX >= (map.MASU_SIZE * 28)) { //右にこれ以上はいけないという制限を付けた　世界の行き止まり
         } else {
             jiki.migiIdo()
@@ -59,6 +61,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             worldOffsetCharacterX += map.MASU_SIZE
         }
     }
+
     fun hidariIdo() {
         if (worldOffsetX <= -(map.MASU_SIZE * 7)) { //左にこれ以上はいけないという制限を付けた　世界の行き止まり
         } else {
@@ -69,19 +72,72 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
     }
 
-    fun ueIdo(){
+    fun ueIdo() {
         jiki.ueIdo()
         background.ueIdo()
     }
-    fun shitaIdo(){
+
+    fun shitaIdo() {
         jiki.shitaIdo()
         background.shitaIdo()
     }
 
-    fun jumpIdo(){
-        jiki.isJump=true
-        //jumpボタンを押すと、一定時間操作を受け付けなくなって、キャラクターだけが浮き上がるような感じにしたい
+    fun jumpIdo() {
+        jiki.isJump = true
     }
+
+    fun ido(){
+        if(jiki.isJump){        //jump状態　右と左だけは行ける
+            when (controller.houkou) {
+                "migi" -> { migiIdo() }
+                "hidari" -> { hidariIdo() }
+            }
+            jiki.jumpChuSyori()
+        }else{
+            when (controller.houkou) {
+                "migi" -> {migiIdo()}
+                "hidari" -> {hidariIdo()}
+                "ue" -> {ueIdo()}
+                "shita" -> {shitaIdo()}
+                "jump" -> {jumpIdo()}
+            }
+        }
+
+    }
+
+    fun lowcalCheck():Boolean {
+        //とりあえずｘマスだけ
+        //ｙはとりあえず１３固定
+
+        val charamasu = worldOffsetCharacterX / map.MASU_SIZE
+
+        when (controller.houkou) {
+            "migi" -> {
+                return true
+            }
+            //右なら１個よこのcalが１なら移動不可にする、とか？
+
+            "hidari" -> {
+                if (map.masu[13][charamasu - 1] == 1) {
+                    return false
+                } else {
+                    return true
+                }
+            }
+            else -> { return true}
+        }
+    }
+
+    fun tsugiNoSyori() {
+        clickPointCheck()
+        if(lowcalCheck()) {
+            ido()
+        }
+        frame += 1  //繰り返し処理はここでやってる
+        invalidate()
+        handler.postDelayed({ tsugiNoSyori() }, 100)
+    }
+
 
 
     fun clickPointCheck(){
@@ -123,33 +179,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             }
         }
     }
-    //段々をつけてみる
-    //落下、というステイツができるのか？
-
-    fun tsugiNoSyori() {
-        clickPointCheck()
-        if(jiki.isJump){        //jump状態　右と左だけは行ける
-            when (controller.houkou) {
-                "migi" -> { migiIdo() }
-                "hidari" -> { hidariIdo() }
-            }
-            jiki.jumpChuSyori()
-        }else{
-        when (controller.houkou) {
-            "migi" -> {migiIdo()}
-            "hidari" -> {hidariIdo()}
-            "ue" -> {ueIdo()}
-            "shita" -> {shitaIdo()}
-            "jump" -> {jumpIdo()}
-            }
-        }
-        frame += 1  //繰り返し処理はここでやってる
-        invalidate()
-        handler.postDelayed({ tsugiNoSyori() }, 100)
-    }
 
 
-    val map = Map()
+
+
     override fun onDraw(canvas: Canvas) {
         val bgPaint = Paint()
         bgPaint.color = Color.argb(255, 0, 0, 255)   // 背景色
