@@ -13,6 +13,8 @@ class Jiki(var x:Int, var y:Int) {
     var jumpFrame = 10
     var jumpTakasa = 0
 
+    var jumpRyoku = 5   //ジャンプの掛け算する大きさ
+
     val NORMAL_STATE = 1
     val JUMP_UP_STATE = 2
     val JUMP_TOP_STATE = 3
@@ -23,6 +25,53 @@ class Jiki(var x:Int, var y:Int) {
     init{
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
+    }
+
+    fun jumpChuSyori() {
+        jumpFrame--
+        when (jumpFrame) {
+            9 -> {
+                jumpTakasa = 10 * jumpRyoku
+            }
+
+            8 -> {
+                jumpTakasa = 20 * jumpRyoku
+            }
+
+            7 -> {
+                jumpTakasa = 30 * jumpRyoku
+            }
+
+            6 -> {
+                jumpTakasa = 40 * jumpRyoku
+            }
+
+            5 -> {
+                jumpTakasa = 50 * jumpRyoku
+            }
+
+            4 -> {
+                jumpTakasa = 40 * jumpRyoku
+            }
+
+            3 -> {
+                jumpTakasa = 30 * jumpRyoku
+            }
+
+            2 -> {
+                jumpTakasa = 20 * jumpRyoku
+            }
+
+            1 -> {
+                jumpTakasa = 10 * jumpRyoku
+            }
+
+        }
+        if (jumpFrame == 0) {
+            isJump = false
+            jumpFrame = 10
+            jumpTakasa = 0
+        }
     }
 
     fun jumpSyori(){
