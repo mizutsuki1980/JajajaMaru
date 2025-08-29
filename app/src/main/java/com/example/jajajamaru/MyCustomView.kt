@@ -63,7 +63,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun hidariIdo() {
-        if (worldOffsetX <= -(map.MASU_SIZE * 7)) { //左にこれ以上はいけないという制限を付けた　世界の行き止まり
+        if (worldOffsetX <= -(map.MASU_SIZE * 6)) { //左にこれ以上はいけないという制限を付けた　世界の行き止まり
         } else {
             jiki.hidariIdo()
             background.hidariIdo()
@@ -112,10 +112,17 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val charamasu = worldOffsetCharacterX / map.MASU_SIZE
 
         when (controller.houkou) {
+            //右は+３　で　左は-１　でちょうどいいのはなんで？
+            //だいたい４マスくらいあるってことかな。
             "migi" -> {
-                return true
+                if (map.masu[13][charamasu + 3] == 1) {
+                    return false
+                } else {
+                    return true
+                }
             }
             //右なら１個よこのcalが１なら移動不可にする、とか？
+            //リストにない[-1]とか取り出そうとすると、強制終了をくらう。
 
             "hidari" -> {
                 if (map.masu[13][charamasu - 1] == 1) {
@@ -130,9 +137,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun tsugiNoSyori() {
         clickPointCheck()
-        if(lowcalCheck()) {
-            ido()
-        }
+        if(lowcalCheck()) {  ido() }
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
         handler.postDelayed({ tsugiNoSyori() }, 100)
