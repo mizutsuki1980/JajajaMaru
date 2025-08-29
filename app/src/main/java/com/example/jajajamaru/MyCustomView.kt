@@ -53,7 +53,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     //ｘ、ｙだけじゃなくて。
 
     fun migiIdo() {
-        if (worldOffsetX >= (map.MASU_SIZE * 28)) { //右にこれ以上はいけないという制限を付けた　世界の行き止まり
+        if (worldOffsetX >= (map.MASU_SIZE * 27)) { //右にこれ以上はいけないという制限を付けた　世界の行き止まり
         } else {
             jiki.migiIdo()
             background.migiIdo()
@@ -115,16 +115,19 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             //右は+３　で　左は-１　でちょうどいいのはなんで？
             //だいたい４マスくらいあるってことかな。
             "migi" -> {
+                if(jiki.isJump){return true}
                 if (map.masu[13][charamasu + 3] == 1) {
                     return false
                 } else {
                     return true
                 }
+
             }
             //右なら１個よこのcalが１なら移動不可にする、とか？
             //リストにない[-1]とか取り出そうとすると、強制終了をくらう。
 
             "hidari" -> {
+                if(jiki.isJump){return true}
                 if (map.masu[13][charamasu - 1] == 1) {
                     return false
                 } else {
