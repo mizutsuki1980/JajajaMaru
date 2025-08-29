@@ -42,6 +42,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     //たぶん、ここに障害物の行き止まりを書く
     //worldOffsetCharaXとｙで、Ｍａｐを元につくる
 
+     //キャラと世界のoffsettは得られた
+    //じゃぁどうする？のか　衝突判定？
+
+    //Mapのrow、cal調べて、岩のポジションだったらｘをプラスできない、とか？
+    //マスって考え方が重要なのかな。ROWCALも結局マス目だし。ｘ、ｙとかってより
+    //自分のキャラはどのマスにいるのか？って考えたらいいのかな？
+    //ｘ、ｙだけじゃなくて。
+
     fun migiIdo(){
         if (worldOffsetX >= (map.MASU_SIZE * 28)) { //右にこれ以上はいけないという制限を付けた　世界の行き止まり
         } else {
