@@ -31,13 +31,19 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var worldOffsetX = 0
     var worldOffsetY = 0
 
+    //見えないけど、これをもとに障害物にあたってるか判定するキャラクターのｘ、ｙ
+    var worldOffsetCharacterX =32 * 7
+    var worldOffsetCharacterY =0
+
     fun beginAnimation() {
         tsugiNoSyori()  //最初に一回だけ呼ばれる
     }
 
+    //たぶん、ここに障害物の行き止まりを書く
+    //worldOffsetCharaXとｙで、Ｍａｐを元につくる
 
     fun migiIdo(){
-        if (worldOffsetX >= (map.MASU_SIZE * 28)) { //右にこれ以上はいけないという制限を付けた
+        if (worldOffsetX >= (map.MASU_SIZE * 28)) { //右にこれ以上はいけないという制限を付けた　世界の行き止まり
         } else {
             jiki.migiIdo()
             background.migiIdo()
@@ -45,7 +51,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
     }
     fun hidariIdo() {
-        if (worldOffsetX <= -(map.MASU_SIZE * 7)) { //左にこれ以上はいけないという制限を付けた
+        if (worldOffsetX <= -(map.MASU_SIZE * 7)) { //左にこれ以上はいけないという制限を付けた　世界の行き止まり
         } else {
             jiki.hidariIdo()
             background.hidariIdo()
