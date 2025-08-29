@@ -15,35 +15,24 @@ import androidx.navigation.ui.AppBarConfiguration
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-
-
     val handler = Handler()
     lateinit var custom : MyCustomView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-
         val display: Display = this.windowManager.defaultDisplay
         val point = Point()
         display.getSize(point)
         custom = findViewById<MyCustomView>(R.id.mycustom)
         custom.post { custom.beginAnimation() }
-
-
-
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         mainTsugiNoSyori()
     }
-
-
     fun mainTsugiNoSyori() {
         findViewById<TextView>(R.id.textLabelX).text=custom.clickX.toString()
         findViewById<TextView>(R.id.textLabelY).text=custom.clickY.toString()
@@ -53,8 +42,6 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.motionEventLabel3).text=custom.clickMotionVent3.toString()
         findViewById<TextView>(R.id.wcxlabel).text=custom.worldOffsetCharacterX.toString()
         findViewById<TextView>(R.id.wcyLabel).text=custom.worldOffsetCharacterY.toString()
-
         handler.postDelayed( { mainTsugiNoSyori() }, 100)
     }
-//コメント修正
 }

@@ -48,6 +48,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             jiki.migiIdo()
             background.migiIdo()
             worldOffsetX += map.MASU_SIZE
+            worldOffsetCharacterX += map.MASU_SIZE
         }
     }
     fun hidariIdo() {
@@ -56,6 +57,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             jiki.hidariIdo()
             background.hidariIdo()
             worldOffsetX -= map.MASU_SIZE
+            worldOffsetCharacterX -= map.MASU_SIZE
         }
     }
 
