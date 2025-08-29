@@ -39,13 +39,22 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun migiIdo(){
         jiki.migiIdo()
         background.migiIdo()
-        worldOffsetX -= map.MASU_SIZE
-    }
-    fun hidariIdo(){
-        jiki.hidariIdo()
-        background.hidariIdo()
         worldOffsetX += map.MASU_SIZE
     }
+    fun hidariIdo() {
+        //worldOffsetXは最初は０
+        //左へ行くたびに増えている
+        //おかしくね？
+        //左へいったら減らないと
+
+        if (worldOffsetX <= -(map.MASU_SIZE * 6)) {
+        } else {
+            jiki.hidariIdo()
+            background.hidariIdo()
+            worldOffsetX -= map.MASU_SIZE
+        }
+    }
+
     fun ueIdo(){
         jiki.ueIdo()
         background.ueIdo()
@@ -124,6 +133,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         invalidate()
         handler.postDelayed({ tsugiNoSyori() }, 100)
     }
+
+
     val map = Map()
     override fun onDraw(canvas: Canvas) {
         val bgPaint = Paint()
@@ -142,7 +153,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         for (i in 0 until map.masu.size) {
             // 内側のリスト（列数）
             for (j in 0 until map.masu[i].size) {
-                map.drawMap(canvas,i,j,map.masShurui(i,j),worldOffsetX)
+                map.drawMap(canvas,i,j,map.masShurui(i,j),-worldOffsetX)
             }
         }
     }
