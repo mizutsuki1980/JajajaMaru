@@ -72,15 +72,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
     }
 
-    fun ueIdo() {
-        jiki.ueIdo()
-        background.ueIdo()
-    }
-
-    fun shitaIdo() {
-        jiki.shitaIdo()
-        background.shitaIdo()
-    }
 
     fun jumpIdo() {
         jiki.isJump = true
@@ -97,8 +88,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             when (controller.houkou) {
                 "migi" -> {migiIdo()}
                 "hidari" -> {hidariIdo()}
-                "ue" -> {ueIdo()}
-                "shita" -> {shitaIdo()}
                 "jump" -> {jumpIdo()}
             }
         }
@@ -191,20 +180,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             if(clickY > 920 && clickY <1070) {
                 if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
                     controller.houkou = "hidari"
-                }
-            }
-        }
-        if(clickX > (30+170) && clickX <(30+170+150)){
-            if(clickY > 920 && clickY < 1070) {
-                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
-                    controller.houkou = "ue"
-                }
-            }
-        }
-        if(clickX > (30+170+170) && clickX <(30+170+170+150)){
-            if(clickY > 920 && clickY < 1070) {
-                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
-                    controller.houkou = "shita"
                 }
             }
         }
