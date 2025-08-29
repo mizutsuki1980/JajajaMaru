@@ -10,9 +10,9 @@ import android.graphics.Rect
 class Map {
     val TYPE_ISHI = 1
     val TYPE_SORA = 0
+
     val MASU_SIZE = 32
-    val listrow = listOf<Int>(-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30)
-    val listcol = listOf<Int>(-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30)
+
 
     val masu: List<List<Int>> = listOf(
         listOf(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,),
@@ -63,8 +63,8 @@ class Map {
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 30, 30, 30)
         when (masushurui) {
-            1 -> { iro.color = argb(255, 30, 30, 30)}
-            0 -> { iro.color = argb(255, 155, 155, 250) }
+            TYPE_SORA -> { iro.color = argb(255, 155, 155, 250) }
+            TYPE_ISHI -> { iro.color = argb(255, 30, 30, 30)}
          }
         canvas.drawRect(shikakuRectXY(100+MASU_SIZE*col+worldOffsetX,100+MASU_SIZE*row,MASU_SIZE),iro) //自機の描画
     }

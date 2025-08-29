@@ -104,7 +104,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     //落下、というステイツができるのか？
 
     fun tsugiNoSyori() {
-
         clickPointCheck()
         if(jiki.isJump){
         //jump状態　右と左だけは行ける
