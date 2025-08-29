@@ -114,34 +114,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val charamasu = worldOffsetCharacterX / map.MASU_SIZE   //キャラの世界位置
 
         when (controller.houkou) {
-            //だいたい４マスくらいあるってことかな。
             "migi" -> {
-                //↓この書き方だとジャンプが止まることはない。
                 if(jiki.isJump){return true}
-
-                //右おしっぱにすると、障害物の前で、ジャンプ自体が止まってしまう問題、
-                //これ、コントローラーの問題？
-
-                //↓この書き方をすると、カクカクとジャンプが止まってしまう。ジャンプが止まるのは変じゃね？
-                /*if(jiki.isJump) {
-                    if (jiki.jumpFrame >= 3 && jiki.jumpFrame <= 7) {
-                        return true
-                    } else {
-                        return false
-                    }
-                }
-                */
-                //jumpFrameのは10,9,8,7,6,5,4,3,2,1,0と減っていくので、
-                // jumpFrameの６～３とかって指定すれば、頂点付近はとれる
-                //けど、「高さ」ってなってくるとなー
-
-                //jumpFrameの３～０までって指定すれば
-                //岩のあるところから強制的に１マス動かせるんじゃないかな。
-
-                //あーここにかくんじゃだめなんだ。
-                //落下中は右を押してないかもしれないし。
-                //落下してる最中は、最後に「右」か「左」を覚えておいて
-                //めり込んだ時に、どちらかの方向へ強制移動する、みたいな、。
 
                 if (map.masu[13][charamasu + 3] == 1) {
                     return false
@@ -200,12 +174,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickNitenmeMotionTyp = ""
     var  pointerCount = 0
 
+    
+    //なんか移動しながらのジャンプは、ちょっと高さが低い気がする。途中で終わってる？
+
     fun clickNitenCheck(){
         //pointerCountは何点押されているか 2点だったら
         if(pointerCount == 2){
             controller.clickPointCheck(clickNitenmeX,clickNitenmeY,clickNitenmeMotionTyp)
             if(lowcalCheck()) {  ido() }
-
         }
     }
     //オンタッチイベントでは、すでに２種類のポイントをとることに成功している。
