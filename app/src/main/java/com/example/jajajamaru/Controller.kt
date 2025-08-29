@@ -76,21 +76,23 @@ class Controller {
     val buttonHidariRect = buttonRect(buttonHidariX.toInt() ,buttonHidariY.toInt(),buttonHidariOokisa,1)
     val buttonMigiRect = buttonRect(buttonMigiX.toInt() ,buttonMigiY.toInt(),buttonMigiOokisa,1)
     val buttonJumpRect = buttonRect(buttonJumpX.toInt() ,buttonJumpY.toInt(),buttonJumpOokisa,2)
-    fun draw(canvas: Canvas,clickX:Int,clbuttonJumpXickY:Int,clickState:String){
-        buttonSyokika()
+
+
+    fun pushButtonCheck() {
         if(houkou == "hidari"){ hidariButtonIro.color = argb(100, 100, 100, 200) }
         if(houkou == "migi"){migiButtonIro.color = argb(100, 100, 100, 200) }
         if(houkou == "jump"){jumpButtonIro.color = argb(100, 100, 100, 200) }
+    }
 
-        //ボタンの追加・修正方法、まず範囲を決める。ClickPointCheckでどこを触ったかを調べる。範囲内なら色を変える（押したことにする）
+    fun draw(canvas: Canvas){
+        buttonSyokika()
+        pushButtonCheck()
         canvas.drawRect( buttonHidariRect, hidariButtonIro)   //
-        canvas.drawText("←",(50).toFloat(),(1035).toFloat(),hyoujiIro)
-
+        canvas.drawText("←",(buttonHidariX+20).toFloat(),(buttonHidariY+115).toFloat(),hyoujiIro)
         canvas.drawRect( buttonMigiRect, migiButtonIro)   //
-        canvas.drawText("→",(570).toFloat(),(1035).toFloat(),hyoujiIro)
-        //jumpボタン
+        canvas.drawText("→",(buttonMigiX+20).toFloat(),(buttonMigiY+115).toFloat(),hyoujiIro)
         canvas.drawRect( buttonJumpRect, jumpButtonIro)   //
-        canvas.drawText("Jump!",(50+170).toFloat(),(1035+170).toFloat(),hyoujiIro)
+        canvas.drawText("Jump!",(buttonJumpX+20).toFloat(),(buttonJumpY+115).toFloat(),hyoujiIro)
     }
 
 
