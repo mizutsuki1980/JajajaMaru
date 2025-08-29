@@ -165,43 +165,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun tsugiNoSyori() {
-//        clickPointCheck()
         controller.clickPointCheck(clickX,clickY,clickState)
         if(lowcalCheck()) {  ido() }
+        clickNitenCheck()        //2点目のチェック
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
         handler.postDelayed({ tsugiNoSyori() }, 100)
     }
-
-
-
-    fun clickPointCheck(){
-        controller.houkou = "nashi"
-        if (clickState == "ACTION_UP"){controller.houkou = "nashi"}
-        if(clickX > 50 && clickX <150){
-            if(clickY > 920 && clickY <1070) {
-                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
-                    controller.houkou = "hidari"
-                }
-            }
-        }
-        if(clickX > (30+170+170+170) && clickX <(30+170+170+170+150)){
-            if(clickY > 920 && clickY < 1070) {
-                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
-                    controller.houkou = "migi"
-                }
-            }
-        }
-        if(clickX > (30+170) && clickX <(30+170+170+150)){
-            if(clickY > 920+170 && clickY < 1070+170) {
-                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
-                    controller.houkou = "jump"
-                }
-            }
-        }
-    }
-
-
 
 
     override fun onDraw(canvas: Canvas) {
@@ -225,32 +195,46 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
     }
 
+    var clickNitenmeX = 0
+    var clickNitenmeY = 0
+    var clickNitenmeMotionTyp = ""
+    var  pointerCount = 0
 
-    //まず、コントローラーの部分をちゃんと見直す必要があるのかもしれない。
-    //もっとリファクタリングする、というか。
+    fun clickNitenCheck(){
+        //pointerCountは何点押されているか 2点だったら
+        if(pointerCount == 2){
+            controller.clickPointCheck(clickNitenmeX,clickNitenmeY,clickNitenmeMotionTyp)
+            if(lowcalCheck()) {  ido() }
 
-    //ジャンプ押しながら右
-    //ジャンプ押しながら左
-    //右押しながらジャンプ
-    //左押しながらジャンプ
-    //    の四パターンある
-
+        }
+    }
+    //オンタッチイベントでは、すでに２種類のポイントをとることに成功している。
+    //右＆Jump　と　左＆jumpだけは許可するような作りにしたい。
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN,
             MotionEvent.ACTION_POINTER_DOWN,
+            MotionEvent.ACTION_POINTER_UP,
             MotionEvent.ACTION_MOVE -> {
                 // 画面に触れている指の数
-                val pointerCount = event.pointerCount
+                pointerCount = event.pointerCount
                 clickMotionVent1 = pointerCount.toString()
+
+                if (event.actionMasked == MotionEvent.ACTION_DOWN) { clickNitenmeMotionTyp = "ACTION_DOWN" }
+                if (event.actionMasked == MotionEvent.ACTION_POINTER_DOWN) { clickNitenmeMotionTyp = "ACTION_DOWN" }
+                if (event.actionMasked == MotionEvent.ACTION_POINTER_UP) {clickNitenmeMotionTyp = "ACTION_UP" }
+                if (event.actionMasked == MotionEvent.ACTION_MOVE) {clickNitenmeMotionTyp = "ACTION_MOVE" }
+
+
+
                 if (pointerCount >= 2) {
                     // 2本目の指のインデックスは 1
                     val x2 = event.getX(1)
                     val y2 = event.getY(1)
                     clickMotionVent2 =  x2.toString()
                     clickMotionVent3 =  y2.toString()
-
-//                    Log.d("Touch", "2本目の指: x=$x2, y=$y2")
+                    clickNitenmeX =  x2.toInt()
+                    clickNitenmeY =  y2.toInt()
                 }
             }
         }
