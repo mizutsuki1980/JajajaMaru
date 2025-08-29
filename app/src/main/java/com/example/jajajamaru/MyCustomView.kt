@@ -105,17 +105,41 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     }
 
+    //一応この形で作っておいた方がいいんだろうか？
+    //いや、総当たりじゃできないか、これは。１３列目の８行が１かどうか？は
+    //最初からマス目がわかってるから、指定できちゃうでしょ。
+    //うーん、こういう風にする意味はわからんな。現時点では。
+/*    fun mapSyruiCheck(canvas:Canvas){
+        for (i in 0 until map.masu.size) {
+            for (j in 0 until map.masu[i].size) {
+                map.drawMap(canvas,i,j,map.masShurui(i,j),-worldOffsetX)
+            }
+        }
+    }
+*/
     fun lowcalCheck():Boolean {
         //とりあえずｘマスだけ
         //ｙはとりあえず１３固定
 
-        val charamasu = worldOffsetCharacterX / map.MASU_SIZE
+        val charamasu = worldOffsetCharacterX / map.MASU_SIZE   //キャラの世界位置
 
         when (controller.houkou) {
-            //右は+３　で　左は-１　でちょうどいいのはなんで？
             //だいたい４マスくらいあるってことかな。
             "migi" -> {
-                if(jiki.isJump){return true}
+//                if(jiki.isJump){return true}
+                if(jiki.jumpFrame>=3 && jiki.jumpFrame<=7){return true}
+                //jumpFrameのは10,9,8,7,6,5,4,3,2,1,0と減っていくので、
+                // jumpFrameの６～３とかって指定すれば、頂点付近はとれる
+                //けど、「高さ」ってなってくるとなー
+
+                //jumpFrameの３～０までって指定すれば
+                //岩のあるところから強制的に１マス動かせるんじゃないかな。
+
+                //あーここにかくんじゃだめなんだ。
+                //落下中は右を押してないかもしれないし。
+                //落下してる最中は、最後に「右」か「左」を覚えておいて
+                //めり込んだ時に、どちらかの方向へ強制移動する、みたいな、。
+
                 if (map.masu[13][charamasu + 3] == 1) {
                     return false
                 } else {
@@ -123,9 +147,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 }
 
             }
-            //右なら１個よこのcalが１なら移動不可にする、とか？
-            //リストにない[-1]とか取り出そうとすると、強制終了をくらう。
 
+            //リストにない[-1]とか取り出そうとすると、強制終了をくらう。
             "hidari" -> {
                 if(jiki.isJump){return true}
                 if (map.masu[13][charamasu - 1] == 1) {
@@ -206,7 +229,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun mapCreate(canvas:Canvas){
         for (i in 0 until map.masu.size) {
-            // 内側のリスト（列数）
             for (j in 0 until map.masu[i].size) {
                 map.drawMap(canvas,i,j,map.masShurui(i,j),-worldOffsetX)
             }
