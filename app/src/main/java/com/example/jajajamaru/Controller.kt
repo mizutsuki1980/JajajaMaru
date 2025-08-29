@@ -80,10 +80,10 @@ class Controller {
         if(houkou == "jump"){jumpButtonIro.color = argb(100, 100, 100, 200) }
 
         //ボタンの追加・修正方法、まず範囲を決める。ClickPointCheckでどこを触ったかを調べる。範囲内なら色を変える（押したことにする）
-        canvas.drawRect(shikakuRectButton(buttonHidariX.toInt() ,buttonHidariY.toInt(),buttonHidariOokisa), hidariButtonIro)   //
+        canvas.drawRect(shikakuRectButtonYokonaga(buttonHidariX.toInt() ,buttonHidariY.toInt(),buttonHidariOokisa,1), hidariButtonIro)   //
         canvas.drawText("←",(50).toFloat(),(1035).toFloat(),hyoujiIro)
 
-        canvas.drawRect(shikakuRectButton(buttonMigiX.toInt() ,buttonMigiY.toInt(),buttonMigiOokisa), migiButtonIro)   //
+        canvas.drawRect(shikakuRectButtonYokonaga(buttonMigiX.toInt() ,buttonMigiY.toInt(),buttonMigiOokisa,1), migiButtonIro)   //
         canvas.drawText("→",(570).toFloat(),(1035).toFloat(),hyoujiIro)
         //jumpボタン
         canvas.drawRect(shikakuRectButtonYokonaga(buttonJumpX.toInt() ,buttonJumpY.toInt(),buttonJumpOokisa,2), jumpButtonIro)   //
