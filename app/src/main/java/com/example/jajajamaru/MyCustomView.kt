@@ -126,12 +126,21 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         when (controller.houkou) {
             //だいたい４マスくらいあるってことかな。
             "migi" -> {
-//                if(jiki.isJump){return true}
+                //↓この書き方だとジャンプが止まることはない。
+                if(jiki.isJump){return true}
 
                 //右おしっぱにすると、障害物の前で、ジャンプ自体が止まってしまう問題、
                 //これ、コントローラーの問題？
 
-                if(jiki.jumpFrame>=3 && jiki.jumpFrame<=7){return true}
+                //↓この書き方をすると、カクカクとジャンプが止まってしまう。ジャンプが止まるのは変じゃね？
+                /*if(jiki.isJump) {
+                    if (jiki.jumpFrame >= 3 && jiki.jumpFrame <= 7) {
+                        return true
+                    } else {
+                        return false
+                    }
+                }
+                */
                 //jumpFrameのは10,9,8,7,6,5,4,3,2,1,0と減っていくので、
                 // jumpFrameの６～３とかって指定すれば、頂点付近はとれる
                 //けど、「高さ」ってなってくるとなー
@@ -206,7 +215,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 }
             }
         }
-        if(clickX > (30+170) && clickX <(30+170+150+150)){
+        if(clickX > (30+170) && clickX <(30+170+170+150)){
             if(clickY > 920+170 && clickY < 1070+170) {
                 if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
                     controller.houkou = "jump"
@@ -238,6 +247,16 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             }
         }
     }
+
+
+    //まず、コントローラーの部分をちゃんと見直す必要があるのかもしれない。
+    //もっとリファクタリングする、というか。
+
+    //ジャンプ押しながら右
+    //ジャンプ押しながら左
+    //右押しながらジャンプ
+    //左押しながらジャンプ
+    //    の四パターンある
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.actionMasked) {
