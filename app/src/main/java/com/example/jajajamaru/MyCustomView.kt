@@ -37,17 +37,15 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun migiIdo(){
-        jiki.migiIdo()
-        background.migiIdo()
-        worldOffsetX += map.MASU_SIZE
+        if (worldOffsetX >= (map.MASU_SIZE * 28)) { //右にこれ以上はいけないという制限を付けた
+        } else {
+            jiki.migiIdo()
+            background.migiIdo()
+            worldOffsetX += map.MASU_SIZE
+        }
     }
     fun hidariIdo() {
-        //worldOffsetXは最初は０
-        //左へ行くたびに増えている
-        //おかしくね？
-        //左へいったら減らないと
-
-        if (worldOffsetX <= -(map.MASU_SIZE * 6)) {
+        if (worldOffsetX <= -(map.MASU_SIZE * 7)) { //左にこれ以上はいけないという制限を付けた
         } else {
             jiki.hidariIdo()
             background.hidariIdo()
