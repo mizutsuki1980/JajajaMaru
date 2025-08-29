@@ -73,6 +73,9 @@ class Controller {
     val buttonJumpY = 920+170
     val buttonJumpOokisa = 150
 
+    val buttonHidariRect = buttonRect(buttonHidariX.toInt() ,buttonHidariY.toInt(),buttonHidariOokisa,1)
+    val buttonMigiRect = buttonRect(buttonMigiX.toInt() ,buttonMigiY.toInt(),buttonMigiOokisa,1)
+    val buttonJumpRect = buttonRect(buttonJumpX.toInt() ,buttonJumpY.toInt(),buttonJumpOokisa,2)
     fun draw(canvas: Canvas,clickX:Int,clbuttonJumpXickY:Int,clickState:String){
         buttonSyokika()
         if(houkou == "hidari"){ hidariButtonIro.color = argb(100, 100, 100, 200) }
@@ -80,38 +83,20 @@ class Controller {
         if(houkou == "jump"){jumpButtonIro.color = argb(100, 100, 100, 200) }
 
         //ボタンの追加・修正方法、まず範囲を決める。ClickPointCheckでどこを触ったかを調べる。範囲内なら色を変える（押したことにする）
-        canvas.drawRect(shikakuRectButtonYokonaga(buttonHidariX.toInt() ,buttonHidariY.toInt(),buttonHidariOokisa,1), hidariButtonIro)   //
+        canvas.drawRect( buttonHidariRect, hidariButtonIro)   //
         canvas.drawText("←",(50).toFloat(),(1035).toFloat(),hyoujiIro)
 
-        canvas.drawRect(shikakuRectButtonYokonaga(buttonMigiX.toInt() ,buttonMigiY.toInt(),buttonMigiOokisa,1), migiButtonIro)   //
+        canvas.drawRect( buttonMigiRect, migiButtonIro)   //
         canvas.drawText("→",(570).toFloat(),(1035).toFloat(),hyoujiIro)
         //jumpボタン
-        canvas.drawRect(shikakuRectButtonYokonaga(buttonJumpX.toInt() ,buttonJumpY.toInt(),buttonJumpOokisa,2), jumpButtonIro)   //
+        canvas.drawRect( buttonJumpRect, jumpButtonIro)   //
         canvas.drawText("Jump!",(50+170).toFloat(),(1035+170).toFloat(),hyoujiIro)
     }
 
 
-
-    fun shikakuYokonagaRectButton(xxx:Int,yyy:Int,yokoooookisa:Int,tateooookisa:Int): Rect {
-        val left = xxx
-        val right = xxx  + yokoooookisa
-        val top = yyy
-        val bottom = yyy + tateooookisa
-        val m = Rect(left, top, right,bottom)
-        return m
-    }
-    fun shikakuRectButtonYokonaga(xxx:Int,yyy:Int,ooookisa:Int,bairitu:Int): Rect {
+    fun buttonRect(xxx:Int,yyy:Int,ooookisa:Int,bairitu:Int): Rect {
         val left = xxx
         val right = xxx*bairitu  + ooookisa
-        val top = yyy
-        val bottom = yyy + ooookisa
-        val m = Rect(left, top, right,bottom)
-        return m
-    }
-
-    fun shikakuRectButton(xxx:Int,yyy:Int,ooookisa:Int): Rect {
-        val left = xxx
-        val right = xxx  + ooookisa
         val top = yyy
         val bottom = yyy + ooookisa
         val m = Rect(left, top, right,bottom)
