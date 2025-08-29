@@ -127,6 +127,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             //だいたい４マスくらいあるってことかな。
             "migi" -> {
 //                if(jiki.isJump){return true}
+
+                //右おしっぱにすると、障害物の前で、ジャンプ自体が止まってしまう問題、
+                //これ、コントローラーの問題？
+
                 if(jiki.jumpFrame>=3 && jiki.jumpFrame<=7){return true}
                 //jumpFrameのは10,9,8,7,6,5,4,3,2,1,0と減っていくので、
                 // jumpFrameの６～３とかって指定すれば、頂点付近はとれる
