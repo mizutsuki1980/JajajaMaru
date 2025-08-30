@@ -95,24 +95,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     }
 
-    //一応この形で作っておいた方がいいんだろうか？
-    //いや、総当たりじゃできないか、これは。１３列目の８行が１かどうか？は
-    //最初からマス目がわかってるから、指定できちゃうでしょ。
-    //うーん、こういう風にする意味はわからんな。現時点では。
-/*    fun mapSyruiCheck(canvas:Canvas){
-        for (i in 0 until map.masu.size) {
-            for (j in 0 until map.masu[i].size) {
-                map.drawMap(canvas,i,j,map.masShurui(i,j),-worldOffsetX)
-            }
-        }
-    }
-*/
     fun lowcalCheck():Boolean {
-        //とりあえずｘマスだけ
-        //ｙはとりあえず１３固定
-
+        //とりあえずｘマスだけ //ｙはとりあえず１３固定
         val charamasu = worldOffsetCharacterX / map.MASU_SIZE   //キャラの世界位置
-
         when (controller.houkou) {
             "migi" -> {
                 if(jiki.isJump){return true}
@@ -122,11 +107,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 } else {
                     return true
                 }
-
             }
-
-            //リストにない[-1]とか取り出そうとすると、強制終了をくらう。
-            "hidari" -> {
+            "hidari" -> {            //リストにない[-1]とか取り出そうとすると、強制終了をくらう。
                 if(jiki.isJump){return true}
                 if (map.masu[13][charamasu - 1] == 1) {
                     return false
@@ -141,11 +123,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun tsugiNoSyori() {
         controller.clickPointCheck(clickX,clickY,clickState)
         if(lowcalCheck()) {  ido() }
-        clickNitenCheck()        //2点目のチェック
+        clickNitenCheck()        //2点目のチェック　ここでちゃんと分ける
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
         handler.postDelayed({ tsugiNoSyori() }, 100)
     }
+
+
 
 
     override fun onDraw(canvas: Canvas) {
@@ -174,7 +158,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickNitenmeMotionTyp = ""
     var  pointerCount = 0
 
-    
+
     //なんか移動しながらのジャンプは、ちょっと高さが低い気がする。途中で終わってる？
 
     fun clickNitenCheck(){
