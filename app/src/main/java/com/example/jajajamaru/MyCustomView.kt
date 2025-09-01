@@ -42,17 +42,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tsugiNoSyori()  //最初に一回だけ呼ばれる
     }
 
-    //たぶん、ここに障害物の行き止まりを書く
-    //worldOffsetCharaXとｙで、Ｍａｐを元につくる
-
-    //キャラと世界のoffsettは得られた
-    //じゃぁどうする？のか　衝突判定？
-
-    //Mapのrow、cal調べて、岩のポジションだったらｘをプラスできない、とか？
-    //マスって考え方が重要なのかな。ROWCALも結局マス目だし。ｘ、ｙとかってより
-    //自分のキャラはどのマスにいるのか？って考えたらいいのかな？
-    //ｘ、ｙだけじゃなくて。
-
     fun migiIdo() {
         if (worldOffsetX >= (map.MASU_SIZE * 27)) { //右にこれ以上はいけないという制限を付けた　世界の行き止まり
         } else {
@@ -121,9 +110,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun tsugiNoSyori() {
+        //ボタンと移動
         controller.clickPointCheck(clickX,clickY,clickState)
         if(lowcalCheck()) {  ido() }
         clickNitenCheck()        //2点目のチェック　ここでちゃんと分ける
+
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
         handler.postDelayed({ tsugiNoSyori() }, 100)
@@ -158,23 +149,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickNitenmeMotionTyp = ""
     var  pointerCount = 0
 
-
-    //なんか移動しながらのジャンプは、ちょっと高さが低い気がする。途中で終わってる？
-
     fun clickNitenCheck(){
-        //pointerCountは何点押されているか 2点だったら
         if(pointerCount == 2){
-            //２点目のｘｙをどのボタンか知る、だから別の変数にする
             controller.clickPointCheck(clickNitenmeX,clickNitenmeY,clickNitenmeMotionTyp)
             if(lowcalCheck()) {
                 val nitenmeButton = controller.clickPointCheckNitenmeYo(clickNitenmeX,clickNitenmeY,clickNitenmeMotionTyp)
-
-
-                //なんかそれっぽい動きになったが、方向が二回押されているケースがあるっぽい
-                //なんか加速している。
-                //まぁでも、ボタンのせいなので、ゆくゆくはボタン消すとおもうからいっか。
-
-
                 //ido()はこれをやっている
                 if(jiki.isJump){        //jump状態　右と左だけは行ける
                     when (nitenmeButton) {
@@ -188,22 +167,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                         "jump" -> {jumpIdo()}
                     }
                 }
-
-            }
+           }
         }
+   }
 
-//            val nitenmeButton = controller.clickPointCheckNitenmeYo(clickNitenmeX,clickNitenmeY,clickNitenmeMotionTyp)
-  //          if (nitenmeButton == "jump"){
-    //            if(lowcalCheck()) { ido() }
-      //      }else{               controller.houkou //現在、最初に押しっぱなしのボタン            }
-
-
-
-
-    }
-
-    //オンタッチイベントでは、すでに２種類のポイントをとることに成功している。
-    //右＆Jump　と　左＆jumpだけは許可するような作りにしたい。
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN,
@@ -213,14 +180,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 // 画面に触れている指の数
                 pointerCount = event.pointerCount
                 clickMotionVent1 = pointerCount.toString()
-
                 if (event.actionMasked == MotionEvent.ACTION_DOWN) { clickNitenmeMotionTyp = "ACTION_DOWN" }
                 if (event.actionMasked == MotionEvent.ACTION_POINTER_DOWN) { clickNitenmeMotionTyp = "ACTION_DOWN" }
                 if (event.actionMasked == MotionEvent.ACTION_POINTER_UP) {clickNitenmeMotionTyp = "ACTION_UP" }
                 if (event.actionMasked == MotionEvent.ACTION_MOVE) {clickNitenmeMotionTyp = "ACTION_MOVE" }
-
-
-
                 if (pointerCount >= 2) {
                     // 2本目の指のインデックスは 1
                     val x2 = event.getX(1)
