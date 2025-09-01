@@ -164,10 +164,44 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun clickNitenCheck(){
         //pointerCountは何点押されているか 2点だったら
         if(pointerCount == 2){
+            //２点目のｘｙをどのボタンか知る、だから別の変数にする
             controller.clickPointCheck(clickNitenmeX,clickNitenmeY,clickNitenmeMotionTyp)
-            if(lowcalCheck()) {  ido() }
+            if(lowcalCheck()) {
+                val nitenmeButton = controller.clickPointCheckNitenmeYo(clickNitenmeX,clickNitenmeY,clickNitenmeMotionTyp)
+
+
+                //なんかそれっぽい動きになったが、方向が二回押されているケースがあるっぽい
+                //なんか加速している。
+                //まぁでも、ボタンのせいなので、ゆくゆくはボタン消すとおもうからいっか。
+
+
+                //ido()はこれをやっている
+                if(jiki.isJump){        //jump状態　右と左だけは行ける
+                    when (nitenmeButton) {
+                        "migi" -> { migiIdo() }
+                        "hidari" -> { hidariIdo() }
+                    }
+                }else{
+                    when (nitenmeButton) {
+                        "migi" -> {migiIdo()}
+                        "hidari" -> {hidariIdo()}
+                        "jump" -> {jumpIdo()}
+                    }
+                }
+
+            }
         }
+
+//            val nitenmeButton = controller.clickPointCheckNitenmeYo(clickNitenmeX,clickNitenmeY,clickNitenmeMotionTyp)
+  //          if (nitenmeButton == "jump"){
+    //            if(lowcalCheck()) { ido() }
+      //      }else{               controller.houkou //現在、最初に押しっぱなしのボタン            }
+
+
+
+
     }
+
     //オンタッチイベントでは、すでに２種類のポイントをとることに成功している。
     //右＆Jump　と　左＆jumpだけは許可するような作りにしたい。
     override fun onTouchEvent(event: MotionEvent): Boolean {
