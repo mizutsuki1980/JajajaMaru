@@ -109,6 +109,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
     }
 
+    //コントローラーから直そうかなぁ、、、
+    //使わないでゲーム作る予定だけど、勉強にはなりそう
     fun tsugiNoSyori() {
         //ボタンと移動
         controller.clickPointCheck(clickX,clickY,clickState)
