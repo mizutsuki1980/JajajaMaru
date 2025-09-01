@@ -42,6 +42,8 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.motionEventLabel3).text=custom.clickMotionVent3.toString()
         findViewById<TextView>(R.id.wcxlabel).text=custom.worldOffsetCharacterX.toString()
         findViewById<TextView>(R.id.wcyLabel).text=custom.worldOffsetCharacterY.toString()
+        findViewById<TextView>(R.id.c1houkouLabel).text=custom.controller.houkou.toString()
+        findViewById<TextView>(R.id.c2houkouLabel).text=custom.nitenmeButton.toString()
         handler.postDelayed( { mainTsugiNoSyori() }, 100)
     }
 }

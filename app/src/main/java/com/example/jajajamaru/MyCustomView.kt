@@ -150,12 +150,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickNitenmeY = 0
     var clickNitenmeMotionTyp = ""
     var  pointerCount = 0
-
+    var nitenmeButton = "nashi"
     fun clickNitenCheck(){
         if(pointerCount == 2){
             controller.clickPointCheck(clickNitenmeX,clickNitenmeY,clickNitenmeMotionTyp)
             if(lowcalCheck()) {
-                val nitenmeButton = controller.clickPointCheckNitenmeYo(clickNitenmeX,clickNitenmeY,clickNitenmeMotionTyp)
+                nitenmeButton = controller.clickPointCheckNitenmeYo(clickNitenmeX,clickNitenmeY,clickNitenmeMotionTyp)
                 //ido()はこれをやっている
                 if(jiki.isJump){        //jump状態　右と左だけは行ける
                     when (nitenmeButton) {
