@@ -27,6 +27,10 @@ class Jiki(var x:Int, var y:Int) {
         iro.color = argb(255, 255, 255, 150)
     }
 
+    //現在、ジャンプっていうのは「単に上方向にプラスして表示」しているだけ
+    //ｙ軸は動いていない。
+    //これをまずは「ジャンプ」というのを「ｙ軸の移動」に変更するところからはじめる
+
     fun jumpChuSyori() {
         jumpFrame--
         when (jumpFrame) {
