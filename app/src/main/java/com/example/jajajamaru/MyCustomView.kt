@@ -72,27 +72,43 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun ido(){
-        if(jiki.isJump){        //jump状態　右と左だけは行ける
-            when (controller.houkou) {
-                "migi" -> { migiIdo() }
-                "hidari" -> { hidariIdo() }
-            }
-            jiki.jumpSyori()
+        if(lowcalCheck(controller.houkou)) {
+            if (jiki.isJump) {        //jump状態　右と左だけは行ける
+                when (controller.houkou) {
+                    "migi" -> {
+                        migiIdo()
+                    }
 
-        }else{
-            when (controller.houkou) {
-                "migi" -> {migiIdo()}
-                "hidari" -> {hidariIdo()}
-                "jump" -> {jumpIdo()}
+                    "hidari" -> {
+                        hidariIdo()
+                    }
+                }
+                jiki.jumpSyori()
+
+            } else {
+                when (controller.houkou) {
+                    "migi" -> {
+                        migiIdo()
+                    }
+
+                    "hidari" -> {
+                        hidariIdo()
+                    }
+
+                    "jump" -> {
+                        jumpIdo()
+                    }
+                }
             }
         }
-
     }
 
-    fun lowcalCheck():Boolean {
+    fun lowcalCheck(checkhoukou:String):Boolean {
         //とりあえずｘマスだけ //ｙはとりあえず１３固定
         val charamasu = worldOffsetCharacterX / map.MASU_SIZE   //キャラの世界位置
-        when (controller.houkou) {
+
+
+        when (checkhoukou) {
             "migi" -> {
                 if(jiki.isJump){return true}
 
@@ -114,15 +130,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
     }
 
-    //コントローラーから直そうかなぁ、、、
-    //使わないでゲーム作る予定だけど、勉強にはなりそう
     fun tsugiNoSyori() {
-        //ボタンと移動
         controller.clickPointCheck(clickX,clickY,clickState)
-
-        if(lowcalCheck()) { //ここで障害物チェックしてる。これはidoの中の方がいいかな
-            ido()
-        }
+        ido()
         clickNitenCheck()        //2点目のチェック　ここでちゃんと分ける
 
         frame += 1  //繰り返し処理はここでやってる
@@ -163,8 +173,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun clickNitenCheck(){
         if(pointerCount == 2){
             controller.clickPointCheck(clickNitenmeX,clickNitenmeY,clickNitenmeMotionTyp)
-            if(lowcalCheck()) {
-                nitenmeButton = controller.clickPointCheckNitenmeYo(clickNitenmeX,clickNitenmeY,clickNitenmeMotionTyp)
+            nitenmeButton = controller.clickPointCheckNitenmeYo(clickNitenmeX,clickNitenmeY,clickNitenmeMotionTyp)
+            if(lowcalCheck(nitenmeButton)) {
                 //ido()はこれをやっている
                 if(jiki.isJump){        //jump状態　右と左だけは行ける
                     when (nitenmeButton) {
