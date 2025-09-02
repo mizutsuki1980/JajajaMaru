@@ -45,7 +45,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
 
-
+    //ジャンプの下降中だと、障害物を乗り越えられないようにしたい
     fun migiIdo() {
         if (worldOffsetX >= (map.MASU_SIZE * 27)) { //右にこれ以上はいけないという制限を付けた　世界の行き止まり
         } else {
@@ -120,7 +120,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //ボタンと移動
         controller.clickPointCheck(clickX,clickY,clickState)
 
-        if(lowcalCheck()) {  ido() }
+        if(lowcalCheck()) { //ここで障害物チェックしてる。これはidoの中の方がいいかな
+            ido()
+        }
         clickNitenCheck()        //2点目のチェック　ここでちゃんと分ける
 
         frame += 1  //繰り返し処理はここでやってる
