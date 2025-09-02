@@ -78,6 +78,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 "hidari" -> { hidariIdo() }
             }
             jiki.jumpChuSyori()
+
         }else{
             when (controller.houkou) {
                 "migi" -> {migiIdo()}
@@ -118,6 +119,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun tsugiNoSyori() {
         //ボタンと移動
         controller.clickPointCheck(clickX,clickY,clickState)
+
         if(lowcalCheck()) {  ido() }
         clickNitenCheck()        //2点目のチェック　ここでちゃんと分ける
 
@@ -138,8 +140,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         mapCreate(canvas)
         jiki.draw(canvas)
         controller.draw(canvas)
+
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusan, BitmapFactory.Options())
-        canvas.drawBitmap(bitmap, jiki.x.toFloat()-40, jiki.y.toFloat()-45-jiki.jumpTakasa, null)
+        canvas.drawBitmap(bitmap, jiki.x.toFloat()-40, jiki.y.toFloat()-45, null)
     }
 
     fun mapCreate(canvas:Canvas){
