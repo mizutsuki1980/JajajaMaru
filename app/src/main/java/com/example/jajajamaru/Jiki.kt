@@ -38,8 +38,19 @@ class Jiki(var x:Int, var y:Int) {
             jumpLimit = 10
             isJump = false
         }
-        if(jumpLimit<=9 && jumpLimit>=6){ y -= 20 }
-        if(jumpLimit<=5 && jumpLimit>=1){ y += 20 }
+
+        when (jumpLimit) {
+            9 -> {y -= 40}
+            8 -> {y -= 40}
+            7 -> {y -= 10}
+            6 -> {y -= 10}
+            5 -> {y += 20}
+            4 -> {y += 20}
+            3 -> {y += 20}
+            2 -> {y += 20}
+            1 -> {y += 20}
+        }
+
 
 
     }
