@@ -42,6 +42,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tsugiNoSyori()  //最初に一回だけ呼ばれる
     }
 
+
+
+
+
     fun migiIdo() {
         if (worldOffsetX >= (map.MASU_SIZE * 27)) { //右にこれ以上はいけないという制限を付けた　世界の行き止まり
         } else {
