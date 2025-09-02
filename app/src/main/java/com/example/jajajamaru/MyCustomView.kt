@@ -77,7 +77,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 "migi" -> { migiIdo() }
                 "hidari" -> { hidariIdo() }
             }
-            jiki.jumpChuSyori()
+            jiki.jumpSyori()
 
         }else{
             when (controller.houkou) {
