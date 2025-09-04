@@ -72,6 +72,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun idoSyori(){//わかんなくなりそうだから、lowcalCheckはここに移します
+        //やっぱこのまま使うけど、スルーするかどうかの判定はここでする
+
         if(lowcalCheck(controller.houkou)) {
             if(jiki.isJump){  jiki.jumpSyori() }
             when (controller.houkou) {
@@ -87,7 +89,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val charamasu = worldOffsetCharacterX / map.MASU_SIZE   //キャラの世界位置
         when (houkou) {
             "migi" -> {
-                if(jiki.isJump){return true}
+                //if(jiki.isJump){return true}
 
                 if (map.masu[13][charamasu + 3] == 1) {
                     return false
@@ -96,7 +98,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 }
             }
             "hidari" -> {            //リストにない[-1]とか取り出そうとすると、強制終了をくらう。
-                if(jiki.isJump){return true}
+                //if(jiki.isJump){return true}
                 if (map.masu[13][charamasu - 1] == 1) {
                     return false
                 } else {
