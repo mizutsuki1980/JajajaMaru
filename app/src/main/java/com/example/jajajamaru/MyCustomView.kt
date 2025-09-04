@@ -44,58 +44,50 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
 
-
     //ジャンプの下降中だと、障害物を乗り越えられないようにしたい
-    fun migiIdo() {
-        if (worldOffsetX >= (map.MASU_SIZE * 27)) { //右にこれ以上はいけないという制限を付けた　世界の行き止まり
-        } else {
-            jiki.migiIdo()
-            background.migiIdo()
-            worldOffsetX += map.MASU_SIZE
-            worldOffsetCharacterX += map.MASU_SIZE
-        }
-    }
-
-    fun hidariIdo() {
-        if (worldOffsetX <= -(map.MASU_SIZE * 6)) { //左にこれ以上はいけないという制限を付けた　世界の行き止まり
-        } else {
-            jiki.hidariIdo()
-            background.hidariIdo()
-            worldOffsetX -= map.MASU_SIZE
-            worldOffsetCharacterX -= map.MASU_SIZE
-        }
-    }
 
 
     fun jumpIdo() {
         jiki.isJump = true
     }
 
-    fun idoSyori(){//わかんなくなりそうだから、lowcalCheckはここに移します
-        //やっぱこのまま使うけど、スルーするかどうかの判定はここでする
 
-        if(lowcalCheck(controller.houkou)) {
-            if(jiki.isJump){  jiki.jumpSyori() }
-            when (controller.houkou) {
+
+    //加速度
+    var v = 0f
+    var a = 1.0f
+
+
+    fun kasokudo(houkou:String):Int{
+        if (houkou=="migi"){
+            a = 1.0f
+        }
+
+        if (houkou=="hidari"){
+            a = -1.0f
+        }
+        v = v + a
+        return v.toInt()
+    }
+
+
+
+    fun migiIdo() {
+        val vv = kasokudo("migi")
+        jiki.x += vv.toInt()
+    }
+
+    fun hidariIdo() {
+        val vv = kasokudo("hidari")
+        jiki.x += vv.toInt()
+    }
+
+    fun idoSyori(){//わかんなくなりそうだから、lowcalCheckはここに移します
+        when (controller.houkou) {
                 "migi" -> {  migiIdo()  }
                 "hidari" -> { hidariIdo() }
                  "jump" -> { jumpIdo() }
             }
-
-        }else{
-            if(jiki.isJump) {
-                jiki.jumpSyori()
-                if(jiki.jumpFrame>=3){
-                when (controller.houkou) {
-                    "migi" -> { migiIdo() }
-
-                    "hidari" -> { hidariIdo() }
-
-                }
-                }
-            }
-
-        }
 
     }
 
@@ -126,9 +118,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun tsugiNoSyori() {
         controller.clickPointCheck(clickX,clickY,clickState)
+
+
         idoSyori()
         clickNitenCheck()        //2点目のチェック　ここでちゃんと分ける
-
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
         handler.postDelayed({ tsugiNoSyori() }, 100)
