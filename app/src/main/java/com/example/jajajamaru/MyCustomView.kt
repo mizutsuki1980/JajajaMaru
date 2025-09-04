@@ -81,7 +81,22 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 "hidari" -> { hidariIdo() }
                  "jump" -> { jumpIdo() }
             }
+
+        }else{
+            if(jiki.isJump) {
+                jiki.jumpSyori()
+                if(jiki.jumpFrame>=3){
+                when (controller.houkou) {
+                    "migi" -> { migiIdo() }
+
+                    "hidari" -> { hidariIdo() }
+
+                }
+                }
+            }
+
         }
+
     }
 
     fun lowcalCheck(houkou:String):Boolean {
