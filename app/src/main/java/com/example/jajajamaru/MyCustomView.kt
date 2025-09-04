@@ -73,19 +73,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun ido(){
         if(lowcalCheck(controller.houkou)) {
-            if (jiki.isJump) {        //jump状態　右と左だけは行ける
-                when (controller.houkou) {
-                    "migi" -> {
-                        migiIdo()
-                    }
-
-                    "hidari" -> {
-                        hidariIdo()
-                    }
-                }
-                jiki.jumpSyori()
-
-            } else {
+            if(jiki.isJump){  jiki.jumpSyori() }
+            
                 when (controller.houkou) {
                     "migi" -> {
                         migiIdo()
@@ -98,7 +87,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                     "jump" -> {
                         jumpIdo()
                     }
-                }
             }
         }
     }
