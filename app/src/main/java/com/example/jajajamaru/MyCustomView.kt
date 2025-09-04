@@ -71,32 +71,21 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jiki.isJump = true
     }
 
-    fun ido(){
+    fun idoSyori(){//わかんなくなりそうだから、lowcalCheckはここに移します
         if(lowcalCheck(controller.houkou)) {
             if(jiki.isJump){  jiki.jumpSyori() }
-            
-                when (controller.houkou) {
-                    "migi" -> {
-                        migiIdo()
-                    }
-
-                    "hidari" -> {
-                        hidariIdo()
-                    }
-
-                    "jump" -> {
-                        jumpIdo()
-                    }
+            when (controller.houkou) {
+                "migi" -> {  migiIdo()  }
+                "hidari" -> { hidariIdo() }
+                 "jump" -> { jumpIdo() }
             }
         }
     }
 
-    fun lowcalCheck(checkhoukou:String):Boolean {
+    fun lowcalCheck(houkou:String):Boolean {
         //とりあえずｘマスだけ //ｙはとりあえず１３固定
         val charamasu = worldOffsetCharacterX / map.MASU_SIZE   //キャラの世界位置
-
-
-        when (checkhoukou) {
+        when (houkou) {
             "migi" -> {
                 if(jiki.isJump){return true}
 
@@ -120,7 +109,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun tsugiNoSyori() {
         controller.clickPointCheck(clickX,clickY,clickState)
-        ido()
+        idoSyori()
         clickNitenCheck()        //2点目のチェック　ここでちゃんと分ける
 
         frame += 1  //繰り返し処理はここでやってる
