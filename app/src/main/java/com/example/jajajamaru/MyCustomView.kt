@@ -41,33 +41,29 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
 
-    //ジャンプの下降中だと、障害物を乗り越えられないようにしたい
-
-
-    fun jumpIdo() {
-        jiki.isJump = true
-    }
-
-
-
     //加速度
     var v = 0f
     var zenkaihoukou = "nashi"
-
-
     fun kasokudo(houkou:String):Float {
         when (houkou) {
             "migi" -> { return 1.0f }
             "hidari" -> { return -1.0f }
-            "nashi" -> { return 0f }
+            "nashi" -> {
+                if(v>0){
+                    return-2.5f
+                }else{
+                    return 2.5f}
+            }
             else -> return 0f
         }
     }
+
     fun tsugiNoIchi(houkou:String):Int{
         v = v + kasokudo(houkou)
-        zenkaihoukou = houkou
         return v.toInt()
     }
+
+
     fun jikiNoIchi(){
         val vv = tsugiNoIchi(controller.houkou)
         jiki.x += vv.toInt()
