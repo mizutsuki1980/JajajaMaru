@@ -4,13 +4,10 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.Color.argb
 import android.graphics.Paint
-import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import kotlin.coroutines.Continuation
 
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     var frame = 0
@@ -55,41 +52,42 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     //加速度
     var v = 0f
-    var a = 1.0f
+    var zenkaihoukou = "nashi"
 
 
-    fun kasokudo(houkou:String):Int{
-        if (houkou=="migi"){
-            a = 1.0f
+    fun kasokudo(houkou:String):Float {
+        when (houkou) {
+            "migi" -> { return 1.0f }
+            "hidari" -> { return -1.0f }
+            "nashi" -> { return 0f }
+            else -> return 0f
         }
-
-        if (houkou=="hidari"){
-            a = -1.0f
-        }
-        v = v + a
+    }
+    fun tsugiNoIchi(houkou:String):Int{
+        v = v + kasokudo(houkou)
+        zenkaihoukou = houkou
         return v.toInt()
     }
-
-
-
-    fun migiIdo() {
-        val vv = kasokudo("migi")
+    fun jikiNoIchi(){
+        val vv = tsugiNoIchi(controller.houkou)
         jiki.x += vv.toInt()
     }
 
-    fun hidariIdo() {
-        val vv = kasokudo("hidari")
-        jiki.x += vv.toInt()
+
+    fun tsugiNoSyori() {
+        controller.clickPointCheck(clickX,clickY,clickState)
+
+        jikiNoIchi()    //課題用
+
+        frame += 1  //繰り返し処理はここでやってる
+        invalidate()
+        handler.postDelayed({ tsugiNoSyori() }, 100)
     }
 
-    fun idoSyori(){//わかんなくなりそうだから、lowcalCheckはここに移します
-        when (controller.houkou) {
-                "migi" -> {  migiIdo()  }
-                "hidari" -> { hidariIdo() }
-                 "jump" -> { jumpIdo() }
-            }
 
-    }
+
+
+
 
     fun lowcalCheck(houkou:String):Boolean {
         //とりあえずｘマスだけ //ｙはとりあえず１３固定
@@ -115,19 +113,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             else -> { return true}
         }
     }
-
-    fun tsugiNoSyori() {
-        controller.clickPointCheck(clickX,clickY,clickState)
-
-
-        idoSyori()
-        clickNitenCheck()        //2点目のチェック　ここでちゃんと分ける
-        frame += 1  //繰り返し処理はここでやってる
-        invalidate()
-        handler.postDelayed({ tsugiNoSyori() }, 100)
-    }
-
-
 
 
     override fun onDraw(canvas: Canvas) {
@@ -157,28 +142,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickNitenmeMotionTyp = ""
     var  pointerCount = 0
     var nitenmeButton = "nashi"
-    fun clickNitenCheck(){
-        if(pointerCount == 2){
-            controller.clickPointCheck(clickNitenmeX,clickNitenmeY,clickNitenmeMotionTyp)
-            nitenmeButton = controller.clickPointCheckNitenmeYo(clickNitenmeX,clickNitenmeY,clickNitenmeMotionTyp)
-            if(lowcalCheck(nitenmeButton)) {
-                //ido()はこれをやっている
-                if(jiki.isJump){        //jump状態　右と左だけは行ける
-                    when (nitenmeButton) {
-                        "migi" -> { migiIdo() }
-                        "hidari" -> { hidariIdo() }
-                    }
-                }else{
-                    when (nitenmeButton) {
-                        "migi" -> {migiIdo()}
-                        "hidari" -> {hidariIdo()}
-                        "jump" -> {jumpIdo()}
-                    }
-                }
-           }
-        }
-   }
-
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN,

@@ -80,7 +80,8 @@ class Controller {
 
     fun clickPointCheck(clickX:Int,clickY:Int,clickState:String){
         houkou = "nashi"
-        if (clickState == "ACTION_UP"){houkou = "nashi"}
+         if (clickState == "ACTION_UP"){houkou = "nashi"}
+
         if(clickX > 50 && clickX <150){
             if(clickY > 920 && clickY <1070) {
                 if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
