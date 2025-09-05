@@ -26,40 +26,6 @@ class Jiki(var x:Int, var y:Int) {
     var jumpFrame = 10
 
     fun jumpSyori() {
-        jumpFrame --
-        if(jumpFrame==0){ //0ならリセット
-            y=motoTakasa
-            jumpFrame = 10
-            isJump = false
-        }
-        //+100して-100する。ジャンプ力の上限は100まで。
-        when (jumpFrame) {
-            9 -> {y -= 40}
-            8 -> {y -= 40}
-            7 -> {y -= 10}
-            6 -> {y -= 10}
-            5 -> {y += 20}
-            4 -> {y += 20}
-            3 -> {y += 20}
-            2 -> {y += 20}
-            1 -> {y += 20}
-        }
-    }
-
-    fun jumpJyoutai(){
-        when (jumpStatus) {
-            NORMAL_STATE -> {
-            }
-
-            JUMP_UPDOWN_STATE -> {
-            }
-
-            JUMP_RAKKA_STATE -> {
-            }
-
-            JUMP_END_STATE -> {
-            }
-        }
     }
 
     fun migiIdo(){
