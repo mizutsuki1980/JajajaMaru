@@ -62,7 +62,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     //加速度で距離を求めて自機のｘに足す
     fun jikiNoIchiYoko(){
         vYoko = vYoko + kasokudoYoko(controller.houkou)
-        jiki.x += vYoko.toInt()
+        var yPlus = vYoko.toInt()
+        if(yPlus < 3 && yPlus > -3){ yPlus= 0}  //キャラがぶれなくするおまじない
+
+        jiki.x += yPlus
     }
 
 
@@ -77,7 +80,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
     }
     //加速度で距離を求めて自機のｙに足す（引く）
-    fun jikiNoIchiTate(){
+    fun jikiNoIchiJump(){
 
         vJump = vJump + kasokudoJump(controller.houkou)
         jiki.y += vJump.toInt()
@@ -96,7 +99,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         // こいつらは押されたボタンを無視していつづける
         jikiNoIchiYoko()    //横方向　課題用
-        jikiNoIchiTate()    //縦方向  ジャンプ
+        jikiNoIchiJump()    //縦方向  ジャンプ
 
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
