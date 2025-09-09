@@ -51,32 +51,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     var vYokoPlus = 0f
-    //加速度で距離を求めて自機のｘに足す
     fun jikiNoIchiYoko(){
-        // aが加速度
-        // 1フレーム = (v0) ＋ a = v
-        // 2フレーム = (V1) ＋ a = v
-        // 3フレーム = (V2) ＋ a = v
-        //ｖっていうのはどんどん増えていく
-
-        //kasokudoYoko(controller.houkou)で加速度は決定
-        //進行方向なら1.0、逆ブレーキなら2.5
-
-        //var vYoko = 0f からはじまるで、だんだん速度が増えていく
-        //1...2...3
-        //逆にブレーキだと-2.5　-2.5　となる
-        //が速度が増えていると50とかなってると、とまるまでも２０フレームくらいかかる
-        //０になったら今度は方向が逆ではなく、左に移動、という判定になるので1.0から。
         var kasokudo = kasokudoYoko(controller.houkou)
-
         //速度制限
         if(kasokudo > 3f){kasokudo = 3f}
         if(kasokudo < -3f){kasokudo = -3f}
-
         vYokoPlus = vYokoPlus + kasokudo
         jiki.x += vYokoPlus.toInt()
     }
-    //加速度
     fun kasokudoYoko(houkou:String):Float {
         when (houkou) {
             "migi" -> {return 5.0f }
@@ -86,11 +68,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             else -> return 0f
         }
     }
-    //以上、横の処理
 
 
-
-    //以下、ジャンプンの処理　
+    var isJump = false
+    var vJump = 0f
+    fun kasokudoJump():Float {
+        return -5.0f
+    }
     fun jikiNoIchiJump(){
         if(controller.houkou=="jump"){
             if(isJump==false){
@@ -99,38 +83,16 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 jiki.y -= vJump.toInt()
             }
         }
-        //もしジャンプじゃなかったらisJumpをtrueにして、ジャンプスタート
-
-        //ジャンプ中ならジャンプ処理を続ける
         if(isJump) {
             vJump = vJump + kasokudoJump()
             jiki.y -= vJump.toInt()
-//            if(jiki.y<) んんん？最初のｙってなんだ？
         }
     }
-    //jumpの速度
-    var isJump = false
-    var vJump = 0f
 
-    fun kasokudoJump():Float {
-         return -5.0f
-    }
-
-    //んんん、まずはＪｕｍｐフレームはいるな
-    //押したときに計算が開始するような感じか
-    //そこで最初に＋30くらいする感じか
     fun tsugiNoSyori() {
         controller.clickPointCheck(clickX,clickY,clickState)
-
-        //ジャンプ時の処理
-        if(controller.isJumpButton){
-
-        }
-
-        // こいつらは押されたボタンを無視していつづける
         jikiNoIchiYoko()    //横方向　課題用
         jikiNoIchiJump()    //縦方向  ジャンプ
-
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
         handler.postDelayed({ tsugiNoSyori() }, 100)
