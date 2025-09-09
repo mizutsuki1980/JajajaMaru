@@ -44,21 +44,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
 
-    //加速度
-    fun kasokudoYoko(houkou:String):Float {
-        when (houkou) {
-            "migi" -> { return 1.0f }
-            "hidari" -> { return -1.0f }
-            "nashi" -> {
-                if( vYokoPlus > 0 ){
-                    return-2.5f
-                }else{
-                    return 2.5f
-                }
-            }
-            else -> return 0f
-        }
-    }
     var vYokoPlus = 0f
     //加速度で距離を求めて自機のｘに足す
     fun jikiNoIchiYoko(){
@@ -76,44 +61,53 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //逆にブレーキだと-2.5　-2.5　となる
         //が速度が増えていると50とかなってると、とまるまでも２０フレームくらいかかる
         //０になったら今度は方向が逆ではなく、左に移動、という判定になるので1.0から。
+        var kasokudo = kasokudoYoko(controller.houkou)
 
-        vYokoPlus = vYokoPlus + kasokudoYoko(controller.houkou)
+        //速度制限
+        if(kasokudo > 3f){kasokudo = 3f}
+        if(kasokudo < -3f){kasokudo = -3f}
 
-        var yPlus = vYokoPlus.toInt()
-
-        if(yPlus < 3 && yPlus > -3){ yPlus= 0}  //キャラがぶれなくするおまじない
-
-        jiki.x += yPlus
+        vYokoPlus = vYokoPlus + kasokudo
+        jiki.x += vYokoPlus.toInt()
     }
-
-
-
     //加速度
-    var isJump = false
-    var vJump = 0f
-    fun kasokudoJump(houkou:String):Float {
+    fun kasokudoYoko(houkou:String):Float {
         when (houkou) {
-            "jump" -> { return 5.0f }
-            "nashi" -> {return 0f }
+            "migi" -> {return 5.0f }
+            "hidari" -> { return -5.0f }
+            "nashi" -> { if (vYokoPlus == 0f) { return 0.0f }
+                if (vYokoPlus > 0) { return -2.5f } else { return 2.5f } }
             else -> return 0f
         }
     }
-    //加速度で距離を求めて自機のｙに足す（引く）
+    //以上、横の処理
+
+
+
+    //以下、ジャンプンの処理　
     fun jikiNoIchiJump(){
         if(controller.houkou=="jump"){
             if(isJump==false){
-            isJump=true
-            vJump = 200f
-            jiki.y += vJump.toInt()
+                isJump=true
+                vJump = 50f
+                jiki.y -= vJump.toInt()
             }
         }
         //もしジャンプじゃなかったらisJumpをtrueにして、ジャンプスタート
 
         //ジャンプ中ならジャンプ処理を続ける
         if(isJump) {
-            vJump = vJump + kasokudoJump(controller.houkou)
+            vJump = vJump + kasokudoJump()
             jiki.y -= vJump.toInt()
+//            if(jiki.y<) んんん？最初のｙってなんだ？
         }
+    }
+    //jumpの速度
+    var isJump = false
+    var vJump = 0f
+
+    fun kasokudoJump():Float {
+         return -5.0f
     }
 
     //んんん、まずはＪｕｍｐフレームはいるな
