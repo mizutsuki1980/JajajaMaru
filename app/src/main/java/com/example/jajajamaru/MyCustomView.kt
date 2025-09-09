@@ -71,19 +71,31 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     //加速度
+    var isJump = false
     var vJump = 0f
     fun kasokudoJump(houkou:String):Float {
         when (houkou) {
-            "jump" -> { return 1.0f }
+            "jump" -> { return 5.0f }
             "nashi" -> {return 0f }
             else -> return 0f
         }
     }
     //加速度で距離を求めて自機のｙに足す（引く）
     fun jikiNoIchiJump(){
+        if(controller.houkou=="jump"){
+            if(isJump==false){
+            isJump=true
+            vJump = 200f
+            jiki.y += vJump.toInt()
+            }
+        }
+        //もしジャンプじゃなかったらisJumpをtrueにして、ジャンプスタート
 
-        vJump = vJump + kasokudoJump(controller.houkou)
-        jiki.y += vJump.toInt()
+        //ジャンプ中ならジャンプ処理を続ける
+        if(isJump) {
+            vJump = vJump + kasokudoJump(controller.houkou)
+            jiki.y -= vJump.toInt()
+        }
     }
 
     //んんん、まずはＪｕｍｐフレームはいるな
