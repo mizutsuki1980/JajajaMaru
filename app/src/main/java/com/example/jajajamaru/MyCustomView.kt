@@ -61,8 +61,25 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
     //加速度で距離を求めて自機のｘに足す
     fun jikiNoIchiYoko(){
+        // aが加速度
+        // 1フレーム = (v0) ＋ a = v
+        // 2フレーム = (V1) ＋ a = v
+        // 3フレーム = (V2) ＋ a = v
+        //ｖっていうのはどんどん増えていく
+
+        //kasokudoYoko(controller.houkou)で加速度は決定
+        //進行方向なら1.0、逆ブレーキなら2.5
+
+        //var vYoko = 0f からはじまるで、だんだん速度が増えていく
+        //1...2...3
+        //逆にブレーキだと-2.5　-2.5　となる
+        //が速度が増えていると50とかなってると、とまるまでも２０フレームくらいかかる
+        //０になったら今度は方向が逆ではなく、左に移動、という判定になるので1.0から。
+
         vYoko = vYoko + kasokudoYoko(controller.houkou)
+
         var yPlus = vYoko.toInt()
+
         if(yPlus < 3 && yPlus > -3){ yPlus= 0}  //キャラがぶれなくするおまじない
 
         jiki.x += yPlus
