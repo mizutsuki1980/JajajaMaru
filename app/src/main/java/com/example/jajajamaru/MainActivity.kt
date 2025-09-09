@@ -26,6 +26,11 @@ class MainActivity : AppCompatActivity() {
         display.getSize(point)
         custom = findViewById<MyCustomView>(R.id.mycustom)
         custom.post { custom.beginAnimation() }
+
+        findViewById<Button>(R.id.resetButton).setOnClickListener{
+            custom.post { custom.syokikaGameReset() }
+        }
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -44,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.wcyLabel).text=custom.worldOffsetCharacterY.toString()
         findViewById<TextView>(R.id.c1houkouLabel).text=custom.controller.houkou.toString()
         findViewById<TextView>(R.id.c2houkouLabel).text=custom.nitenmeButton.toString()
+
         handler.postDelayed( { mainTsugiNoSyori() }, 100)
     }
 }

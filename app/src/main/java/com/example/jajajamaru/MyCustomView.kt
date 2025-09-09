@@ -36,6 +36,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var worldOffsetCharacterX = map.MASU_SIZE * 7
     var worldOffsetCharacterY = 0
 
+
+    fun syokikaGameReset(){
+        isJump = false
+        jiki = Jiki(initialJikiX, initialJikiY)
+    }
+
     fun beginAnimation() {
         tsugiNoSyori()  //最初に一回だけ呼ばれる
     }
