@@ -45,20 +45,21 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     //加速度
-    var vYoko = 0f
     fun kasokudoYoko(houkou:String):Float {
         when (houkou) {
             "migi" -> { return 1.0f }
             "hidari" -> { return -1.0f }
             "nashi" -> {
-                if( vYoko > 0 ){
+                if( vYokoPlus > 0 ){
                     return-2.5f
                 }else{
-                    return 2.5f}
+                    return 2.5f
+                }
             }
             else -> return 0f
         }
     }
+    var vYokoPlus = 0f
     //加速度で距離を求めて自機のｘに足す
     fun jikiNoIchiYoko(){
         // aが加速度
@@ -76,9 +77,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //が速度が増えていると50とかなってると、とまるまでも２０フレームくらいかかる
         //０になったら今度は方向が逆ではなく、左に移動、という判定になるので1.0から。
 
-        vYoko = vYoko + kasokudoYoko(controller.houkou)
+        vYokoPlus = vYokoPlus + kasokudoYoko(controller.houkou)
 
-        var yPlus = vYoko.toInt()
+        var yPlus = vYokoPlus.toInt()
 
         if(yPlus < 3 && yPlus > -3){ yPlus= 0}  //キャラがぶれなくするおまじない
 
