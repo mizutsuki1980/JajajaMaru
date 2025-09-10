@@ -55,6 +55,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     //ではワールドマップを動かしてみよう
     //自分のマスが２こ動いたら、ワールドマップも２こ動くようにしよう
 
+    var migiGamenGotoIdo = false
+    var hidariGamenGotoIdo = false
     var vYokoPlus = 0f
     fun jikiNoIchiYoko() {
         var kasokudo = kasokudoYoko(controller.houkou)
@@ -65,9 +67,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if (kasokudo < -3f) {
             kasokudo = -3f
         }
+        //画面による制限
 
-        // 加速がついていると、めりこんで見えてしまう。どーにかできないかなー
-        //まーでもできてるからいっか。
+        //〇〇〇〇〇ここに画面が左端、右端だったら、というように書く
+
         //移動制限
         if (sekaix <= 1 || sekaix >= 800) {
             //まず、ワールド内であるか確認
@@ -83,13 +86,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             sekaix += 10
             vYokoPlus = 0f
         }
-
         if (sekaix >= 800) {//右端なら
             jiki.x -= 10
             sekaix -= 10
             vYokoPlus = 0f
         }
     }
+
+
     fun kasokudoYoko(houkou:String):Float {
         when (houkou) {
             "migi" -> {return 5.0f }
@@ -148,20 +152,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawBitmap(bitmap, jiki.x.toFloat()-40, jiki.y.toFloat()-45, null)
     }
 
-    //んんん？
-    //自機のｘが増えるのはあくまで画面の中だけ
-    //sekaixがマップを動かす
-    //けれど、自機はどこかで止まってsekaixだけが動くようにしないと、
-    //自機が画面外まで出て行ってしまう。
-    //なんで、自機を制止する、とマップを動かす、というのは同時にやらないとだめ
-    //（もしくは自機は画面中央に固定する。）
-
-    //二段階くらいにわけてやるほうがいいのかな
-    fun mapCreate(canvas:Canvas){
-        // ここにマップを動かすように書く
-        val jikinomasu = sekaix /32
-        if(jikinomasu==9){}
-        worldOffsetX = jikinomasu
+   fun mapCreate(canvas:Canvas){
+        val jikinomasu = sekaix /32 //初期値は7
+        if(jikinomasu>=9){
+            worldOffsetX = (jikinomasu-7)*32
+        //なんとなくはできた
+        //これで、自機をとめる。どうやって？
+        }
 
         for (i in 0 until map.masu.size) {
             for (j in 0 until map.masu[i].size) {
@@ -171,20 +168,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     /*
-    fun mapCreate(canvas:Canvas){
-        // ここにマップを動かすように書く
-        val jikinomasu = sekaix /32
-        if(jikinomasu==9){}
-        worldOffsetX = sekaix
-
-        for (i in 0 until map.masu.size) {
-            for (j in 0 until map.masu[i].size) {
-                map.drawMap(canvas,i,j,map.masShurui(i,j),-worldOffsetX)
-            }
-        }
-    }
-
-
     fun lowcalCheck(houkou:String):Boolean {
         //とりあえずｘマスだけ //ｙはとりあえず１３固定
         val charamasu = worldOffsetCharacterX / map.MASU_SIZE   //キャラの世界位置
