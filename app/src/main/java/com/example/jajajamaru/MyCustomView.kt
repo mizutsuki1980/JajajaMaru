@@ -21,7 +21,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     var jiki = Jiki(initialJikiX, initialJikiY)
     var controller = Controller()
-    var background = BackGround()
 
     var clickMotionVent1 = ""
     var clickMotionVent2 = ""
@@ -32,30 +31,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     val map = Map()
 
-    //見えないけど、これをもとに障害物にあたってるか判定するキャラクターのｘ、ｙ
-    //マスのXとワールドのX値を別にしないとだめかも
 
-    var worldOffsetCharacterX = map.MASU_SIZE * 7
-    //初期位置は360で、ここが７マス目という計算から始まる
-    //マスの大きさは32だから
-    //-32で１　-64で２　-96で3　-128で4　-160で5　-192で6　-224で7　-256で8　-288で9　-320で10
-    // 　なわけだ
-    //今の自分が何マス目か？というのはif文でわかる、もしくは移動しながらずっと計算しつづける
-    //どっちがいいんだろうか？とりあえず計算することにする。
-
-    //初期位置から+40したら、マスは8目ということになる。
-    //これはjiki.xが400だから８というように出せる
-    //jiki.xが450だから9だ
-
-    //　450/32　なら14マス目、
-    //　あ、違うか。「キャラクターの世界ｘ軸」で出さないと、マス目は出せない。
-    //現在の画面のｘ、ｙは使えないのか。やっぱいるな。sekaix
-
-    //なんでここで決めてしまおう。世界の最左端を「０」として
-    //キャラクターの始まる位置を７マス目
-    //キャラクターの初期sekaixは32＊7　ここを最初にしておこう
-
-
+    var worldOffsetCharacterX = map.MASU_SIZE * 7   //マスサイズ32
     var sekaix = 224    //世界の左端から７マス　32＊7が初期位置
 
     var worldOffsetCharacterY = 0
@@ -75,6 +52,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     //毎フレームで自分がどこのマスにいるのか？の計算がいる
+    //ではワールドマップを動かしてみよう
+    //自分のマスが２こ動いたら、ワールドマップも２こ動くようにしよう
 
     var vYokoPlus = 0f
     fun jikiNoIchiYoko() {
@@ -88,8 +67,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
 
         // 加速がついていると、めりこんで見えてしまう。どーにかできないかなー
+        //まーでもできてるからいっか。
         //移動制限
-        if (sekaix <= 1 || sekaix >= 380) {
+        if (sekaix <= 1 || sekaix >= 800) {
             //まず、ワールド内であるか確認
         } else {
             //ここはワールド内
@@ -104,7 +84,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             vYokoPlus = 0f
         }
 
-        if (sekaix >= 380) {//右端なら
+        if (sekaix >= 800) {//右端なら
             jiki.x -= 10
             sekaix -= 10
             vYokoPlus = 0f
@@ -160,7 +140,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         bgPaint.color = Color.argb(255, 0, 0, 255)   // 背景色
         bgPaint.style = Paint.Style.FILL
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bgPaint)
-        background.draw(canvas)
         mapCreate(canvas)
         jiki.draw(canvas)
         controller.draw(canvas)
@@ -169,13 +148,43 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawBitmap(bitmap, jiki.x.toFloat()-40, jiki.y.toFloat()-45, null)
     }
 
+    //んんん？
+    //自機のｘが増えるのはあくまで画面の中だけ
+    //sekaixがマップを動かす
+    //けれど、自機はどこかで止まってsekaixだけが動くようにしないと、
+    //自機が画面外まで出て行ってしまう。
+    //なんで、自機を制止する、とマップを動かす、というのは同時にやらないとだめ
+    //（もしくは自機は画面中央に固定する。）
+
+    //二段階くらいにわけてやるほうがいいのかな
     fun mapCreate(canvas:Canvas){
+        // ここにマップを動かすように書く
+        val jikinomasu = sekaix /32
+        if(jikinomasu==9){}
+        worldOffsetX = jikinomasu
+
         for (i in 0 until map.masu.size) {
             for (j in 0 until map.masu[i].size) {
                 map.drawMap(canvas,i,j,map.masShurui(i,j),-worldOffsetX)
             }
         }
     }
+
+    /*
+    fun mapCreate(canvas:Canvas){
+        // ここにマップを動かすように書く
+        val jikinomasu = sekaix /32
+        if(jikinomasu==9){}
+        worldOffsetX = sekaix
+
+        for (i in 0 until map.masu.size) {
+            for (j in 0 until map.masu[i].size) {
+                map.drawMap(canvas,i,j,map.masShurui(i,j),-worldOffsetX)
+            }
+        }
+    }
+
+
     fun lowcalCheck(houkou:String):Boolean {
         //とりあえずｘマスだけ //ｙはとりあえず１３固定
         val charamasu = worldOffsetCharacterX / map.MASU_SIZE   //キャラの世界位置
@@ -200,7 +209,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             else -> { return true}
         }
     }
-
+    */
 
     var clickNitenmeX = 0
     var clickNitenmeY = 0
