@@ -33,7 +33,31 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     val map = Map()
 
     //見えないけど、これをもとに障害物にあたってるか判定するキャラクターのｘ、ｙ
+    //マスのXとワールドのX値を別にしないとだめかも
+
     var worldOffsetCharacterX = map.MASU_SIZE * 7
+    //初期位置は360で、ここが７マス目という計算から始まる
+    //マスの大きさは32だから
+    //-32で１　-64で２　-96で3　-128で4　-160で5　-192で6　-224で7　-256で8　-288で9　-320で10
+    // 　なわけだ
+    //今の自分が何マス目か？というのはif文でわかる、もしくは移動しながらずっと計算しつづける
+    //どっちがいいんだろうか？とりあえず計算することにする。
+
+    //初期位置から+40したら、マスは8目ということになる。
+    //これはjiki.xが400だから８というように出せる
+    //jiki.xが450だから9だ
+
+    //　450/32　なら14マス目、
+    //　あ、違うか。「キャラクターの世界ｘ軸」で出さないと、マス目は出せない。
+    //現在の画面のｘ、ｙは使えないのか。やっぱいるな。sekaix
+
+    //なんでここで決めてしまおう。世界の最左端を「０」として
+    //キャラクターの始まる位置を７マス目
+    //キャラクターの初期sekaixは32＊7　ここを最初にしておこう
+
+
+    var sekaix = 224    //世界の左端から７マス　32＊7が初期位置
+
     var worldOffsetCharacterY = 0
 
 
@@ -48,7 +72,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
 
-
+    //毎フレームで自分がどこのマスにいるのか？の計算がいる
 
     var vYokoPlus = 0f
     fun jikiNoIchiYoko(){
@@ -57,8 +81,19 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(kasokudo > 3f){kasokudo = 3f}
         if(kasokudo < -3f){kasokudo = -3f}
         vYokoPlus = vYokoPlus + kasokudo
-        jiki.x += vYokoPlus.toInt()
+
+        //移動制限
+        if(sekaix<=1) {
+            //止めたはいいが、動かなくなった
+            jiki.x +=10
+            sekaix +=10
+            //これだとすり抜けてしまうなー、どうしよう
+        }else{
+            jiki.x += vYokoPlus.toInt()
+            sekaix += vYokoPlus.toInt()
+        }
     }
+
     fun kasokudoYoko(houkou:String):Float {
         when (houkou) {
             "migi" -> {return 5.0f }

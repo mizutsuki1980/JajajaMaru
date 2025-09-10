@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.wcyLabel).text=custom.worldOffsetCharacterY.toString()
         findViewById<TextView>(R.id.c1houkouLabel).text=custom.controller.houkou.toString()
         findViewById<TextView>(R.id.c2houkouLabel).text=custom.nitenmeButton.toString()
+        findViewById<TextView>(R.id.sekaixLabel).text=custom.sekaix.toString()
 
         handler.postDelayed( { mainTsugiNoSyori() }, 100)
     }

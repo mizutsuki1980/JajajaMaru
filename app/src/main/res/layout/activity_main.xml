@@ -114,6 +114,12 @@
         android:layout_height="wrap_content"
         android:text="Button" />
 
+    <TextView
+        android:id="@+id/sekaixLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
     <com.example.jajajamaru.MyCustomView
         android:id="@+id/mycustom"
         android:layout_width="match_parent"
