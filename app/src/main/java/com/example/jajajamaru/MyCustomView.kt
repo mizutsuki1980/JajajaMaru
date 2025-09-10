@@ -50,6 +50,32 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
 
+    //いや、なんかマス目方式ではダメな気がしてきた。
+    //sekaixを基に１マスじゃなくてｘを基にマップを描画しないと
+    //なんかカクカクしちゃうんじゃないかな。
+    //だから、自分の周りにバブルみたいな数値をもっていてい
+    //それが画面左端、右端にあたると画面ごと移動する、
+    //というような感じなのかな。
+
+    var jikinomasu = 7  //初期値は7
+
+
+
+    fun mapCreate(canvas:Canvas){
+         jikinomasu = sekaix /32 //初期値は7
+        if(jikinomasu>=9){
+            worldOffsetX = (jikinomasu-7)*32
+            //なんとなくはできた
+            //これで、自機をとめる。どうやって？
+        }
+
+        for (i in 0 until map.masu.size) {
+            for (j in 0 until map.masu[i].size) {
+                map.drawMap(canvas,i,j,map.masShurui(i,j),-worldOffsetX)
+            }
+        }
+    }
+
 
     //毎フレームで自分がどこのマスにいるのか？の計算がいる
     //ではワールドマップを動かしてみよう
@@ -150,21 +176,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusan, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, jiki.x.toFloat()-40, jiki.y.toFloat()-45, null)
-    }
-
-   fun mapCreate(canvas:Canvas){
-        val jikinomasu = sekaix /32 //初期値は7
-        if(jikinomasu>=9){
-            worldOffsetX = (jikinomasu-7)*32
-        //なんとなくはできた
-        //これで、自機をとめる。どうやって？
-        }
-
-        for (i in 0 until map.masu.size) {
-            for (j in 0 until map.masu[i].size) {
-                map.drawMap(canvas,i,j,map.masShurui(i,j),-worldOffsetX)
-            }
-        }
     }
 
     /*
