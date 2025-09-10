@@ -64,6 +64,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun syokikaGameReset(){
         isJump = false
         jiki = Jiki(initialJikiX, initialJikiY)
+        sekaix = 224
+
     }
 
     fun beginAnimation() {
@@ -84,10 +86,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         //移動制限
         if(sekaix<=1) {
-            //止めたはいいが、動かなくなった
-            jiki.x +=10
-            sekaix +=10
-            //これだとすり抜けてしまうなー、どうしよう
+            jiki.x ++
+            sekaix ++
+            vYokoPlus = 0f
         }else{
             jiki.x += vYokoPlus.toInt()
             sekaix += vYokoPlus.toInt()
