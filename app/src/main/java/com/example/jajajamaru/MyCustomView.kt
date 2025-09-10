@@ -77,24 +77,39 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     //毎フレームで自分がどこのマスにいるのか？の計算がいる
 
     var vYokoPlus = 0f
-    fun jikiNoIchiYoko(){
+    fun jikiNoIchiYoko() {
         var kasokudo = kasokudoYoko(controller.houkou)
         //速度制限
-        if(kasokudo > 3f){kasokudo = 3f}
-        if(kasokudo < -3f){kasokudo = -3f}
-        vYokoPlus = vYokoPlus + kasokudo
+        if (kasokudo > 3f) {
+            kasokudo = 3f
+        }
+        if (kasokudo < -3f) {
+            kasokudo = -3f
+        }
 
+        // 加速がついていると、めりこんで見えてしまう。どーにかできないかなー
         //移動制限
-        if(sekaix<=1) {
-            jiki.x ++
-            sekaix ++
-            vYokoPlus = 0f
-        }else{
+        if (sekaix <= 1 || sekaix >= 380) {
+            //まず、ワールド内であるか確認
+        } else {
+            //ここはワールド内
+            vYokoPlus = vYokoPlus + kasokudo
             jiki.x += vYokoPlus.toInt()
             sekaix += vYokoPlus.toInt()
         }
-    }
 
+        if (sekaix <= 1) {//左端なら
+            jiki.x += 10
+            sekaix += 10
+            vYokoPlus = 0f
+        }
+
+        if (sekaix >= 380) {//右端なら
+            jiki.x -= 10
+            sekaix -= 10
+            vYokoPlus = 0f
+        }
+    }
     fun kasokudoYoko(houkou:String):Float {
         when (houkou) {
             "migi" -> {return 5.0f }
