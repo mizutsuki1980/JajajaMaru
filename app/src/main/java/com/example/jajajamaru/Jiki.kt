@@ -8,7 +8,6 @@ class Jiki(var x:Int, var y:Int) {
     val ookisa = 100
     val iro = Paint()
 
-    var isJump = false
     var motoTakasa = y
 
     val NORMAL_STATE = 1
@@ -38,5 +37,26 @@ class Jiki(var x:Int, var y:Int) {
     fun draw(canvas: Canvas){
         canvas.drawCircle(x.toFloat(),(y).toFloat(),(ookisa/2).toFloat(),iro) //自機の描画
     }
+
+    var isJump = false
+    var vJump = 0f
+
+    fun kasokudoJump():Float {
+        return -5.0f
+    }
+    fun jumpSyori(controller: Controller){
+        if(controller.houkou=="jump"){
+            if(isJump==false){
+                isJump=true
+                vJump = 50f
+                y -= vJump.toInt()
+            }
+        }
+        if(isJump) {
+            vJump = vJump + kasokudoJump()
+            y -= vJump.toInt()
+        }
+    }
+
 
 }

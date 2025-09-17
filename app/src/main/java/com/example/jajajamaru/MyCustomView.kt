@@ -15,26 +15,18 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickState = "nashi"
     val initialJikiX = 360 //初期位置
     val initialJikiY = 500 //初期位置
-
     var clickX = initialJikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
-
     var jiki = Jiki(initialJikiX, initialJikiY)
     var controller = Controller()
-
     var clickMotionVent1 = ""
     var clickMotionVent2 = ""
     var clickMotionVent3 = ""
-
     var worldOffsetX = 0
     var worldOffsetY = 0
-
     val map = Map()
-
-
     var worldOffsetCharacterX = map.MASU_SIZE * 7   //マスサイズ32
     var sekaix = 224    //世界の左端から７マス　32＊7が初期位置
-
     var worldOffsetCharacterY = 0
 
 
@@ -50,13 +42,15 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         tsugiNoSyori()  //最初に一回だけ呼ばれる
     }
 
-    var jikinomasu = 7  //初期値は7
-    fun mapCreate(canvas:Canvas){
-        for (i in 0 until map.masu.size) {
-            for (j in 0 until map.masu[i].size) {
-                map.drawMap(canvas,i,j,map.masShurui(i,j),-worldOffsetX)
-            }
-        }
+    fun tsugiNoSyori() {
+        controller.clickPointCheck(clickX,clickY,clickState)
+        jikiIdoYoko()    //横方向　課題用
+        jiki.jumpSyori(controller)
+
+//        jikiNoIchiJump()    //縦方向  ジャンプ
+        frame += 1  //繰り返し処理はここでやってる
+        invalidate()
+        handler.postDelayed({ tsugiNoSyori() }, 100)
     }
 
 
@@ -82,6 +76,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //var syougaibutuCheck = syougaibutuHantei(vYokoPlusCheckyou)
         var syougaibutuCheck=true
         val genzaitiCheck = true //syougaibutuHantei(sekaix.toFloat())
+
+
         if(genzaitiCheck){}else{syougaibutuCheck=false}
         if(syougaibutuCheck) {
             vYokoPlus = vYokoPlus + kasokudo
@@ -123,6 +119,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
 
+    //ジャンプ処理
     var isJump = false
     var vJump = 0f
     fun kasokudoJump():Float {
@@ -142,20 +139,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
     }
 
-    fun tsugiNoSyori() {
-        controller.clickPointCheck(clickX,clickY,clickState)
-        jikiIdoYoko()    //横方向　課題用
-        jikiNoIchiJump()    //縦方向  ジャンプ
-        frame += 1  //繰り返し処理はここでやってる
-        invalidate()
-        handler.postDelayed({ tsugiNoSyori() }, 100)
-    }
-
-
-
-
-
-
 
     override fun onDraw(canvas: Canvas) {
         val bgPaint = Paint()
@@ -165,37 +148,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         mapCreate(canvas)
         jiki.draw(canvas)
         controller.draw(canvas)
-
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusan, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, jiki.x.toFloat()-40, jiki.y.toFloat()-45, null)
     }
-
-    /*
-    fun lowcalCheck(houkou:String):Boolean {
-        //とりあえずｘマスだけ //ｙはとりあえず１３固定
-        val charamasu = worldOffsetCharacterX / map.MASU_SIZE   //キャラの世界位置
-        when (houkou) {
-            "migi" -> {
-                //if(jiki.isJump){return true}
-
-                if (map.masu[13][charamasu + 3] == 1) {
-                    return false
-                } else {
-                    return true
-                }
-            }
-            "hidari" -> {            //リストにない[-1]とか取り出そうとすると、強制終了をくらう。
-                //if(jiki.isJump){return true}
-                if (map.masu[13][charamasu - 1] == 1) {
-                    return false
-                } else {
-                    return true
-                }
-            }
-            else -> { return true}
-        }
-    }
-    */
 
     var clickNitenmeX = 0
     var clickNitenmeY = 0
@@ -249,5 +204,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         return super.onTouchEvent(event)
     }
+
+    fun mapCreate(canvas:Canvas){
+        for (i in 0 until map.masu.size) {
+            for (j in 0 until map.masu[i].size) {
+                map.drawMap(canvas,i,j,map.masShurui(i,j),-worldOffsetX)
+            }
+        }
+    }
+
 }
 
