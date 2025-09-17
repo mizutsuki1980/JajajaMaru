@@ -32,7 +32,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun syokikaGameReset(){
         jiki = Jiki(initialJikiX, initialJikiY)
         vYokoPlus = 0f
-        worldOffsetX = 0
+        worldOffsetX = 0    //いる
     }
 
     fun beginAnimation() {
