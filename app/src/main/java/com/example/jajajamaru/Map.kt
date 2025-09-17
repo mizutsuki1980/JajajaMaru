@@ -49,25 +49,18 @@ class Map {
         val iro = Paint()
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 30, 30, 30)
-
         when (masushurui) {
             TYPE_SORA -> { iro.color = argb(255, 155, 155, 250) }
             TYPE_ISHI -> { iro.color = argb(255, 80, 80, 80)}
         }
-        canvas.drawRect(shikakuRectXY(100+MASU_SIZE*col+worldOffsetX,100+MASU_SIZE*row,MASU_SIZE),iro)
+        //ここまでは色の設定
+
+        //worldOffsetXってのは？
+        val xx = 100+MASU_SIZE*col+worldOffsetX
+        val yy = 100+MASU_SIZE*row
+        canvas.drawRect(shikakuRectXY(xx,yy,MASU_SIZE),iro)
+
     }
-    /*
-    fun drawMap(canvas: Canvas,row:Int,col:Int,masushurui:Int,worldOffsetX: Int){
-        val iro = Paint()
-        iro.style = Paint.Style.FILL
-        iro.color = argb(255, 30, 30, 30)
-        when (masushurui) {
-            TYPE_SORA -> { iro.color = argb(255, 155, 155, 250) }
-            TYPE_ISHI -> { iro.color = argb(255, 80, 80, 80)}
-         }
-        canvas.drawRect(shikakuRectXY(100+MASU_SIZE*col+worldOffsetX,100+MASU_SIZE*row,MASU_SIZE),iro) //自機の描画
-    }
-    */
 
     fun shikakuRectXY(x:Int,y:Int,ookisa:Int): Rect {
         val left = x  - ookisa / 2

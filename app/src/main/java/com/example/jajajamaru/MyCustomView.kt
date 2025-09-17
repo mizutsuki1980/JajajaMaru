@@ -42,32 +42,17 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         isJump = false
         jiki = Jiki(initialJikiX, initialJikiY)
         sekaix = 224
-
+        vYokoPlus = 0f
     }
 
     fun beginAnimation() {
         tsugiNoSyori()  //最初に一回だけ呼ばれる
     }
 
-
-    //いや、なんかマス目方式ではダメな気がしてきた。
-    //sekaixを基に１マスじゃなくてｘを基にマップを描画しないと
-    //なんかカクカクしちゃうんじゃないかな。
-    //だから、自分の周りにバブルみたいな数値をもっていてい
-    //それが画面左端、右端にあたると画面ごと移動する、
-    //というような感じなのかな。
-
     var jikinomasu = 7  //初期値は7
-
-
-
     fun mapCreate(canvas:Canvas){
-         jikinomasu = sekaix /32 //初期値は7
-        if(jikinomasu>=9){
-            worldOffsetX = (jikinomasu-7)*32
-            //なんとなくはできた
-            //これで、自機をとめる。どうやって？
-        }
+
+      //  マップをどれだけうごかすか？　ここで引数を渡してマップをずらせばいいのでは？
 
         for (i in 0 until map.masu.size) {
             for (j in 0 until map.masu[i].size) {
@@ -76,23 +61,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
     }
 
-
-    //毎フレームで自分がどこのマスにいるのか？の計算がいる
-    //ではワールドマップを動かしてみよう
-    //自分のマスが２こ動いたら、ワールドマップも２こ動くようにしよう
-
-    var migiGamenGotoIdo = false
-    var hidariGamenGotoIdo = false
     var vYokoPlus = 0f
     fun jikiNoIchiYoko() {
         var kasokudo = kasokudoYoko(controller.houkou)
-        //速度制限
-        if (kasokudo > 3f) {
-            kasokudo = 3f
-        }
-        if (kasokudo < -3f) {
-            kasokudo = -3f
-        }
+        //速度制限　//カクカク対策
+        if (kasokudo > 3f) { kasokudo = 3f }
+        if (kasokudo < -3f) { kasokudo = -3f }
+
         //画面による制限
 
         //〇〇〇〇〇ここに画面が左端、右端だったら、というように書く
@@ -100,22 +75,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //移動制限
         if (sekaix <= 1 || sekaix >= 800) {
             //まず、ワールド内であるか確認
+            //ここはワールド外
         } else {
             //ここはワールド内
             vYokoPlus = vYokoPlus + kasokudo
-            jiki.x += vYokoPlus.toInt()
+            //jiki.x += vYokoPlus.toInt() //jiki.xも動くと、倍うごくことになってしまう。
+            //なんでjiki.xは１０くらいまでしかうごかないようにする。
+            worldOffsetX += vYokoPlus.toInt()
             sekaix += vYokoPlus.toInt()
-        }
-
-        if (sekaix <= 1) {//左端なら
-            jiki.x += 10
-            sekaix += 10
-            vYokoPlus = 0f
-        }
-        if (sekaix >= 800) {//右端なら
-            jiki.x -= 10
-            sekaix -= 10
-            vYokoPlus = 0f
         }
     }
 
