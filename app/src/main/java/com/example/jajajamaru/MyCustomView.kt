@@ -38,7 +38,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun tsugiNoSyori() {
         controller.clickPointCheck(clickX,clickY,clickState)
-        jikiIdoYoko()    //横方向　課題用
+ //       jikiIdoYoko()    //横方向　課題用
+        jiki.jikiYokoIdo(controller)
         jiki.jumpSyori(controller)
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
@@ -122,6 +123,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusan, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, jiki.x.toFloat()-40, jiki.y.toFloat()-45, null)
     }
+    fun mapCreate(canvas:Canvas){
+        for (i in 0 until map.masu.size) {
+            for (j in 0 until map.masu[i].size) {
+                map.drawMap(canvas,i,j,map.masShurui(i,j),-jiki.worldOffsetX)
+            }
+        }
+    }
 
     var clickNitenmeX = 0
     var clickNitenmeY = 0
@@ -175,14 +183,5 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         return super.onTouchEvent(event)
     }
-
-    fun mapCreate(canvas:Canvas){
-        for (i in 0 until map.masu.size) {
-            for (j in 0 until map.masu[i].size) {
-                map.drawMap(canvas,i,j,map.masShurui(i,j),-jiki.worldOffsetX)
-            }
-        }
-    }
-
 }
 
