@@ -62,10 +62,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun syougaibutuHantei(vYokoPlusCheckyou: Float):Boolean{
         //自機は右と左にそれぞれ幅がある。それを考慮しないといけない。とりあえずはそのままいく。
-
         val checksekaix = sekaix + vYokoPlusCheckyou.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
         var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
-        val checkMasuSyurui = map.masu[13][checkBlock]  //チェックするマスの特定
+
+        val checkMasuSyurui = map.masu[13][checkBlock+1]  //listは０から　// チェックするマスの特定
 
         when(checkMasuSyurui){
             0 -> { return true }
@@ -81,11 +81,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun jikiNoIchiYoko() {
         val kasokudo = kasokudoYoko(controller.houkou)
         val vYokoPlusCheckyou = vYokoPlus + kasokudo
-        val syougaibutuCheck = syougaibutuHantei(vYokoPlusCheckyou)
+        var syougaibutuCheck = syougaibutuHantei(vYokoPlusCheckyou)
+        val genzaitiCheck = syougaibutuHantei(sekaix.toFloat())
+        if(genzaitiCheck){}else{syougaibutuCheck=false}
 
         if(syougaibutuCheck) {
             vYokoPlus = vYokoPlus + kasokudo
-
             //速度制限
             if(vYokoPlus>=50){ vYokoPlus = 50f}
             if(vYokoPlus<=-50){ vYokoPlus = -50f}
@@ -101,7 +102,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                     }
                 }
             }
-
             if (controller.houkou == "hidari") {
                 if (vYokoPlus < 0) {
                     if (jiki.x >= 300) {
