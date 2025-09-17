@@ -43,6 +43,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jiki = Jiki(initialJikiX, initialJikiY)
         sekaix = 224
         vYokoPlus = 0f
+        worldOffsetX = 0
     }
 
     fun beginAnimation() {
@@ -51,9 +52,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     var jikinomasu = 7  //初期値は7
     fun mapCreate(canvas:Canvas){
-
-      //  マップをどれだけうごかすか？　ここで引数を渡してマップをずらせばいいのでは？
-
         for (i in 0 until map.masu.size) {
             for (j in 0 until map.masu[i].size) {
                 map.drawMap(canvas,i,j,map.masShurui(i,j),-worldOffsetX)
@@ -69,21 +67,38 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if (kasokudo < -3f) { kasokudo = -3f }
 
         //画面による制限
-
-        //〇〇〇〇〇ここに画面が左端、右端だったら、というように書く
-
         //移動制限
+        /*
         if (sekaix <= 1 || sekaix >= 800) {
             //まず、ワールド内であるか確認
             //ここはワールド外
         } else {
             //ここはワールド内
+        }
+        */
+
             vYokoPlus = vYokoPlus + kasokudo
             //jiki.x += vYokoPlus.toInt() //jiki.xも動くと、倍うごくことになってしまう。
             //なんでjiki.xは１０くらいまでしかうごかないようにする。
             worldOffsetX += vYokoPlus.toInt()
-            sekaix += vYokoPlus.toInt()
+            sekaix += vYokoPlus.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
+
+    //とりあえず、ここでjikixも足しちゃう    。んである範囲をこえたらjikixは変わらないようにする
+// 方向性はあっていると思う
+        if(jiki.x <=400){
+            jiki.x += vYokoPlus.toInt()
+        }else{
+            jiki.x = 399
+
         }
+
+        //            if(jiki.x >=50){jiki.x = 51}
+
+    //sekaixには自機の世界におけるｘが入っている。
+
+    //jiki.xは画面内での自機の位置
+
+
     }
 
 
