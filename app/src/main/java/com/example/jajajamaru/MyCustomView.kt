@@ -66,13 +66,15 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val checksekaix = sekaix + vYokoPlusCheckyou.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
         var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
         val checkMasuSyurui = map.masu[13][checkBlock]  //チェックするマスの特定
-        if(checkMasuSyurui==0){ return true }
 
-        if(checkMasuSyurui==1){
-            vYokoPlus = 0f
-            return false
+        when(checkMasuSyurui){
+            0 -> { return true }
+            1 -> {
+                vYokoPlus = 0f
+                return false
+            }
+            else ->{return true }
         }
-        return true
     }
 
     var vYokoPlus = 0f  //速度に相当するもの
