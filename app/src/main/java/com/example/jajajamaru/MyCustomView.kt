@@ -64,9 +64,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         //自機は右と左にそれぞれ幅がある。それを考慮しないといけない。とりあえずはそのままいく。
         val checksekaix = sekaix + vYokoPlusCheckyou.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
         var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
-
         val checkMasuSyurui = map.masu[13][checkBlock+1]  //listは０から　// チェックするマスの特定
-
         when(checkMasuSyurui){
             0 -> { return true }
             1 -> {
@@ -78,41 +76,38 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     var vYokoPlus = 0f  //速度に相当するもの
-    fun jikiNoIchiYoko() {
+    fun jikiIdoYoko() {
         val kasokudo = kasokudoYoko(controller.houkou)
         val vYokoPlusCheckyou = vYokoPlus + kasokudo
         var syougaibutuCheck = syougaibutuHantei(vYokoPlusCheckyou)
         val genzaitiCheck = syougaibutuHantei(sekaix.toFloat())
         if(genzaitiCheck){}else{syougaibutuCheck=false}
-
         if(syougaibutuCheck) {
             vYokoPlus = vYokoPlus + kasokudo
             //速度制限
             if(vYokoPlus>=50){ vYokoPlus = 50f}
             if(vYokoPlus<=-50){ vYokoPlus = -50f}
-
-
             worldOffsetX += vYokoPlus.toInt()
             sekaix += vYokoPlus.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
-
-            if (controller.houkou == "migi") {
-                if (vYokoPlus > 0) {
-                    if (jiki.x <= 400) {
-                        jiki.x += vYokoPlus.toInt()
-                    }
+            migihidariCharaGamenIdoSeigen()
+        }
+    }
+    private fun migihidariCharaGamenIdoSeigen() {
+        if (controller.houkou == "migi") {
+            if (vYokoPlus > 0) {
+                if (jiki.x <= 400) {
+                    jiki.x += vYokoPlus.toInt()
                 }
             }
-            if (controller.houkou == "hidari") {
-                if (vYokoPlus < 0) {
-                    if (jiki.x >= 300) {
-                        jiki.x += vYokoPlus.toInt()
-                    }
+        }
+        if (controller.houkou == "hidari") {
+            if (vYokoPlus < 0) {
+                if (jiki.x >= 300) {
+                    jiki.x += vYokoPlus.toInt()
                 }
             }
         }
     }
-
-
 
 
     fun kasokudoYoko(houkou:String):Float {
@@ -147,7 +142,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun tsugiNoSyori() {
         controller.clickPointCheck(clickX,clickY,clickState)
-        jikiNoIchiYoko()    //横方向　課題用
+        jikiIdoYoko()    //横方向　課題用
         jikiNoIchiJump()    //縦方向  ジャンプ
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
