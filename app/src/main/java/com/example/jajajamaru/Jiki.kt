@@ -7,6 +7,7 @@ import android.graphics.Paint
 class Jiki(var x:Int, var y:Int) {
     val ookisa = 100
     val iro = Paint()
+    var sekaix = 224    //世界の左端から７マス　32＊7が初期位置
 
     var motoTakasa = y
 

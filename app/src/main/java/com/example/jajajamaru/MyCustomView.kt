@@ -26,14 +26,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var worldOffsetY = 0
     val map = Map()
     var worldOffsetCharacterX = map.MASU_SIZE * 7   //マスサイズ32
-    var sekaix = 224    //世界の左端から７マス　32＊7が初期位置
     var worldOffsetCharacterY = 0
 
 
     fun syokikaGameReset(){
-        isJump = false
         jiki = Jiki(initialJikiX, initialJikiY)
-        sekaix = 224
         vYokoPlus = 0f
         worldOffsetX = 0
     }
@@ -46,8 +43,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         controller.clickPointCheck(clickX,clickY,clickState)
         jikiIdoYoko()    //横方向　課題用
         jiki.jumpSyori(controller)
-
-//        jikiNoIchiJump()    //縦方向  ジャンプ
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
         handler.postDelayed({ tsugiNoSyori() }, 100)
@@ -56,7 +51,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun syougaibutuHantei(vYokoPlusCheckyou: Float):Boolean{
         //自機は右と左にそれぞれ幅がある。それを考慮しないといけない。とりあえずはそのままいく。
-        val checksekaix = sekaix + vYokoPlusCheckyou.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
+        val checksekaix = jiki.sekaix + vYokoPlusCheckyou.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
         var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
         val checkMasuSyurui = map.masu[13][checkBlock+1]  //listは０から　// チェックするマスの特定
         when(checkMasuSyurui){
@@ -85,7 +80,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             if(vYokoPlus>=50){ vYokoPlus = 50f}
             if(vYokoPlus<=-50){ vYokoPlus = -50f}
             worldOffsetX += vYokoPlus.toInt()
-            sekaix += vYokoPlus.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
+            jiki.sekaix += vYokoPlus.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
             migihidariCharaGamenIdoSeigen()
         }
     }
@@ -115,27 +110,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             "nashi" -> { if (vYokoPlus == 0f) { return 0.0f }
                 if (vYokoPlus > 0) { return -2.5f } else { return 2.5f } }
             else -> return 0f
-        }
-    }
-
-
-    //ジャンプ処理
-    var isJump = false
-    var vJump = 0f
-    fun kasokudoJump():Float {
-        return -5.0f
-    }
-    fun jikiNoIchiJump(){
-        if(controller.houkou=="jump"){
-            if(isJump==false){
-                isJump=true
-                vJump = 50f
-                jiki.y -= vJump.toInt()
-            }
-        }
-        if(isJump) {
-            vJump = vJump + kasokudoJump()
-            jiki.y -= vJump.toInt()
         }
     }
 
