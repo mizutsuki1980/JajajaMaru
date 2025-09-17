@@ -29,7 +29,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun syokikaGameReset(){
         jiki = Jiki(initialJikiX, initialJikiY)
-        vYokoPlus = 0f
     }
 
     fun beginAnimation() {
@@ -38,7 +37,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun tsugiNoSyori() {
         controller.clickPointCheck(clickX,clickY,clickState)
- //       jikiIdoYoko()    //横方向　課題用
         jiki.jikiYokoIdo(controller)
         jiki.jumpSyori(controller)
         frame += 1  //繰り返し処理はここでやってる
@@ -55,61 +53,15 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         when(checkMasuSyurui){
             0 -> { return true }
             1 -> {
-                vYokoPlus = 0f
+                jiki.vYokoPlus = 0f
                 return false
             }
             else ->{return true }
         }
     }
 
-    var vYokoPlus = 0f  //速度に相当するもの
-    fun jikiIdoYoko() {
-        val kasokudo = kasokudoYoko(controller.houkou)
-        //val vYokoPlusCheckyou = vYokoPlus + kasokudo
-        //var syougaibutuCheck = syougaibutuHantei(vYokoPlusCheckyou)
-        var syougaibutuCheck=true
-        val genzaitiCheck = true //syougaibutuHantei(sekaix.toFloat())
 
 
-        if(genzaitiCheck){}else{syougaibutuCheck=false}
-        if(syougaibutuCheck) {
-            vYokoPlus = vYokoPlus + kasokudo
-            //速度制限
-            if(vYokoPlus>=50){ vYokoPlus = 50f}
-            if(vYokoPlus<=-50){ vYokoPlus = -50f}
-            jiki.worldOffsetX += vYokoPlus.toInt()
-            jiki.sekaix += vYokoPlus.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
-            migihidariCharaGamenIdoSeigen()
-        }
-    }
-
-    private fun migihidariCharaGamenIdoSeigen() {
-        if (controller.houkou == "migi") {
-            if (vYokoPlus > 0) {
-                if (jiki.x <= 400) {
-                    jiki.x += vYokoPlus.toInt()
-                }
-            }
-        }
-        if (controller.houkou == "hidari") {
-            if (vYokoPlus < 0) {
-                if (jiki.x >= 300) {
-                    jiki.x += vYokoPlus.toInt()
-                }
-            }
-        }
-    }
-
-
-    fun kasokudoYoko(houkou:String):Float {
-        when (houkou) {
-            "migi" -> {return 5.0f }
-            "hidari" -> { return -5.0f }
-            "nashi" -> { if (vYokoPlus == 0f) { return 0.0f }
-                if (vYokoPlus > 0) { return -2.5f } else { return 2.5f } }
-            else -> return 0f
-        }
-    }
 
 
     override fun onDraw(canvas: Canvas) {
