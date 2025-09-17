@@ -78,9 +78,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var vYokoPlus = 0f  //速度に相当するもの
     fun jikiIdoYoko() {
         val kasokudo = kasokudoYoko(controller.houkou)
-        val vYokoPlusCheckyou = vYokoPlus + kasokudo
-        var syougaibutuCheck = syougaibutuHantei(vYokoPlusCheckyou)
-        val genzaitiCheck = syougaibutuHantei(sekaix.toFloat())
+        //val vYokoPlusCheckyou = vYokoPlus + kasokudo
+        //var syougaibutuCheck = syougaibutuHantei(vYokoPlusCheckyou)
+        var syougaibutuCheck=true
+        val genzaitiCheck = true //syougaibutuHantei(sekaix.toFloat())
         if(genzaitiCheck){}else{syougaibutuCheck=false}
         if(syougaibutuCheck) {
             vYokoPlus = vYokoPlus + kasokudo
@@ -92,6 +93,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             migihidariCharaGamenIdoSeigen()
         }
     }
+
     private fun migihidariCharaGamenIdoSeigen() {
         if (controller.houkou == "migi") {
             if (vYokoPlus > 0) {
