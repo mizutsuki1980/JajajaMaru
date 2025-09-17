@@ -66,38 +66,25 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if (kasokudo > 3f) { kasokudo = 3f }
         if (kasokudo < -3f) { kasokudo = -3f }
 
-        //画面による制限
-        //移動制限
-        /*
-        if (sekaix <= 1 || sekaix >= 800) {
-            //まず、ワールド内であるか確認
-            //ここはワールド外
-        } else {
-            //ここはワールド内
-        }
-        */
+        vYokoPlus = vYokoPlus + kasokudo
+        worldOffsetX += vYokoPlus.toInt()
+        sekaix += vYokoPlus.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
 
-            vYokoPlus = vYokoPlus + kasokudo
-            //jiki.x += vYokoPlus.toInt() //jiki.xも動くと、倍うごくことになってしまう。
-            //なんでjiki.xは１０くらいまでしかうごかないようにする。
-            worldOffsetX += vYokoPlus.toInt()
-            sekaix += vYokoPlus.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
-
-    //とりあえず、ここでjikixも足しちゃう    。んである範囲をこえたらjikixは変わらないようにする
-// 方向性はあっていると思う
-        if(jiki.x <=400){
-            jiki.x += vYokoPlus.toInt()
-        }else{
-            jiki.x = 399
-
+        if(controller.houkou=="migi") {
+            if (vYokoPlus > 0) {
+                if (jiki.x <= 400) {
+                    jiki.x += vYokoPlus.toInt()
+                }
+            }
         }
 
-        //            if(jiki.x >=50){jiki.x = 51}
-
-    //sekaixには自機の世界におけるｘが入っている。
-
-    //jiki.xは画面内での自機の位置
-
+        if(controller.houkou=="hidari"){
+            if (vYokoPlus < 0) {
+                if (jiki.x >= 300) {
+                    jiki.x += vYokoPlus.toInt()
+                }
+            }
+        }
 
     }
 
