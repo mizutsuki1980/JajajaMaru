@@ -59,34 +59,54 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
     }
 
-    var vYokoPlus = 0f
+
+    fun syougaibutuHantei():Boolean{
+        val checksekaix = sekaix + vYokoPlus.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
+        var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
+        val checkMasuSyurui = map.masu[13][checkBlock]  //チェックするマスの特定
+        if(checkMasuSyurui==0){ return true }
+        if(checkMasuSyurui==1){
+            vYokoPlus = 0f
+            return false
+        }
+        return true
+    }
+
+    var vYokoPlus = 0f  //速度に相当するもの
     fun jikiNoIchiYoko() {
         var kasokudo = kasokudoYoko(controller.houkou)
-        //速度制限　//カクカク対策
+        //速度制限　
         if (kasokudo > 3f) { kasokudo = 3f }
         if (kasokudo < -3f) { kasokudo = -3f }
 
-        vYokoPlus = vYokoPlus + kasokudo
-        worldOffsetX += vYokoPlus.toInt()
-        sekaix += vYokoPlus.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
+        //いきなり足すのではなく、入れるかチェックをする
+        val syougaibutuCheck = syougaibutuHantei()
 
-        if(controller.houkou=="migi") {
-            if (vYokoPlus > 0) {
-                if (jiki.x <= 400) {
-                    jiki.x += vYokoPlus.toInt()
+        if(syougaibutuCheck) {
+            vYokoPlus = vYokoPlus + kasokudo
+
+            worldOffsetX += vYokoPlus.toInt()
+            sekaix += vYokoPlus.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
+
+            if (controller.houkou == "migi") {
+                if (vYokoPlus > 0) {
+                    if (jiki.x <= 400) {
+                        jiki.x += vYokoPlus.toInt()
+                    }
+                }
+            }
+
+            if (controller.houkou == "hidari") {
+                if (vYokoPlus < 0) {
+                    if (jiki.x >= 300) {
+                        jiki.x += vYokoPlus.toInt()
+                    }
                 }
             }
         }
-
-        if(controller.houkou=="hidari"){
-            if (vYokoPlus < 0) {
-                if (jiki.x >= 300) {
-                    jiki.x += vYokoPlus.toInt()
-                }
-            }
-        }
-
     }
+
+
 
 
     fun kasokudoYoko(houkou:String):Float {
