@@ -22,8 +22,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickMotionVent1 = ""
     var clickMotionVent2 = ""
     var clickMotionVent3 = ""
-    var worldOffsetX = 0
-    var worldOffsetY = 0
     val map = Map()
     var worldOffsetCharacterX = map.MASU_SIZE * 7   //マスサイズ32
     var worldOffsetCharacterY = 0
@@ -32,7 +30,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun syokikaGameReset(){
         jiki = Jiki(initialJikiX, initialJikiY)
         vYokoPlus = 0f
-        worldOffsetX = 0    //いる
     }
 
     fun beginAnimation() {
@@ -79,7 +76,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             //速度制限
             if(vYokoPlus>=50){ vYokoPlus = 50f}
             if(vYokoPlus<=-50){ vYokoPlus = -50f}
-            worldOffsetX += vYokoPlus.toInt()
+            jiki.worldOffsetX += vYokoPlus.toInt()
             jiki.sekaix += vYokoPlus.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
             migihidariCharaGamenIdoSeigen()
         }
@@ -182,7 +179,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun mapCreate(canvas:Canvas){
         for (i in 0 until map.masu.size) {
             for (j in 0 until map.masu[i].size) {
-                map.drawMap(canvas,i,j,map.masShurui(i,j),-worldOffsetX)
+                map.drawMap(canvas,i,j,map.masShurui(i,j),-jiki.worldOffsetX)
             }
         }
     }
