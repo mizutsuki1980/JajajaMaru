@@ -59,8 +59,8 @@ class Jiki(var x:Int, var y:Int) {
         if(syougaibutuCheck) {
             vYokoPlus = vYokoPlus + kasokudo
             //速度制限
-            if(vYokoPlus>=50){ vYokoPlus = 50f}
-            if(vYokoPlus<=-50){ vYokoPlus = -50f}
+            if(vYokoPlus>=30){ vYokoPlus = 30f} //１マス以上加速しないことで制限
+            if(vYokoPlus<=-30){ vYokoPlus = -30f} //１マス以上加速しないことで制限
             worldOffsetX += vYokoPlus.toInt()
             sekaix += vYokoPlus.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
             migihidariCharaGamenIdoSeigen(controller)
