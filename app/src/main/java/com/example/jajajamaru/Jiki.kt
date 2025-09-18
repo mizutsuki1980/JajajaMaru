@@ -11,20 +11,10 @@ class Jiki(var x:Int, var y:Int) {
     var worldOffsetX = 0    //いる
     var vYokoPlus = 0f
 
-    var motoTakasa = y
 
-    val NORMAL_STATE = 1
-    val JUMP_UPDOWN_STATE = 2
-    val JUMP_RAKKA_STATE = 3
-    val JUMP_END_STATE = 4
-    var jumpStatus = NORMAL_STATE // 最初はNORMAL_STATE
-
-
-    init{
+    fun draw(canvas: Canvas){
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
-    }
-    fun draw(canvas: Canvas){
         canvas.drawCircle(x.toFloat(),(y).toFloat(),(ookisa/2).toFloat(),iro) //自機の描画
     }
 
@@ -53,9 +43,6 @@ class Jiki(var x:Int, var y:Int) {
         val kasokudo = kasokudoYoko(controller.houkou)
         val vYokoPlusCheckyou = vYokoPlus + kasokudo
         var syougaibutuCheck = syougaibutuHantei(vYokoPlusCheckyou,map)
-
-
-
         if(syougaibutuCheck) {
             vYokoPlus = vYokoPlus + kasokudo
             //速度制限
@@ -65,17 +52,29 @@ class Jiki(var x:Int, var y:Int) {
             sekaix += vYokoPlus.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
             migihidariCharaGamenIdoSeigen(controller)
         }else{
-            //ぶつかった場合　右方向のみ
-            vYokoPlus = 0f
-            worldOffsetX +=  -17    //マスの半分をもどす
-            sekaix += -17
-        //なるほど、ぶつかった場合もsekaixを「ぶつかる直前」まで進めないとだめなのかな
 
+            when (controller.houkou) {
+                "migi" -> {
+                    vYokoPlus = 0f
+                    worldOffsetX +=  -17    //マスの半分をもどす
+                    sekaix += -17
+                }
+                "hidari" -> {
+                    vYokoPlus = 0f
+                    worldOffsetX +=  17    //マスの半分をもどす
+                    sekaix += 17
+                }
+                "nashi" -> { vYokoPlus = 0f }
+                else -> vYokoPlus = 0f
+
+            }
+            //ぶつかった場合　右方向のみ
+        //なるほど、ぶつかった場合もsekaixを「ぶつかる直前」まで進めないとだめなのかな
         }
     }
 
     fun syougaibutuHantei(vYokoPlusCheckyou: Float,map:Map):Boolean{
-
+// ぶつかり判定にjiki.ookisaを加えればいいんじゃないかな
         val checksekaix = sekaix + vYokoPlusCheckyou.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
         var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
         val checkMasuSyurui = map.masu[13][checkBlock+1]  //listは０から!!!
@@ -89,11 +88,6 @@ class Jiki(var x:Int, var y:Int) {
             else ->{checkKekka = true }
         }
         return checkKekka
-        //止まる、けれども、なんかめり込む
-        //ここでは処理はできてるっぽい
-        //じゃ、なんでめりこむのか？
-        //即止めないから？
-        //いや止めてるんだけどなー
     }
 
 
