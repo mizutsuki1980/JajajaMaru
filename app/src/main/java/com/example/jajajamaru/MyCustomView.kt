@@ -50,14 +50,17 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val checksekaix = jiki.sekaix + vYokoPlusCheckyou.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
         var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
         val checkMasuSyurui = map.masu[13][checkBlock+1]  //listは０から　// チェックするマスの特定
+        var checkKekka = false
         when(checkMasuSyurui){
-            0 -> { return true }
+            0 -> { checkKekka = true }
             1 -> {
+                //障害物にあたっている判定
                 jiki.vYokoPlus = 0f
-                return false
+                checkKekka = false
             }
-            else ->{return true }
+            else ->{checkKekka = true }
         }
+        return checkKekka
     }
 
 
