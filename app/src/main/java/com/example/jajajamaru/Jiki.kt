@@ -62,15 +62,11 @@ class Jiki(var x:Int, var y:Int) {
     }
 
 
-    fun jikiYokoIdo(controller: Controller) {
+    fun jikiYokoIdo(controller: Controller,map: Map) {
         val kasokudo = kasokudoYoko(controller.houkou)
-        //val vYokoPlusCheckyou = vYokoPlus + kasokudo
-        //var syougaibutuCheck = syougaibutuHantei(vYokoPlusCheckyou)
-        var syougaibutuCheck=true
-        val genzaitiCheck = true //syougaibutuHantei(sekaix.toFloat())
+        val vYokoPlusCheckyou = vYokoPlus + kasokudo
+        var syougaibutuCheck = syougaibutuHantei(vYokoPlusCheckyou,map)
 
-
-        if(genzaitiCheck){}else{syougaibutuCheck=false}
         if(syougaibutuCheck) {
             vYokoPlus = vYokoPlus + kasokudo
             //速度制限
@@ -81,6 +77,28 @@ class Jiki(var x:Int, var y:Int) {
             migihidariCharaGamenIdoSeigen(controller)
         }
     }
+
+    fun syougaibutuHantei(vYokoPlusCheckyou: Float,map:Map):Boolean{
+        //自機は右と左にそれぞれ幅がある。それを考慮しないといけない。とりあえずはそのままいく。
+
+        val checksekaix = sekaix + vYokoPlusCheckyou.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
+        var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
+        val checkMasuSyurui = map.masu[13][checkBlock+1]  //listは０から!!!
+        var checkKekka = false
+
+        when(checkMasuSyurui){
+            0 -> { checkKekka = true }
+            1 -> {
+                //障害物にあたっている判定
+                vYokoPlus = 0f
+                checkKekka = false
+            }
+            else ->{checkKekka = true }
+        }
+        return checkKekka
+    }
+
+
 
     private fun migihidariCharaGamenIdoSeigen(controller: Controller) {
         if (controller.houkou == "migi") {
@@ -98,8 +116,6 @@ class Jiki(var x:Int, var y:Int) {
             }
         }
     }
-
-
     fun kasokudoYoko(houkou:String):Float {
         when (houkou) {
             "migi" -> {return 5.0f }

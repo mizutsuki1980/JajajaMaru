@@ -37,7 +37,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun tsugiNoSyori() {
         controller.clickPointCheck(clickX,clickY,clickState)
-        jiki.jikiYokoIdo(controller)
+        jiki.jikiYokoIdo(controller,map)
         jiki.jumpSyori(controller)
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
