@@ -24,19 +24,6 @@ class Jiki(var x:Int, var y:Int) {
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
     }
-
-    var jumpFrame = 10
-
-    fun jumpSyori() {
-    }
-
-    fun migiIdo(){
-        x += 0
-    }
-    fun hidariIdo(){
-        x -= 0
-    }
-
     fun draw(canvas: Canvas){
         canvas.drawCircle(x.toFloat(),(y).toFloat(),(ookisa/2).toFloat(),iro) //自機の描画
     }
@@ -78,9 +65,11 @@ class Jiki(var x:Int, var y:Int) {
             sekaix += vYokoPlus.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
             migihidariCharaGamenIdoSeigen(controller)
         }else{
-            //ぶつかった場合
+            //ぶつかった場合　右方向のみ
             vYokoPlus = 0f
-            //なるほど、ぶつかった場合もsekaixを「ぶつかる直前」まで進めないとだめなのかな
+            worldOffsetX +=  -17    //マスの半分をもどす
+            sekaix += -17
+        //なるほど、ぶつかった場合もsekaixを「ぶつかる直前」まで進めないとだめなのかな
 
         }
     }
@@ -91,7 +80,6 @@ class Jiki(var x:Int, var y:Int) {
         var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
         val checkMasuSyurui = map.masu[13][checkBlock+1]  //listは０から!!!
         var checkKekka = false
-
         when(checkMasuSyurui){
             0 -> { checkKekka = true }
             1 -> {
