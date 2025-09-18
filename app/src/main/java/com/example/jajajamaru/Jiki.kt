@@ -67,6 +67,8 @@ class Jiki(var x:Int, var y:Int) {
         val vYokoPlusCheckyou = vYokoPlus + kasokudo
         var syougaibutuCheck = syougaibutuHantei(vYokoPlusCheckyou,map)
 
+
+
         if(syougaibutuCheck) {
             vYokoPlus = vYokoPlus + kasokudo
             //速度制限
@@ -75,11 +77,15 @@ class Jiki(var x:Int, var y:Int) {
             worldOffsetX += vYokoPlus.toInt()
             sekaix += vYokoPlus.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
             migihidariCharaGamenIdoSeigen(controller)
+        }else{
+            //ぶつかった場合
+            vYokoPlus = 0f
+            //なるほど、ぶつかった場合もsekaixを「ぶつかる直前」まで進めないとだめなのかな
+
         }
     }
 
     fun syougaibutuHantei(vYokoPlusCheckyou: Float,map:Map):Boolean{
-        //自機は右と左にそれぞれ幅がある。それを考慮しないといけない。とりあえずはそのままいく。
 
         val checksekaix = sekaix + vYokoPlusCheckyou.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
         var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
@@ -90,12 +96,16 @@ class Jiki(var x:Int, var y:Int) {
             0 -> { checkKekka = true }
             1 -> {
                 //障害物にあたっている判定
-                vYokoPlus = 0f
                 checkKekka = false
             }
             else ->{checkKekka = true }
         }
         return checkKekka
+        //止まる、けれども、なんかめり込む
+        //ここでは処理はできてるっぽい
+        //じゃ、なんでめりこむのか？
+        //即止めないから？
+        //いや止めてるんだけどなー
     }
 
 
