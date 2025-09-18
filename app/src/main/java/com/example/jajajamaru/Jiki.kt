@@ -42,7 +42,7 @@ class Jiki(var x:Int, var y:Int) {
     fun jikiYokoIdo(controller: Controller,map: Map) {
         val kasokudo = kasokudoYoko(controller.houkou)
         val vYokoPlusCheckyou = vYokoPlus + kasokudo
-        var syougaibutuCheck = syougaibutuHantei(vYokoPlusCheckyou,map)
+        var syougaibutuCheck = syougaibutuHantei(vYokoPlusCheckyou,controller,map)
         if(syougaibutuCheck) {
             vYokoPlus = vYokoPlus + kasokudo
             //速度制限
@@ -73,10 +73,18 @@ class Jiki(var x:Int, var y:Int) {
         }
     }
 
-    fun syougaibutuHantei(vYokoPlusCheckyou: Float,map:Map):Boolean{
-// ぶつかり判定にjiki.ookisaを加えればいいんじゃないかな
-        val checksekaix = sekaix + vYokoPlusCheckyou.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
+    fun syougaibutuHantei(vYokoPlusCheckyou: Float, controller: Controller, map:Map):Boolean{
+        var checksekaix = sekaix + vYokoPlusCheckyou.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
+        if (controller.houkou == "migi") {
+            checksekaix += ookisa / 2 //自機のookisaを計算に加える
+        }
+
+        if (controller.houkou == "hidari") {
+            checksekaix -= ookisa / 2 //自機のookisaを計算に加える
+        }
+
         var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
+
         val checkMasuSyurui = map.masu[13][checkBlock+1]  //listは０から!!!
         var checkKekka = false
         when(checkMasuSyurui){
