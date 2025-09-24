@@ -15,7 +15,7 @@ class Jiki(var x:Int, var y:Int) {
     fun draw(canvas: Canvas){
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
-        canvas.drawCircle(x.toFloat(),(y).toFloat(),(ookisa/2).toFloat(),iro) //自機の描画
+            //  canvas.drawCircle(x.toFloat(),(y).toFloat(),(ookisa/2).toFloat(),iro) //自機の描画
     }
 
     var isJump = false
