@@ -55,18 +55,19 @@ class Jiki(var x:Int, var y:Int) {
         sekaix += sekaixPlus
     }
 
-    fun jikiYokoIdo(controller: Controller, map: Map) {
+    fun jikiIdo(controller: Controller, map: Map) {
+        jumpSyori(controller)
+
         val kasokudoX = kasokudoYoko(controller.houkou)
         val checkX = xPlus + kasokudoYoko(controller.houkou)
         var syougaibutuX = false
         var syougaibutuJump = false
-        if (isJump) {
+        if (isJump) {   //ジャンプしてたら横方向の障害物無視
             syougaibutuX = true
-            syougaibutuJump = syougaibutuJump(checkX,controller, map) //この時点では判定だけする
-        } else {
+            syougaibutuJump = syougaiY(checkX,controller, map)
+        } else {    //ジャンプしてなかったら横方向の障害物は有効
             syougaibutuX = syougaibutuHantei(checkX, controller, map)
         }
-
 
         if (syougaibutuX) { //障害物がなかった場合
             xPlus = xPlus + kasokudoX // 速度をプラス
@@ -82,12 +83,14 @@ class Jiki(var x:Int, var y:Int) {
             }
         }
 
-        if (isJump) { if(syougaibutuJump){}else{isJump = false} }
+        if (isJump) { if(syougaibutuJump){
+
+        }else{isJump = false} }
 
     }
 
-    fun syougaibutuJump( vYokoPlusCheckyou:Float,controller: Controller, map:Map):Boolean{
-        var checksekaix = sekaix + vYokoPlusCheckyou.toInt()
+    fun syougaiY(xPlusCheck:Float, controller: Controller, map:Map):Boolean{
+        var checksekaix = sekaix + xPlusCheck.toInt()
         if (controller.houkou == "migi") { checksekaix += ookisa / 2 }
         if (controller.houkou == "hidari") { checksekaix -= ookisa / 2 }
         var checkBlock = checksekaix / 32
