@@ -61,31 +61,33 @@ class Jiki(var x:Int, var y:Int) {
 
         val kasokudoX = kasokudoYoko(controller.houkou)
         val checkX = xPlus + kasokudoYoko(controller.houkou)
-        var syougaibutuX = false
+        var syougaibutuX = true
         var syougaibutuJump = false
 
         jumpSyori(controller)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
 
         if (isJump) {   //ジャンプしてたら横方向の障害物無視
-            syougaibutuX = true
+            syougaibutuX = false
         } else {    //ジャンプしてなかったら横方向の障害物は有効
             syougaibutuX = syougaibutuHantei(checkX, controller, map)
         }
 
-        if (isJump) { syougaibutuJump = syougaiY(checkX,controller, map)} //ジャンプしてたら障害物の位置計算
+        if (isJump) { syougaibutuJump = syougaiY(checkX,controller, map)} //ジャンプしてたら位置計算
 
         if (syougaibutuX) { //障害物がなかった場合
-            xPlus = xPlus + kasokudoX // 速度をプラス
-            if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
-            if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
-            jikiXido(controller)
-        } else { //障害物があった場合
             when (controller.houkou) {
                 "migi" -> { jikiXidoSyougaibutuSyori(-17,-17) }
                 "hidari" -> { jikiXidoSyougaibutuSyori(17,17) }
                 "nashi" -> { xPlus = 0f }
                 else -> xPlus = 0f
             }
+
+        } else { //障害物があった場合
+            xPlus = xPlus + kasokudoX // 速度をプラス
+            if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
+            if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
+            jikiXido(controller)
+
         }
 
         if (isJump) { if(syougaibutuJump){
@@ -138,11 +140,8 @@ class Jiki(var x:Int, var y:Int) {
         val checkMasuSyurui = map.masu[13][checkBlock+1]  //listは０から!!!
         var checkKekka = false
         when(checkMasuSyurui){
-            0 -> { checkKekka = true }
-            1 -> {
-                //障害物にあたっている判定
-                checkKekka = false
-            }
+            0 -> { checkKekka = false }     //障害物にあたっていない判定
+            1 -> { checkKekka = true }     //障害物にあたっている判定
             else ->{checkKekka = true }
         }
         return checkKekka
