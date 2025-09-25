@@ -37,7 +37,11 @@ class Jiki(var x:Int, var y:Int) {
             y -= vJump.toInt()
         }
         //ジャンプの処理はこの辺で行っている。ｙが０地点ならジャンプを終了する、みたいなのを書く
-        
+        if (y >= 500 && y <550){
+            isJump = false
+            vJump = 50f
+            y = 500
+        }
 
 
     }
