@@ -46,8 +46,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun syougaibutuHantei(vYokoPlusCheckyou: Float):Boolean{
-        //自機は右と左にそれぞれ幅がある。それを考慮しないといけない。とりあえずはそのままいく。
-        //１マス分動いてしまうのは、中心点からの比較だから。
 
         val checksekaix = jiki.sekaix + vYokoPlusCheckyou.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
         var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
@@ -78,7 +76,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         mapCreate(canvas)
         jiki.draw(canvas)
         controller.draw(canvas)
-        //画像を水平方向に反転させる、ということができるんだろうな。なんかむずそうだけど。newMatrixとか
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusanpng, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, jiki.x.toFloat()-40, jiki.y.toFloat()-45, null)
     }

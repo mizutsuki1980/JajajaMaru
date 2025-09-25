@@ -43,9 +43,6 @@ class Jiki(var x:Int, var y:Int) {
             vJump = 50f
             y = 500
         }
-        //これを、障害物によって変えるようにする。
-
-
     }
 
 
@@ -54,9 +51,6 @@ class Jiki(var x:Int, var y:Int) {
         val vYokoPlusCheckyou = vYokoPlus + kasokudo
         var syougaibutuCheck = false
         var syougaibutuJump = false
-
-        //まず、ここでジャンプか、ジャンプじゃないか、分ける。
-        // ジャンプじゃないなら、今まで通りの処理でいい。
 
         if (isJump) {
             syougaibutuCheck = true
@@ -100,7 +94,6 @@ class Jiki(var x:Int, var y:Int) {
 
         if (isJump) {
             if(syougaibutuJump){
-             //もしジャンプかつ、障害物に当たってるよ、という判定なら、ここにくる
 
             }else{
                 isJump = false
@@ -110,14 +103,11 @@ class Jiki(var x:Int, var y:Int) {
     }
 
     fun syougaibutuJump( vYokoPlusCheckyou:Float,controller: Controller, map:Map):Boolean{
-        //x,yは既にわかっているわけで、そこから障害物かどうか判定する、
-
         var checksekaix = sekaix + vYokoPlusCheckyou.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
         if (controller.houkou == "migi") { checksekaix += ookisa / 2 }
         if (controller.houkou == "hidari") { checksekaix -= ookisa / 2 }
         var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
         val checkMasuSyuruiX = map.masu[13][checkBlock+1]  //listは０から!!!
-        // ここまでｘのはなし
 
         var checksekaiy = y - vJump.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
         var yBlock = 0
@@ -127,18 +117,6 @@ class Jiki(var x:Int, var y:Int) {
 
 
         val checkMasuSyuruiJump = map.masu[yBlock][checkBlock+1]
-
-
-
-        //ここでｙを含めた障害物をチェックする
-        //横移動との違いは、ｘ、ｙともにチェックする、ということだ。
-
-        //ここでチェックするマスの種類をチェックするが、ｙ方向にも必要となる
-        //１３が変わる？っていうこと？
-        //１３っていうのは５００～４６８っていうことだと思う。
-        //ｙが入っているから
-
-        //checkMasuSyuruiJumpにはMapの１，０が入っている、、、、はず
 
         var checkKekka = false
         when(checkMasuSyuruiJump){
