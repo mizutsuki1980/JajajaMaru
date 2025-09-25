@@ -44,16 +44,15 @@ class Jiki(var x:Int, var y:Int) {
         }
     }
 
-    fun jikiXido(controller: Controller){
+    fun jikiXido(controller: Controller){   //実際にjikiの位置を動かす処理
         worldOffsetX += xPlus.toInt()
         sekaix += xPlus.toInt()
         migihidariCharaGamenIdoSeigen(controller)//画面端で移動を制限
     }
-    fun jikiXidoSyougaibutuSyori( worldOffsetXPlus:Int, sekaixPlus:Int){
-        xPlus = 0f
+    fun jikiXidoSyougaibutuSyori( worldOffsetXPlus:Int, sekaixPlus:Int){    //jikiの位置が当たったら戻す処理
+        xPlus = 0f  //加速はいったん０にする
         worldOffsetX += worldOffsetXPlus    //マスの半分をもどす
         sekaix += sekaixPlus
-
     }
 
     fun jikiYokoIdo(controller: Controller, map: Map) {
@@ -61,7 +60,6 @@ class Jiki(var x:Int, var y:Int) {
         val checkX = xPlus + kasokudoYoko(controller.houkou)
         var syougaibutuX = false
         var syougaibutuJump = false
-
         if (isJump) {
             syougaibutuX = true
             syougaibutuJump = syougaibutuJump(checkX,controller, map) //この時点では判定だけする
