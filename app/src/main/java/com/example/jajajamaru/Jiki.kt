@@ -59,15 +59,17 @@ class Jiki(var x:Int, var y:Int) {
         }
 
         if (syougaibutuX) {
+            //障害物がなかった場合
             xPlus = xPlus + kasokudoX
             //速度制限
             if (xPlus >= 30) { xPlus = 30f } //１マス以上加速しないことで制限
             if (xPlus <= -30) { xPlus = -30f } //１マス以上加速しないことで制限
 
             worldOffsetX += xPlus.toInt()
-            sekaix += xPlus.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
-            migihidariCharaGamenIdoSeigen(controller)
+            sekaix += xPlus.toInt()
+            migihidariCharaGamenIdoSeigen(controller)//画面端で移動を制限
         } else {
+            //障害物があった場合
             when (controller.houkou) {
                 "migi" -> {
                     xPlus = 0f
@@ -99,13 +101,13 @@ class Jiki(var x:Int, var y:Int) {
     }
 
     fun syougaibutuJump( vYokoPlusCheckyou:Float,controller: Controller, map:Map):Boolean{
-        var checksekaix = sekaix + vYokoPlusCheckyou.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
+        var checksekaix = sekaix + vYokoPlusCheckyou.toInt()
         if (controller.houkou == "migi") { checksekaix += ookisa / 2 }
         if (controller.houkou == "hidari") { checksekaix -= ookisa / 2 }
-        var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
-        val checkMasuSyuruiX = map.masu[13][checkBlock+1]  //listは０から!!!
+        var checkBlock = checksekaix / 32
+        val checkMasuSyuruiX = map.masu[13][checkBlock+1]
 
-        var checksekaiy = y - vJump.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
+        var checksekaiy = y - vJump.toInt()
         var yBlock = 0
         if(checksekaiy<=500 && checksekaiy >=468){yBlock = 13}
         if(checksekaiy<=467 && checksekaiy >=436){yBlock = 12}
@@ -118,7 +120,6 @@ class Jiki(var x:Int, var y:Int) {
         when(checkMasuSyuruiJump){
             0 -> { checkKekka = true }
             1 -> {
-                //障害物にあたっている判定
                 checkKekka = false
             }
             else ->{checkKekka = true }
