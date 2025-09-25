@@ -9,13 +9,13 @@ class Jiki(var x:Int, var y:Int) {
     val iro = Paint()
     var sekaix = 224    //世界の左端から７マス　32＊7が初期位置
     var worldOffsetX = 0    //いる
-    var vYokoPlus = 0f
+    var xPlus = 0f
 
 
-    fun draw(canvas: Canvas) {
+    fun draw(canvas: Canvas) {//わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
-        //  canvas.drawCircle(x.toFloat(),(y).toFloat(),(ookisa/2).toFloat(),iro) //自機の描画
+        canvas.drawCircle(x.toFloat(),(y).toFloat(),(ookisa/2).toFloat(),iro)
     }
 
     var isJump = false
@@ -37,7 +37,6 @@ class Jiki(var x:Int, var y:Int) {
             vJump = vJump + kasokudoJump()
             y -= vJump.toInt()
         }
-        //ジャンプの処理はこの辺で行っている。ｙが０地点ならジャンプを終了する、みたいなのを書く
         if (y >= 500 && y < 550) {
             isJump = false
             vJump = 50f
@@ -47,48 +46,45 @@ class Jiki(var x:Int, var y:Int) {
 
 
     fun jikiYokoIdo(controller: Controller, map: Map) {
-        val kasokudo = kasokudoYoko(controller.houkou)
-        val vYokoPlusCheckyou = vYokoPlus + kasokudo
-        var syougaibutuCheck = false
+        val kasokudoX = kasokudoYoko(controller.houkou)
+        val checkX = xPlus + kasokudoYoko(controller.houkou)
+        var syougaibutuX = false
         var syougaibutuJump = false
 
         if (isJump) {
-            syougaibutuCheck = true
-            syougaibutuJump = syougaibutuJump(vYokoPlusCheckyou,controller, map) //この時点では判定だけする
+            syougaibutuX = true
+            syougaibutuJump = syougaibutuJump(checkX,controller, map) //この時点では判定だけする
         } else {
-            syougaibutuCheck = syougaibutuHantei(vYokoPlusCheckyou, controller, map)
+            syougaibutuX = syougaibutuHantei(checkX, controller, map)
         }
 
-        if (syougaibutuCheck) {
-            vYokoPlus = vYokoPlus + kasokudo
+        if (syougaibutuX) {
+            xPlus = xPlus + kasokudoX
             //速度制限
-            if (vYokoPlus >= 30) {
-                vYokoPlus = 30f
-            } //１マス以上加速しないことで制限
-            if (vYokoPlus <= -30) {
-                vYokoPlus = -30f
-            } //１マス以上加速しないことで制限
-            worldOffsetX += vYokoPlus.toInt()
-            sekaix += vYokoPlus.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
+            if (xPlus >= 30) { xPlus = 30f } //１マス以上加速しないことで制限
+            if (xPlus <= -30) { xPlus = -30f } //１マス以上加速しないことで制限
+
+            worldOffsetX += xPlus.toInt()
+            sekaix += xPlus.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
             migihidariCharaGamenIdoSeigen(controller)
         } else {
             when (controller.houkou) {
                 "migi" -> {
-                    vYokoPlus = 0f
+                    xPlus = 0f
                     worldOffsetX += -17    //マスの半分をもどす
                     sekaix += -17
                 }
 
                 "hidari" -> {
-                    vYokoPlus = 0f
+                    xPlus = 0f
                     worldOffsetX += 17    //マスの半分をもどす
                     sekaix += 17
                 }
 
                 "nashi" -> {
-                    vYokoPlus = 0f
+                    xPlus = 0f
                 }
-                else -> vYokoPlus = 0f
+                else -> xPlus = 0f
             }
         }
 
@@ -160,16 +156,16 @@ class Jiki(var x:Int, var y:Int) {
 
     private fun migihidariCharaGamenIdoSeigen(controller: Controller) {
         if (controller.houkou == "migi") {
-            if (vYokoPlus > 0) {
+            if (xPlus > 0) {
                 if (x <= 400) {
-                    x += vYokoPlus.toInt()
+                    x += xPlus.toInt()
                 }
             }
         }
         if (controller.houkou == "hidari") {
-            if (vYokoPlus < 0) {
+            if (xPlus < 0) {
                 if (x >= 300) {
-                    x += vYokoPlus.toInt()
+                    x += xPlus.toInt()
                 }
             }
         }
@@ -178,8 +174,8 @@ class Jiki(var x:Int, var y:Int) {
         when (houkou) {
             "migi" -> {return 5.0f }
             "hidari" -> { return -5.0f }
-            "nashi" -> { if (vYokoPlus == 0f) { return 0.0f }
-                if (vYokoPlus > 0) { return -2.5f } else { return 2.5f } }
+            "nashi" -> { if (xPlus == 0f) { return 0.0f }
+                if (xPlus > 0) { return -2.5f } else { return 2.5f } }
             else -> return 0f
         }
     }

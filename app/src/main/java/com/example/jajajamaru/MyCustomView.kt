@@ -56,7 +56,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             0 -> { checkKekka = true }
             1 -> {
                 //障害物にあたっている判定
-                jiki.vYokoPlus = 0f
+                jiki.xPlus = 0f
                 checkKekka = false
             }
             else ->{checkKekka = true }
