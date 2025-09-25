@@ -61,18 +61,18 @@ class Jiki(var x:Int, var y:Int) {
 
         val kasokudoX = kasokudoYoko(controller.houkou)
         val checkX = xPlus + kasokudoYoko(controller.houkou)
-        var syougaibutuX = true
-        var syougaibutuJump = false
+        var syougaibutuX = false
+        var syougaibutuY = false
 
         jumpSyori(controller)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
 
         if (isJump) {   //ジャンプしてたら横方向の障害物無視
             syougaibutuX = false
         } else {    //ジャンプしてなかったら横方向の障害物は有効
-            syougaibutuX = syougaibutuHantei(checkX, controller, map)
+            syougaibutuX = syougaiX(checkX, controller, map)
         }
 
-        if (isJump) { syougaibutuJump = syougaiY(checkX,controller, map)} //ジャンプしてたら位置計算
+        if (isJump) { syougaibutuY = syougaiY(checkX,controller, map)} //ジャンプしてたら位置計算
 
         if (syougaibutuX) { //障害物がなかった場合
             when (controller.houkou) {
@@ -90,9 +90,7 @@ class Jiki(var x:Int, var y:Int) {
 
         }
 
-        if (isJump) { if(syougaibutuJump){
-
-        }else{isJump = false} }
+        if (isJump) { if(syougaibutuY){ isJump = false} }
 
     }
 
@@ -114,18 +112,16 @@ class Jiki(var x:Int, var y:Int) {
 
         var checkKekka = false
         when(checkMasuSyuruiJump){
-            0 -> { checkKekka = true }
-            1 -> {
-                checkKekka = false
-            }
-            else ->{checkKekka = true }
+            0 -> { checkKekka = false }
+            1 -> { checkKekka = true }
+            else ->{checkKekka = false }
         }
         return checkKekka
     }
 
 
 
-    fun syougaibutuHantei(vYokoPlusCheckyou: Float, controller: Controller, map:Map):Boolean{
+    fun syougaiX(vYokoPlusCheckyou: Float, controller: Controller, map:Map):Boolean{
         var checksekaix = sekaix + vYokoPlusCheckyou.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
         if (controller.houkou == "migi") {
             checksekaix += ookisa / 2 //自機のookisaを計算に加える
