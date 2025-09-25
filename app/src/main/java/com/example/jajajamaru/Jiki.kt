@@ -46,11 +46,23 @@ class Jiki(var x:Int, var y:Int) {
 
     }
 
-    fun jikiXido(controller: Controller){   //実際にjikiの位置を動かす処理
-        worldOffsetX += xPlus.toInt()
-        sekaix += xPlus.toInt()
-        migihidariCharaGamenIdoSeigen(controller)//画面端で移動を制限
+    fun charaWorldIdoSeigen(controller: Controller): Boolean {
+        val checkWorldOffsetX = worldOffsetX + xPlus.toInt()
+        if (checkWorldOffsetX >= 100 && checkWorldOffsetX <= 12400) {
+            return true
+        } else {
+            xPlus = 0f  //加速はいったん０にする
+            return false
+        }
     }
+
+
+    fun jikiXido(controller: Controller){   //実際にjikiの位置を動かす処理
+        CharaCameraIdoSeigen(controller)//キャラクターのカメラワークで画面内を制限
+//        if(charaWorldIdoSeigen(controller)) {//ワールドの画面端で移動を制限
+            worldOffsetX += xPlus.toInt()
+            sekaix += xPlus.toInt()
+   }
     fun jikiXidoSyougaibutuSyori( worldOffsetXPlus:Int, sekaixPlus:Int){    //jikiの位置が当たったら戻す処理
         xPlus = 0f  //加速はいったん０にする
         worldOffsetX += worldOffsetXPlus    //マスの半分をもどす
@@ -83,7 +95,6 @@ class Jiki(var x:Int, var y:Int) {
             if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
             if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
             jikiXido(controller)
-
         }
 
         if (isJump) { if(syougaibutuY){ isJump = false} }
@@ -140,7 +151,7 @@ class Jiki(var x:Int, var y:Int) {
     }
 
 
-    private fun migihidariCharaGamenIdoSeigen(controller: Controller) {
+    private fun CharaCameraIdoSeigen(controller: Controller) {
         if (controller.houkou == "migi") {
             if (xPlus > 0) {
                 if (x <= 400) {
