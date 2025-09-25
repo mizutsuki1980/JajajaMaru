@@ -46,7 +46,7 @@ class Jiki(var x:Int, var y:Int) {
         }
     }
 
-    fun charaWorldIdoSeigen(controller: Controller): Boolean {
+    fun charaWorldIdoSeigen(): Boolean {
         val checkSekaix = sekaix + xPlus.toInt()
         if (checkSekaix >= 100 && checkSekaix <= (224+32*25)) { //25マスまでしか進めませんよ、みたいな
             return true
@@ -59,48 +59,50 @@ class Jiki(var x:Int, var y:Int) {
 
     fun jikiXido(controller: Controller){   //実際にjikiの位置を動かす処理
         CharaCameraIdoSeigen(controller)//キャラクターのカメラワークで画面内を制限
-         if(charaWorldIdoSeigen(controller)) {//ワールドの画面端で移動を制限
+         if(charaWorldIdoSeigen()) {//ワールドの画面端で移動を制限
+            //ワールド内なら移動してOK
              worldOffsetX += xPlus.toInt()
              sekaix += xPlus.toInt()
          }
 
    }
-    fun jikiXidoSyougaibutuSyori( worldOffsetXPlus:Int, sekaixPlus:Int){    //jikiの位置が当たったら戻す処理
-        xPlus = 0f  //加速はいったん０にする
-        worldOffsetX += worldOffsetXPlus    //マスの半分をもどす
-        sekaix += sekaixPlus
-    }
 
     fun jikiIdo(controller: Controller, map: Map) {
-
         val kasokudoX = kasokudoYoko(controller.houkou)
         val checkX = xPlus + kasokudoYoko(controller.houkou)
-        var syougaibutuX = false
-        var syougaibutuY = false
+        var syougaiCheckX = false
+        var syougaiCheckY = false
 
         jumpSyori(controller)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
 
-        //ジャンプしてたら横方向の障害物無視
-        if (isJump) { syougaibutuX = false } else {syougaibutuX = syougaiX(checkX, controller, map) }
-        if (isJump) { syougaibutuY = syougaiY(checkX,controller, map)} //ジャンプしてたら位置計算
+        syougaiCheckX = syougaiX(checkX, controller, map)
 
-        if (syougaibutuX) { //障害物がなかった場合
+        if (isJump) {        //ジャンプしてたら横方向の障害物無視
+            syougaiCheckX = false
+            syougaiCheckY = syougaiY(checkX,controller, map)
+        }
+        if (syougaiCheckX) { //障害物があった場合
             when (controller.houkou) {
-                "migi" -> { jikiXidoSyougaibutuSyori(-17,-17) }
-                "hidari" -> { jikiXidoSyougaibutuSyori(17,17) }
+                "migi" -> { syougaibutuSyoriX(-17,-17) }
+                "hidari" -> { syougaibutuSyoriX(17,17) }
                 "nashi" -> { xPlus = 0f }
                 else -> xPlus = 0f
             }
-
-        } else { //障害物があった場合
+        } else { //障害物がなかった場合
             xPlus = xPlus + kasokudoX // 速度をプラス
             if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
             if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
             jikiXido(controller)
         }
 
-        if (isJump) { if(syougaibutuY){ isJump = false} }
-
+        //ここで着地判定してる。ｙが障害物があるかどうか。なるほどー
+        //ここちゃんと書かないとだめだな。
+        if (isJump) { if(syougaiCheckY){ isJump = false} }
+    }
+    fun syougaibutuSyoriX(worldOffsetXPlus:Int, sekaixPlus:Int){    //jikiの位置が当たったら戻す処理
+        xPlus = 0f  //加速はいったん０にする
+        worldOffsetX += worldOffsetXPlus    //マスの半分をもどす
+        sekaix += sekaixPlus
     }
 
     fun syougaiY(xPlusCheck:Float, controller: Controller, map:Map):Boolean{
