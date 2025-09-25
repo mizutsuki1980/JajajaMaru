@@ -47,8 +47,8 @@ class Jiki(var x:Int, var y:Int) {
     }
 
     fun charaWorldIdoSeigen(controller: Controller): Boolean {
-        val checkWorldOffsetX = worldOffsetX + xPlus.toInt()
-        if (checkWorldOffsetX >= 100 && checkWorldOffsetX <= 12400) {
+        val checkSekaix = sekaix + xPlus.toInt()
+        if (checkSekaix >= 100 && checkSekaix <= (224+32*25)) { //25マスまでしか進めませんよ、みたいな
             return true
         } else {
             xPlus = 0f  //加速はいったん０にする
@@ -59,9 +59,11 @@ class Jiki(var x:Int, var y:Int) {
 
     fun jikiXido(controller: Controller){   //実際にjikiの位置を動かす処理
         CharaCameraIdoSeigen(controller)//キャラクターのカメラワークで画面内を制限
-//        if(charaWorldIdoSeigen(controller)) {//ワールドの画面端で移動を制限
-            worldOffsetX += xPlus.toInt()
-            sekaix += xPlus.toInt()
+         if(charaWorldIdoSeigen(controller)) {//ワールドの画面端で移動を制限
+             worldOffsetX += xPlus.toInt()
+             sekaix += xPlus.toInt()
+         }
+
    }
     fun jikiXidoSyougaibutuSyori( worldOffsetXPlus:Int, sekaixPlus:Int){    //jikiの位置が当たったら戻す処理
         xPlus = 0f  //加速はいったん０にする
