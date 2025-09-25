@@ -42,6 +42,7 @@ class Jiki(var x:Int, var y:Int) {
             vJump = 50f
             y = 500
         }
+        //これを、障害物によって変えるようにする。
 
 
     }
