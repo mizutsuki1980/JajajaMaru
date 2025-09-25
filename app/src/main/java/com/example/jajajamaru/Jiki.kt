@@ -51,52 +51,53 @@ class Jiki(var x:Int, var y:Int) {
 
     fun jikiIdo(controller: Controller, map: Map){
         val kasokudo = kasokudoYoko(controller.houkou)
-        val idoGoXCheck = (vYokoPlus + kasokudo).toInt()
-        val idoGoYCheck = (y - vJump).toInt()
+        val idoGoX = (vYokoPlus + kasokudo).toInt()
+        val idoGoY = (y - vJump).toInt()
         //ここでチェックしてからｘ、ｙともに移動させたらいいんじゃないかな
         var syougaibutuCheck = false
         var syougaibutuJump = false
-        var idoGoCheck = jikiIdoCheck(controller,map,idoGoXCheck,idoGoYCheck)//あれ、縦と横で二つ真偽値はかえせねーな
+        var idoGoCheckX = jikiIdoCheckX(controller,map,idoGoX,idoGoY)//あれ、縦と横で二つ真偽値はかえせねーな
+        var idoGoCheckY = jikiIdoCheckY(controller,map,idoGoX,idoGoY)//
+        if(idoGoCheckX){jikiIdoX()}
+        if(idoGoCheckY){jikiIdoY()}
     }
 
-    
 
-    fun jikiIdoCheck(controller: Controller, map:Map,idoGoXCheck:Int,idoGoYCheck:Int): Boolean{
-        var checksekaix = idoGoXCheck
+    fun jikiIdoX(){
+
+    }
+    fun jikiIdoY(){
+
+    }
+
+    fun jikiIdoCheckY(controller: Controller, map:Map,idoGoXCheck:Int,idoGoYCheck:Int): Boolean {
+        //あとで作る
+        return true
+    }
+
+    fun jikiIdoCheckX(controller: Controller, map:Map, idoGoX:Int, idoGoY:Int): Boolean {
+        var checksekaix = idoGoX
         if (controller.houkou == "migi") { checksekaix += ookisa / 2 }
         if (controller.houkou == "hidari") { checksekaix -= ookisa / 2 }
         var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
-        val checkMasuSyuruiX = map.masu[13][checkBlock+1]  //listは０から!!!
+        val checkMasuSyuruiX = map.masu[13][checkBlock + 1]  //listは０から!!!
         // ここまでｘのはなし
 
-        var checksekaiy = idoGoYCheck //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
+        //今はなくてもいい
+        var checksekaiy = idoGoY //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
         var yBlock = 0
-        if(checksekaiy<=500 && checksekaiy >=468){yBlock = 13}
-        if(checksekaiy<=467 && checksekaiy >=436){yBlock = 12}
-        if(checksekaiy<=435 && checksekaiy >=404){yBlock = 11}
+        if (checksekaiy <= 500 && checksekaiy >= 468) { yBlock = 13 }
+        if (checksekaiy <= 467 && checksekaiy >= 436) { yBlock = 12 }
+        if (checksekaiy <= 435 && checksekaiy >= 404) { yBlock = 11 }
+        val checkMasuSyuruiJump = map.masu[yBlock][checkBlock + 1]
 
-        val checkMasuSyuruiJump = map.masu[yBlock][checkBlock+1]
-
-
-
-        when (controller.houkou) {
-            "migi" -> {
-                vYokoPlus = 0f
-                worldOffsetX += -17    //マスの半分をもどす
-                sekaix += -17
-            }
-
-            "hidari" -> {
-                vYokoPlus = 0f
-                worldOffsetX += 17    //マスの半分をもどす
-                sekaix += 17
-            }
-
-            "nashi" -> {
-                vYokoPlus = 0f
-            }
+        var checkKekka = true
+        when (checkMasuSyuruiX) {
+            0 -> { checkKekka = true }
+            1 -> { checkKekka = false }
+            else -> { checkKekka = true }
         }
-        return true
+        return checkKekka
     }
 
     fun jikiYokoIdo(controller: Controller, map: Map) {
@@ -164,29 +165,13 @@ class Jiki(var x:Int, var y:Int) {
         if (controller.houkou == "hidari") { checksekaix -= ookisa / 2 }
         var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
         val checkMasuSyuruiX = map.masu[13][checkBlock+1]  //listは０から!!!
-        // ここまでｘのはなし
 
         var checksekaiy = y - vJump.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
         var yBlock = 0
         if(checksekaiy<=500 && checksekaiy >=468){yBlock = 13}
         if(checksekaiy<=467 && checksekaiy >=436){yBlock = 12}
         if(checksekaiy<=435 && checksekaiy >=404){yBlock = 11}
-
-
         val checkMasuSyuruiJump = map.masu[yBlock][checkBlock+1]
-
-
-
-        //ここでｙを含めた障害物をチェックする
-        //横移動との違いは、ｘ、ｙともにチェックする、ということだ。
-
-        //ここでチェックするマスの種類をチェックするが、ｙ方向にも必要となる
-        //１３が変わる？っていうこと？
-        //１３っていうのは５００～４６８っていうことだと思う。
-        //ｙが入っているから
-
-        //checkMasuSyuruiJumpにはMapの１，０が入っている、、、、はず
-
         var checkKekka = false
         when(checkMasuSyuruiJump){
             0 -> { checkKekka = true }
