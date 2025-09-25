@@ -15,7 +15,6 @@ class Jiki(var x:Int, var y:Int) {
     fun draw(canvas: Canvas) {
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
-        //  canvas.drawCircle(x.toFloat(),(y).toFloat(),(ookisa/2).toFloat(),iro) //自機の描画
     }
 
     var isJump = false
@@ -35,19 +34,70 @@ class Jiki(var x:Int, var y:Int) {
         }
         if (isJump) {
             vJump = vJump + kasokudoJump()
+
+            //これ、チェック後に移動しなとダメじゃない？
             y -= vJump.toInt()
         }
-        //ジャンプの処理はこの辺で行っている。ｙが０地点ならジャンプを終了する、みたいなのを書く
         if (y >= 500 && y < 550) {
             isJump = false
             vJump = 50f
+
+            //これ、チェック後に移動しなとダメじゃない？これも
             y = 500
         }
-        //これを、障害物によって変えるようにする。
-
 
     }
 
+
+    fun jikiIdo(controller: Controller, map: Map){
+        val kasokudo = kasokudoYoko(controller.houkou)
+        val idoGoXCheck = (vYokoPlus + kasokudo).toInt()
+        val idoGoYCheck = (y - vJump).toInt()
+        //ここでチェックしてからｘ、ｙともに移動させたらいいんじゃないかな
+        var syougaibutuCheck = false
+        var syougaibutuJump = false
+        var idoGoCheck = jikiIdoCheck(controller,map,idoGoXCheck,idoGoYCheck)//あれ、縦と横で二つ真偽値はかえせねーな
+    }
+
+    
+
+    fun jikiIdoCheck(controller: Controller, map:Map,idoGoXCheck:Int,idoGoYCheck:Int): Boolean{
+        var checksekaix = idoGoXCheck
+        if (controller.houkou == "migi") { checksekaix += ookisa / 2 }
+        if (controller.houkou == "hidari") { checksekaix -= ookisa / 2 }
+        var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
+        val checkMasuSyuruiX = map.masu[13][checkBlock+1]  //listは０から!!!
+        // ここまでｘのはなし
+
+        var checksekaiy = idoGoYCheck //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
+        var yBlock = 0
+        if(checksekaiy<=500 && checksekaiy >=468){yBlock = 13}
+        if(checksekaiy<=467 && checksekaiy >=436){yBlock = 12}
+        if(checksekaiy<=435 && checksekaiy >=404){yBlock = 11}
+
+        val checkMasuSyuruiJump = map.masu[yBlock][checkBlock+1]
+
+
+
+        when (controller.houkou) {
+            "migi" -> {
+                vYokoPlus = 0f
+                worldOffsetX += -17    //マスの半分をもどす
+                sekaix += -17
+            }
+
+            "hidari" -> {
+                vYokoPlus = 0f
+                worldOffsetX += 17    //マスの半分をもどす
+                sekaix += 17
+            }
+
+            "nashi" -> {
+                vYokoPlus = 0f
+            }
+        }
+        return true
+    }
 
     fun jikiYokoIdo(controller: Controller, map: Map) {
         val kasokudo = kasokudoYoko(controller.houkou)
@@ -55,8 +105,6 @@ class Jiki(var x:Int, var y:Int) {
         var syougaibutuCheck = false
         var syougaibutuJump = false
 
-        //まず、ここでジャンプか、ジャンプじゃないか、分ける。
-        // ジャンプじゃないなら、今まで通りの処理でいい。
 
         if (isJump) {
             syougaibutuCheck = true
@@ -98,9 +146,9 @@ class Jiki(var x:Int, var y:Int) {
             }
         }
 
+
         if (isJump) {
             if(syougaibutuJump){
-             //もしジャンプかつ、障害物に当たってるよ、という判定なら、ここにくる
 
             }else{
                 isJump = false
@@ -110,7 +158,6 @@ class Jiki(var x:Int, var y:Int) {
     }
 
     fun syougaibutuJump( vYokoPlusCheckyou:Float,controller: Controller, map:Map):Boolean{
-        //x,yは既にわかっているわけで、そこから障害物かどうか判定する、
 
         var checksekaix = sekaix + vYokoPlusCheckyou.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
         if (controller.houkou == "migi") { checksekaix += ookisa / 2 }
@@ -144,7 +191,6 @@ class Jiki(var x:Int, var y:Int) {
         when(checkMasuSyuruiJump){
             0 -> { checkKekka = true }
             1 -> {
-                //障害物にあたっている判定
                 checkKekka = false
             }
             else ->{checkKekka = true }
@@ -155,23 +201,22 @@ class Jiki(var x:Int, var y:Int) {
 
 
     fun syougaibutuHantei(vYokoPlusCheckyou: Float, controller: Controller, map:Map):Boolean{
-        var checksekaix = sekaix + vYokoPlusCheckyou.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
+        var checksekaix = sekaix + vYokoPlusCheckyou.toInt()
         if (controller.houkou == "migi") {
-            checksekaix += ookisa / 2 //自機のookisaを計算に加える
+            checksekaix += ookisa / 2
         }
 
         if (controller.houkou == "hidari") {
-            checksekaix -= ookisa / 2 //自機のookisaを計算に加える
+            checksekaix -= ookisa / 2
         }
 
-        var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
+        var checkBlock = checksekaix / 32
 
-        val checkMasuSyurui = map.masu[13][checkBlock+1]  //listは０から!!!
+        val checkMasuSyurui = map.masu[13][checkBlock+1]
         var checkKekka = false
         when(checkMasuSyurui){
             0 -> { checkKekka = true }
             1 -> {
-                //障害物にあたっている判定
                 checkKekka = false
             }
             else ->{checkKekka = true }
