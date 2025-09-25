@@ -38,6 +38,7 @@ class Jiki(var x:Int, var y:Int) {
             y -= vJump.toInt()
         }
 
+        //現在、強制的に着地している。落下はしない。ここで止めてるから。
         if (y >= 500 && y < 550) {
             isJump = false
             vJump = 50f
