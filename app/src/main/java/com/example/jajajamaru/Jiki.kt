@@ -8,11 +8,11 @@ class Jiki(var x:Int, var y:Int) {
     val ookisa = 100
     val iro = Paint()
     var sekaix = 224    //世界の左端から７マス　32＊7が初期位置
-    var worldOffsetX = 0    //いる
+    var worldOffsetX = 0    //いる    消したら何が起きるかわからないが、いる
     var xPlus = 0f
 
 
-    fun draw(canvas: Canvas) {//わかりやすいように戻した、自機の位置を黄色いマルで表示
+    fun draw(canvas: Canvas) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
         canvas.drawCircle(x.toFloat(),(y).toFloat(),(ookisa/2).toFloat(),iro)
@@ -43,7 +43,6 @@ class Jiki(var x:Int, var y:Int) {
             vJump = 50f
             y = 500
         }
-
     }
 
     fun charaWorldIdoSeigen(controller: Controller): Boolean {
