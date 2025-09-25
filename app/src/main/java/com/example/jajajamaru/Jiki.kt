@@ -44,6 +44,12 @@ class Jiki(var x:Int, var y:Int) {
         }
     }
 
+    fun jikiXido(controller: Controller){
+        worldOffsetX += xPlus.toInt()
+        sekaix += xPlus.toInt()
+        migihidariCharaGamenIdoSeigen(controller)//画面端で移動を制限
+    }
+
 
     fun jikiYokoIdo(controller: Controller, map: Map) {
         val kasokudoX = kasokudoYoko(controller.houkou)
@@ -58,16 +64,14 @@ class Jiki(var x:Int, var y:Int) {
             syougaibutuX = syougaibutuHantei(checkX, controller, map)
         }
 
+
         if (syougaibutuX) {
             //障害物がなかった場合
             xPlus = xPlus + kasokudoX
             //速度制限
             if (xPlus >= 30) { xPlus = 30f } //１マス以上加速しないことで制限
             if (xPlus <= -30) { xPlus = -30f } //１マス以上加速しないことで制限
-
-            worldOffsetX += xPlus.toInt()
-            sekaix += xPlus.toInt()
-            migihidariCharaGamenIdoSeigen(controller)//画面端で移動を制限
+            jikiXido(controller)
         } else {
             //障害物があった場合
             when (controller.houkou) {
