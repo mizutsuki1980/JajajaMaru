@@ -49,7 +49,12 @@ class Jiki(var x:Int, var y:Int) {
         sekaix += xPlus.toInt()
         migihidariCharaGamenIdoSeigen(controller)//画面端で移動を制限
     }
+    fun jikiXidoSyougaibutuSyori( worldOffsetXPlus:Int, sekaixPlus:Int){
+        xPlus = 0f
+        worldOffsetX += worldOffsetXPlus    //マスの半分をもどす
+        sekaix += sekaixPlus
 
+    }
 
     fun jikiYokoIdo(controller: Controller, map: Map) {
         val kasokudoX = kasokudoYoko(controller.houkou)
@@ -65,31 +70,16 @@ class Jiki(var x:Int, var y:Int) {
         }
 
 
-        if (syougaibutuX) {
-            //障害物がなかった場合
-            xPlus = xPlus + kasokudoX
-            //速度制限
-            if (xPlus >= 30) { xPlus = 30f } //１マス以上加速しないことで制限
-            if (xPlus <= -30) { xPlus = -30f } //１マス以上加速しないことで制限
+        if (syougaibutuX) { //障害物がなかった場合
+            xPlus = xPlus + kasokudoX // 速度をプラス
+            if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
+            if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
             jikiXido(controller)
-        } else {
-            //障害物があった場合
+        } else { //障害物があった場合
             when (controller.houkou) {
-                "migi" -> {
-                    xPlus = 0f
-                    worldOffsetX += -17    //マスの半分をもどす
-                    sekaix += -17
-                }
-
-                "hidari" -> {
-                    xPlus = 0f
-                    worldOffsetX += 17    //マスの半分をもどす
-                    sekaix += 17
-                }
-
-                "nashi" -> {
-                    xPlus = 0f
-                }
+                "migi" -> { jikiXidoSyougaibutuSyori(-17,-17) }
+                "hidari" -> { jikiXidoSyougaibutuSyori(17,17) }
+                "nashi" -> { xPlus = 0f }
                 else -> xPlus = 0f
             }
         }
