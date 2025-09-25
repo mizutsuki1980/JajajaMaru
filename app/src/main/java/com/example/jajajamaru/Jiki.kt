@@ -37,11 +37,13 @@ class Jiki(var x:Int, var y:Int) {
             vJump = vJump + kasokudoJump()
             y -= vJump.toInt()
         }
+
         if (y >= 500 && y < 550) {
             isJump = false
             vJump = 50f
             y = 500
         }
+
     }
 
     fun jikiXido(controller: Controller){   //実際にjikiの位置を動かす処理
@@ -56,18 +58,21 @@ class Jiki(var x:Int, var y:Int) {
     }
 
     fun jikiIdo(controller: Controller, map: Map) {
-        jumpSyori(controller)
 
         val kasokudoX = kasokudoYoko(controller.houkou)
         val checkX = xPlus + kasokudoYoko(controller.houkou)
         var syougaibutuX = false
         var syougaibutuJump = false
+
+        jumpSyori(controller)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
+
         if (isJump) {   //ジャンプしてたら横方向の障害物無視
             syougaibutuX = true
-            syougaibutuJump = syougaiY(checkX,controller, map)
         } else {    //ジャンプしてなかったら横方向の障害物は有効
             syougaibutuX = syougaibutuHantei(checkX, controller, map)
         }
+
+        if (isJump) { syougaibutuJump = syougaiY(checkX,controller, map)} //ジャンプしてたら障害物の位置計算
 
         if (syougaibutuX) { //障害物がなかった場合
             xPlus = xPlus + kasokudoX // 速度をプラス
