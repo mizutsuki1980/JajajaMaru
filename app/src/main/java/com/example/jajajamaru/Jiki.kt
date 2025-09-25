@@ -36,6 +36,10 @@ class Jiki(var x:Int, var y:Int) {
             vJump = vJump + kasokudoJump()
             y -= vJump.toInt()
         }
+        //ジャンプの処理はこの辺で行っている。ｙが０地点ならジャンプを終了する、みたいなのを書く
+        
+
+
     }
 
 
