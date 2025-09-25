@@ -82,13 +82,7 @@ class Jiki(var x:Int, var y:Int) {
             }
         }
 
-        if (isJump) {
-            if(syougaibutuJump){
-
-            }else{
-                isJump = false
-            }
-        }
+        if (isJump) { if(syougaibutuJump){}else{isJump = false} }
 
     }
 
