@@ -66,12 +66,8 @@ class Jiki(var x:Int, var y:Int) {
 
         jumpSyori(controller)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
 
-        if (isJump) {   //ジャンプしてたら横方向の障害物無視
-            syougaibutuX = false
-        } else {    //ジャンプしてなかったら横方向の障害物は有効
-            syougaibutuX = syougaiX(checkX, controller, map)
-        }
-
+        //ジャンプしてたら横方向の障害物無視
+        if (isJump) { syougaibutuX = false } else {syougaibutuX = syougaiX(checkX, controller, map) }
         if (isJump) { syougaibutuY = syougaiY(checkX,controller, map)} //ジャンプしてたら位置計算
 
         if (syougaibutuX) { //障害物がなかった場合
