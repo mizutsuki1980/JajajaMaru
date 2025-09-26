@@ -76,15 +76,16 @@ class Jiki(var x:Int, var y:Int) {
         val checkX = xPlus + kasokudoYoko(controller.houkou)
         var syougaiCheckX = false
         syougaiCheckX = syougaiX(checkX, controller, map)
+        if (isJump) {        //ジャンプしてたら横方向の障害物無視
+            syougaiCheckX = false
+        }
+
 
         //縦軸関連　ｙ軸
         var syougaiCheckY = false
         jumpSyori(controller)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
+        syougaiCheckY = syougaiY(checkX,controller, map)
 
-        if (isJump) {        //ジャンプしてたら横方向の障害物無視
-            syougaiCheckX = false
-            syougaiCheckY = syougaiY(checkX,controller, map)
-        }
 
         if (syougaiCheckX) { //横方向に障害物があった場合
             when (controller.houkou) {
