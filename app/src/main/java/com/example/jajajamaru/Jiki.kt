@@ -97,8 +97,17 @@ class Jiki(var x:Int, var y:Int) {
 
         //ここで着地判定してる。ｙが障害物があるかどうか。なるほどー
         //ここちゃんと書かないとだめだな。
-        if (isJump) { if(syougaiCheckY){ isJump = false} }
+        if (isJump) {
+            if(syougaiCheckY){
+                isJump = false
+            }
+        }
     }
+
+    fun jumpChakuchi(){
+
+    }
+
     fun syougaibutuSyoriX(worldOffsetXPlus:Int, sekaixPlus:Int){    //jikiの位置が当たったら戻す処理
         xPlus = 0f  //加速はいったん０にする
         worldOffsetX += worldOffsetXPlus    //マスの半分をもどす
