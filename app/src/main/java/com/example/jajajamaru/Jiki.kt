@@ -26,14 +26,14 @@ class Jiki(var x:Int, var y:Int) {
     }
 
     fun jumpSyori(controller: Controller) {
-        if (controller.houkou == "jump") {
+        if (controller.houkou == "jump") {  //ジャンプしてなかったらジャンプする
             if (isJump == false) {
                 isJump = true
                 vJump = 50f
                 y -= vJump.toInt()
             }
         }
-        if (isJump) {
+        if (isJump) {   //ジャンプ中ならジャンプを継続する
             vJump = vJump + kasokudoJump()
             y -= vJump.toInt()
         }
@@ -73,15 +73,17 @@ class Jiki(var x:Int, var y:Int) {
         var syougaiCheckX = false
         var syougaiCheckY = false
 
-        jumpSyori(controller)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
 
         syougaiCheckX = syougaiX(checkX, controller, map)
+
+        jumpSyori(controller)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
 
         if (isJump) {        //ジャンプしてたら横方向の障害物無視
             syougaiCheckX = false
             syougaiCheckY = syougaiY(checkX,controller, map)
         }
-        if (syougaiCheckX) { //障害物があった場合
+
+        if (syougaiCheckX) { //横方向に障害物があった場合
             when (controller.houkou) {
                 "migi" -> { syougaibutuSyoriX(-17,-17) }
                 "hidari" -> { syougaibutuSyoriX(17,17) }
@@ -95,10 +97,9 @@ class Jiki(var x:Int, var y:Int) {
             jikiXido(controller)
         }
 
-        //ここで着地判定してる。ｙが障害物があるかどうか。なるほどー
-        //ここちゃんと書かないとだめだな。
         if (isJump) {
-            if(syougaiCheckY){
+            if(syougaiCheckY){  //縦方向に障害物があった場合
+
                 isJump = false
             }
         }
