@@ -71,6 +71,14 @@ class Jiki(var x:Int, var y:Int) {
     fun idoUeShitaMigiHidari(controller: Controller, map: Map){
        //まずは横移動。できた
         idoMigiHidari(controller,map)
+
+        //次には縦移動。のっからない
+        var syougaiCheckY = false
+        jumpSyori(controller)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
+        val checkX = xPlus + kasokudoYoko(controller.houkou)
+        syougaiCheckY = syougaiY(checkX,controller, map)
+
+
     }
 
     fun idoMigiHidari(controller: Controller, map: Map){
