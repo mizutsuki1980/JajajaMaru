@@ -25,26 +25,6 @@ class Jiki(var x:Int, var y:Int) {
         return -5.0f
     }
 
-    fun jumpSyori(controller: Controller) {
-        if (controller.houkou == "jump") {  //ジャンプしてなかったらジャンプする
-            if (isJump == false) {
-                isJump = true
-                vJump = 50f
-                y -= vJump.toInt()
-            }
-        }
-        if (isJump) {   //ジャンプ中ならジャンプを継続する
-            vJump = vJump + kasokudoJump()
-            y -= vJump.toInt()
-        }
-
-        //現在、強制的に着地している。落下はしない。ここで止めてるから。
-        if (y >= 500 && y < 550) {
-            isJump = false
-            vJump = 50f
-            y = 500
-        }
-    }
 
     fun charaWorldIdoSeigen(): Boolean {
         val checkSekaix = sekaix + xPlus.toInt()
@@ -83,6 +63,52 @@ class Jiki(var x:Int, var y:Int) {
         if (isJump) { if(syougaiCheckY){ isJump = false } }        //縦方向に障害物があった場合、ジャンプを中止する。
     }
 
+    fun jumpSyori(controller: Controller) {
+        if (controller.houkou == "jump") {  //ジャンプしてなかったらジャンプする
+            if (isJump == false) {
+                isJump = true
+                vJump = 50f
+                y -= vJump.toInt()
+            }
+        }
+        if (isJump) {   //ジャンプ中ならジャンプを継続する
+            vJump = vJump + kasokudoJump()
+            y -= vJump.toInt()
+        }
+
+        //現在、強制的に着地している。落下はしない。ここで止めてるから。
+        if (y >= 500 && y < 550) {
+            isJump = false
+            vJump = 50f
+            y = 500
+        }
+    }
+
+    fun syougaiY(xPlusCheck:Float, controller: Controller, map:Map):Boolean{
+        var checksekaix = sekaix + xPlusCheck.toInt()
+        if (controller.houkou == "migi") { checksekaix += ookisa / 2 }
+        if (controller.houkou == "hidari") { checksekaix -= ookisa / 2 }
+        var checkBlock = checksekaix / 32
+        val checkMasuSyuruiX = map.masu[13][checkBlock+1]
+
+        var checksekaiy = y - vJump.toInt()
+        var yBlock = 0
+        if(checksekaiy<=500 && checksekaiy >=468){yBlock = 13}
+        if(checksekaiy<=467 && checksekaiy >=436){yBlock = 12}
+        if(checksekaiy<=435 && checksekaiy >=404){yBlock = 11}
+
+
+        val checkMasuSyuruiJump = map.masu[yBlock][checkBlock+1]
+
+        var checkKekka = false
+        when(checkMasuSyuruiJump){
+            0 -> { checkKekka = false }
+            1 -> { checkKekka = true }
+            else ->{checkKekka = false }
+        }
+        return checkKekka
+    }
+
     fun idoMigiHidari(controller: Controller, map: Map){
         val kasokudoX = kasokudoYoko(controller.houkou)
         val checkX = xPlus + kasokudoYoko(controller.houkou)
@@ -112,30 +138,6 @@ class Jiki(var x:Int, var y:Int) {
         sekaix += sekaixPlus
     }
 
-    fun syougaiY(xPlusCheck:Float, controller: Controller, map:Map):Boolean{
-        var checksekaix = sekaix + xPlusCheck.toInt()
-        if (controller.houkou == "migi") { checksekaix += ookisa / 2 }
-        if (controller.houkou == "hidari") { checksekaix -= ookisa / 2 }
-        var checkBlock = checksekaix / 32
-        val checkMasuSyuruiX = map.masu[13][checkBlock+1]
-
-        var checksekaiy = y - vJump.toInt()
-        var yBlock = 0
-        if(checksekaiy<=500 && checksekaiy >=468){yBlock = 13}
-        if(checksekaiy<=467 && checksekaiy >=436){yBlock = 12}
-        if(checksekaiy<=435 && checksekaiy >=404){yBlock = 11}
-
-
-        val checkMasuSyuruiJump = map.masu[yBlock][checkBlock+1]
-
-        var checkKekka = false
-        when(checkMasuSyuruiJump){
-            0 -> { checkKekka = false }
-            1 -> { checkKekka = true }
-            else ->{checkKekka = false }
-        }
-        return checkKekka
-    }
 
 
 
