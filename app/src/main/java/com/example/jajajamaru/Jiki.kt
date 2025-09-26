@@ -67,6 +67,33 @@ class Jiki(var x:Int, var y:Int) {
 
    }
 
+    //    fun jikiIdo(controller: Controller, map: Map) の中身を作り直す。
+    fun idoUeShitaMigiHidari(controller: Controller, map: Map){
+       //まずは横移動。できた
+        idoMigiHidari(controller,map)
+    }
+
+    fun idoMigiHidari(controller: Controller, map: Map){
+        val kasokudoX = kasokudoYoko(controller.houkou)
+        val checkX = xPlus + kasokudoYoko(controller.houkou)
+        var syougaiCheckX = false
+        syougaiCheckX = syougaiX(checkX, controller, map)
+        if (isJump) { syougaiCheckX = false }
+        if (syougaiCheckX) { //横方向に障害物があった場合
+            when (controller.houkou) {
+                "migi" -> { syougaibutuSyoriX(-17,-17) }
+                "hidari" -> { syougaibutuSyoriX(17,17) }
+                "nashi" -> { xPlus = 0f }
+                else -> xPlus = 0f
+            }
+        } else { //障害物がなかった場合
+            xPlus = xPlus + kasokudoX // 速度をプラス
+            if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
+            if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
+            jikiXido(controller)
+        }
+
+    }
 
     //jikiIdoの中身を、横軸移動、縦軸移動、みたいに分けたい。
     //縦と横で、関数を作ってまとめたい。
@@ -80,7 +107,7 @@ class Jiki(var x:Int, var y:Int) {
             syougaiCheckX = false
         }
 
-//なんかこの辺の順番を変えると、挙動が変わるきがする、、、、
+        //なんかこの辺の順番を変えると、挙動が変わるきがする、、、、
         //縦軸関連　ｙ軸
         var syougaiCheckY = false
         jumpSyori(controller)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
