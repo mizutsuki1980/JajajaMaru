@@ -67,16 +67,18 @@ class Jiki(var x:Int, var y:Int) {
 
    }
 
+
+    //jikiIdoの中身を、横軸移動、縦軸移動、みたいに分けたい。
+    //縦と横で、関数を作ってまとめたい。
     fun jikiIdo(controller: Controller, map: Map) {
+        //横軸関連　ｘ軸
         val kasokudoX = kasokudoYoko(controller.houkou)
         val checkX = xPlus + kasokudoYoko(controller.houkou)
         var syougaiCheckX = false
-        var syougaiCheckY = false
-
-
         syougaiCheckX = syougaiX(checkX, controller, map)
 
-        //なんかこれで、それっぽく動いてる。３段目に着地している。ここから直そう。
+        //縦軸関連　ｙ軸
+        var syougaiCheckY = false
         jumpSyori(controller)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
 
         if (isJump) {        //ジャンプしてたら横方向の障害物無視
