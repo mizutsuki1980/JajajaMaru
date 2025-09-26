@@ -80,7 +80,7 @@ class Jiki(var x:Int, var y:Int) {
             syougaiCheckX = false
         }
 
-
+//なんかこの辺の順番を変えると、挙動が変わるきがする、、、、
         //縦軸関連　ｙ軸
         var syougaiCheckY = false
         jumpSyori(controller)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
