@@ -77,6 +77,8 @@ class Jiki(var x:Int, var y:Int) {
         jumpSyori(controller)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
         val checkX = xPlus + kasokudoYoko(controller.houkou)
         syougaiCheckY = syougaiY(checkX,controller, map)
+        //縦方向に障害物があった場合、ジャンプを中止する。
+        if (isJump) { if(syougaiCheckY){ isJump = false } }
 
 
     }
