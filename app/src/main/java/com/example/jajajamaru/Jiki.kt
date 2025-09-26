@@ -98,16 +98,8 @@ class Jiki(var x:Int, var y:Int) {
             jikiXido(controller)
         }
 
-        if (isJump) {
-            if(syougaiCheckY){  //縦方向に障害物があった場合
-
-                isJump = false
-            }
-        }
-    }
-
-    fun jumpChakuchi(){
-
+        //縦方向に障害物があった場合、ジャンプを中止する。
+        if (isJump) { if(syougaiCheckY){ isJump = false } }
     }
 
     fun syougaibutuSyoriX(worldOffsetXPlus:Int, sekaixPlus:Int){    //jikiの位置が当たったら戻す処理
