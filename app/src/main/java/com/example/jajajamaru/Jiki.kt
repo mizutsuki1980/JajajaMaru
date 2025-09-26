@@ -76,6 +76,7 @@ class Jiki(var x:Int, var y:Int) {
 
         syougaiCheckX = syougaiX(checkX, controller, map)
 
+        //なんかこれで、それっぽく動いてる。３段目に着地している。ここから直そう。
         jumpSyori(controller)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
 
         if (isJump) {        //ジャンプしてたら横方向の障害物無視
