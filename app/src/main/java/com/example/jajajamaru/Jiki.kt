@@ -67,23 +67,20 @@ class Jiki(var x:Int, var y:Int) {
 
    }
 
-    //    fun jikiIdo(controller: Controller, map: Map) の中身を作り直す。
     fun idoUeShitaMigiHidari(controller: Controller, map: Map){
-       //まずは横移動。できた
-        idoMigiHidari(controller,map)
-
-        //次には縦移動。
-        idoUeShita(controller,map)
-
+        idoMigiHidari(controller,map)       //横移動 x軸
+        idoUeShita(controller,map)        //縦移動　y軸
     }
+
+
+    //今度はここを直していく。なんかちゃんと止まってない縦方向
+    //横軸をちょっと別のところをみてるんじゃないかと思っている。
     fun idoUeShita(controller: Controller, map: Map){
         var syougaiCheckY = false
         jumpSyori(controller)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
         val checkX = xPlus + kasokudoYoko(controller.houkou)
         syougaiCheckY = syougaiY(checkX,controller, map)
-        //縦方向に障害物があった場合、ジャンプを中止する。
-        if (isJump) { if(syougaiCheckY){ isJump = false } }
-
+        if (isJump) { if(syougaiCheckY){ isJump = false } }        //縦方向に障害物があった場合、ジャンプを中止する。
     }
 
     fun idoMigiHidari(controller: Controller, map: Map){
@@ -108,42 +105,6 @@ class Jiki(var x:Int, var y:Int) {
 
     }
 
-    //jikiIdoの中身を、横軸移動、縦軸移動、みたいに分けたい。
-    //縦と横で、関数を作ってまとめたい。
-    fun jikiIdo(controller: Controller, map: Map) {
-        //横軸関連　ｘ軸
-        val kasokudoX = kasokudoYoko(controller.houkou)
-        val checkX = xPlus + kasokudoYoko(controller.houkou)
-        var syougaiCheckX = false
-        syougaiCheckX = syougaiX(checkX, controller, map)
-        if (isJump) {        //ジャンプしてたら横方向の障害物無視
-            syougaiCheckX = false
-        }
-
-        //なんかこの辺の順番を変えると、挙動が変わるきがする、、、、
-        //縦軸関連　ｙ軸
-        var syougaiCheckY = false
-        jumpSyori(controller)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
-        syougaiCheckY = syougaiY(checkX,controller, map)
-
-
-        if (syougaiCheckX) { //横方向に障害物があった場合
-            when (controller.houkou) {
-                "migi" -> { syougaibutuSyoriX(-17,-17) }
-                "hidari" -> { syougaibutuSyoriX(17,17) }
-                "nashi" -> { xPlus = 0f }
-                else -> xPlus = 0f
-            }
-        } else { //障害物がなかった場合
-            xPlus = xPlus + kasokudoX // 速度をプラス
-            if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
-            if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
-            jikiXido(controller)
-        }
-
-        //縦方向に障害物があった場合、ジャンプを中止する。
-        if (isJump) { if(syougaiCheckY){ isJump = false } }
-    }
 
     fun syougaibutuSyoriX(worldOffsetXPlus:Int, sekaixPlus:Int){    //jikiの位置が当たったら戻す処理
         xPlus = 0f  //加速はいったん０にする
