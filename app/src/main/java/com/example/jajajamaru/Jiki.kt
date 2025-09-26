@@ -57,13 +57,16 @@ class Jiki(var x:Int, var y:Int) {
     //横軸をちょっと別のところをみてるんじゃないかと思っている。
     fun idoUeShita(controller: Controller, map: Map){
         var syougaiCheckY = false
-        jumpSyori(controller)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
+        jumpSyori(controller,map)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
+
+        //なんかすり抜けて落下していくケースがある。
         val checkX = xPlus + kasokudoYoko(controller.houkou)
         syougaiCheckY = syougaiY(checkX,controller, map)
+
         if (isJump) { if(syougaiCheckY){ isJump = false } }        //縦方向に障害物があった場合、ジャンプを中止する。
     }
 
-    fun jumpSyori(controller: Controller) {
+    fun jumpSyori(controller: Controller,map:Map) {
         if (controller.houkou == "jump") {  //ジャンプしてなかったらジャンプする
             if (isJump == false) {
                 isJump = true
@@ -75,14 +78,8 @@ class Jiki(var x:Int, var y:Int) {
             vJump = vJump + kasokudoJump()
             y -= vJump.toInt()
         }
-
-        //現在、強制的に着地している。落下はしない。ここで止めてるから。
-        if (y >= 500 && y < 550) {
-            isJump = false
-            vJump = 50f
-            y = 500
-        }
     }
+
 
     fun syougaiY(xPlusCheck:Float, controller: Controller, map:Map):Boolean{
         var checksekaix = sekaix + xPlusCheck.toInt()
@@ -93,6 +90,7 @@ class Jiki(var x:Int, var y:Int) {
 
         var checksekaiy = y - vJump.toInt()
         var yBlock = 0
+        if(checksekaiy<=550 && checksekaiy >=501){yBlock = 14}
         if(checksekaiy<=500 && checksekaiy >=468){yBlock = 13}
         if(checksekaiy<=467 && checksekaiy >=436){yBlock = 12}
         if(checksekaiy<=435 && checksekaiy >=404){yBlock = 11}
