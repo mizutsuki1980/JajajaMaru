@@ -56,12 +56,12 @@ class Jiki(var x:Int, var y:Int) {
     //今度はここを直していく。なんかちゃんと止まってない縦方向
     //横軸をちょっと別のところをみてるんじゃないかと思っている。
     fun idoUeShita(controller: Controller, map: Map){
+
         var syougaiCheckY = false
         jumpSyori(controller,map)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
 
         //なんかすり抜けて落下していくケースがある。
-        val checkX = xPlus + kasokudoYoko(controller.houkou)
-        syougaiCheckY = syougaiY(checkX,controller, map)
+        syougaiCheckY = syougaiY(controller, map)
 
         if (isJump) { if(syougaiCheckY){ isJump = false } }        //縦方向に障害物があった場合、ジャンプを中止する。
     }
@@ -81,8 +81,12 @@ class Jiki(var x:Int, var y:Int) {
     }
 
 
-    fun syougaiY(xPlusCheck:Float, controller: Controller, map:Map):Boolean{
-        var checksekaix = sekaix + xPlusCheck.toInt()
+
+
+    //ここをリファクタリングしてみる
+    //やっぱｘPlusCheckっていうやつは、なくてもいける。なんか画面でみると、一つ左のブロックの高さを参照しているようにみえる。
+    fun syougaiY( controller: Controller, map:Map):Boolean{
+        var checksekaix = sekaix
         if (controller.houkou == "migi") { checksekaix += ookisa / 2 }
         if (controller.houkou == "hidari") { checksekaix -= ookisa / 2 }
         var checkBlock = checksekaix / 32
