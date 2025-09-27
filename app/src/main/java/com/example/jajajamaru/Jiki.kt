@@ -60,26 +60,35 @@ class Jiki(var x:Int, var y:Int) {
 
         //障害物　１　がある場合　false　行けないという意味
         //障害物　０　ならば場合　true　　行ける、という意味
-        val migiCheck = mapCheck(map,checkCharaMigihajiX)
-        val hidariCheck = mapCheck(map,checkCharaHidarihajiX)
+        val migiCheck = mapCheckMigi(map,checkCharaMigihajiX)
+        val hidariCheck = mapCheckHaidari(map,checkCharaHidarihajiX)
 
         //右と左
         //当たった判定の時点で加速を０にしちまうか。
-        if(controller.houkou=="migi") {
-            if (migiCheck) { jikiXido(controller)}else{xPlus=0f}
+        // xPlus=0fにしても、次の加速でofじゃなくってしまう。
+            //かといってofだと動かない、と設定したら、そもそも動かなくなってしまう。最初は０だから。
+            //どーすんの
+        if(controller.houkou=="migi") { if (migiCheck) { jikiXido(controller)}else{xPlus=0f} }
+        if(controller.houkou=="hidari") { if (hidariCheck) { jikiXido(controller)}else{xPlus=0f} }
+        if(controller.houkou=="nashi") {
+            if (migiCheck) {}else{xPlus=0f}
+            if (hidariCheck) {}else{xPlus=0f}
         }
-        if(controller.houkou=="hidari") {
-            if (hidariCheck) { jikiXido(controller)}else{xPlus=0f}
-        }
-        if(controller.houkou=="nashi") {}
 
 
     }
 
-    fun mapCheck(map:Map,checkCharaMigihajiX:Int): Boolean{
+    //mapCheckを左右に分けた
+    fun mapCheckMigi(map:Map,checkCharaMigihajiX:Int): Boolean{
         var check = true
         val checkBlock = checkCharaMigihajiX / 32
         if(map.masu[13][checkBlock+1] == 1){check = false}
+        return check
+    }
+    fun mapCheckHaidari(map:Map,checkCharaHidarihajiX:Int): Boolean{
+        var check = true
+        val checkBlock = checkCharaHidarihajiX / 32
+        if(map.masu[13][checkBlock+0] == 1){check = false}
         return check
     }
 
