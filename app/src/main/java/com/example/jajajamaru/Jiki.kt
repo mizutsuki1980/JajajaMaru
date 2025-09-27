@@ -52,12 +52,30 @@ class Jiki(var x:Int, var y:Int) {
         idoUeShita(controller,map)        //縦移動　y軸
     }
 
+
     fun idoMigiHidari(controller: Controller, map: Map){
         val kasokudoX = kasokudoYoko(controller.houkou)//次の速度を計算
         xPlus = xPlus + kasokudoX // 速度をプラス
         if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
         if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
         val checkX = xPlus + kasokudoYoko(controller.houkou)//次の位置を計算
+
+        //現在のキャラの右端、左端
+        val charaMigihajiX = (sekaix +(ookisa/2)).toInt()
+        val charaHidarihajiX = (sekaix -(ookisa/2)).toInt()
+
+        //次の位置の右端、左端
+        val checkCharaMigihajiX = (checkX +(ookisa/2)).toInt()
+        val checkCharaHidarihajiX = (checkX -(ookisa/2)).toInt()
+
+        //右端を決めるためのチェック
+        //次の右端の座標ｘはわかっているのだから、true か　falseで返せるはず。
+        if(mapCheck(map,checkCharaMigihajiX)){
+
+        }
+        //左端を決めるためのチェック
+
+
         var syougaiCheckX = syougaiX(checkX, controller, map)//次の位置に障害物あるか？
         if (isJump) { syougaiCheckX = false }//ジャンプなら障害物は無視
 
@@ -72,12 +90,23 @@ class Jiki(var x:Int, var y:Int) {
             jikiXido(controller)//障害物がなければ、はじめて時期を移動させる
         }
     }
+    fun mapCheck(map:Map,checkCharaMigihajiX:Int): Boolean{
+        var check = false
+        val checkBlock = checkCharaMigihajiX / 32
+        if(map.masu[13][checkBlock] == 1){check = false}
+        return check
+    }
+
+
     fun syougaiX(checkX: Float, controller: Controller, map:Map):Boolean{
         var checksekaix = sekaix + checkX.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
         if (controller.houkou == "migi") { checksekaix += ookisa / 2 }
         if (controller.houkou == "hidari") { checksekaix -= ookisa / 2 }
         var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
-        val checkMasuSyurui = map.masu[13][checkBlock+1]  //listは０から!!!なるほど、ここの＋１はlistの０を１にするためか。
+        var checkMasuSyurui = map.masu[13][checkBlock+3] //+2はリストの＋１と隣のマスの＋１
+        if (controller.houkou == "hidari") { checkMasuSyurui = map.masu[13][checkBlock] }//-1は隣のマス
+        //checkBlock+3とかcheckBlock-1にしてたのは、キャラクターの大きさを考慮しての為
+        //ここちゃんと計算した方がいいんじゃないか説
         var checkKekka = false
         when(checkMasuSyurui){
             0 -> { checkKekka = false }     //障害物にあたっていない判定
