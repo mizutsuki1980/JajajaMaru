@@ -42,6 +42,7 @@ class Jiki(var x:Int, var y:Int) {
         idoUeShita(controller,map)        //縦移動　y軸
     }
 
+
     fun idoMigiHidari(controller: Controller, map: Map){
         val kasokudoX = kasokudoYoko(controller.houkou)//次の速度を計算
         xPlus = xPlus + kasokudoX // 速度をプラス
@@ -63,25 +64,10 @@ class Jiki(var x:Int, var y:Int) {
         val hidariCheck = mapCheckHaidari(map,checkCharaHidarihajiX)
 
         //右と左
-        //当たった判定の時点で加速を０にしちまうか。
-        // xPlus=0fにしても、次の加速でofじゃなくってしまう。
-            //かといってofだと動かない、と設定したら、そもそも動かなくなってしまう。最初は０だから。
-            //どーすんの
         if(controller.houkou=="migi") { if (migiCheck) { jikiXido(controller)}else{xPlus=0f} }
         if(controller.houkou=="hidari") { if (hidariCheck) { jikiXido(controller)}else{xPlus=0f} }
-        if(controller.houkou=="nashi") {
-
-            val migiCheckNi = mapCheckMigi(map,charaMigihajiX)
-            val hidariCheckNi = mapCheckHaidari(map,charaHidarihajiX)
-            if (migiCheckNi) {}else{xPlus=0f}
-            if (hidariCheckNi) {}else{xPlus=0f}
-        }
-        //おしっぱなしでめりこんでしまう問題を考える
-        //現状、押しっぱなしにすると、１，２、と二段階でめり込んでいくように見える
-        //一回目はxPlusはofに戻される
-        //二回目はxPlusはxPlus + kasokudoXされる。
-        //kasokudoXは　右なら5.0　左なら－5.0　nshiならー２．５か２．５だ。
-        //xPlus=0f で   nashiならば　0.0になるが、当たった瞬間にnashiにしなきゃならんので至難の業だ。
+        //nashiはそもそも考えない。あとにする。
+        //おしっぱでもめり込んでる現状。とまってない。
     }
 
     //mapCheckを左右に分けた
