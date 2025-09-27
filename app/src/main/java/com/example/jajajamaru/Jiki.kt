@@ -42,7 +42,6 @@ class Jiki(var x:Int, var y:Int) {
         idoUeShita(controller,map)        //縦移動　y軸
     }
 
-        //おしっぱなしでめりこんでしまう問題を考える
     fun idoMigiHidari(controller: Controller, map: Map){
         val kasokudoX = kasokudoYoko(controller.houkou)//次の速度を計算
         xPlus = xPlus + kasokudoX // 速度をプラス
@@ -71,11 +70,18 @@ class Jiki(var x:Int, var y:Int) {
         if(controller.houkou=="migi") { if (migiCheck) { jikiXido(controller)}else{xPlus=0f} }
         if(controller.houkou=="hidari") { if (hidariCheck) { jikiXido(controller)}else{xPlus=0f} }
         if(controller.houkou=="nashi") {
-            if (migiCheck) {}else{xPlus=0f}
-            if (hidariCheck) {}else{xPlus=0f}
+
+            val migiCheckNi = mapCheckMigi(map,charaMigihajiX)
+            val hidariCheckNi = mapCheckHaidari(map,charaHidarihajiX)
+            if (migiCheckNi) {}else{xPlus=0f}
+            if (hidariCheckNi) {}else{xPlus=0f}
         }
-
-
+        //おしっぱなしでめりこんでしまう問題を考える
+        //現状、押しっぱなしにすると、１，２、と二段階でめり込んでいくように見える
+        //一回目はxPlusはofに戻される
+        //二回目はxPlusはxPlus + kasokudoXされる。
+        //kasokudoXは　右なら5.0　左なら－5.0　nshiならー２．５か２．５だ。
+        //xPlus=0f で   nashiならば　0.0になるが、当たった瞬間にnashiにしなきゃならんので至難の業だ。
     }
 
     //mapCheckを左右に分けた
