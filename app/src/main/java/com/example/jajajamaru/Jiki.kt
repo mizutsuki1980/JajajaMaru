@@ -48,25 +48,22 @@ class Jiki(var x:Int, var y:Int) {
         xPlus = xPlus + kasokudoX // 速度をプラス
         if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
         if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
-        val checkX = xPlus + kasokudoYoko(controller.houkou)//次の位置を計算
+        val checkKasokuX = xPlus + kasokudoYoko(controller.houkou)//次の位置を計算
 
         //現在のキャラの右端、左端
         val charaMigihajiX = (sekaix +(ookisa/2)).toInt()
         val charaHidarihajiX = (sekaix -(ookisa/2)).toInt()
 
         //次の位置の右端、左端
-        val checkCharaMigihajiX = (sekaix+checkX +(ookisa/2)).toInt()
-        val checkCharaHidarihajiX = (sekaix+checkX -(ookisa/2)).toInt()
+        val checkCharaMigihajiX = (sekaix+checkKasokuX +(ookisa/2)).toInt()
+        val checkCharaHidarihajiX = (sekaix+checkKasokuX -(ookisa/2)).toInt()
         val migiCheck = mapCheck(map,checkCharaMigihajiX)
 
-        if(migiCheck){
-            jikiXido(controller)//障害物がなければ、はじめて時期を移動させる
-
-        }
-
+        //現在は右のみ、nashiも無視する。
+        if(controller.houkou=="migi") { if (migiCheck) { jikiXido(controller)}}//自機を移動させる
 
         //おもったよりここがちゃんと動いてんだなー、なんでだろうか？
-        var syougaiCheckX = syougaiX(checkX, controller, map)//次の位置に障害物あるか？
+        var syougaiCheckX = syougaiX(checkKasokuX, controller, map)//次の位置に障害物あるか？
         if(syougaiCheckX) {
             worldOffsetX += xPlus.toInt()
             sekaix += xPlus.toInt()
@@ -81,7 +78,7 @@ class Jiki(var x:Int, var y:Int) {
                 else -> xPlus = 0f
             }
         } else { //障害物がなかった場合
-            jikiXido(controller)//障害物がなければ、はじめて時期を移動させる
+        //    jikiXido(controller)//障害物がなければ、はじめて時期を移動させる
         }
     }
 
