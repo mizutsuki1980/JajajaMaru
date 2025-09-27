@@ -53,16 +53,9 @@ class Jiki(var x:Int, var y:Int) {
     }
 
 
-    //今度はここを直していく。なんかちゃんと止まってない縦方向
-    //横軸をちょっと別のところをみてるんじゃないかと思っている。
     fun idoUeShita(controller: Controller, map: Map){
-
-        var syougaiCheckY = false
         jumpSyori(controller,map)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
-
-        //なんかすり抜けて落下していくケースがある。
-        syougaiCheckY = syougaiY(controller, map)
-
+        var syougaiCheckY  = syougaiY(controller, map)
         if (isJump) { if(syougaiCheckY){ isJump = false } }        //縦方向に障害物があった場合、ジャンプを中止する。
     }
 
@@ -91,17 +84,13 @@ class Jiki(var x:Int, var y:Int) {
         if (controller.houkou == "hidari") { checksekaix -= ookisa / 2 }
         var checkBlock = checksekaix / 32
         val checkMasuSyuruiX = map.masu[13][checkBlock+1]
-
         var checksekaiy = y - vJump.toInt()
         var yBlock = 0
         if(checksekaiy<=550 && checksekaiy >=501){yBlock = 14}
         if(checksekaiy<=500 && checksekaiy >=468){yBlock = 13}
         if(checksekaiy<=467 && checksekaiy >=436){yBlock = 12}
         if(checksekaiy<=435 && checksekaiy >=404){yBlock = 11}
-
-
         val checkMasuSyuruiJump = map.masu[yBlock][checkBlock+1]
-
         var checkKekka = false
         when(checkMasuSyuruiJump){
             0 -> { checkKekka = false }
@@ -155,7 +144,7 @@ class Jiki(var x:Int, var y:Int) {
 
         var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
 
-        val checkMasuSyurui = map.masu[13][checkBlock+1]  //listは０から!!!
+        val checkMasuSyurui = map.masu[13][checkBlock+1]  //listは０から!!!なるほど、ここの＋１はlistの０を１にするためか。
         var checkKekka = false
         when(checkMasuSyurui){
             0 -> { checkKekka = false }     //障害物にあたっていない判定
