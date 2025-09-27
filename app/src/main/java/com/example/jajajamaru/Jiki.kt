@@ -46,8 +46,6 @@ class Jiki(var x:Int, var y:Int) {
     fun idoMigiHidari(controller: Controller, map: Map){
         val kasokudoX = kasokudoYoko(controller.houkou)//次の速度を計算
         xPlus = xPlus + kasokudoX // 速度をプラス
-        if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
-        if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
         val checkKasokuX = xPlus + kasokudoYoko(controller.houkou)//次の位置を計算
 
         //現在のキャラの右端、左端
@@ -64,8 +62,15 @@ class Jiki(var x:Int, var y:Int) {
         val hidariCheck = mapCheck(map,checkCharaHidarihajiX)
 
         //右と左
-        if(controller.houkou=="migi") { if (migiCheck) { jikiXido(controller)}}//自機を移動させる
-        if(controller.houkou=="hidari") { if (hidariCheck) { jikiXido(controller)}}//自機を移動させる
+        //当たった判定の時点で加速を０にしちまうか。
+        if(controller.houkou=="migi") {
+            if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
+            if (migiCheck) { jikiXido(controller)}else{xPlus=0f}
+        }
+        if(controller.houkou=="hidari") {
+            if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
+            if (hidariCheck) { jikiXido(controller)}else{xPlus=0f}
+        }
         if(controller.houkou=="nashi") {}
 
 
