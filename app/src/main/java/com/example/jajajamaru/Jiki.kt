@@ -48,6 +48,8 @@ class Jiki(var x:Int, var y:Int) {
         if(xPlus==0.1f){
             //できたで
             xPlus+=0.1f
+
+
             //うーむ、結局３くらいすすんじゃうなー
         }else {
             xPlus = xPlus + kasokudoX // 速度をプラス
@@ -56,8 +58,11 @@ class Jiki(var x:Int, var y:Int) {
         if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
         if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
         val checkKasokuX = xPlus + kasokudoYoko(controller.houkou)//次の位置を計算
+        hasitterutokiTomaru(controller,map,checkKasokuX)
+    }
 
-
+    fun hasitterutokiTomaru(controller: Controller,map:Map,checkKasokuX:Float){
+        //ここはあくまで、走っている時に止まる、という条件。ぶつかる、という感じ
         //次の位置の右端、左端
         val checkCharaMigihajiX = (sekaix+checkKasokuX +(ookisa/2)).toInt()
         val checkCharaHidarihajiX = (sekaix+checkKasokuX -(ookisa/2)).toInt()
@@ -70,8 +75,8 @@ class Jiki(var x:Int, var y:Int) {
         //右と左
         if(controller.houkou=="migi") { if (migiCheck) {jikiXido(controller)}else{xPlus=0.1f} }
         if(controller.houkou=="hidari") { if (hidariCheck) {jikiXido(controller)}else{xPlus=0.1f} }
-    }
 
+    }
     //mapCheckを左右に分けた
     fun mapCheckMigi(map:Map,checkCharaMigihajiX:Int): Boolean{
         var check = true
