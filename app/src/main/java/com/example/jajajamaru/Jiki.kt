@@ -47,9 +47,56 @@ class Jiki(var x:Int, var y:Int) {
 
    }
 
-    fun idoUeShitaMigiHidari(controller: Controller, map: Map){
+    fun idoSyori(controller: Controller, map: Map){
         idoMigiHidari(controller,map)       //横移動 x軸
         idoUeShita(controller,map)        //縦移動　y軸
+    }
+
+    fun idoMigiHidari(controller: Controller, map: Map){
+        val kasokudoX = kasokudoYoko(controller.houkou)
+        val checkX = xPlus + kasokudoYoko(controller.houkou)
+        var syougaiCheckX = syougaiX(checkX, controller, map)
+        if (isJump) { syougaiCheckX = false }
+        if (syougaiCheckX) { //横方向に障害物があった場合
+            when (controller.houkou) {
+                "migi" -> { syougaibutuSyoriX(-17,-17) }
+                "hidari" -> { syougaibutuSyoriX(17,17) }
+                "nashi" -> { xPlus = 0f }
+                else -> xPlus = 0f
+            }
+        } else { //障害物がなかった場合
+            xPlus = xPlus + kasokudoX // 速度をプラス
+            if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
+            if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
+            jikiXido(controller)
+        }
+
+    }
+    fun syougaibutuSyoriX(worldOffsetXPlus:Int, sekaixPlus:Int){    //jikiの位置が当たったら戻す処理
+        xPlus = 0f  //加速はいったん０にする
+        worldOffsetX += worldOffsetXPlus    //マスの半分をもどす
+        sekaix += sekaixPlus
+    }
+    fun syougaiX(vYokoPlusCheckyou: Float, controller: Controller, map:Map):Boolean{
+        var checksekaix = sekaix + vYokoPlusCheckyou.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
+        if (controller.houkou == "migi") {
+            checksekaix += ookisa / 2 //自機のookisaを計算に加える
+        }
+
+        if (controller.houkou == "hidari") {
+            checksekaix -= ookisa / 2 //自機のookisaを計算に加える
+        }
+
+        var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
+
+        val checkMasuSyurui = map.masu[13][checkBlock+1]  //listは０から!!!なるほど、ここの＋１はlistの０を１にするためか。
+        var checkKekka = false
+        when(checkMasuSyurui){
+            0 -> { checkKekka = false }     //障害物にあたっていない判定
+            1 -> { checkKekka = true }     //障害物にあたっている判定
+            else ->{checkKekka = true }
+        }
+        return checkKekka
     }
 
 
@@ -100,59 +147,6 @@ class Jiki(var x:Int, var y:Int) {
         return checkKekka
     }
 
-    fun idoMigiHidari(controller: Controller, map: Map){
-        val kasokudoX = kasokudoYoko(controller.houkou)
-        val checkX = xPlus + kasokudoYoko(controller.houkou)
-        var syougaiCheckX = false
-        syougaiCheckX = syougaiX(checkX, controller, map)
-        if (isJump) { syougaiCheckX = false }
-        if (syougaiCheckX) { //横方向に障害物があった場合
-            when (controller.houkou) {
-                "migi" -> { syougaibutuSyoriX(-17,-17) }
-                "hidari" -> { syougaibutuSyoriX(17,17) }
-                "nashi" -> { xPlus = 0f }
-                else -> xPlus = 0f
-            }
-        } else { //障害物がなかった場合
-            xPlus = xPlus + kasokudoX // 速度をプラス
-            if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
-            if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
-            jikiXido(controller)
-        }
-
-    }
-
-
-    fun syougaibutuSyoriX(worldOffsetXPlus:Int, sekaixPlus:Int){    //jikiの位置が当たったら戻す処理
-        xPlus = 0f  //加速はいったん０にする
-        worldOffsetX += worldOffsetXPlus    //マスの半分をもどす
-        sekaix += sekaixPlus
-    }
-
-
-
-
-    fun syougaiX(vYokoPlusCheckyou: Float, controller: Controller, map:Map):Boolean{
-        var checksekaix = sekaix + vYokoPlusCheckyou.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
-        if (controller.houkou == "migi") {
-            checksekaix += ookisa / 2 //自機のookisaを計算に加える
-        }
-
-        if (controller.houkou == "hidari") {
-            checksekaix -= ookisa / 2 //自機のookisaを計算に加える
-        }
-
-        var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
-
-        val checkMasuSyurui = map.masu[13][checkBlock+1]  //listは０から!!!なるほど、ここの＋１はlistの０を１にするためか。
-        var checkKekka = false
-        when(checkMasuSyurui){
-            0 -> { checkKekka = false }     //障害物にあたっていない判定
-            1 -> { checkKekka = true }     //障害物にあたっている判定
-            else ->{checkKekka = true }
-        }
-        return checkKekka
-    }
 
 
     private fun CharaCameraIdoSeigen(controller: Controller) {
