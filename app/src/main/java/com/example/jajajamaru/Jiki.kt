@@ -71,7 +71,7 @@ class Jiki(var x:Int, var y:Int) {
         //右端を決めるためのチェック
         //次の右端の座標ｘはわかっているのだから、true か　falseで返せるはず。
         if(mapCheck(map,checkCharaMigihajiX)){
-
+            jikiXido(controller)//障害物がなければ、はじめて時期を移動させる
         }
         //左端を決めるためのチェック
 
@@ -87,11 +87,11 @@ class Jiki(var x:Int, var y:Int) {
                 else -> xPlus = 0f
             }
         } else { //障害物がなかった場合
-            jikiXido(controller)//障害物がなければ、はじめて時期を移動させる
+           // jikiXido(controller)//障害物がなければ、はじめて時期を移動させる
         }
     }
     fun mapCheck(map:Map,checkCharaMigihajiX:Int): Boolean{
-        var check = false
+        var check = true
         val checkBlock = checkCharaMigihajiX / 32
         if(map.masu[13][checkBlock] == 1){check = false}
         return check
