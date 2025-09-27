@@ -70,6 +70,7 @@ class Jiki(var x:Int, var y:Int) {
 
         //右端を決めるためのチェック
         //次の右端の座標ｘはわかっているのだから、true か　falseで返せるはず。
+        //やっぱこれがだめなんだなー、なんか１ドットづつしか動かなくなるし。
         if(mapCheck(map,checkCharaMigihajiX)){
            // jikiXido(controller)//障害物がなければ、はじめて時期を移動させる
         }
@@ -77,6 +78,7 @@ class Jiki(var x:Int, var y:Int) {
         //おもったよりここがちゃんと動いてんだなー、なんでだろうか？
         var syougaiCheckX = syougaiX(checkX, controller, map)//次の位置に障害物あるか？
         if (isJump) { syougaiCheckX = false }//ジャンプなら障害物は無視
+
         if (syougaiCheckX) { //横方向に障害物があった場合
             when (controller.houkou) {
                 "migi" -> { syougaibutuSyoriX(-17,-17) }//右に障害物があれば半マス戻す
