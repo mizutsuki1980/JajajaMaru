@@ -56,38 +56,21 @@ class Jiki(var x:Int, var y:Int) {
         if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
         val checkKasokuX = xPlus + kasokudoYoko(controller.houkou)//次の位置を計算
 
-        hasitterutokiTomaru(controller,map,checkKasokuX)
         if(xPlus==0.1f) {
             tomatterutokiHashiru(controller, map)
+        }  else{    //もし止まってたら、動く
+            hasitterutokiTomaru(controller,map,checkKasokuX)
         }
     }
 
     fun tomatterutokiHashiru(controller: Controller,map: Map){
-        //ここはあくまで、走っている時に止まる、という条件。ぶつかる、という感じ
-        //次の位置の右端、左端
-        val checkCharaMigihajiX = (sekaix +(ookisa/2)).toInt()
-        val checkCharaHidarihajiX = (sekaix -(ookisa/2)).toInt()
-
-        //障害物　１　がある場合　false　行けないという意味
-        //障害物　０　ならば場合　true　　行ける、という意味
-        val migiCheck = mapCheckMigi(map,checkCharaMigihajiX)
-        val hidariCheck = mapCheckHaidari(map,checkCharaHidarihajiX)
-
-        //右と左
-        if(controller.houkou=="migi") {
-            if (migiCheck) {
-                jikiXido(controller)
-            }else{
-
-            }
-        }
+        //ここは止まっている時にくる
+        //xPlus==0.1fの時
 
         if(controller.houkou=="hidari") {
-            if (hidariCheck) {
-                jikiXido(controller)
-            }
+            xPlus = xPlus + kasokudoX // 速度をプラス
+        //            jikiXido(controller)
         }
-
     }
 
     fun hasitterutokiTomaru(controller: Controller,map:Map,checkKasokuX:Float){
