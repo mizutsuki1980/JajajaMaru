@@ -53,22 +53,24 @@ class Jiki(var x:Int, var y:Int) {
     }
 
     fun idoMigiHidari(controller: Controller, map: Map){
-        val kasokudoX = kasokudoYoko(controller.houkou)
-        val checkX = xPlus + kasokudoYoko(controller.houkou)
-        var syougaiCheckX = syougaiX(checkX, controller, map)
-        if (isJump) { syougaiCheckX = false }
+        val kasokudoX = kasokudoYoko(controller.houkou)//次の速度を計算
+        xPlus = xPlus + kasokudoX // 速度をプラス
+        if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
+        if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
+        val checkX = xPlus + kasokudoYoko(controller.houkou)//次の位置を計算
+        var syougaiCheckX = syougaiX(checkX, controller, map)//次の位置に障害物あるか？
+        if (isJump) { syougaiCheckX = false }//ジャンプなら障害物は無視
+
         if (syougaiCheckX) { //横方向に障害物があった場合
             when (controller.houkou) {
-                "migi" -> { syougaibutuSyoriX(-17,-17) }
-                "hidari" -> { syougaibutuSyoriX(17,17) }
-                "nashi" -> { xPlus = 0f }
+                "migi" -> { syougaibutuSyoriX(-17,-17) }//右に障害物があれば半マス戻す
+                "hidari" -> { syougaibutuSyoriX(17,17) }//左に障害物があれば半マス戻す
+                "nashi" -> { xPlus = 0f }//なしだとどーすんの？ちゃんと決めてない。ここだ！多分すりぬけるの。
                 else -> xPlus = 0f
             }
         } else { //障害物がなかった場合
-            xPlus = xPlus + kasokudoX // 速度をプラス
-            if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
-            if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
-            jikiXido(controller)
+
+            jikiXido(controller)//障害物がなければ、はじめて時期を移動させる
         }
 
     }
