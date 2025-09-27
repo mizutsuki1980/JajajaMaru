@@ -37,16 +37,6 @@ class Jiki(var x:Int, var y:Int) {
     }
 
 
-    fun jikiXido(controller: Controller){   //実際にjikiの位置を動かす処理
-        CharaCameraIdoSeigen(controller)//キャラクターのカメラワークで画面内を制限
-         if(charaWorldIdoSeigen()) {//ワールドの画面端で移動を制限
-            //ワールド内なら移動してOK
-             worldOffsetX += xPlus.toInt()
-             sekaix += xPlus.toInt()
-         }
-
-   }
-
     fun idoSyori(controller: Controller, map: Map){
         idoMigiHidari(controller,map)       //横移動 x軸
         idoUeShita(controller,map)        //縦移動　y軸
@@ -67,16 +57,14 @@ class Jiki(var x:Int, var y:Int) {
         //次の位置の右端、左端
         val checkCharaMigihajiX = (checkX +(ookisa/2)).toInt()
         val checkCharaHidarihajiX = (checkX -(ookisa/2)).toInt()
-
-        //右端を決めるためのチェック
-        //次の右端の座標ｘはわかっているのだから、true か　falseで返せるはず。
-        //やっぱこれがだめなんだなー、なんか１ドットづつしか動かなくなるし。
-        if(mapCheck(map,checkCharaMigihajiX)){
-           // jikiXido(controller)//障害物がなければ、はじめて時期を移動させる
-        }
+        val migiCheck = mapCheck(map,checkCharaMigihajiX)
 
         //おもったよりここがちゃんと動いてんだなー、なんでだろうか？
         var syougaiCheckX = syougaiX(checkX, controller, map)//次の位置に障害物あるか？
+        if(syougaiCheckX) {
+            worldOffsetX += xPlus.toInt()
+            sekaix += xPlus.toInt()
+        }
         if (isJump) { syougaiCheckX = false }//ジャンプなら障害物は無視
 
         if (syougaiCheckX) { //横方向に障害物があった場合
@@ -89,14 +77,21 @@ class Jiki(var x:Int, var y:Int) {
         } else { //障害物がなかった場合
             jikiXido(controller)//障害物がなければ、はじめて時期を移動させる
         }
-
-
     }
     fun mapCheck(map:Map,checkCharaMigihajiX:Int): Boolean{
-        var check = false
+        var check = true
         val checkBlock = checkCharaMigihajiX / 32
         if(map.masu[13][checkBlock] == 1){check = false}
         return check
+    }
+
+    fun jikiXido(controller: Controller){   //実際にjikiの位置を動かす処理
+        CharaCameraIdoSeigen(controller)//キャラクターのカメラワークで画面内を制限
+        if(charaWorldIdoSeigen()) {//ワールドの画面端で移動を制限
+            //ワールド内なら移動してOK
+            worldOffsetX += xPlus.toInt()
+            sekaix += xPlus.toInt()
+        }
     }
 
 
