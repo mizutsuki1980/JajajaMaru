@@ -58,12 +58,17 @@ class Jiki(var x:Int, var y:Int) {
         val checkCharaMigihajiX = (sekaix+checkKasokuX +(ookisa/2)).toInt()
         val checkCharaHidarihajiX = (sekaix+checkKasokuX -(ookisa/2)).toInt()
 
+        //障害物　１　がある場合　false　行けないという意味
+        //障害物　０　ならば場合　true　　行ける、という意味
         val migiCheck = mapCheck(map,checkCharaMigihajiX)
         val hidariCheck = mapCheck(map,checkCharaHidarihajiX)
 
-        //現在は右と左
+        //右と左
         if(controller.houkou=="migi") { if (migiCheck) { jikiXido(controller)}}//自機を移動させる
         if(controller.houkou=="hidari") { if (hidariCheck) { jikiXido(controller)}}//自機を移動させる
+        if(controller.houkou=="nashi") {}
+
+
     }
 
     fun mapCheck(map:Map,checkCharaMigihajiX:Int): Boolean{
