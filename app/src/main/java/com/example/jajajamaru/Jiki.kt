@@ -42,17 +42,15 @@ class Jiki(var x:Int, var y:Int) {
         idoUeShita(controller,map)        //縦移動　y軸
     }
 
-    var syoutotuflag = false
     var kasokudoX = 0.0f
-
     fun idoMigiHidari(controller: Controller, map: Map){
         kasokudoX = kasokudoYoko(controller.houkou)//次の速度を計算
-        if (syoutotuflag){
-            kasokudoX = 0.0f
-            xPlus = 0.0f
-            syoutotuflag = false
+        if(xPlus==0.1f){
+            //できたで
+            xPlus+=0.1f
+            //うーむ、結局３くらいすすんじゃうなー
         }else {
-             xPlus = xPlus + kasokudoX // 速度をプラス
+            xPlus = xPlus + kasokudoX // 速度をプラス
         }
 
         if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
@@ -70,15 +68,8 @@ class Jiki(var x:Int, var y:Int) {
         val hidariCheck = mapCheckHaidari(map,checkCharaHidarihajiX)
 
         //右と左
-        if(controller.houkou=="migi") {
-            if (migiCheck) {
-                jikiXido(controller)
-            }else{
-                xPlus=0f
-                syoutotuflag = true
-            }
-        }
-        if(controller.houkou=="hidari") { if (hidariCheck) { jikiXido(controller)}else{xPlus=0f} }
+        if(controller.houkou=="migi") { if (migiCheck) {jikiXido(controller)}else{xPlus=0.1f} }
+        if(controller.houkou=="hidari") { if (hidariCheck) {jikiXido(controller)}else{xPlus=0.1f} }
     }
 
     //mapCheckを左右に分けた
