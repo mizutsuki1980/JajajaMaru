@@ -57,10 +57,13 @@ class Jiki(var x:Int, var y:Int) {
         //次の位置の右端、左端
         val checkCharaMigihajiX = (sekaix+checkKasokuX +(ookisa/2)).toInt()
         val checkCharaHidarihajiX = (sekaix+checkKasokuX -(ookisa/2)).toInt()
-        val migiCheck = mapCheck(map,checkCharaMigihajiX)
 
-        //現在は右のみ、nashiも無視する。
+        val migiCheck = mapCheck(map,checkCharaMigihajiX)
+        val hidariCheck = mapCheck(map,checkCharaHidarihajiX)
+
+        //現在は右と左
         if(controller.houkou=="migi") { if (migiCheck) { jikiXido(controller)}}//自機を移動させる
+        if(controller.houkou=="hidari") { if (hidariCheck) { jikiXido(controller)}}//自機を移動させる
 
         //おもったよりここがちゃんと動いてんだなー、なんでだろうか？
         var syougaiCheckX = syougaiX(checkKasokuX, controller, map)//次の位置に障害物あるか？
