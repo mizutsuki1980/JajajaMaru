@@ -73,12 +73,10 @@ class Jiki(var x:Int, var y:Int) {
         if(mapCheck(map,checkCharaMigihajiX)){
            // jikiXido(controller)//障害物がなければ、はじめて時期を移動させる
         }
-        //左端を決めるためのチェック
 
-
+        //おもったよりここがちゃんと動いてんだなー、なんでだろうか？
         var syougaiCheckX = syougaiX(checkX, controller, map)//次の位置に障害物あるか？
         if (isJump) { syougaiCheckX = false }//ジャンプなら障害物は無視
-
         if (syougaiCheckX) { //横方向に障害物があった場合
             when (controller.houkou) {
                 "migi" -> { syougaibutuSyoriX(-17,-17) }//右に障害物があれば半マス戻す
@@ -89,6 +87,8 @@ class Jiki(var x:Int, var y:Int) {
         } else { //障害物がなかった場合
             jikiXido(controller)//障害物がなければ、はじめて時期を移動させる
         }
+
+
     }
     fun mapCheck(map:Map,checkCharaMigihajiX:Int): Boolean{
         var check = false
