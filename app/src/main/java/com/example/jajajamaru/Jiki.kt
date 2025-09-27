@@ -69,28 +69,14 @@ class Jiki(var x:Int, var y:Int) {
                 else -> xPlus = 0f
             }
         } else { //障害物がなかった場合
-
             jikiXido(controller)//障害物がなければ、はじめて時期を移動させる
         }
-
     }
-    fun syougaibutuSyoriX(worldOffsetXPlus:Int, sekaixPlus:Int){    //jikiの位置が当たったら戻す処理
-        xPlus = 0f  //加速はいったん０にする
-        worldOffsetX += worldOffsetXPlus    //マスの半分をもどす
-        sekaix += sekaixPlus
-    }
-    fun syougaiX(vYokoPlusCheckyou: Float, controller: Controller, map:Map):Boolean{
-        var checksekaix = sekaix + vYokoPlusCheckyou.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
-        if (controller.houkou == "migi") {
-            checksekaix += ookisa / 2 //自機のookisaを計算に加える
-        }
-
-        if (controller.houkou == "hidari") {
-            checksekaix -= ookisa / 2 //自機のookisaを計算に加える
-        }
-
+    fun syougaiX(checkX: Float, controller: Controller, map:Map):Boolean{
+        var checksekaix = sekaix + checkX.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
+        if (controller.houkou == "migi") { checksekaix += ookisa / 2 }
+        if (controller.houkou == "hidari") { checksekaix -= ookisa / 2 }
         var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
-
         val checkMasuSyurui = map.masu[13][checkBlock+1]  //listは０から!!!なるほど、ここの＋１はlistの０を１にするためか。
         var checkKekka = false
         when(checkMasuSyurui){
@@ -101,6 +87,13 @@ class Jiki(var x:Int, var y:Int) {
         return checkKekka
     }
 
+
+
+    fun syougaibutuSyoriX(worldOffsetXPlus:Int, sekaixPlus:Int){    //jikiの位置が当たったら戻す処理
+        xPlus = 0f  //加速はいったん０にする
+        worldOffsetX += worldOffsetXPlus    //マスの半分をもどす
+        sekaix += sekaixPlus
+    }
 
     fun idoUeShita(controller: Controller, map: Map){
         jumpSyori(controller,map)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
