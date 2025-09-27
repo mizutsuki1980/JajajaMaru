@@ -64,25 +64,6 @@ class Jiki(var x:Int, var y:Int) {
         //現在は右と左
         if(controller.houkou=="migi") { if (migiCheck) { jikiXido(controller)}}//自機を移動させる
         if(controller.houkou=="hidari") { if (hidariCheck) { jikiXido(controller)}}//自機を移動させる
-
-        //おもったよりここがちゃんと動いてんだなー、なんでだろうか？
-        var syougaiCheckX = syougaiX(checkKasokuX, controller, map)//次の位置に障害物あるか？
-        if(syougaiCheckX) {
-            worldOffsetX += xPlus.toInt()
-            sekaix += xPlus.toInt()
-        }
-        if (isJump) { syougaiCheckX = false }//ジャンプなら障害物は無視
-
-        if (syougaiCheckX) { //横方向に障害物があった場合
-            when (controller.houkou) {
-                "migi" -> { syougaibutuSyoriX(-17,-17) }//右に障害物があれば半マス戻す
-                "hidari" -> { syougaibutuSyoriX(17,17) }//左に障害物があれば半マス戻す
-                "nashi" -> { xPlus = 0f }//なしだとどーすんの？ちゃんと決めてない。ここだ！多分すりぬけるの。
-                else -> xPlus = 0f
-            }
-        } else { //障害物がなかった場合
-        //    jikiXido(controller)//障害物がなければ、はじめて時期を移動させる
-        }
     }
 
     fun mapCheck(map:Map,checkCharaMigihajiX:Int): Boolean{
