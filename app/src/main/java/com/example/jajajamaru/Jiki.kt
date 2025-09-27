@@ -55,9 +55,15 @@ class Jiki(var x:Int, var y:Int) {
         val charaHidarihajiX = (sekaix -(ookisa/2)).toInt()
 
         //次の位置の右端、左端
-        val checkCharaMigihajiX = (checkX +(ookisa/2)).toInt()
-        val checkCharaHidarihajiX = (checkX -(ookisa/2)).toInt()
+        val checkCharaMigihajiX = (sekaix+checkX +(ookisa/2)).toInt()
+        val checkCharaHidarihajiX = (sekaix+checkX -(ookisa/2)).toInt()
         val migiCheck = mapCheck(map,checkCharaMigihajiX)
+
+        if(migiCheck){
+            jikiXido(controller)//障害物がなければ、はじめて時期を移動させる
+
+        }
+
 
         //おもったよりここがちゃんと動いてんだなー、なんでだろうか？
         var syougaiCheckX = syougaiX(checkX, controller, map)//次の位置に障害物あるか？
@@ -78,10 +84,11 @@ class Jiki(var x:Int, var y:Int) {
             jikiXido(controller)//障害物がなければ、はじめて時期を移動させる
         }
     }
+
     fun mapCheck(map:Map,checkCharaMigihajiX:Int): Boolean{
         var check = true
         val checkBlock = checkCharaMigihajiX / 32
-        if(map.masu[13][checkBlock] == 1){check = false}
+        if(map.masu[13][checkBlock+1] == 1){check = false}
         return check
     }
 
@@ -94,6 +101,23 @@ class Jiki(var x:Int, var y:Int) {
         }
     }
 
+
+    fun CharaCameraIdoSeigen(controller: Controller) {
+        if (controller.houkou == "migi") {
+            if (xPlus > 0) {
+                if (x <= 400) {
+                    x += xPlus.toInt()
+                }
+            }
+        }
+        if (controller.houkou == "hidari") {
+            if (xPlus < 0) {
+                if (x >= 300) {
+                    x += xPlus.toInt()
+                }
+            }
+        }
+    }
 
     fun syougaiX(checkX: Float, controller: Controller, map:Map):Boolean{
         var checksekaix = sekaix + checkX.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
@@ -112,7 +136,6 @@ class Jiki(var x:Int, var y:Int) {
         }
         return checkKekka
     }
-
 
 
     fun syougaibutuSyoriX(worldOffsetXPlus:Int, sekaixPlus:Int){    //jikiの位置が当たったら戻す処理
@@ -170,22 +193,6 @@ class Jiki(var x:Int, var y:Int) {
 
 
 
-    private fun CharaCameraIdoSeigen(controller: Controller) {
-        if (controller.houkou == "migi") {
-            if (xPlus > 0) {
-                if (x <= 400) {
-                    x += xPlus.toInt()
-                }
-            }
-        }
-        if (controller.houkou == "hidari") {
-            if (xPlus < 0) {
-                if (x >= 300) {
-                    x += xPlus.toInt()
-                }
-            }
-        }
-    }
     fun kasokudoYoko(houkou:String):Float {
         when (houkou) {
             "migi" -> {return 5.0f }
