@@ -50,25 +50,7 @@ class Jiki(var x:Int, var y:Int) {
         worldOffsetX += xPlus.toInt()
         sekaix += xPlus.toInt()
     }
-    //ここでリミットをかける。ｘリミット（壁からの距離でリミットとする）
-    fun sekaix1KouhoSyougaiCheck(controller: Controller,map:Map,sekaix1Kouho:Int,xPlus1: Float): Boolean{
-        //障害物　１　がある場合　false　行けないという意味
-        //障害物　０　ならば場合　true　　行ける、という意味
-        var check = true
 
-
-        val checkCharaMigihajiX = (sekaix1Kouho +(ookisa/2)).toInt()
-        val checkCharaHidarihajiX = (sekaix1Kouho -(ookisa/2)).toInt()
-        val migiCheck = mapCheckMigi(map,checkCharaMigihajiX)
-        val hidariCheck = mapCheckHaidari(map,checkCharaHidarihajiX)
-
-
-        if(controller.houkou=="migi") { if (migiCheck) {}else{check=false} }
-        if(controller.houkou=="hidari") { if (hidariCheck) {}else{check=false} }
-        return check
-        //できたらこの辺でリミットｘを割り出したいところ
-
-    }
 
 
 
@@ -78,8 +60,7 @@ class Jiki(var x:Int, var y:Int) {
         val kasokudo1= kasokudoYoko(controller.houkou)
         val xPlus1 = xPlus0 + kasokudo1    //次の、今の、速度　（時間が１の時の速度）
         val sekaix1Kouho = (sekaix0 + xPlus1).toInt()
-        val sekaix1KouhoCheck = sekaix1KouhoSyougaiCheck(controller,map,sekaix1Kouho,xPlus1)
-
+        val sekaix1KouhoCheck = mapCheck(map,sekaix1Kouho,xPlus1)
         if(sekaix1KouhoCheck){
             xPlus = xPlus + xPlus1 // 速度をプラス
             if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
@@ -91,19 +72,15 @@ class Jiki(var x:Int, var y:Int) {
     }
 
 
-
-
-    //mapCheckを左右に分けた
-    fun mapCheckMigi(map:Map,checkCharaMigihajiX:Int): Boolean{
+    fun mapCheck(map:Map,sekaix1Kouho:Int,xPlus1:Float):Boolean{
         var check = true
-        val checkBlock = checkCharaMigihajiX / 32
-        if(map.masu[13][checkBlock+1] == 1){check = false}
-        return check
-    }
-    fun mapCheckHaidari(map:Map,checkCharaHidarihajiX:Int): Boolean{
-        var check = true
-        val checkBlock = checkCharaHidarihajiX / 32
-        if(map.masu[13][checkBlock+0] == 1){check = false}
+        val checkBlock = sekaix1Kouho / 32
+            if (xPlus1 > 0) {
+                if(map.masu[13][checkBlock+1] == 1){check = false}
+            }//右向きってこと
+            if (xPlus1 < 0) {
+                if(map.masu[13][checkBlock+0] == 1){check = false}
+            }//左向きってこと
         return check
     }
 
