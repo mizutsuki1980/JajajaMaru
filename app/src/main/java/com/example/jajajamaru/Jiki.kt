@@ -48,6 +48,13 @@ class Jiki(var x:Int, var y:Int) {
         val checkKasokuX = xPlus + kasokudoYoko(controller.houkou)//次の位置を計算
         val check = syougaibutuHantei(controller,map,checkKasokuX)
 
+        val xPlus0 = xPlus
+        val sekaix0 = sekaix
+        val kasokudo1= kasokudoYoko(controller.houkou)
+        val xPlus1 = xPlus0 + kasokudo1    //次の、今の、速度　（時間が１の時の速度）
+        val sekaix1Kouho = (sekaix0 + xPlus1).toInt()
+        val sekaix1KouhoCheck = sekaix1KouhoSyougaiCheck(controller,map,sekaix1Kouho)
+
         if(check){
             xPlus = xPlus + kasokudoX // 速度をプラス
             if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
@@ -56,8 +63,22 @@ class Jiki(var x:Int, var y:Int) {
         }else{
             xPlus = 0f
         }
-
     }
+
+    fun sekaix1KouhoSyougaiCheck(controller: Controller,map:Map,sekaix1Kouho:Int): Boolean{
+        //障害物　１　がある場合　false　行けないという意味
+        //障害物　０　ならば場合　true　　行ける、という意味
+        var check = true
+        val checkCharaMigihajiX = (sekaix1Kouho +(ookisa/2)).toInt()
+        val checkCharaHidarihajiX = (sekaix1Kouho -(ookisa/2)).toInt()
+        val migiCheck = mapCheckMigi(map,checkCharaMigihajiX)
+        val hidariCheck = mapCheckHaidari(map,checkCharaHidarihajiX)
+        if(controller.houkou=="migi") { if (migiCheck) {jikiXido(controller)}else{check=false} }
+        if(controller.houkou=="hidari") { if (hidariCheck) {jikiXido(controller)}else{check=false} }
+        return check
+    }
+
+
     fun syougaibutuHantei(controller: Controller,map:Map,checkKasokuX:Float): Boolean{
 
         val checkCharaMigihajiX = (sekaix+checkKasokuX +(ookisa/2)).toInt()
