@@ -64,20 +64,30 @@ class Jiki(var x:Int, var y:Int) {
             if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
         }else{
             //移動はしない、指定したポイントに強制移動する
-            xPlus = 0f
+
+            xPlus = (sekaix - resetIchi).toFloat()
+
         }
     }
 
-
+    var resetIchi = 0
     fun mapCheck(map:Map,sekaix1Kouho:Int,xPlus1:Float):Boolean{
         var check = true
+        resetIchi = sekaix
         val checkBlock = sekaix1Kouho / 32
-            if (xPlus1 > 0) {
-                if(map.masu[13][checkBlock+1] == 1){check = false}
-            }//右向きってこと
+            if (xPlus1 > 0) {   //右向きってこと
+                if(map.masu[13][checkBlock+1] == 1){
+                    check = false
+                    resetIchi = (checkBlock * 32 + 32) - (ookisa/2)
+                }
+            }
             if (xPlus1 < 0) {
-                if(map.masu[13][checkBlock+0] == 1){check = false}
+                if(map.masu[13][checkBlock+0] == 1){
+                    check = false
+                    resetIchi = (checkBlock * 32 ) + (ookisa/2)
+                }
             }//左向きってこと
+
             //nashiならtrueが返る
         return check
     }
