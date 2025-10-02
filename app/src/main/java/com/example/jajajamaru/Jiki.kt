@@ -69,11 +69,9 @@ class Jiki(var x:Int, var y:Int) {
             } else {
                 //移動はしない、指定したポイントに強制移動する
                 xPlus = (sekaix1Kouho - resetIchiX).toFloat()
-                //xPlus = 0f
             }
         }else{
-            xPlus = (sekaix1Kouho - resetIchiX).toFloat()
-//            xPlus = 0f
+            xPlus = 0f
         }
     }
 
@@ -86,10 +84,11 @@ class Jiki(var x:Int, var y:Int) {
                 val checkBlock = (sekaix1Kouho + ookisa) / 32
                 if(map.masu[13][checkBlock+1] == 1){
                     check = false
-                    resetIchiX = checkBlock * 32
+                    //ここの強制的に戻る位置の指定がうまくいってないのだと思う。
+                    resetIchiX = ((checkBlock+1) * 32)
                 }
             }
-            if (xPlus1 < 0f) {
+            else if (xPlus1 < 0f) {
                 val checkBlock = (sekaix1Kouho - ookisa) / 32
                 if(map.masu[13][checkBlock+1] == 1){
                     check = false
