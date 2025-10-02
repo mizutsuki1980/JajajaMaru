@@ -54,12 +54,12 @@ class Jiki(var x:Int, var y:Int) {
     fun jikiXidoCheck(controller: Controller, map:Map){
         val xPlus0 = xPlus
         val sekaix0 = sekaix
-        val kasokudo1= kasokudoYoko(controller.houkou)
+        val kasokudo1 = kasokudoYoko(controller.houkou)
         val xPlus1 = xPlus0 + kasokudo1    //次の、今の、速度　（時間が１の時の速度）
         val sekaix1Kouho = (sekaix0 + xPlus1).toInt()
         val sekaix1KouhoCheck = mapCheck(map,sekaix1Kouho,xPlus1)
         if(sekaix1KouhoCheck){
-            xPlus = xPlus + xPlus1 // 速度をプラス
+            xPlus = xPlus + kasokudo1 // 速度をプラス
             if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
             if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
         }else{
