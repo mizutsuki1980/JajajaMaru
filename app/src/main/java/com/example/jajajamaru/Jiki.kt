@@ -45,51 +45,38 @@ class Jiki(var x:Int, var y:Int) {
     var kasokudoX = 0.0f
     fun idoMigiHidari(controller: Controller, map: Map){
         kasokudoX = kasokudoYoko(controller.houkou)//次の速度を計算
-
-        if(xPlus==0.1f){
-            //できたで　完全に止まる
-        }else {
-            xPlus = xPlus + kasokudoX // 速度をプラス
-        }
-
-        if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
-        if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
         val checkKasokuX = xPlus + kasokudoYoko(controller.houkou)//次の位置を計算
+        val check = syougaibutuHantei(controller,map,checkKasokuX)
 
-        if(xPlus==0.1f) {
-            tomatterutokiHashiru(controller, map)
-        }  else{    //もし止まってたら、動く
-            hasitterutokiTomaru(controller,map,checkKasokuX)
-        }
-    }
-
-    fun tomatterutokiHashiru(controller: Controller,map: Map){
-        //ここは止まっている時にくる
-        //xPlus==0.1fの時
-
-        if(controller.houkou=="hidari") {
+        if(check){
             xPlus = xPlus + kasokudoX // 速度をプラス
-        //            jikiXido(controller)
+            if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
+            if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
+            xPlus = xPlus + kasokudoX // 速度をプラス
+        }else{
+            xPlus = 0f
         }
-    }
 
-    //めり込んで動かなくなってしまう、というケースもあるなぁ。
-    fun hasitterutokiTomaru(controller: Controller,map:Map,checkKasokuX:Float){
-        //ここはあくまで、走っている時に止まる、という条件。ぶつかる、という感じ
-        //次の位置の右端、左端
+    }
+    fun syougaibutuHantei(controller: Controller,map:Map,checkKasokuX:Float): Boolean{
+
         val checkCharaMigihajiX = (sekaix+checkKasokuX +(ookisa/2)).toInt()
         val checkCharaHidarihajiX = (sekaix+checkKasokuX -(ookisa/2)).toInt()
 
+        var check = true
         //障害物　１　がある場合　false　行けないという意味
         //障害物　０　ならば場合　true　　行ける、という意味
         val migiCheck = mapCheckMigi(map,checkCharaMigihajiX)
         val hidariCheck = mapCheckHaidari(map,checkCharaHidarihajiX)
 
         //右と左
-        if(controller.houkou=="migi") { if (migiCheck) {jikiXido(controller)}else{xPlus=0.1f} }
-        if(controller.houkou=="hidari") { if (hidariCheck) {jikiXido(controller)}else{xPlus=0.1f} }
-
+        if(controller.houkou=="migi") { if (migiCheck) {jikiXido(controller)}else{check=false} }
+        if(controller.houkou=="hidari") { if (hidariCheck) {jikiXido(controller)}else{check=false} }
+        return check
     }
+
+
+
     //mapCheckを左右に分けた
     fun mapCheckMigi(map:Map,checkCharaMigihajiX:Int): Boolean{
         var check = true
