@@ -39,6 +39,11 @@ class Jiki(var x:Int, var y:Int) {
     }
 
     fun idoMigiHidari(controller: Controller, map: Map){
+        jikiXidoCheck(controller,map)
+        jikiXido(controller)    //実際に移動する。//障害物があったら0f移動する
+    }
+
+    fun jikiXidoCheck(controller: Controller, map:Map){
         val xPlus0 = xPlus
         val sekaix0 = sekaix
         val kasokudo1= kasokudoYoko(controller.houkou)
@@ -54,13 +59,12 @@ class Jiki(var x:Int, var y:Int) {
             //移動はしない、指定したポイントに強制移動する
             xPlus = 0f
         }
-        jikiXido(controller)    //実際に移動する。//障害物があったら0f移動する
+
     }
 
     fun jikiXido(controller: Controller){   //実際にjikiの位置を動かす処理
         CharaCameraIdoSeigen(controller)//キャラクターのカメラワークで画面内を制限
         if(charaWorldIdoSeigen()) {//ワールドの画面端で移動を制限
-            //ワールド内なら移動してOK
             worldOffsetX += xPlus.toInt()
             sekaix += xPlus.toInt()
         }
