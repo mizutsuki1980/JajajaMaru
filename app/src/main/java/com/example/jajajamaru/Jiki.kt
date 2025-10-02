@@ -64,17 +64,16 @@ class Jiki(var x:Int, var y:Int) {
         if(sekaixCheck) {
             if (sekaix1KouhoCheck) {
                 xPlus = xPlus + kasokudo1 // 速度をプラス
-                if (xPlus >= 30) {
-                    xPlus = 30f
-                } //速度制限 //１マス以上加速しないことで制限
-                if (xPlus <= -30) {
-                    xPlus = -30f
-                } //速度制限 //１マス以上加速しないことで制限
+                if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
+                if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
             } else {
                 //移動はしない、指定したポイントに強制移動する
-                //xPlus = (sekaix - resetIchiX).toFloat()
-                xPlus = 0f
+                xPlus = (sekaix1Kouho - resetIchiX).toFloat()
+                //xPlus = 0f
             }
+        }else{
+            xPlus = (sekaix1Kouho - resetIchiX).toFloat()
+//            xPlus = 0f
         }
     }
 
@@ -87,12 +86,14 @@ class Jiki(var x:Int, var y:Int) {
                 val checkBlock = (sekaix1Kouho + ookisa) / 32
                 if(map.masu[13][checkBlock+1] == 1){
                     check = false
+                    resetIchiX = checkBlock * 32
                 }
             }
             if (xPlus1 < 0f) {
                 val checkBlock = (sekaix1Kouho - ookisa) / 32
                 if(map.masu[13][checkBlock+1] == 1){
                     check = false
+                    resetIchiX = checkBlock * 32
                 }
             }//左向きってこと
 
