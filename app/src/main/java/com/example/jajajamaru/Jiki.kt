@@ -50,13 +50,22 @@ class Jiki(var x:Int, var y:Int) {
             xPlus = xPlus + xPlus1 // 速度をプラス
             if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
             if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
-            jikiXido(controller)    //実際に移動する。
         }else{
             //移動はしない、指定したポイントに強制移動する
             xPlus = 0f
+        }
+        jikiXido(controller)    //実際に移動する。//障害物があったら0f移動する
+    }
 
+    fun jikiXido(controller: Controller){   //実際にjikiの位置を動かす処理
+        CharaCameraIdoSeigen(controller)//キャラクターのカメラワークで画面内を制限
+        if(charaWorldIdoSeigen()) {//ワールドの画面端で移動を制限
+            //ワールド内なら移動してOK
+            worldOffsetX += xPlus.toInt()
+            sekaix += xPlus.toInt()
         }
     }
+
 
     fun sekaix1KouhoSyougaiCheck(controller: Controller,map:Map,sekaix1Kouho:Int): Boolean{
         //障害物　１　がある場合　false　行けないという意味
@@ -86,15 +95,6 @@ class Jiki(var x:Int, var y:Int) {
         val checkBlock = checkCharaHidarihajiX / 32
         if(map.masu[13][checkBlock+0] == 1){check = false}
         return check
-    }
-
-    fun jikiXido(controller: Controller){   //実際にjikiの位置を動かす処理
-        CharaCameraIdoSeigen(controller)//キャラクターのカメラワークで画面内を制限
-        if(charaWorldIdoSeigen()) {//ワールドの画面端で移動を制限
-            //ワールド内なら移動してOK
-            worldOffsetX += xPlus.toInt()
-            sekaix += xPlus.toInt()
-        }
     }
 
 
