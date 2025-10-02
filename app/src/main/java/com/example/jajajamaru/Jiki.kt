@@ -39,8 +39,11 @@ class Jiki(var x:Int, var y:Int) {
     }
 
     fun idoMigiHidari(controller: Controller, map: Map){
-        jikiXidoCheck(controller,map)
-        jikiXido(controller)    //実際に移動する。//障害物があったら0f移動する
+        jikiXidoCheck(controller,map)   //自機の次の位置に障害物があるのかチェック
+        CharaCameraIdoSeigen(controller)//キャラクターの画面内のカメラワークで制限
+        if(charaWorldIdoSeigen()) {//キャラクターがワールドの画面端で移動を制限
+            jikiXido(controller)    //実際の移動
+        }
     }
 
     fun jikiXidoCheck(controller: Controller, map:Map){
@@ -63,11 +66,8 @@ class Jiki(var x:Int, var y:Int) {
     }
 
     fun jikiXido(controller: Controller){   //実際にjikiの位置を動かす処理
-        CharaCameraIdoSeigen(controller)//キャラクターのカメラワークで画面内を制限
-        if(charaWorldIdoSeigen()) {//ワールドの画面端で移動を制限
             worldOffsetX += xPlus.toInt()
             sekaix += xPlus.toInt()
-        }
     }
 
 
