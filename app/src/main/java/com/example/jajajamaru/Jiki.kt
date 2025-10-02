@@ -50,8 +50,11 @@ class Jiki(var x:Int, var y:Int) {
             xPlus = xPlus + xPlus1 // 速度をプラス
             if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
             if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
+            jikiXido(controller)    //実際に移動する。
         }else{
+            //移動はしない、指定したポイントに強制移動する
             xPlus = 0f
+
         }
     }
 
@@ -66,7 +69,10 @@ class Jiki(var x:Int, var y:Int) {
         if(controller.houkou=="migi") { if (migiCheck) {}else{check=false} }
         if(controller.houkou=="hidari") { if (hidariCheck) {}else{check=false} }
         return check
+        //できたらこの辺でリミットｘを割り出したいところ
+
     }
+
 
     //mapCheckを左右に分けた
     fun mapCheckMigi(map:Map,checkCharaMigihajiX:Int): Boolean{
