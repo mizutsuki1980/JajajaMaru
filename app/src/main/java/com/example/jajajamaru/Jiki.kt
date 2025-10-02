@@ -44,10 +44,6 @@ class Jiki(var x:Int, var y:Int) {
 
     var kasokudoX = 0.0f
     fun idoMigiHidari(controller: Controller, map: Map){
-        kasokudoX = kasokudoYoko(controller.houkou)//次の速度を計算
-        val checkKasokuX = xPlus + kasokudoYoko(controller.houkou)//次の位置を計算
-        val check = syougaibutuHantei(controller,map,checkKasokuX)
-
         val xPlus0 = xPlus
         val sekaix0 = sekaix
         val kasokudo1= kasokudoYoko(controller.houkou)
@@ -55,11 +51,10 @@ class Jiki(var x:Int, var y:Int) {
         val sekaix1Kouho = (sekaix0 + xPlus1).toInt()
         val sekaix1KouhoCheck = sekaix1KouhoSyougaiCheck(controller,map,sekaix1Kouho)
 
-        if(check){
-            xPlus = xPlus + kasokudoX // 速度をプラス
+        if(sekaix1KouhoCheck){
+            xPlus = xPlus + xPlus1 // 速度をプラス
             if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
             if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
-            xPlus = xPlus + kasokudoX // 速度をプラス
         }else{
             xPlus = 0f
         }
