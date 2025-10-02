@@ -74,23 +74,6 @@ class Jiki(var x:Int, var y:Int) {
     }
 
 
-    fun syougaibutuHantei(controller: Controller,map:Map,checkKasokuX:Float): Boolean{
-
-        val checkCharaMigihajiX = (sekaix+checkKasokuX +(ookisa/2)).toInt()
-        val checkCharaHidarihajiX = (sekaix+checkKasokuX -(ookisa/2)).toInt()
-
-        var check = true
-        //障害物　１　がある場合　false　行けないという意味
-        //障害物　０　ならば場合　true　　行ける、という意味
-        val migiCheck = mapCheckMigi(map,checkCharaMigihajiX)
-        val hidariCheck = mapCheckHaidari(map,checkCharaHidarihajiX)
-
-        //右と左
-        if(controller.houkou=="migi") { if (migiCheck) {jikiXido(controller)}else{check=false} }
-        if(controller.houkou=="hidari") { if (hidariCheck) {jikiXido(controller)}else{check=false} }
-        return check
-    }
-
 
 
     //mapCheckを左右に分けた
@@ -134,30 +117,8 @@ class Jiki(var x:Int, var y:Int) {
         }
     }
 
-    fun syougaiX(checkX: Float, controller: Controller, map:Map):Boolean{
-        var checksekaix = sekaix + checkX.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
-        if (controller.houkou == "migi") { checksekaix += ookisa / 2 }
-        if (controller.houkou == "hidari") { checksekaix -= ookisa / 2 }
-        var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
-        var checkMasuSyurui = map.masu[13][checkBlock+3] //+2はリストの＋１と隣のマスの＋１
-        if (controller.houkou == "hidari") { checkMasuSyurui = map.masu[13][checkBlock] }//-1は隣のマス
-        //checkBlock+3とかcheckBlock-1にしてたのは、キャラクターの大きさを考慮しての為
-        //ここちゃんと計算した方がいいんじゃないか説
-        var checkKekka = false
-        when(checkMasuSyurui){
-            0 -> { checkKekka = false }     //障害物にあたっていない判定
-            1 -> { checkKekka = true }     //障害物にあたっている判定
-            else ->{checkKekka = true }
-        }
-        return checkKekka
-    }
 
 
-    fun syougaibutuSyoriX(worldOffsetXPlus:Int, sekaixPlus:Int){    //jikiの位置が当たったら戻す処理
-        xPlus = 0f  //加速はいったん０にする
-        worldOffsetX += worldOffsetXPlus    //マスの半分をもどす
-        sekaix += sekaixPlus
-    }
 
     fun idoUeShita(controller: Controller, map: Map){
         jumpSyori(controller,map)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
