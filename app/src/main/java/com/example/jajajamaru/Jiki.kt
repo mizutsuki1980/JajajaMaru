@@ -73,6 +73,7 @@ class Jiki(var x:Int, var y:Int) {
         }
     }
 
+    //めり込んで動かなくなってしまう、というケースもあるなぁ。
     fun hasitterutokiTomaru(controller: Controller,map:Map,checkKasokuX:Float){
         //ここはあくまで、走っている時に止まる、という条件。ぶつかる、という感じ
         //次の位置の右端、左端
