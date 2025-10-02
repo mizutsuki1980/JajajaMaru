@@ -64,8 +64,8 @@ class Jiki(var x:Int, var y:Int) {
         if(sekaixCheck) {
             if (sekaix1KouhoCheck) {
                 xPlus = xPlus + kasokudo1 // 速度をプラス
-                if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
-                if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
+                if (xPlus >= 30) { xPlus = 25f } //速度制限 //１マス以上加速しないことで制限
+                if (xPlus <= -30) { xPlus = -25f } //速度制限 //１マス以上加速しないことで制限
             } else {
                 //移動はしない、指定したポイントに強制移動する
                 xPlus = (sekaix1Kouho - resetIchiX).toFloat()
