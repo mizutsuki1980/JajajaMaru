@@ -72,29 +72,29 @@ class Jiki(var x:Int, var y:Int) {
                 } //速度制限 //１マス以上加速しないことで制限
             } else {
                 //移動はしない、指定したポイントに強制移動する
-                xPlus = (sekaix - resetIchiX).toFloat()
+                //xPlus = (sekaix - resetIchiX).toFloat()
+                xPlus = 0f
             }
         }
     }
 
     var resetIchiX = 0
+
     fun mapCheck(map:Map,sekaix1Kouho:Int,xPlus1:Float):Boolean{
         var check = true
         resetIchiX = sekaix
-        val checkBlock = sekaix1Kouho / 32
             if (xPlus1 > 0f) {   //右向きってこと
+                val checkBlock = (sekaix1Kouho + ookisa) / 32
                 if(map.masu[13][checkBlock+1] == 1){
                     check = false
-                    resetIchiX = (checkBlock * 32 + 32) - (ookisa/2)
                 }
             }
             if (xPlus1 < 0f) {
-                if(map.masu[13][checkBlock+0] == 1){
+                val checkBlock = (sekaix1Kouho - ookisa) / 32
+                if(map.masu[13][checkBlock+1] == 1){
                     check = false
-                    resetIchiX = (checkBlock * 32 ) + (ookisa/2)
                 }
             }//左向きってこと
-            if (xPlus1 == 0f) { resetIchiX = sekaix }
 
 
             return check
