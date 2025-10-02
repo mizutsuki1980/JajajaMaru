@@ -38,6 +38,7 @@ class Jiki(var x:Int, var y:Int) {
         idoUeShita(controller,map)        //縦移動　y軸
     }
 
+
     fun idoMigiHidari(controller: Controller, map: Map){
         jikiXidoCheck(controller,map)   //自機の次の位置に障害物があるのかチェック
         CharaCameraIdoSeigen(controller)//キャラクターの画面内のカメラワークで制限
@@ -45,6 +46,31 @@ class Jiki(var x:Int, var y:Int) {
             jikiXido(controller)    //実際の移動
         }
     }
+    fun jikiXido(controller: Controller){   //実際にjikiの位置を動かす処理
+        worldOffsetX += xPlus.toInt()
+        sekaix += xPlus.toInt()
+    }
+    //ここでリミットをかける。ｘリミット（壁からの距離でリミットとする）
+    fun sekaix1KouhoSyougaiCheck(controller: Controller,map:Map,sekaix1Kouho:Int,xPlus1: Float): Boolean{
+        //障害物　１　がある場合　false　行けないという意味
+        //障害物　０　ならば場合　true　　行ける、という意味
+        var check = true
+
+
+        val checkCharaMigihajiX = (sekaix1Kouho +(ookisa/2)).toInt()
+        val checkCharaHidarihajiX = (sekaix1Kouho -(ookisa/2)).toInt()
+        val migiCheck = mapCheckMigi(map,checkCharaMigihajiX)
+        val hidariCheck = mapCheckHaidari(map,checkCharaHidarihajiX)
+
+
+        if(controller.houkou=="migi") { if (migiCheck) {}else{check=false} }
+        if(controller.houkou=="hidari") { if (hidariCheck) {}else{check=false} }
+        return check
+        //できたらこの辺でリミットｘを割り出したいところ
+
+    }
+
+
 
     fun jikiXidoCheck(controller: Controller, map:Map){
         val xPlus0 = xPlus
@@ -52,7 +78,7 @@ class Jiki(var x:Int, var y:Int) {
         val kasokudo1= kasokudoYoko(controller.houkou)
         val xPlus1 = xPlus0 + kasokudo1    //次の、今の、速度　（時間が１の時の速度）
         val sekaix1Kouho = (sekaix0 + xPlus1).toInt()
-        val sekaix1KouhoCheck = sekaix1KouhoSyougaiCheck(controller,map,sekaix1Kouho)
+        val sekaix1KouhoCheck = sekaix1KouhoSyougaiCheck(controller,map,sekaix1Kouho,xPlus1)
 
         if(sekaix1KouhoCheck){
             xPlus = xPlus + xPlus1 // 速度をプラス
@@ -62,29 +88,9 @@ class Jiki(var x:Int, var y:Int) {
             //移動はしない、指定したポイントに強制移動する
             xPlus = 0f
         }
-
-    }
-
-    fun jikiXido(controller: Controller){   //実際にjikiの位置を動かす処理
-            worldOffsetX += xPlus.toInt()
-            sekaix += xPlus.toInt()
     }
 
 
-    fun sekaix1KouhoSyougaiCheck(controller: Controller,map:Map,sekaix1Kouho:Int): Boolean{
-        //障害物　１　がある場合　false　行けないという意味
-        //障害物　０　ならば場合　true　　行ける、という意味
-        var check = true
-        val checkCharaMigihajiX = (sekaix1Kouho +(ookisa/2)).toInt()
-        val checkCharaHidarihajiX = (sekaix1Kouho -(ookisa/2)).toInt()
-        val migiCheck = mapCheckMigi(map,checkCharaMigihajiX)
-        val hidariCheck = mapCheckHaidari(map,checkCharaHidarihajiX)
-        if(controller.houkou=="migi") { if (migiCheck) {}else{check=false} }
-        if(controller.houkou=="hidari") { if (hidariCheck) {}else{check=false} }
-        return check
-        //できたらこの辺でリミットｘを割り出したいところ
-
-    }
 
 
     //mapCheckを左右に分けた
