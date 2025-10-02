@@ -10,17 +10,13 @@ class Jiki(var x:Int, var y:Int) {
     var sekaix = 224    //世界の左端から７マス　32＊7が初期位置
     var worldOffsetX = 0    //いる    消したら何が起きるかわからないが、いる
     var xPlus = 0f
-
-
     fun draw(canvas: Canvas) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
         canvas.drawCircle(x.toFloat(),(y).toFloat(),(ookisa/2).toFloat(),iro)
     }
-
     var isJump = false
     var vJump = 0f
-
     fun kasokudoJump(): Float {
         return -5.0f
     }
@@ -42,7 +38,6 @@ class Jiki(var x:Int, var y:Int) {
         idoUeShita(controller,map)        //縦移動　y軸
     }
 
-    var kasokudoX = 0.0f
     fun idoMigiHidari(controller: Controller, map: Map){
         val xPlus0 = xPlus
         val sekaix0 = sekaix
@@ -68,13 +63,10 @@ class Jiki(var x:Int, var y:Int) {
         val checkCharaHidarihajiX = (sekaix1Kouho -(ookisa/2)).toInt()
         val migiCheck = mapCheckMigi(map,checkCharaMigihajiX)
         val hidariCheck = mapCheckHaidari(map,checkCharaHidarihajiX)
-        if(controller.houkou=="migi") { if (migiCheck) {jikiXido(controller)}else{check=false} }
-        if(controller.houkou=="hidari") { if (hidariCheck) {jikiXido(controller)}else{check=false} }
+        if(controller.houkou=="migi") { if (migiCheck) {}else{check=false} }
+        if(controller.houkou=="hidari") { if (hidariCheck) {}else{check=false} }
         return check
     }
-
-
-
 
     //mapCheckを左右に分けた
     fun mapCheckMigi(map:Map,checkCharaMigihajiX:Int): Boolean{
@@ -143,14 +135,11 @@ class Jiki(var x:Int, var y:Int) {
 
 
 
-    //ここをリファクタリングしてみる
-    //やっぱｘPlusCheckっていうやつは、なくてもいける。なんか画面でみると、一つ左のブロックの高さを参照しているようにみえる。
     fun syougaiY( controller: Controller, map:Map):Boolean{
         var checksekaix = sekaix
         if (controller.houkou == "migi") { checksekaix += ookisa / 2 }
         if (controller.houkou == "hidari") { checksekaix -= ookisa / 2 }
         var checkBlock = checksekaix / 32
-        val checkMasuSyuruiX = map.masu[13][checkBlock+1]
         var checksekaiy = y - vJump.toInt()
         var yBlock = 0
         if(checksekaiy<=550 && checksekaiy >=501){yBlock = 14}
