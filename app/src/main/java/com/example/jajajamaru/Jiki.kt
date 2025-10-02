@@ -51,9 +51,6 @@ class Jiki(var x:Int, var y:Int) {
         sekaix += xPlus.toInt()
     }
 
-
-
-
     fun jikiXidoCheck(controller: Controller, map:Map){
         val xPlus0 = xPlus
         val sekaix0 = sekaix
@@ -81,6 +78,7 @@ class Jiki(var x:Int, var y:Int) {
             if (xPlus1 < 0) {
                 if(map.masu[13][checkBlock+0] == 1){check = false}
             }//左向きってこと
+            //nashiならtrueが返る
         return check
     }
 
