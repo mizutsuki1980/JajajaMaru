@@ -59,23 +59,18 @@ class Jiki(var x:Int, var y:Int) {
         val sekaix1Kouho = (sekaix0 + xPlus1).toInt()
         val sekaix1KouhoCheck = mapCheck(map,sekaix1Kouho,xPlus1)
 
-        val sekaixCheck = mapCheck(map,sekaix,xPlus1)
-
-        if(sekaixCheck) {
-            if (sekaix1KouhoCheck) {
-                xPlus = xPlus + kasokudo1 // 速度をプラス
-                if (xPlus >= 30) { xPlus = 25f } //速度制限 //１マス以上加速しないことで制限
-                if (xPlus <= -30) { xPlus = -25f } //速度制限 //１マス以上加速しないことで制限
-            } else {
-                //移動はしない、指定したポイントに強制移動する
-                xPlus = (sekaix1Kouho - resetIchiX).toFloat()
-            }
-        }else{
-            xPlus = 0f
+        if (sekaix1KouhoCheck) {
+            xPlus = xPlus + kasokudo1 // 速度をプラス
+            if (xPlus >= 30) { xPlus = 25f } //速度制限 //１マス以上加速しないことで制限
+            if (xPlus <= -30) { xPlus = -25f } //速度制限 //１マス以上加速しないことで制限
+        } else {
+            //移動はしない、指定したポイントに強制移動する
+            xPlus = (sekaix1Kouho - resetIchiX).toFloat()
         }
     }
 
     var resetIchiX = 0
+
 
     fun mapCheck(map:Map,sekaix1Kouho:Int,xPlus1:Float):Boolean{
         var check = true
@@ -90,13 +85,11 @@ class Jiki(var x:Int, var y:Int) {
             }
             else if (xPlus1 < 0f) {
                 val checkBlock = (sekaix1Kouho - ookisa) / 32
-                if(map.masu[13][checkBlock+1] == 1){
+                if(map.masu[13][checkBlock] == 1){
                     check = false
-                    resetIchiX = checkBlock * 32
+                    resetIchiX = (checkBlock+1) * 32
                 }
             }//左向きってこと
-
-
             return check
     }
 
