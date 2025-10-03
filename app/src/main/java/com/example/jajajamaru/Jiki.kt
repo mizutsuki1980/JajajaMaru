@@ -92,7 +92,9 @@ class Jiki(var x:Int, var y:Int) {
         return check
     }
 
-
+//何回か当たる、を繰り返していると、どうも引っかかる場所が変わっているように見える。
+//右、左、右、と動いているうちに、障害物のないところでも、引っかかるようになるのだ。
+//これはなんか値が変になっているんじゃないのかな。
     fun xLimitKeisan(controller: Controller,map:Map,sekaix1Kouho:Int,xPlus1:Float):Int{
         var xLimit = 0
         var checkPoint = sekaix1Kouho
