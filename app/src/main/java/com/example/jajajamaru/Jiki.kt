@@ -59,7 +59,7 @@ class Jiki(var x:Int, var y:Int) {
         val kasokudo1 = kasokudoYoko(controller.houkou)
         val xPlus1 = xPlus0 + kasokudo1    //次の、今の、速度　（時間が１の時の速度）
         val sekaix1Kouho = (sekaix0 + xPlus1).toInt()
-        val sekaix1KouhoCheck = mapCheck(map,sekaix1Kouho,xPlus1)
+        val sekaix1KouhoCheck = mapCheck(controller,map,sekaix1Kouho,xPlus1)
 
         if (sekaix1KouhoCheck) {
             xPlus = xPlus + kasokudo1 // 速度をプラス
@@ -71,6 +71,24 @@ class Jiki(var x:Int, var y:Int) {
             val xLimit = xLimitKeisan(xPlus1,sekaix1Kouho)
             xPlus = 0f
         }
+    }
+
+
+    fun mapCheck(controller: Controller,map:Map,sekaix1Kouho:Int,xPlus1:Float):Boolean{
+        var check = true
+        var checkPoint = sekaix1Kouho
+        if (controller.houkou == "migi") {   //右向き
+            checkPoint += (ookisa)
+            val checkBlock = ( checkPoint/ 32)
+
+            if(map.masu[13][checkBlock+1] == 1){ check = false }
+        }
+        else if (controller.houkou == "hidari") { //左向き
+            checkPoint -= (ookisa)
+            val checkBlock = checkPoint / 32
+            if(map.masu[13][checkBlock+1] == 1){ check = false }
+        }
+        return check
     }
 
 
@@ -86,20 +104,6 @@ class Jiki(var x:Int, var y:Int) {
             xLimit =( checkBlock* 32) + (ookisa/2)
         }
         return xLimit
-    }
-    fun mapCheck(map:Map,sekaix1Kouho:Int,xPlus1:Float):Boolean{
-        var check = true
-        if (xPlus1 > 0f) {   //右向き
-            val checkPoint = (sekaix1Kouho + (ookisa/2))    //右向なら大きさはプラス
-            val checkBlock = ( checkPoint/ 32)
-            if(map.masu[13][checkBlock] == 1){ check = false }
-        }
-        else if (xPlus1 < 0f) { //左向き
-            val checkPoint = (sekaix1Kouho - (ookisa/2))    //左向なら大きさはマイナス
-            val checkBlock = checkPoint / 32
-            if(map.masu[13][checkBlock] == 1){ check = false }
-        }
-        return check
     }
 
 
