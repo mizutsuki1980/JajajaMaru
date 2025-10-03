@@ -61,9 +61,6 @@ class Jiki(var x:Int, var y:Int) {
         val sekaix1Kouho = (sekaix0 + xPlus1).toInt()
         val sekaix1KouhoCheck = mapCheck(map,sekaix1Kouho,xPlus1)
 
-
-
-
         if (sekaix1KouhoCheck) {
             xPlus = xPlus + kasokudo1 // 速度をプラス
             if (xPlus >= 30) { xPlus = 25f } //速度制限 //１マス以上加速しないことで制限
@@ -71,28 +68,33 @@ class Jiki(var x:Int, var y:Int) {
         } else {
             //　壁に当たった
             // xLimitを計算する
-            if (xPlus1 > 0f) { //左向きってこと
-                val checkPoint = (sekaix1Kouho + (ookisa / 2))    //右向なら大きさはプラス
-                val checkBlock = (checkPoint / 32)
-                val xLimit = (checkBlock * 32) - (ookisa / 2)
-                sekaix = xLimit
-            }else if (xPlus1 < 0f) { //左向きってこと
-                val checkPoint = (sekaix1Kouho - (ookisa/2))    //左向なら大きさはマイナス
-                val checkBlock = checkPoint / 32
-                val xLimit =( checkBlock* 32) + (ookisa/2)
-                sekaix = xLimit
-            }
+            val xLimit = xLimitKeisan(xPlus1,sekaix1Kouho)
             xPlus = 0f
         }
     }
+
+
+    fun xLimitKeisan(xPlus1:Float,sekaix1Kouho:Int):Int{
+        var xLimit = 0
+        if (xPlus1 > 0f) { //左向きってこと
+            val checkPoint = (sekaix1Kouho + (ookisa / 2))    //右向なら大きさはプラス
+            val checkBlock = (checkPoint / 32)
+            xLimit = (checkBlock * 32) - (ookisa / 2)
+        }else if (xPlus1 < 0f) { //左向きってこと
+            val checkPoint = (sekaix1Kouho - (ookisa/2))    //左向なら大きさはマイナス
+            val checkBlock = checkPoint / 32
+            xLimit =( checkBlock* 32) + (ookisa/2)
+        }
+        return xLimit
+    }
     fun mapCheck(map:Map,sekaix1Kouho:Int,xPlus1:Float):Boolean{
         var check = true
-        if (xPlus1 > 0f) {   //右向きってこと
+        if (xPlus1 > 0f) {   //右向き
             val checkPoint = (sekaix1Kouho + (ookisa/2))    //右向なら大きさはプラス
             val checkBlock = ( checkPoint/ 32)
             if(map.masu[13][checkBlock] == 1){ check = false }
         }
-        else if (xPlus1 < 0f) { //左向きってこと
+        else if (xPlus1 < 0f) { //左向き
             val checkPoint = (sekaix1Kouho - (ookisa/2))    //左向なら大きさはマイナス
             val checkBlock = checkPoint / 32
             if(map.masu[13][checkBlock] == 1){ check = false }
