@@ -65,31 +65,41 @@ class Jiki(var x:Int, var y:Int) {
             if (xPlus <= -30) { xPlus = -25f } //速度制限 //１マス以上加速しないことで制限
         } else {
             //移動はしない、指定したポイントに強制移動する
-            xPlus = (sekaix1Kouho - resetIchiX).toFloat()
+            //            xPlus = (sekaix1Kouho - resetIchiX).toFloat()
+            xPlus = 0f
         }
     }
 
-    var resetIchiX = 0
 
-
+    //xリミットがじゃんと作れてない、のが原因か
     fun mapCheck(map:Map,sekaix1Kouho:Int,xPlus1:Float):Boolean{
+        //sekaix1Kouho　チェックする座標
+        //xPlus1　方向　+なら右向き　-なら左向き
+        //まずsekaix1Kouhoの座標は、Map内ではどこなのか？
+        //0ならば0、33～64なら1、65～96なら２、という感じか。
+        //1なら0、３１でも０、３２から１、あ、違うじゃん。
+        //32～63が1だ。64～95が２だ。
+        //なんで277なら277/32は８マス目だ
+        //map.masu[13][checkBlock+1] == 1){
+        //checkBlock+1なんてする必要ねーじゃん
+
         var check = true
-        resetIchiX = sekaix
-            if (xPlus1 > 0f) {   //右向きってこと
-                val checkBlock = (sekaix1Kouho + ookisa) / 32
-                if(map.masu[13][checkBlock+1] == 1){
-                    check = false
-                    //ここの強制的に戻る位置の指定がうまくいってないのだと思う。
-                    resetIchiX = ((checkBlock+1) * 32)
-                }
+
+        //checkするポイントを一度変数にいれる、ｘリミットのこと
+        if (xPlus1 > 0f) {   //右向きってこと
+            val checkPoint = (sekaix1Kouho + (ookisa/2))    //右向なら大きさはプラス
+            val checkBlock = ( checkPoint/ 32)
+            if(map.masu[13][checkBlock] == 1){
+                check = false
             }
-            else if (xPlus1 < 0f) {
-                val checkBlock = (sekaix1Kouho - ookisa) / 32
-                if(map.masu[13][checkBlock] == 1){
-                    check = false
-                    resetIchiX = (checkBlock+1) * 32
-                }
-            }//左向きってこと
+        }
+        else if (xPlus1 < 0f) { //左向きってこと
+            val checkPoint = (sekaix1Kouho - (ookisa/2))    //左向なら大きさはマイナス
+            val checkBlock = checkPoint / 32
+            if(map.masu[13][checkBlock] == 1){
+                check = false
+            }
+        }
             return check
     }
 
