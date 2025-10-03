@@ -68,8 +68,9 @@ class Jiki(var x:Int, var y:Int) {
         } else {
             //　壁に当たった
             // xLimitを計算する
-            val xLimit = xLimitKeisan(xPlus1,sekaix1Kouho)
-            xPlus = 0f
+            val xLimit = xLimitKeisan(controller,map,sekaix1Kouho,xPlus1)
+            val xPlusSabun = sekaix - xLimit
+            xPlus = xPlusSabun.toFloat()
         }
     }
 
@@ -92,16 +93,18 @@ class Jiki(var x:Int, var y:Int) {
     }
 
 
-    fun xLimitKeisan(xPlus1:Float,sekaix1Kouho:Int):Int{
+    fun xLimitKeisan(controller: Controller,map:Map,sekaix1Kouho:Int,xPlus1:Float):Int{
         var xLimit = 0
-        if (xPlus1 > 0f) { //左向きってこと
-            val checkPoint = (sekaix1Kouho + (ookisa / 2))    //右向なら大きさはプラス
-            val checkBlock = (checkPoint / 32)
-            xLimit = (checkBlock * 32) - (ookisa / 2)
-        }else if (xPlus1 < 0f) { //左向きってこと
-            val checkPoint = (sekaix1Kouho - (ookisa/2))    //左向なら大きさはマイナス
+        var checkPoint = sekaix1Kouho
+        if (controller.houkou == "migi") {   //右向き
+            checkPoint += (ookisa)
+            val checkBlock = ( checkPoint/ 32)
+            xLimit = ((checkBlock+1) *32) + 31
+        }
+        else if (controller.houkou == "hidari") { //左向き
+            checkPoint -= (ookisa)
             val checkBlock = checkPoint / 32
-            xLimit =( checkBlock* 32) + (ookisa/2)
+            xLimit = ((checkBlock+1) *32) - 31
         }
         return xLimit
     }
