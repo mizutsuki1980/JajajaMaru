@@ -59,6 +59,9 @@ class Jiki(var x:Int, var y:Int) {
         val sekaix1Kouho = (sekaix0 + xPlus1).toInt()
         val sekaix1KouhoCheck = mapCheck(map,sekaix1Kouho,xPlus1)
 
+        //これ、帰ってくる値が真偽値じゃだめなんか？xLimitからどれだけ離れてるか？じゃないと。
+        //もしくはtrue条件ならxLimiをマイナスで返すとか？
+
         if (sekaix1KouhoCheck) {
             xPlus = xPlus + kasokudo1 // 速度をプラス
             if (xPlus >= 30) { xPlus = 25f } //速度制限 //１マス以上加速しないことで制限
@@ -72,6 +75,8 @@ class Jiki(var x:Int, var y:Int) {
 
 
     //xリミットがじゃんと作れてない、のが原因か
+    //ん、これチェックと値の計算をふたつやってるからだめなんじゃないかな。
+    //まずはチェックだけ、そこから値の計算、と関数を分けてみる
     fun mapCheck(map:Map,sekaix1Kouho:Int,xPlus1:Float):Boolean{
         //sekaix1Kouho　チェックする座標
         //xPlus1　方向　+なら右向き　-なら左向き
