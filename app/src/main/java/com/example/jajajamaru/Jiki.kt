@@ -89,18 +89,17 @@ class Jiki(var x:Int, var y:Int) {
         if (xPlus1 > 0f) {   //右向きってこと
             val checkPoint = (sekaix1Kouho + (ookisa/2))    //右向なら大きさはプラス
             val checkBlock = ( checkPoint/ 32)
-            if(map.masu[13][checkBlock] == 1){
-                check = false
-            }
+            val xLimit = (checkPoint * 32) - (ookisa/2)
+            if(map.masu[13][checkBlock] == 1){ check = false }
         }
         else if (xPlus1 < 0f) { //左向きってこと
             val checkPoint = (sekaix1Kouho - (ookisa/2))    //左向なら大きさはマイナス
             val checkBlock = checkPoint / 32
-            if(map.masu[13][checkBlock] == 1){
-                check = false
-            }
+            val xLimit = (checkPoint * 32) + (ookisa/2)
+            if(map.masu[13][checkBlock] == 1){ check = false }
         }
-            return check
+
+        return check
     }
 
 
