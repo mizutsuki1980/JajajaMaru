@@ -78,9 +78,9 @@ class Jiki(var x:Int, var y:Int) {
         var check = true
         var checkPoint = sekaix1Kouho
         if (controller.houkou == "migi") {   //右向き
-            checkPoint += (ookisa)
-            val checkBlock = ( checkPoint/ 32)
-
+//            checkPoint += (ookisa/2) //ookisaの半分にするとめり込んでる感がある。
+              checkPoint += (ookisa)
+          val checkBlock = ( checkPoint/ 32)
             if(map.masu[13][checkBlock+1] == 1){ check = false }
         }
         else if (controller.houkou == "hidari") { //左向き
