@@ -51,16 +51,17 @@ class Jiki(var x:Int, var y:Int) {
         kasokudox = kasokudoYoko(controller.houkou)
 
         // 世界の画面から移動を制限。
-        if(sekaix1>877){}else if(sekaix1<0){}else{
+        if(sekaix1>877){
+            kasokudox = 0f
+            xPlus = 0f
+        }else if(sekaix1<0){
+            kasokudox = 0f
+            xPlus = 0f
+        }else{
             flag = true
         }
         //自機を移動
-        if(flag){jikiXido(controller)}else{
-            kasokudox = 0f
-            xPlus = 0f
-            if(sekaix>877){sekaix = 877}
-            if(sekaix<0){sekaix= 0}
-        }
+        if(flag){jikiXido(controller)}
 
     }
 
@@ -74,7 +75,7 @@ class Jiki(var x:Int, var y:Int) {
 
 
     fun jikiXido(controller: Controller){   //実際にjikiの位置を動かす処理
-        xPlus = xPlus + kasokudoYoko(controller.houkou) // 速度をプラス
+        xPlus = xPlus + kasokudox // 速度をプラス
         if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
         if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
         sekaix += xPlus.toInt()
