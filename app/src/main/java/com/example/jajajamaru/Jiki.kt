@@ -40,24 +40,36 @@ class Jiki(var x:Int, var y:Int) {
 
 
 
+    var kasokudox = 0f
 
     fun idoMigiHidari(controller: Controller, map: Map){
 
         //　sekaixが次にどの位置にくるのか計算する
+        val sekaix0 = sekaix
         val sekaix1 = jikidoPre(controller)
+        var flag = false
+        kasokudox = kasokudoYoko(controller.houkou)
 
-        if(sekaix1>877){}else if(sekaix1<0){}else{jikiXido(controller)}
-    //　sekaixにxPlusが足されることで動く、これが原則、真の値
+        // 世界の画面から移動を制限。
+        if(sekaix1>877){}else if(sekaix1<0){}else{
+            flag = true
+        }
+        //自機を移動
+        if(flag){jikiXido(controller)}else{
+            kasokudox = 0f
+            xPlus = 0f
+            if(sekaix>877){sekaix = 877}
+            if(sekaix<0){sekaix= 0}
+        }
 
     }
 
-
     fun jikidoPre(controller: Controller):Int{   //実際にjikiの位置を動かす処理
-        xPlus = xPlus + kasokudoYoko(controller.houkou) // 速度をプラス
-        if (xPlus >= 30) { xPlus = 30f } //速度制限 //１マス以上加速しないことで制限
-        if (xPlus <= -30) { xPlus = -30f } //速度制限 //１マス以上加速しないことで制限
-        val sekaix1 = sekaix + xPlus.toInt()
-        return sekaix1
+        var checkxPlus = xPlus + kasokudox // 速度をプラス
+        if (checkxPlus >= 30) { checkxPlus = 30f } //速度制限 //１マス以上加速しないことで制限
+        if (checkxPlus <= -30) { checkxPlus = -30f } //速度制限 //１マス以上加速しないことで制限
+        val checkx = sekaix + checkxPlus.toInt()
+        return checkx
     }
 
 
