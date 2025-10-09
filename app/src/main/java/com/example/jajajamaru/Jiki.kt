@@ -40,21 +40,27 @@ class Jiki(var x:Int, var y:Int) {
 
     fun idoMigiHidari(controller: Controller, map: Map){
         val kasokudox = kasokudoYoko(controller.houkou)
-
         val xPlus1Cand = xPlus + kasokudox
         val sekaix1Cand = sekaix + xPlus1Cand.toInt()
+        val sekaix1SyougaibutuCand = if(sekaix1Cand>877){877}else if(sekaix1Cand<0){0}else{sekaix1Cand}
+        val xPlus1SokudoSeigenCand =  if(sekaix1Cand>877){0f}else if(sekaix1Cand<0){0f}else{xPlus1Cand}
 
-        val sekaix1 = if(sekaix1Cand>877){877}else if(sekaix1Cand<0){0}else{sekaix1Cand}
-        val xPlus1 =  if(sekaix1Cand>877){0f}else if(sekaix1Cand<0){0f}else{xPlus1Cand}
+        //速度制限つけた
+        val xPlus1 = if(xPlus1SokudoSeigenCand>= 30){30f}else if(xPlus1SokudoSeigenCand<= -30){-30f}else{xPlus1SokudoSeigenCand}
+
+        //障害物
+        val sekaix1 = if(mapCheckx(controller,map,sekaix1SyougaibutuCand)){sekaix1SyougaibutuCand}else{200}
+
 
         sekaix  = sekaix1
         xPlus = xPlus1
-
     }
 
-
-
-
+    fun mapCheckx(controller: Controller,map:Map,sekaix1:Int):Boolean{
+        var checkPoint =  if (controller.houkou == "migi"){sekaix1 + ookisa} else if (controller.houkou == "hidari") {sekaix1 - ookisa}else{sekaix1}
+        val checkBlock = ( checkPoint/ 32)
+        return if(map.masu[13][checkBlock+1] == 1){ false }else{true}
+    }
 
     fun jikiXidoCheck(controller: Controller, map:Map){
         val xPlus0 = xPlus
@@ -95,9 +101,6 @@ class Jiki(var x:Int, var y:Int) {
         return check
     }
 
-//何回か当たる、を繰り返していると、どうも引っかかる場所が変わっているように見える。
-//右、左、右、と動いているうちに、障害物のないところでも、引っかかるようになるのだ。
-//これはなんか値が変になっているんじゃないのかな。
     fun xLimitKeisan(controller: Controller,map:Map,sekaix1Kouho:Int,xPlus1:Float):Int{
         var xLimit = 0
         var checkPoint = sekaix1Kouho
