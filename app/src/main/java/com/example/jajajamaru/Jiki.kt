@@ -37,13 +37,9 @@ class Jiki(var x:Int, var y:Int) {
         idoMigiHidari(controller,map)       //横移動 x軸
         idoUeShita(controller,map)        //縦移動　y軸
     }
-
-
-
-    var kasokudox = 0f
-
+    
     fun idoMigiHidari(controller: Controller, map: Map){
-        kasokudox = kasokudoYoko(controller.houkou)
+        val kasokudox = kasokudoYoko(controller.houkou)
         xPlus = xPlus + kasokudox // 速度をプラス
         val sekaix1 = sekaix + xPlus.toInt()
 
@@ -56,9 +52,7 @@ class Jiki(var x:Int, var y:Int) {
             sekaix = 0
             xPlus = 0f
         }else{
-
         }
-        println("sekaix1=$sekaix1,sekaix=$sekaix,xPlus=$xPlus")
 
         sekaix += xPlus.toInt()
 
@@ -195,6 +189,7 @@ class Jiki(var x:Int, var y:Int) {
 
     fun kasokudoYoko(houkou:String):Float {
         when (houkou) {
+            "migi" -> {return 5.0f }
             "migi" -> {return 5.0f }
             "hidari" -> { return -5.0f }
             "nashi" -> { if (xPlus == 0f) { return 0.0f }
