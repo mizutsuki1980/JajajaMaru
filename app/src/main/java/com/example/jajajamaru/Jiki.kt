@@ -40,21 +40,15 @@ class Jiki(var x:Int, var y:Int) {
 
     fun idoMigiHidari(controller: Controller, map: Map){
         val kasokudox = kasokudoYoko(controller.houkou)
-        xPlus = xPlus + kasokudox // 速度をプラス
-        val sekaix1Cand = sekaix + xPlus.toInt()
 
+        val xPlus1Cand = xPlus + kasokudox
+        val sekaix1Cand = sekaix + xPlus1Cand.toInt()
 
-        // 世界の画面から移動を制限。
-        if(sekaix1Cand>877){
-            sekaix = 877
-            xPlus = 0f
-        }else if(sekaix1Cand<0){
-            sekaix = 0
-            xPlus = 0f
-        }else{
-        }
+        val sekaix1 = if(sekaix1Cand>877){877}else if(sekaix1Cand<0){0}else{sekaix1Cand}
+        val xPlus1 =  if(sekaix1Cand>877){0f}else if(sekaix1Cand<0){0f}else{xPlus1Cand}
 
-        sekaix += xPlus.toInt()
+        sekaix  = sekaix1
+        xPlus = xPlus1
 
     }
 
