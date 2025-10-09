@@ -39,13 +39,19 @@ class Jiki(var x:Int, var y:Int) {
     }
 
 
+
+
     fun idoMigiHidari(controller: Controller, map: Map){
-        jikiXidoCheck(controller,map)   //自機の次の位置に障害物があるのかチェック
-        CharaCameraIdoSeigen(controller)//キャラクターの画面内のカメラワークで制限
-        if(charaWorldIdoSeigen()) {//キャラクターがワールドの画面端で移動を制限
-            jikiXido(controller)    //実際の移動
-        }
+        //　sekaixにxPlusが足されることで動く、これが原則、真の値
+        xPlus = xPlus + kasokudoYoko(controller.houkou) // 速度をプラス
+        if (xPlus >= 30) { xPlus = 25f } //速度制限 //１マス以上加速しないことで制限
+        if (xPlus <= -30) { xPlus = -25f } //速度制限 //１マス以上加速しないことで制限
+        sekaix += xPlus.toInt()
+
     }
+
+
+
     fun jikiXido(controller: Controller){   //実際にjikiの位置を動かす処理
         worldOffsetX += xPlus.toInt()
         sekaix += xPlus.toInt()
@@ -60,6 +66,7 @@ class Jiki(var x:Int, var y:Int) {
         val xPlus1 = xPlus0 + kasokudo1    //次の、今の、速度　（時間が１の時の速度）
         val sekaix1Kouho = (sekaix0 + xPlus1).toInt()
         val sekaix1KouhoCheck = mapCheck(controller,map,sekaix1Kouho,xPlus1)
+
 
         if (sekaix1KouhoCheck) {
             xPlus = xPlus + kasokudo1 // 速度をプラス
@@ -79,7 +86,6 @@ class Jiki(var x:Int, var y:Int) {
         var check = true
         var checkPoint = sekaix1Kouho
         if (controller.houkou == "migi") {   //右向き
-//            checkPoint += (ookisa/2) //ookisaの半分にするとめり込んでる感がある。
               checkPoint += (ookisa)
           val checkBlock = ( checkPoint/ 32)
             if(map.masu[13][checkBlock+1] == 1){ check = false }

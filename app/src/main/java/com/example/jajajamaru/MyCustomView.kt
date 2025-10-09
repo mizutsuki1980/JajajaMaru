@@ -82,7 +82,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun mapCreate(canvas:Canvas){
         for (i in 0 until map.masu.size) {
             for (j in 0 until map.masu[i].size) {
-                map.drawMap(canvas,i,j,map.masShurui(i,j),-jiki.worldOffsetX)
+                map.drawMap(canvas,i,j,map.masShurui(i,j),-jiki.sekaix)
             }
         }
     }

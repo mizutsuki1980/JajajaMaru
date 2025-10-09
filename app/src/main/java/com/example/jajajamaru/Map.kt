@@ -44,7 +44,7 @@ class Map {
 
 
 
-    fun drawMap(canvas: Canvas,row:Int,col:Int,masushurui:Int,worldOffsetX: Int){
+    fun drawMap(canvas: Canvas, row:Int, col:Int, masushurui:Int, sekaix: Int){
         val iro = Paint()
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 30, 30, 30)
@@ -54,7 +54,7 @@ class Map {
         }
         //ここまでは色の設定
         //worldOffsetXってのは？
-        val xx = 100+MASU_SIZE*col+worldOffsetX
+        val xx = 100+MASU_SIZE*col+sekaix
         val yy = 100+MASU_SIZE*row
         canvas.drawRect(shikakuRectXY(xx,yy,MASU_SIZE),iro)
     }
