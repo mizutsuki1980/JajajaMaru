@@ -37,7 +37,7 @@ class Jiki(var x:Int, var y:Int) {
         idoMigiHidari(controller,map)       //横移動 x軸
         idoUeShita(controller,map)        //縦移動　y軸
     }
-    
+
     fun idoMigiHidari(controller: Controller, map: Map){
         val kasokudox = kasokudoYoko(controller.houkou)
         xPlus = xPlus + kasokudox // 速度をプラス
