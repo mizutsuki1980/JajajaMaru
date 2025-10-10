@@ -54,11 +54,13 @@ class Jiki(var x:Int, var y:Int) {
         //障害物チェックをつける //今は素通り
         if (controller.houkou == "migi") {
             val checkPoint = sekaix1SyougaibutuCand + ookisa
-            val checkBlock = (( checkPoint/ 32)+1)
-            checkSyougaibutu = if(map.masu[13][checkBlock] == 1){false}else{true}
+            val checkBlock = (( checkPoint/ 32))
+            checkSyougaibutu = if(map.masu[13][checkBlock] == 0){true}else{false}
         }
 
-        val sekaix1Cand = if(checkSyougaibutu){sekaix1SyougaibutuCand}else{sekaix1SyougaibutuCand - ookisa}
+        //この時点では、問題はない
+        val sekaix1Cand = sekaix1SyougaibutuCand
+
 
 
         val sekaix1 = if(sekaix1Cand>877){877}else if(sekaix1Cand<0){0}else{sekaix1Cand}
