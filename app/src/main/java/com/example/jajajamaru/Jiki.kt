@@ -38,19 +38,20 @@ class Jiki(var x:Int, var y:Int) {
         idoUeShita(controller,map)        //縦移動　y軸
     }
 
+
+
     fun idoMigiHidari(controller: Controller, map: Map){
         val kasokudox = kasokudoYoko(controller.houkou)
-        val xPlus1Cand = xPlus + kasokudox
+
+        val maxSpeed = 15f
+        //速度制限をつける
+        val xPlus1SokudoSeigenCand = xPlus + kasokudox
+        val xPlus1Cand = if(xPlus1SokudoSeigenCand>= maxSpeed){maxSpeed}else if(xPlus1SokudoSeigenCand<= -maxSpeed){-maxSpeed}else{xPlus1SokudoSeigenCand}
+
         val sekaix1Cand = sekaix + xPlus1Cand.toInt()
-        val sekaix1SyougaibutuCand = if(sekaix1Cand>877){877}else if(sekaix1Cand<0){0}else{sekaix1Cand}
-        val xPlus1SokudoSeigenCand =  if(sekaix1Cand>877){0f}else if(sekaix1Cand<0){0f}else{xPlus1Cand}
 
-        //速度制限つけた
-        val xPlus1 = if(xPlus1SokudoSeigenCand>= 30){30f}else if(xPlus1SokudoSeigenCand<= -30){-30f}else{xPlus1SokudoSeigenCand}
-
-        //障害物
-        val sekaix1 = if(mapCheckx(controller,map,sekaix1SyougaibutuCand)){sekaix1SyougaibutuCand}else{200}
-
+        val sekaix1 = if(sekaix1Cand>877){877}else if(sekaix1Cand<0){0}else{sekaix1Cand}
+        val xPlus1 =  if(sekaix1Cand>877){0f}else if(sekaix1Cand<0){0f}else{xPlus1Cand}
 
         sekaix  = sekaix1
         xPlus = xPlus1
