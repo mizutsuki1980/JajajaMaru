@@ -44,16 +44,21 @@ class Jiki(var x:Int, var y:Int) {
         val kasokudox = kasokudoYoko(controller.houkou)
 
         //速度制限をつける
-        val maxSpeed = 15f
+        val maxSpeed = 45f
         val xPlus1SokudoSeigenCand = xPlus + kasokudox
         val xPlus1Cand = if(xPlus1SokudoSeigenCand>= maxSpeed){maxSpeed}else if(xPlus1SokudoSeigenCand<= -maxSpeed){-maxSpeed}else{xPlus1SokudoSeigenCand}
         val sekaix1SyougaibutuCand = sekaix + xPlus1Cand.toInt()
 
 
+        var checkSyougaibutu = true
         //障害物チェックをつける //今は素通り
-        //val checkSyougaibutu = mapCheckx(controller,map,sekaix1SyougaibutuCand)
-        val checkSyougaibutu = true
-        val sekaix1Cand = if(checkSyougaibutu){sekaix1SyougaibutuCand}else {sekaix1SyougaibutuCand}
+        if (controller.houkou == "migi") {
+            val checkPoint = sekaix1SyougaibutuCand + ookisa
+            val checkBlock = (( checkPoint/ 32)+1)
+            checkSyougaibutu = if(map.masu[13][checkBlock] == 1){false}else{true}
+        }
+
+        val sekaix1Cand = if(checkSyougaibutu){sekaix1SyougaibutuCand}else{sekaix1SyougaibutuCand - ookisa}
 
 
         val sekaix1 = if(sekaix1Cand>877){877}else if(sekaix1Cand<0){0}else{sekaix1Cand}
@@ -61,7 +66,20 @@ class Jiki(var x:Int, var y:Int) {
 
         sekaix  = sekaix1
         xPlus = xPlus1
+
     }
+
+
+    fun mapCheckx1(controller: Controller,map:Map,sekaix1:Int){
+        if (controller.houkou == "migi"){
+            sekaix1 + ookisa
+        } else if (controller.houkou == "hidari") {
+            sekaix1 - ookisa
+        }else{sekaix1}
+    }
+
+
+
 
     fun mapCheckx(controller: Controller,map:Map,sekaix1:Int):Boolean{
         var checkPoint =  if (controller.houkou == "migi"){sekaix1 + ookisa} else if (controller.houkou == "hidari") {sekaix1 - ookisa}else{sekaix1}
