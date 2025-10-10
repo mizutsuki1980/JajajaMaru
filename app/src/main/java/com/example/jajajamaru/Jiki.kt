@@ -43,12 +43,18 @@ class Jiki(var x:Int, var y:Int) {
     fun idoMigiHidari(controller: Controller, map: Map){
         val kasokudox = kasokudoYoko(controller.houkou)
 
-        val maxSpeed = 15f
         //速度制限をつける
+        val maxSpeed = 15f
         val xPlus1SokudoSeigenCand = xPlus + kasokudox
         val xPlus1Cand = if(xPlus1SokudoSeigenCand>= maxSpeed){maxSpeed}else if(xPlus1SokudoSeigenCand<= -maxSpeed){-maxSpeed}else{xPlus1SokudoSeigenCand}
+        val sekaix1SyougaibutuCand = sekaix + xPlus1Cand.toInt()
 
-        val sekaix1Cand = sekaix + xPlus1Cand.toInt()
+
+        //障害物チェックをつける //今は素通り
+        //val checkSyougaibutu = mapCheckx(controller,map,sekaix1SyougaibutuCand)
+        val checkSyougaibutu = true
+        val sekaix1Cand = if(checkSyougaibutu){sekaix1SyougaibutuCand}else {sekaix1SyougaibutuCand}
+
 
         val sekaix1 = if(sekaix1Cand>877){877}else if(sekaix1Cand<0){0}else{sekaix1Cand}
         val xPlus1 =  if(sekaix1Cand>877){0f}else if(sekaix1Cand<0){0f}else{xPlus1Cand}
