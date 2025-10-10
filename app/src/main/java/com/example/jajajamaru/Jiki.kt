@@ -53,17 +53,22 @@ class Jiki(var x:Int, var y:Int) {
         var checkSyougaibutu = true
         //障害物チェックをつける //今は素通り
         if (controller.houkou == "migi") {
-            val checkPoint = sekaix1SyougaibutuCand + ookisa
-            val checkBlock = (( checkPoint/ 32))
-            checkSyougaibutu = if(map.masu[13][checkBlock] == 0){true}else{false}
+            val checkPoint = sekaix1SyougaibutuCand
+            val checkBlock = (( checkPoint/ 32)+6)
+            checkSyougaibutu = if(map.masu[13][checkBlock] == 1){true}else{false}
+
         }
-
+        //349あたりで止まってほしい。最初の障害物。なんでとまらないのか？
+        // 213あたりで止まっている。なんで？
+        //なるほど、０地点というのは7か8ブロックなのか。そこがずれている。
+        //ひだり側から最初の障害物は[6]で7番目のアイテムになる
+        //        31/32で＝0なら[6]にするために　[ｘ+6]って感じにするのかな
         //この時点では、問題はない
-        val sekaix1Cand = sekaix1SyougaibutuCand
+        val sekaix1Cand = if(checkSyougaibutu){sekaix1SyougaibutuCand}else{sekaix}
 
 
 
-        val sekaix1 = if(sekaix1Cand>877){877}else if(sekaix1Cand<0){0}else{sekaix1Cand}
+        val sekaix1 = if(sekaix1Cand>349){349}else if(sekaix1Cand<0){0}else{sekaix1Cand}
         val xPlus1 =  if(sekaix1Cand>877){0f}else if(sekaix1Cand<0){0f}else{xPlus1Cand}
 
         sekaix  = sekaix1
