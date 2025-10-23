@@ -3,6 +3,7 @@ package com.example.jajajamaru
 import android.graphics.Canvas
 import android.graphics.Color.argb
 import android.graphics.Paint
+import android.widget.Toast
 
 class Jiki(var x:Int, var y:Int) {
     val ookisa = 100
@@ -41,99 +42,37 @@ class Jiki(var x:Int, var y:Int) {
     fun idoMigiHidari(controller: Controller, map: Map){
         val kasokudox = kasokudoYoko(controller.houkou)
         val xPlus1Cand = xPlus + kasokudox
-        val sekaix1Cand = sekaix + xPlus1Cand.toInt()
-        val sekaix1SyougaibutuCand = if(sekaix1Cand>877){877}else if(sekaix1Cand<0){0}else{sekaix1Cand}
-        val xPlus1SokudoSeigenCand =  if(sekaix1Cand>877){0f}else if(sekaix1Cand<0){0f}else{xPlus1Cand}
+        val x1CandA = sekaix + xPlus1Cand.toInt()
+
+        //世界の端かどうかを補正したｘ１候補
+        val x1CandB = if(x1CandA>877){877}else if(x1CandA<0){0}else{x1CandA}
+        val xPlus1SokudoSeigenCand =  if(x1CandA>877){0f}else if(x1CandA<0){0f}else{xPlus1Cand}
 
         //速度制限つけた
-        val xPlus1 = if(xPlus1SokudoSeigenCand>= 30){30f}else if(xPlus1SokudoSeigenCand<= -30){-30f}else{xPlus1SokudoSeigenCand}
+        var xPlus1 = if(xPlus1SokudoSeigenCand>= 30){30f}else if(xPlus1SokudoSeigenCand<= -30){-30f}else{xPlus1SokudoSeigenCand}
 
-        //障害物
-        val sekaix1 = if(mapCheckx(controller,map,sekaix1SyougaibutuCand)){sekaix1SyougaibutuCand}else{200}
+        //障害物にぶつかっているかどうかを補正したｘ１候補
+        val x1CandC = if(mapCheck(map,x1CandB,xPlus1)){
+            x1CandB
+        }else{
+            xPlus1 = 0f
 
+  //          val xSyougai =  x1CandB
 
-        sekaix  = sekaix1
+//            val xLimit = ...
+            200
+        }
+
+        sekaix  = x1CandC
         xPlus = xPlus1
     }
 
-    fun mapCheckx(controller: Controller,map:Map,sekaix1:Int):Boolean{
-        var checkPoint =  if (controller.houkou == "migi"){sekaix1 + ookisa} else if (controller.houkou == "hidari") {sekaix1 - ookisa}else{sekaix1}
+    fun mapCheck(map:Map,x1CandB:Int,xPlus1: Float):Boolean{
+        val checkPoint = x1CandB
         val checkBlock = ( checkPoint/ 32)
         return if(map.masu[13][checkBlock+1] == 1){ false }else{true}
     }
 
-    fun jikiXidoCheck(controller: Controller, map:Map){
-        val xPlus0 = xPlus
-        val sekaix0 = sekaix
-        val kasokudo1 = kasokudoYoko(controller.houkou)
-        val xPlus1 = xPlus0 + kasokudo1    //次の、今の、速度　（時間が１の時の速度）
-        val sekaix1Kouho = (sekaix0 + xPlus1).toInt()
-        val sekaix1KouhoCheck = mapCheck(controller,map,sekaix1Kouho,xPlus1)
-
-
-        if (sekaix1KouhoCheck) {
-            xPlus = xPlus + kasokudo1 // 速度をプラス
-            if (xPlus >= 30) { xPlus = 25f } //速度制限 //１マス以上加速しないことで制限
-            if (xPlus <= -30) { xPlus = -25f } //速度制限 //１マス以上加速しないことで制限
-        } else {
-            //　壁に当たった
-            // xLimitを計算する
-            val xLimit = xLimitKeisan(controller,map,sekaix1Kouho,xPlus1)
-            sekaix = xLimit
-            xPlus = 0f
-        }
-    }
-
-
-    fun mapCheck(controller: Controller,map:Map,sekaix1Kouho:Int,xPlus1:Float):Boolean{
-        var check = true
-        var checkPoint = sekaix1Kouho
-        if (controller.houkou == "migi") {   //右向き
-              checkPoint += (ookisa)
-          val checkBlock = ( checkPoint/ 32)
-            if(map.masu[13][checkBlock+1] == 1){ check = false }
-        }
-        else if (controller.houkou == "hidari") { //左向き
-            checkPoint -= (ookisa)
-            val checkBlock = checkPoint / 32
-            if(map.masu[13][checkBlock+1] == 1){ check = false }
-        }
-        return check
-    }
-
-    fun xLimitKeisan(controller: Controller,map:Map,sekaix1Kouho:Int,xPlus1:Float):Int{
-        var xLimit = 0
-        var checkPoint = sekaix1Kouho
-        if (controller.houkou == "migi") {   //右向き
-            checkPoint += (ookisa)
-            val checkBlock = ( checkPoint/ 32)
-            xLimit = ((checkBlock) *32) - 1
-        }
-        else if (controller.houkou == "hidari") { //左向き
-            checkPoint -= (ookisa)
-            val checkBlock = checkPoint / 32
-            xLimit = ((checkBlock) *32) + 31
-        }
-        return xLimit
-    }
-
-
-    fun CharaCameraIdoSeigen(controller: Controller) {
-        if (controller.houkou == "migi") {
-            if (xPlus > 0) {
-                if (x <= 400) {
-                    x += xPlus.toInt()
-                }
-            }
-        }
-        if (controller.houkou == "hidari") {
-            if (xPlus < 0) {
-                if (x >= 300) {
-                    x += xPlus.toInt()
-                }
-            }
-        }
-    }
 
 
 
