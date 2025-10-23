@@ -43,30 +43,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         handler.postDelayed({ tsugiNoSyori() }, 100)
     }
 
-
-    fun syougaibutuHantei(vYokoPlusCheckyou: Float):Boolean{
-
-        val checksekaix = jiki.sekaix + vYokoPlusCheckyou.toInt() //世界のｘだけ動いていれば、画面上のｘはどこでもいいのかもしれない
-        var checkBlock = checksekaix / 32 // 7マスから map.MASU_SIZE
-        val checkMasuSyurui = map.masu[13][checkBlock+1]  //listは０から　// チェックするマスの特定
-        var checkKekka = false
-
-        when(checkMasuSyurui){
-            0 -> { checkKekka = true }
-            1 -> {
-                //障害物にあたっている判定
-                jiki.xPlus = 0f
-                checkKekka = false
-            }
-            else ->{checkKekka = true }
-        }
-        return checkKekka
-    }
-
-
-
-
-
     override fun onDraw(canvas: Canvas) {
         val bgPaint = Paint()
         bgPaint.color = Color.argb(255, 0, 0, 255)   // 背景色
@@ -82,7 +58,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun mapCreate(canvas:Canvas){
         for (i in 0 until map.masu.size) {
             for (j in 0 until map.masu[i].size) {
-                map.drawMap(canvas,i,j,map.masShurui(i,j),-jiki.sekaix)
+                map.drawMap(canvas,i,j,map.masShurui(i,j),360-jiki.sekaix)
             }
         }
     }

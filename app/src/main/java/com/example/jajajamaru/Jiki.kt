@@ -3,11 +3,12 @@ package com.example.jajajamaru
 import android.graphics.Canvas
 import android.graphics.Color.argb
 import android.graphics.Paint
+import android.widget.Toast
 
 class Jiki(var x:Int, var y:Int) {
     val ookisa = 100
     val iro = Paint()
-    var sekaix = 224    //世界の左端から７マス　32＊7が初期位置
+    var sekaix = 360    //世界の左端から７マス　32＊7が初期位置
     var worldOffsetX = 0    //いる    消したら何が起きるかわからないが、いる
     var xPlus = 0f
     fun draw(canvas: Canvas) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
@@ -21,71 +22,46 @@ class Jiki(var x:Int, var y:Int) {
         return -5.0f
     }
 
-
-    fun charaWorldIdoSeigen(): Boolean {
-        val checkSekaix = sekaix + xPlus.toInt()
-        if (checkSekaix >= 100 && checkSekaix <= (224+32*25)) { //25マスまでしか進めませんよ、みたいな
-            return true
-        } else {
-            xPlus = 0f  //加速はいったん０にする
-            return false
-        }
-    }
-
-
     fun idoSyori(controller: Controller, map: Map){
         idoMigiHidari(controller,map)       //横移動 x軸
         idoUeShita(controller,map)        //縦移動　y軸
     }
 
-
-
     fun idoMigiHidari(controller: Controller, map: Map){
         val kasokudox = kasokudoYoko(controller.houkou)
-
-        //速度制限をつける
-        val maxSpeed = 45f
-        val xPlus1SokudoSeigenCand = xPlus + kasokudox
-        val xPlus1Cand = if(xPlus1SokudoSeigenCand>= maxSpeed){maxSpeed}else if(xPlus1SokudoSeigenCand<= -maxSpeed){-maxSpeed}else{xPlus1SokudoSeigenCand}
+        val xPlus1Cand = xPlus + kasokudox
         val x1CandA = sekaix + xPlus1Cand.toInt()
 
+        //世界の端かどうかを補正したｘ１候補
+        val x1CandB = if(x1CandA>877){877}else if(x1CandA<0){0}else{x1CandA}
+        val xPlus1SokudoSeigenCand =  if(x1CandA>877){0f}else if(x1CandA<0){0f}else{xPlus1Cand}
 
-        var checkSyougaibutu = true
-        //障害物チェックをつける //今は素通り
-        if (controller.houkou == "migi") {
-            val checkPoint = x1CandA
-            val checkBlock = (( checkPoint/ 32)+6)
-            checkSyougaibutu = if(map.masu[13][checkBlock] == 1){true}else{false}
+        //速度制限つけた
+        var xPlus1 = if(xPlus1SokudoSeigenCand>= 30){30f}else if(xPlus1SokudoSeigenCand<= -30){-30f}else{xPlus1SokudoSeigenCand}
 
+
+        println("sekaix:$sekaix,x1CandB:$x1CandB")        //障害物にぶつかっているかどうかを補正したｘ１候補
+        val x1CandC = if(mapCheck(map,x1CandB,xPlus1)){
+            x1CandB
+        }else{
+            val xSyougai =  (x1CandB/ 32)*32 //かならず左肩が入る
+            val xLimit = if(xPlus1>0){(xSyougai - ookisa /2)}else if(xPlus1<0){xSyougai + 32 + (ookisa /2)}else{500}
+            xPlus1 = 0f
+            xLimit
         }
-        val sekaix1Cand = if(checkSyougaibutu){x1CandA}else{sekaix}
 
-
-
-        val sekaix1 = if(sekaix1Cand>349){349}else if(sekaix1Cand<0){0}else{sekaix1Cand}
-        val xPlus1 =  if(sekaix1Cand>877){0f}else if(sekaix1Cand<0){0f}else{xPlus1Cand}
-
-        sekaix  = sekaix1
+        sekaix  = x1CandC
         xPlus = xPlus1
-
     }
 
-    fun CharaCameraIdoSeigen(controller: Controller) {
-        if (controller.houkou == "migi") {
-            if (xPlus > 0) {
-                if (x <= 400) {
-                    x += xPlus.toInt()
-                }
-            }
-        }
-        if (controller.houkou == "hidari") {
-            if (xPlus < 0) {
-                if (x >= 300) {
-                    x += xPlus.toInt()
-                }
-            }
-        }
+    fun mapCheck(map:Map,x1CandB:Int,xPlus1: Float):Boolean{
+        val checkPoint = x1CandB
+        val checkBlock = ( checkPoint/ 32)
+        val masu = map.masu
+        println("cb=$checkBlock,x1cand=$x1CandB,mas[9]=${masu[13][9]},mas[10]=${masu[13][10]},mas[11]=${masu[13][11]}")
+        return if(map.masu[13][checkBlock+1] == 1){ false }else{true}
     }
+
 
 
 
@@ -147,5 +123,5 @@ class Jiki(var x:Int, var y:Int) {
         }
     }
 
-
 }
+
