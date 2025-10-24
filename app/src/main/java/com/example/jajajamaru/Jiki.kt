@@ -8,8 +8,7 @@ import android.widget.Toast
 class Jiki(var x:Int, var y:Int) {
     val ookisa = 100
     val iro = Paint()
-    var sekaix = 360    //世界の左端から７マス　32＊7が初期位置
-    var worldOffsetX = 0    //いる    消したら何が起きるかわからないが、いる
+    var sekaix = 360    //360にした。有野指令
     var xPlus = 0f
     fun draw(canvas: Canvas) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
@@ -32,7 +31,7 @@ class Jiki(var x:Int, var y:Int) {
         val xPlus1Cand = xPlus + kasokudox
         val x1CandA = sekaix + xPlus1Cand.toInt()
 
-        //世界の端かどうかを補正したｘ１候補
+        //世界の端かどうかを補正したx1候補
         val x1CandB = if(x1CandA>877){877}else if(x1CandA<0){0}else{x1CandA}
         val xPlus1SokudoSeigenCand =  if(x1CandA>877){0f}else if(x1CandA<0){0f}else{xPlus1Cand}
 
@@ -40,7 +39,8 @@ class Jiki(var x:Int, var y:Int) {
         var xPlus1 = if(xPlus1SokudoSeigenCand>= 30){30f}else if(xPlus1SokudoSeigenCand<= -30){-30f}else{xPlus1SokudoSeigenCand}
 
 
-        println("sekaix:$sekaix,x1CandB:$x1CandB")        //障害物にぶつかっているかどうかを補正したｘ１候補
+        println("sekaix:$sekaix,x1CandB:$x1CandB")
+        //障害物にぶつかっているかどうかを補正したx1候補
         val x1CandC = if(mapCheck(map,x1CandB,xPlus1)){
             x1CandB
         }else{
