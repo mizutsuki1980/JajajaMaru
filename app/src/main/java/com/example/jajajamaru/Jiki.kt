@@ -59,7 +59,14 @@ class Jiki(var x:Int, var y:Int) {
 
 
         val checkPoint = x1CandB
-        val checkBlock = if(xPlus1>0){ ( checkPoint/ 32)}else if(xPlus1<0){( checkPoint/ 32)+1}else{( checkPoint/ 32)}
+        val checkBlock = if(xPlus1>0){
+            //右方向だったら
+            ( checkPoint/ 32)
+        }else if(xPlus1<0){
+            //左方向だったら
+            ( checkPoint/ 32)-1
+        }else{( checkPoint/ 32)
+        }
         val masu = map.masu
 
 
