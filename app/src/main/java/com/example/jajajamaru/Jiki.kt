@@ -55,6 +55,7 @@ class Jiki(var x:Int, var y:Int) {
     }
 
     fun mapCheck(map:Map,x1CandB:Int,xPlus1: Float):Boolean{
+//mapcheckでxPlusによる左右判定をしていないと予想
         val checkPoint = x1CandB
         val checkBlock = ( checkPoint/ 32)
         val masu = map.masu
