@@ -49,15 +49,12 @@ class Jiki(var x:Int, var y:Int) {
             xPlus1 = 0f
             xLimit
         }
-
         sekaix  = x1CandC
         xPlus = xPlus1
     }
 
     fun mapCheck(map:Map,x1CandB:Int,xPlus1: Float):Boolean{
-//mapcheckでxPlusによる左右判定をしていないと予想
-
-
+        //mapcheckでxPlusによる左右判定をしていないと予想
         val checkPoint = x1CandB
         val checkBlock = if(xPlus1>0){
             //右方向だったら
@@ -68,12 +65,8 @@ class Jiki(var x:Int, var y:Int) {
         }else{( checkPoint/ 32)
         }
         val masu = map.masu
-
-
         println("cb=$checkBlock,x1cand=$x1CandB,mas[9]=${masu[13][9]},mas[10]=${masu[13][10]},mas[11]=${masu[13][11]}")
-
         return if(map.masu[13][checkBlock+1] == 1){ false }else{true}
-
     }
 
 
@@ -81,6 +74,8 @@ class Jiki(var x:Int, var y:Int) {
 
 
     fun idoUeShita(controller: Controller, map: Map){
+        //縦軸を作ってみる
+
         jumpSyori(controller,map)   // ジャンプ処理　落下、障害物に当たるなど　//なんかこの位置にないとダメ
         var syougaiCheckY  = syougaiY(controller, map)
         if (isJump) { if(syougaiCheckY){ isJump = false } }        //縦方向に障害物があった場合、ジャンプを中止する。
