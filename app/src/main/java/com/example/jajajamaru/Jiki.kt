@@ -12,7 +12,7 @@ class Jiki(var x:Int, var y:Int) {
     var sekaiy = 500
     var xPlus = 0f
     var isJump = false
-    var vJump = 0f
+    var yPlus = 0f
 
     fun idoSyori(controller: Controller, map: Map){
         idoMigiHidari(controller,map)       //横移動 x軸
@@ -21,7 +21,7 @@ class Jiki(var x:Int, var y:Int) {
 
 
     fun idoUeShita(controller: Controller, map: Map){
-//むむむ結構長いな
+        //むむむ結構長いな
 
         val kasokudoy = kasokudoJump()
         //val vJumpCand = vJump + kasokudoy
@@ -29,18 +29,23 @@ class Jiki(var x:Int, var y:Int) {
 
         //縦軸を作ってみる
         //①最初に、ジャンプをしていなかった場合、ジャンプをする（）
-        val vJumpCand = if (controller.houkou == "jump") {  //ジャンプしてなかったらジャンプする
+        val vJumpCand = if (isJump == false) {if (controller.houkou == "jump"){
             isJump = true
             50f
-        }else  {   //ジャンプ中ならジャンプを継続する
-            vJump = vJump + kasokudoy
-            y - vJump.toInt()
+            }else{
+            (yPlus + kasokudoy).toFloat()
+            }
+        }else{
+            (yPlus + kasokudoy).toFloat()
         }
 
-        val y1CandA = sekaiy + vJumpCand.toInt()
+
 
 
         //②次の位置を計算する
+
+        val y1CandA = sekaiy + vJumpCand.toInt()
+
 
         //③計算した位置が障害物かどうかを判定する
 
@@ -54,7 +59,7 @@ class Jiki(var x:Int, var y:Int) {
 
         //最後に代入
         sekaiy  = y1CandA
-        vJump = vJumpCand
+        yPlus = vJumpCand
         y = sekaiy
 
     }
@@ -66,13 +71,13 @@ class Jiki(var x:Int, var y:Int) {
         if (controller.houkou == "jump") {  //ジャンプしてなかったらジャンプする
             if (isJump == false) {
                 isJump = true
-                vJump = 50f
-                y -= vJump.toInt()
+                yPlus = 50f
+                y -= yPlus.toInt()
             }
         }
         if (isJump) {   //ジャンプ中ならジャンプを継続する
-            vJump = vJump + kasokudoJump()
-            y -= vJump.toInt()
+            yPlus = yPlus + kasokudoJump()
+            y -= yPlus.toInt()
         }
 
 
@@ -86,7 +91,7 @@ class Jiki(var x:Int, var y:Int) {
         if (controller.houkou == "migi") { checksekaix += ookisa / 2 }
         if (controller.houkou == "hidari") { checksekaix -= ookisa / 2 }
         var checkBlock = checksekaix / 32
-        var checksekaiy = y - vJump.toInt()
+        var checksekaiy = y - yPlus.toInt()
         var yBlock = 0
         if(checksekaiy<=550 && checksekaiy >=501){yBlock = 14}
         if(checksekaiy<=500 && checksekaiy >=468){yBlock = 13}
