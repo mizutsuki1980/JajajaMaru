@@ -21,13 +21,24 @@ class Jiki(var x:Int, var y:Int) {
 
 
     fun idoUeShita(controller: Controller, map: Map){
+//むむむ結構長いな
+
         val kasokudoy = kasokudoJump()
-        val vJumpCand = vJump + kasokudoy
-        val y1CandA = sekaiy + vJumpCand.toInt()
+        //val vJumpCand = vJump + kasokudoy
 
 
         //縦軸を作ってみる
         //①最初に、ジャンプをしていなかった場合、ジャンプをする（）
+        val vJumpCand = if (controller.houkou == "jump") {  //ジャンプしてなかったらジャンプする
+            isJump = true
+            50f
+        }else  {   //ジャンプ中ならジャンプを継続する
+            vJump = vJump + kasokudoy
+            y - vJump.toInt()
+        }
+
+        val y1CandA = sekaiy + vJumpCand.toInt()
+
 
         //②次の位置を計算する
 
