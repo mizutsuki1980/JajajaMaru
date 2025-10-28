@@ -60,7 +60,7 @@ class Jiki(var x:Int, var y:Int) {
         //最後に代入
         sekaiy  = y1CandA
         yPlus = vJumpCand
-        y = sekaiy
+        y = 500
 
     }
 
