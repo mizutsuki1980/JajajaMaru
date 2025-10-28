@@ -21,15 +21,10 @@ class Jiki(var x:Int, var y:Int) {
 
 
     fun idoUeShita(controller: Controller, map: Map){
-        //むむむ結構長いな
-
         val kasokudoy = kasokudoJump()
-        //val vJumpCand = vJump + kasokudoy
 
-
-        //縦軸を作ってみる
         //①最初に、ジャンプをしていなかった場合、ジャンプをする（）
-        val vJumpCand = if (isJump == false) {if (controller.houkou == "jump"){
+        val yPlusCand = if (isJump == false) {if (controller.houkou == "jump"){
             isJump = true
             50f
             }else{
@@ -43,26 +38,49 @@ class Jiki(var x:Int, var y:Int) {
 
 
         //②次の位置を計算する
-
-        val y1CandA = sekaiy + vJumpCand.toInt()
-
+        val y1CandA = sekaiy + yPlusCand.toInt()
 
         //③計算した位置が障害物かどうかを判定する
+        val c = mapCheckY(map,y1CandA,yPlusCand)
+
 
         //④結果を反映させる
-
-
-        jumpSyori(controller,map)
         var syougaiCheckY  = syougaiY(controller, map)
         if (isJump) { if(syougaiCheckY){ isJump = false } }
 
 
         //最後に代入
         sekaiy  = y1CandA
-        yPlus = vJumpCand
+        yPlus = yPlusCand
         y = 500
-
     }
+
+    fun mapCheckY(map:Map,y1CandA:Int,yPlusCand: Float):Boolean{
+        val checkPointY = y1CandA
+
+        val checkBlockY = if(yPlusCand>0){ //上方向だったら
+            ( checkPointY/ 32)
+        }else if(yPlusCand<0){ //下方向だったら
+            ( checkPointY/ 32)-1
+        }else{( checkPointY/ 32)
+        }
+
+        //mapcheckでxPlusによる左右判定をしていないと予想
+        val checkPointX = sekaix
+        val checkBlockX = if(xPlus>0){
+            //右方向だったら
+            ( checkPointX/ 32)
+        }else if(xPlus<0){
+            //左方向だったら
+            ( checkPointX/ 32)-1
+        }else{( checkPointX/ 32)
+        }
+
+        val masu = map.masu
+        println("cb=$checkBlockX,x1cand=$y1CandA,mas[9]=${masu[13][9]},mas[10]=${masu[13][10]},mas[11]=${masu[13][11]}")
+        return if(map.masu[13+checkPointY][checkBlockX+1] == 1){ false }else{true}
+    }
+
 
 
 
@@ -82,7 +100,6 @@ class Jiki(var x:Int, var y:Int) {
 
 
     }
-
 
 
 
