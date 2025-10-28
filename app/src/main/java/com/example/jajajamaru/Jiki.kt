@@ -27,6 +27,15 @@ class Jiki(var x:Int, var y:Int) {
 
 
         //縦軸を作ってみる
+        //①最初に、ジャンプをしていなかった場合、ジャンプをする（）
+
+        //②次の位置を計算する
+
+        //③計算した位置が障害物かどうかを判定する
+
+        //④結果を反映させる
+
+
         jumpSyori(controller,map)
         var syougaiCheckY  = syougaiY(controller, map)
         if (isJump) { if(syougaiCheckY){ isJump = false } }
@@ -38,6 +47,8 @@ class Jiki(var x:Int, var y:Int) {
         y = sekaiy
 
     }
+
+
 
     fun jumpSyori(controller: Controller,map:Map) {
 
