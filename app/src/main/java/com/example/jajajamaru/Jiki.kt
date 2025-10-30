@@ -10,7 +10,7 @@ class Jiki(var x:Int, var y:Int) {
     val iro = Paint()
     var sekaix = 360    //360にした。有野指令
     var sekaiy = 500
-    
+
     var xPlus = 0f
     var isJump = false
     var yPlus = 0f
@@ -31,7 +31,7 @@ class Jiki(var x:Int, var y:Int) {
         if (isJump == false) {
             if (controller.houkou == "jump") {
                 isJump = true
-                yPlusCand = -30f
+                yPlusCand = -40f
                 y1CandA = sekaiy + yPlusCand.toInt()
             }
         }
@@ -65,14 +65,15 @@ class Jiki(var x:Int, var y:Int) {
     }
 
     fun mapCheckY(map:Map,y1CandA:Int,yPlusCand: Float):Boolean{
-        val checkPointY = y1CandA - ookisa
+        val checkPointY = y1CandA
         //チェックするポイントは自機の大きさを＋したもの (つまりマイナスしたもの)
         val yBlock = ( checkPointY/ 32)
         //たとえば、５００わる３２なら１５．６で「１５ブロック」になる
         val xBlock = (sekaix/32)
 
         println("yb=$yBlock,y1CandA=$y1CandA")
-        return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
+        return if(map.masu[yBlock][xBlock] == 1
+            ){ false }else{true}
     }
 
     fun kasokudoJump(): Float {
