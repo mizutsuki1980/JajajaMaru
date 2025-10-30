@@ -9,14 +9,14 @@ class Jiki(var x:Int, var y:Int) {
     val ookisa = 100
     val iro = Paint()
     var sekaix = 360    //360にした。有野指令
-    var sekaiy = 500
+    var sekaiy = 100
     var xPlus = 0f
     var isJump = false
     var yPlus = 0f
 
     fun idoSyori(controller: Controller, map: Map){
         idoMigiHidari(controller,map)       //横移動 x軸
-        idoUeShita(controller,map)        //縦移動　y軸
+         idoUeShita(controller,map)        //縦移動　y軸
     }
 
 
@@ -34,93 +34,31 @@ class Jiki(var x:Int, var y:Int) {
             (yPlus + kasokudoy).toFloat()
         }
 
-
-
-
         //②次の位置を計算する
         val y1CandA = sekaiy + yPlusCand.toInt()
 
+        val c = mapCheckY(map, y1CandA ,yPlusCand)
+        println("y1CandA=$y1CandA")
+
+
         //③計算した位置が障害物かどうかを判定する
-        val c = true //mapCheckY(map,y1CandA,yPlusCand)
 
 
         //④結果を反映させる
-        var syougaiCheckY  = syougaiY(controller, map)
-        if (isJump) { if(syougaiCheckY){ isJump = false } }
 
 
         //最後に代入
-        sekaiy  = y1CandA
-        yPlus = yPlusCand
-        y = 500
     }
 
     fun mapCheckY(map:Map,y1CandA:Int,yPlusCand: Float):Boolean{
-        //チェックする場所のポイント
         val checkPointY = y1CandA
-        // チェックするブロック
-        val checkBlockY = ( checkPointY/ 32)
+        val yBlock = ( checkPointY/ 32)
+        //たとえば、５００わる３２なら１５．６で「１５ブロック」になる
+        val xBlock = (sekaix/32)
 
-
-        //横方向も必要
-        val checkPointX = sekaix
-        val checkBlockX = if(xPlus>0){
-            //右方向だったら
-            ( checkPointX/ 32)
-        }else if(xPlus<0){
-            //左方向だったら
-            ( checkPointX/ 32)-1
-        }else{( checkPointX/ 32)
-        }
-
-        val masu = map.masu
-        println("cb=$checkBlockX,x1cand=$y1CandA,mas[9]=${masu[13][9]},mas[10]=${masu[13][10]},mas[11]=${masu[13][11]}")
-        return if(map.masu[13+checkPointY][checkBlockX+1] == 1){ false }else{true}
+        println("yb=$yBlock,y1CandA=$y1CandA,sekaix=$sekaix")
+        return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
     }
-
-
-
-
-    fun jumpSyori(controller: Controller,map:Map) {
-
-        if (controller.houkou == "jump") {  //ジャンプしてなかったらジャンプする
-            if (isJump == false) {
-                isJump = true
-                yPlus = 50f
-                y -= yPlus.toInt()
-            }
-        }
-        if (isJump) {   //ジャンプ中ならジャンプを継続する
-            yPlus = yPlus + kasokudoJump()
-            y -= yPlus.toInt()
-        }
-
-
-    }
-
-
-
-    fun syougaiY( controller: Controller, map:Map):Boolean{
-        var checksekaix = sekaix
-        if (controller.houkou == "migi") { checksekaix += ookisa / 2 }
-        if (controller.houkou == "hidari") { checksekaix -= ookisa / 2 }
-        var checkBlock = checksekaix / 32
-        var checksekaiy = y - yPlus.toInt()
-        var yBlock = 0
-        if(checksekaiy<=550 && checksekaiy >=501){yBlock = 14}
-        if(checksekaiy<=500 && checksekaiy >=468){yBlock = 13}
-        if(checksekaiy<=467 && checksekaiy >=436){yBlock = 12}
-        if(checksekaiy<=435 && checksekaiy >=404){yBlock = 11}
-        val checkMasuSyuruiJump = map.masu[yBlock][checkBlock+1]
-        var checkKekka = false
-        when(checkMasuSyuruiJump){
-            0 -> { checkKekka = false }
-            1 -> { checkKekka = true }
-            else ->{checkKekka = false }
-        }
-        return checkKekka
-    }
-
 
     fun kasokudoJump(): Float {
         return -5.0f
@@ -139,7 +77,7 @@ class Jiki(var x:Int, var y:Int) {
         var xPlus1 = if(xPlus1SokudoSeigenCand>= 30){30f}else if(xPlus1SokudoSeigenCand<= -30){-30f}else{xPlus1SokudoSeigenCand}
 
 
-        println("sekaix:$sekaix,x1CandB:$x1CandB")
+//        println("sekaix:$sekaix,x1CandB:$x1CandB")
         //障害物にぶつかっているかどうかを補正したx1候補
         val x1CandC = if(mapCheck(map,x1CandB,xPlus1)){
             x1CandB
@@ -168,7 +106,7 @@ class Jiki(var x:Int, var y:Int) {
         }else{( checkPoint/ 32)
         }
         val masu = map.masu
-        println("cb=$checkBlock,x1cand=$x1CandB,mas[9]=${masu[13][9]},mas[10]=${masu[13][10]},mas[11]=${masu[13][11]}")
+        //println("cb=$checkBlock,x1cand=$x1CandB,mas[9]=${masu[13][9]},mas[10]=${masu[13][10]},mas[11]=${masu[13][11]}")
         return if(map.masu[13][checkBlock+1] == 1){ false }else{true}
     }
 
