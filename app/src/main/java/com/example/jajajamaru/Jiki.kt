@@ -45,7 +45,8 @@ class Jiki(var x:Int, var y:Int) {
     }
 
     fun mapCheckY(map:Map,y1CandA:Int,yPlusCand: Float):Boolean{
-        val checkPointY = y1CandA
+        val checkPointY = y1CandA - ookisa
+        //チェックするポイントは自機の大きさを＋したもの (つまりマイナスしたもの)
         val yBlock = ( checkPointY/ 32)
         //たとえば、５００わる３２なら１５．６で「１５ブロック」になる
         val xBlock = (sekaix/32)
