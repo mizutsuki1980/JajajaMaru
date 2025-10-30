@@ -24,16 +24,23 @@ class Jiki(var x:Int, var y:Int) {
         val kasokudoy = kasokudoJump()
 
         //①最初に、ジャンプをしていなかった場合、ジャンプをする（）
-        val yPlusCandA = yPlus + kasokudoy
+        var yPlusCand = yPlus + kasokudoy
         //②次の位置を計算する
-        val y1CandA = sekaiy + yPlusCandA.toInt()
-        val c = mapCheckY(map, y1CandA ,yPlusCandA)
+        val y1CandA = sekaiy + yPlusCand.toInt()
+        val c = mapCheckY(map, y1CandA ,yPlusCand)
         println("y1CandA=$c")
-        if (c){
-            y = y1CandA
-            sekaiy = y1CandA
-            yPlus = yPlusCandA
+
+       val y1CandB =  if (c){
+           y1CandA
+        }else {
+            val y1CandB = y1CandA
+            yPlusCand = 0f
+           sekaiy
         }
+
+        sekaiy = y1CandB
+        y = y1CandB
+        yPlus = yPlusCand
 
         //③計算した位置が障害物かどうかを判定する
 
@@ -67,12 +74,8 @@ class Jiki(var x:Int, var y:Int) {
         //世界の端かどうかを補正したx1候補
         val x1CandB = if(x1CandA>877){877}else if(x1CandA<0){0}else{x1CandA}
         val xPlus1SokudoSeigenCand =  if(x1CandA>877){0f}else if(x1CandA<0){0f}else{xPlus1Cand}
-
         //速度制限つけた
         var xPlus1 = if(xPlus1SokudoSeigenCand>= 30){30f}else if(xPlus1SokudoSeigenCand<= -30){-30f}else{xPlus1SokudoSeigenCand}
-
-
-//        println("sekaix:$sekaix,x1CandB:$x1CandB")
         //障害物にぶつかっているかどうかを補正したx1候補
         val x1CandC = if(mapCheck(map,x1CandB,xPlus1)){
             x1CandB
