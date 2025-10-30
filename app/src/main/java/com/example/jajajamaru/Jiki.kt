@@ -24,22 +24,16 @@ class Jiki(var x:Int, var y:Int) {
         val kasokudoy = kasokudoJump()
 
         //①最初に、ジャンプをしていなかった場合、ジャンプをする（）
-        val yPlusCand = if (isJump == false) {if (controller.houkou == "jump"){
-            isJump = true
-            50f
-            }else{
-            (yPlus + kasokudoy).toFloat()
-            }
-        }else{
-            (yPlus + kasokudoy).toFloat()
-        }
-
+        val yPlusCandA = yPlus + kasokudoy
         //②次の位置を計算する
-        val y1CandA = sekaiy + yPlusCand.toInt()
-
-        val c = mapCheckY(map, y1CandA ,yPlusCand)
-        println("y1CandA=$y1CandA")
-
+        val y1CandA = sekaiy + yPlusCandA.toInt()
+        val c = mapCheckY(map, y1CandA ,yPlusCandA)
+        println("y1CandA=$c")
+        if (c){
+            y = y1CandA
+            sekaiy = y1CandA
+            yPlus = yPlusCandA
+        }
 
         //③計算した位置が障害物かどうかを判定する
 
@@ -61,7 +55,7 @@ class Jiki(var x:Int, var y:Int) {
     }
 
     fun kasokudoJump(): Float {
-        return -5.0f
+        return 5.0f
     }
 
     fun idoMigiHidari(controller: Controller, map: Map){
