@@ -10,6 +10,7 @@ class Jiki(var x:Int, var y:Int) {
     val iro = Paint()
     var sekaix = 360    //360にした。有野指令
     var sekaiy = 500
+    
     var xPlus = 0f
     var isJump = false
     var yPlus = 0f
