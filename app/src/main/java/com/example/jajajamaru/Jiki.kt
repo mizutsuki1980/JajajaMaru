@@ -22,25 +22,28 @@ class Jiki(var x:Int, var y:Int) {
 
     fun idoUeShita(controller: Controller, map: Map){
         val kasokudoy = kasokudoJump()
+        var yPlusCand = yPlus + kasokudoy
+        val y1CandA = sekaiy + yPlusCand.toInt()
 
         //①最初に、ジャンプをしていなかった場合、ジャンプをする（）
-        var yPlusCand = yPlus + kasokudoy
+
         //②次の位置を計算する
-        val y1CandA = sekaiy + yPlusCand.toInt()
         val c = mapCheckY(map, y1CandA ,yPlusCand)
-        println("y1CandA=$c")
 
        val y1CandB =  if (c){
            y1CandA
         }else {
-            val y1CandB = y1CandA
-            yPlusCand = 0f
-           sekaiy
+           val ySyougai =  (y1CandA/ 32)*32 //かならず上辺が入る
+           val yLimit = (ySyougai - ookisa /2)
+           yPlusCand = 0f
+           yLimit
         }
 
+        println("y1CandB=$y1CandB,yPlusCand=$yPlusCand")
+
+        yPlus = yPlusCand
         sekaiy = y1CandB
         y = y1CandB
-        yPlus = yPlusCand
 
         //③計算した位置が障害物かどうかを判定する
 
@@ -58,7 +61,7 @@ class Jiki(var x:Int, var y:Int) {
         //たとえば、５００わる３２なら１５．６で「１５ブロック」になる
         val xBlock = (sekaix/32)
 
-        println("yb=$yBlock,y1CandA=$y1CandA,sekaix=$sekaix")
+        println("yb=$yBlock,y1CandA=$y1CandA")
         return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
     }
 
