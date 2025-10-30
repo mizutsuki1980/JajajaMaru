@@ -34,7 +34,7 @@ class Jiki(var x:Int, var y:Int) {
            y1CandA
         }else {
            val ySyougai =  (y1CandA/ 32)*32 //かならず上辺が入る
-           val yLimit = (ySyougai - ookisa /2)
+           val yLimit = (ySyougai)
            yPlusCand = 0f
            yLimit
         }
