@@ -95,7 +95,7 @@ class Jiki(var x:Int, var y:Int) {
             x1CandB
         }else{
             val xSyougai =  (x1CandB/ 32)*32 //かならず左肩が入る
-            val xLimit = if(xPlus1>0){(xSyougai - ookisa /2)}else if(xPlus1<0){xSyougai + 32 + (ookisa /2)}else{500}
+            val xLimit = if(xPlus1>0){(xSyougai - ookisa /2)}else if(xPlus1<0){xSyougai + 32 + (ookisa /2)}else{sekaix}
             xPlus1 = 0f
             xLimit
         }
@@ -119,7 +119,10 @@ class Jiki(var x:Int, var y:Int) {
         }
         val masu = map.masu
         //println("cb=$checkBlock,x1cand=$x1CandB,mas[9]=${masu[13][9]},mas[10]=${masu[13][10]},mas[11]=${masu[13][11]}")
-        return if(map.masu[13][checkBlock+1] == 1){ false }else{true}
+
+        val yBolck = (sekaiy / 32)-2
+        println("yBolck=$yBolck")
+        return if(map.masu[yBolck][checkBlock+1] == 1){ false }else{true}
     }
 
 
