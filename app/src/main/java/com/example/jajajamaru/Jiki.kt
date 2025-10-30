@@ -41,7 +41,7 @@ class Jiki(var x:Int, var y:Int) {
         val y1CandA = sekaiy + yPlusCand.toInt()
 
         //③計算した位置が障害物かどうかを判定する
-        val c = mapCheckY(map,y1CandA,yPlusCand)
+        val c = true //mapCheckY(map,y1CandA,yPlusCand)
 
 
         //④結果を反映させる
