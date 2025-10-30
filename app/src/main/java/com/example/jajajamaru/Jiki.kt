@@ -9,7 +9,7 @@ class Jiki(var x:Int, var y:Int) {
     val ookisa = 100
     val iro = Paint()
     var sekaix = 360    //360にした。有野指令
-    var sekaiy = 100
+    var sekaiy = 500
     var xPlus = 0f
     var isJump = false
     var yPlus = 0f
@@ -23,9 +23,18 @@ class Jiki(var x:Int, var y:Int) {
     fun idoUeShita(controller: Controller, map: Map){
         val kasokudoy = kasokudoJump()
         var yPlusCand = yPlus + kasokudoy
-        val y1CandA = sekaiy + yPlusCand.toInt()
+        var y1CandA = sekaiy + yPlusCand.toInt()
 
         //①最初に、ジャンプをしていなかった場合、ジャンプをする（）
+
+        if (isJump == false) {
+            if (controller.houkou == "jump") {
+                isJump = true
+                yPlusCand = -30f
+                y1CandA = sekaiy + yPlusCand.toInt()
+            }
+        }
+
 
         //②次の位置を計算する
         val c = mapCheckY(map, y1CandA ,yPlusCand)
@@ -33,17 +42,16 @@ class Jiki(var x:Int, var y:Int) {
        val y1CandB =  if (c){
            y1CandA
         }else {
+            isJump = false
            val ySyougai =  (y1CandA/ 32)*32 //かならず上辺が入る
            val yLimit = (ySyougai)
            yPlusCand = 0f
            yLimit
         }
 
-        println("y1CandB=$y1CandB,yPlusCand=$yPlusCand")
 
         yPlus = yPlusCand
         sekaiy = y1CandB
-        y = y1CandB
 
         //③計算した位置が障害物かどうかを判定する
 
@@ -52,6 +60,7 @@ class Jiki(var x:Int, var y:Int) {
 
 
         //最後に代入
+        y = sekaiy
     }
 
     fun mapCheckY(map:Map,y1CandA:Int,yPlusCand: Float):Boolean{
