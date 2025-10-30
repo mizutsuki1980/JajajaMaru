@@ -56,16 +56,13 @@ class Jiki(var x:Int, var y:Int) {
     }
 
     fun mapCheckY(map:Map,y1CandA:Int,yPlusCand: Float):Boolean{
+        //チェックする場所のポイント
         val checkPointY = y1CandA
+        // チェックするブロック
+        val checkBlockY = ( checkPointY/ 32)
 
-        val checkBlockY = if(yPlusCand>0){ //上方向だったら
-            ( checkPointY/ 32)
-        }else if(yPlusCand<0){ //下方向だったら
-            ( checkPointY/ 32)-1
-        }else{( checkPointY/ 32)
-        }
 
-        //mapcheckでxPlusによる左右判定をしていないと予想
+        //横方向も必要
         val checkPointX = sekaix
         val checkBlockX = if(xPlus>0){
             //右方向だったら
