@@ -9,7 +9,7 @@ class Jiki(var x:Int, var y:Int) {
     val ookisa = 100
     val iro = Paint()
     var sekaix = 360    //360にした。有野指令
-    var sekaiy = 500
+    var sekaiy = 400
 
     var xPlus = 0f
     var isJump = false
@@ -24,31 +24,30 @@ class Jiki(var x:Int, var y:Int) {
     fun idoUeShita(controller: Controller, map: Map){
         val kasokudoy = kasokudoJump()
         var yPlusCand = yPlus + kasokudoy
-        var y1CandA = sekaiy + yPlusCand.toInt()
 
         //①最初に、ジャンプをしていなかった場合、ジャンプをする（）
 
         if (isJump == false) {
             if (controller.houkou == "jump") {
                 isJump = true
-                yPlusCand = -40f
-                y1CandA = sekaiy + yPlusCand.toInt()
+                yPlusCand = -45f
             }
         }
 
+       val y1CandA = sekaiy + yPlusCand.toInt()
 
         //②次の位置を計算する
-        val c = mapCheckY(map, y1CandA ,yPlusCand)
-
+       val c = mapCheckY(map, y1CandA)
        val y1CandB =  if (c){
            y1CandA
-        }else {
+       }else {
             isJump = false
            val ySyougai =  (y1CandA/ 32)*32 //かならず上辺が入る
            val yLimit = (ySyougai)
            yPlusCand = 0f
            yLimit
-        }
+       }
+
 
 
         yPlus = yPlusCand
@@ -62,18 +61,16 @@ class Jiki(var x:Int, var y:Int) {
 
         //最後に代入
         y = sekaiy
+
+        println("y=$y,sekaiy=$sekaiy,y1CandA=$y1CandA,yPlusCand=$yPlusCand,${(y1CandB/32)}")
+
     }
 
-    fun mapCheckY(map:Map,y1CandA:Int,yPlusCand: Float):Boolean{
+    fun mapCheckY(map:Map,y1CandA:Int):Boolean{
         val checkPointY = y1CandA
-        //チェックするポイントは自機の大きさを＋したもの (つまりマイナスしたもの)
         val yBlock = ( checkPointY/ 32)
-        //たとえば、５００わる３２なら１５．６で「１５ブロック」になる
         val xBlock = (sekaix/32)
-
-        println("yb=$yBlock,y1CandA=$y1CandA")
-        return if(map.masu[yBlock][xBlock] == 1
-            ){ false }else{true}
+        return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
     }
 
     fun kasokudoJump(): Float {
@@ -101,9 +98,6 @@ class Jiki(var x:Int, var y:Int) {
         }
         sekaix  = x1CandC
         xPlus = xPlus1
-        //ｘは不変だが、設定するならここか
-        // x = x1CandA
-
     }
 
     fun mapCheck(map:Map,x1CandB:Int,xPlus1: Float):Boolean{
@@ -119,10 +113,9 @@ class Jiki(var x:Int, var y:Int) {
         }
         val masu = map.masu
         //println("cb=$checkBlock,x1cand=$x1CandB,mas[9]=${masu[13][9]},mas[10]=${masu[13][10]},mas[11]=${masu[13][11]}")
-
-        val yBolck = (sekaiy / 32)-2
-        println("yBolck=$yBolck")
-        return if(map.masu[yBolck][checkBlock+1] == 1){ false }else{true}
+        val yBlock = (sekaiy / 32)-2
+        println("yBlock=$yBlock,sekaiy$sekaiy,isJump=$isJump")
+        return if(map.masu[yBlock][checkBlock+1] == 1){ false }else{true}
     }
 
 

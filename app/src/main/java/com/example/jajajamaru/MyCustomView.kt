@@ -14,7 +14,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var frame = 0
     var clickState = "nashi"
     val initialJikiX = 360 //初期位置
-    val initialJikiY = 500 //初期位置
+    val initialJikiY = 400 //初期位置
     var clickX = initialJikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var jiki = Jiki(initialJikiX, initialJikiY)
