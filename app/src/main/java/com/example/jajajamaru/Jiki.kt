@@ -63,7 +63,7 @@ class Jiki(var x:Int, var y:Int) {
         y = sekaiy
 
         println("y=$y,sekaiy=$sekaiy,y1CandA=$y1CandA,yPlusCand=$yPlusCand,${(y1CandB/32)}")
-
+    //四角を表示するときに、変にプラスをしてたから、なんかズレた表示になっていたのか
     }
 
     fun mapCheckY(map:Map,y1CandA:Int):Boolean{
