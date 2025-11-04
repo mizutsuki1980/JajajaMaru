@@ -83,7 +83,7 @@ class Jiki(var x:Int, var y:Int) {
         val x1CandA = sekaix + xPlus1Cand.toInt()
 
         //世界の端かどうかを補正したx1候補
-        val x1CandB = if(x1CandA>877){877}else if(x1CandA<0){0}else{x1CandA}
+        val x1CandB = if(x1CandA>1500){1500}else if(x1CandA<0){0}else{x1CandA}
         val xPlus1SokudoSeigenCand =  if(x1CandA>877){0f}else if(x1CandA<0){0f}else{xPlus1Cand}
         //速度制限つけた
         var xPlus1 = if(xPlus1SokudoSeigenCand>= 30){30f}else if(xPlus1SokudoSeigenCand<= -30){-30f}else{xPlus1SokudoSeigenCand}
