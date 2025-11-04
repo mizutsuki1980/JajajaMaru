@@ -50,15 +50,17 @@ class Jiki(var x:Int, var y:Int) {
 
 
         //yが０以下にならないように補正したy1Cand
-        //val y1CandC = if(isJump) {
-        //if (y1CandB < 50) {
-          //      y1CandB
-            //} else {
-              //  50
-//            }
-  //      }else{ y1CandB}
-        val y1CandC = y1CandB
+        val y1CandC = if(isJump) {
+             if (y1CandB < 96) {
+                 yPlusCand = 0f
+                96
+            } else {
+                y1CandB
+            }
+        }else{
+            y1CandB
 
+        }
 
         yPlus = yPlusCand
         sekaiy = y1CandC
