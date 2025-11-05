@@ -49,7 +49,7 @@ class Jiki(var x:Int, var y:Int) {
        }
 
 
-        //yが０以下にならないように補正したy1Cand
+        //世界の端かどうかを補正したy1候補
         val y1CandC = if(isJump) {
              if (y1CandB < 96) {
                  yPlusCand = 0f
