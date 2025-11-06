@@ -79,25 +79,25 @@ class Jiki(var pos: Vec2D) {
 
     fun idoMigiHidari(controller: Controller, map: Map){
          val u0 = Ugoki(sekaipos,sokudo,kasokudo)
-        val u1CandA = u0.copy(kasokudo = Vec2DF(kasokudoDush(controller.houkou),u0.kasokudo.y))
-        val u1CandB = u1CandA.copy(sokudo = Vec2DF(u1CandA.sokudo.x + u1CandA.kasokudo.x,u1CandA.sokudo.y))
-        val u1CandC = u1CandB.copy(pos = u1CandB.pos.copy(x=u1CandB.pos.x + u1CandB.sokudo.x.toInt()))
+        val u1CandA_M = u0.copy(kasokudo = Vec2DF(kasokudoDush(controller.houkou),u0.kasokudo.y))
+        val u1CandB_M = u1CandA_M.copy(sokudo = Vec2DF(u1CandA_M.sokudo.x + u1CandA_M.kasokudo.x,u1CandA_M.sokudo.y))
+        val u1CandC_M = u1CandB_M.copy(pos = u1CandB_M.pos.copy(x=u1CandB_M.pos.x + u1CandB_M.sokudo.x.toInt()))
 
-        val u1CandD = u1CandC.copy(pos = Vec2D( min(max(0,u1CandC.pos.x),1500),u1CandC.pos.y))
-        val u1CandE = if(u1CandD.pos.x==1500 || u1CandD.pos.x==0){u1CandD.copy(sokudo = Vec2DF(0f,u1CandD.sokudo.y))}else{u1CandD}
-        val u1CandF = u1CandE.copy(sokudo = Vec2DF( min(max(-30f,u1CandE.sokudo.x),30f),u1CandE.sokudo.y))
+        val u1CandD_M = u1CandC_M.copy(pos = Vec2D( min(max(0,u1CandC_M.pos.x),1500),u1CandC_M.pos.y))
+        val u1CandE_M = if(u1CandD_M.pos.x==1500 || u1CandD_M.pos.x==0){u1CandD_M.copy(sokudo = Vec2DF(0f,u1CandD_M.sokudo.y))}else{u1CandD_M}
+        val u1CandF_M = u1CandE_M.copy(sokudo = Vec2DF( min(max(-30f,u1CandE_M.sokudo.x),30f),u1CandE_M.sokudo.y))
 
-        val u1CandG = if(mapCheck(map,u1CandF.pos.x,u1CandF.sokudo.x)){
-            u1CandF
+        val u1CandG_M = if(mapCheck(map,u1CandF_M.pos.x,u1CandF_M.sokudo.x)){
+            u1CandF_M
         }else{
-            val xSyougai =  (u1CandF.pos.x/ 32)*32 //かならず左肩が入る
-            val xLimit = if(u1CandF.sokudo.x>0){(xSyougai - ookisa /2)}else if(u1CandF.sokudo.x<0){xSyougai + 32 + (ookisa /2)}else{sekaipos.x}
-          u1CandF.copy(pos= Vec2D(xLimit,u1CandF.pos.y),sokudo = Vec2DF(0f,u1CandF.sokudo.y))
+            val xSyougai =  (u1CandF_M.pos.x/ 32)*32 //かならず左肩が入る
+            val xLimit = if(u1CandF_M.sokudo.x>0){(xSyougai - ookisa /2)}else if(u1CandF_M.sokudo.x<0){xSyougai + 32 + (ookisa /2)}else{sekaipos.x}
+          u1CandF_M.copy(pos= Vec2D(xLimit,u1CandF_M.pos.y),sokudo = Vec2DF(0f,u1CandF_M.sokudo.y))
         }
 
-        sekaipos = u1CandG.pos
-        sokudo = u1CandG.sokudo
-        kasokudo = u1CandG.kasokudo
+        sekaipos = u1CandG_M.pos
+        sokudo = u1CandG_M.sokudo
+        kasokudo = u1CandG_M.kasokudo
 
     }
 
