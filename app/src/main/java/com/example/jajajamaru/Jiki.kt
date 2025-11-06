@@ -20,37 +20,37 @@ class Jiki(var pos: Vec2D) {
 
     fun idoSyori(controller: Controller, map: Map) {
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
-        val u1CandA_M = u0.copy(kasokudo = Vec2DF(kasokudoDush(controller.houkou), kasokudoJump()))
-        val u1CandB_M = u1CandA_M.copy(
+        val u1CandA = u0.copy(kasokudo = Vec2DF(kasokudoDush(controller.houkou), kasokudoJump()))
+        val u1CandB = u1CandA.copy(
             sokudo = Vec2DF(
-                u1CandA_M.sokudo.x + u1CandA_M.kasokudo.x,
-                u1CandA_M.sokudo.y + u1CandA_M.kasokudo.y
+                u1CandA.sokudo.x + u1CandA.kasokudo.x,
+                u1CandA.sokudo.y + u1CandA.kasokudo.y
             )
         )
-        var u1CandB2 = u1CandB_M
+        var u1CandC = u1CandB
         if (isJump == false) {
             if (controller.houkou == "jump") {
                 isJump = true
-                u1CandB2 = u1CandB2.copy(sokudo = Vec2DF(u1CandB2.sokudo.x, -45f))
+                u1CandC = u1CandC.copy(sokudo = Vec2DF(u1CandC.sokudo.x, -45f))
             }
         }
 
-        val u1CandC_M =
-            u1CandB2.copy(pos = Vec2D(u1CandB_M.pos.x + u1CandB_M.sokudo.x.toInt(), sekaipos.y + u1CandB2.sokudo.y.toInt()))
+        val u1CandC1 =
+            u1CandC.copy(pos = Vec2D(u1CandB.pos.x + u1CandB.sokudo.x.toInt(), sekaipos.y + u1CandC.sokudo.y.toInt()))
 
 
 
-        val u1CandC2 = if (mapCheckY(map, u1CandC_M.pos.y)) {
-            u1CandC_M
+        val u1CandC2 = if (mapCheckY(map, u1CandC1.pos.y)) {
+            u1CandC1
         } else {
             isJump = false
-            val ySyougai = (u1CandC_M.pos.y / 32) * 32 //かならず上辺が入る
+            val ySyougai = (u1CandC1.pos.y / 32) * 32 //かならず上辺が入る
             val yLimit = (ySyougai)
-            u1CandC_M.copy(pos = Vec2D(u1CandC_M.pos.x, yLimit), sokudo = Vec2DF(u1CandC_M.sokudo.x, 0f))
+            u1CandC1.copy(pos = Vec2D(u1CandC1.pos.x, yLimit), sokudo = Vec2DF(u1CandC1.sokudo.x, 0f))
         }
 
         val u1CandD_M =
-            u1CandC2.copy(pos = Vec2D(min(max(0, u1CandC_M.pos.x), 1500), u1CandC_M.pos.y))
+            u1CandC2.copy(pos = Vec2D(min(max(0, u1CandC2.pos.x), 1500), u1CandC2.pos.y))
 
 
 
