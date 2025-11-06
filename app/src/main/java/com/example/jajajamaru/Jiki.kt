@@ -26,12 +26,10 @@ class Jiki(var pos: Vec2D) {
 
 
     fun idoUeShita(controller: Controller, map: Map){
-        // val u0 = Ugoki(pos,sokudo,kasokudo)
         val u0 = Ugoki(sekaipos,sokudo,kasokudo)
         val u1CandA = u0.copy(kasokudo= Vec2DF(kasokudo.x,kasokudoJump()))
         val u1CandB = u1CandA.copy(sokudo= Vec2DF(u1CandA.sokudo.x,u1CandA.sokudo.y + u1CandA.kasokudo.y))
 
-        //①最初に、ジャンプをしていなかった場合、ジャンプをする（）
 
         var u1CandC = u1CandB
         if (isJump == false) {
@@ -64,6 +62,7 @@ class Jiki(var pos: Vec2D) {
         kasokudo = u1CandF.kasokudo
 
         pos = pos.copy(y=u1CandF.pos.y)
+
         sekaipos = u1CandF.pos
     }
 
@@ -81,27 +80,12 @@ class Jiki(var pos: Vec2D) {
     fun idoMigiHidari(controller: Controller, map: Map){
          val u0 = Ugoki(sekaipos,sokudo,kasokudo)
         val u1CandA = u0.copy(kasokudo = Vec2DF(kasokudoDush(controller.houkou),u0.kasokudo.y))
-    //    kasokudo = Vec2DF(kasokudoDush(controller.houkou),kasokudo.y)
         val u1CandB = u1CandA.copy(sokudo = Vec2DF(u1CandA.sokudo.x + u1CandA.kasokudo.x,u1CandA.sokudo.y))
-        //val xPlus1Cand = sokudo.x + kasokudo.x
-
-        //  これは下記のようにもかける      val u1CandC = u1CandB.copy(pos = Vec2D(u1CandB.pos.x + u1CandB.sokudo.x.toInt(),u1CandB.pos.y))
         val u1CandC = u1CandB.copy(pos = u1CandB.pos.copy(x=u1CandB.pos.x + u1CandB.sokudo.x.toInt()))
 
-  //      val x1CandA = sekaipos.x + xPlus1Cand.toInt()
-
-        //世界の端かどうかを補正したx1候補
-        //val u1CandD = if(u1CandC.pos.x>1500){u1CandC.copy (pos=u1CandC.pos.copy(x = 1500)}else if(u1CandC.pos.x<0){u1CandC.copy (pos=u1CandC.pos.copy(x = 0)}else{u1CandC}
         val u1CandD = u1CandC.copy(pos = Vec2D( min(max(0,u1CandC.pos.x),1500),u1CandC.pos.y))
         val u1CandE = if(u1CandD.pos.x==1500 || u1CandD.pos.x==0){u1CandD.copy(sokudo = Vec2DF(0f,u1CandD.sokudo.y))}else{u1CandD}
-
-      //  val x1CandB = if(x1CandA>1500){1500}else if(x1CandA<0){0}else{x1CandA}
-//        val xPlus1SokudoSeigenCand =  if(x1CandA>1500){0f}else if(x1CandA<0){0f}else{xPlus1Cand}
-        //速度制限つけた
         val u1CandF = u1CandE.copy(sokudo = Vec2DF( min(max(-30f,u1CandE.sokudo.x),30f),u1CandE.sokudo.y))
-
-//        var xPlus1 = if(xPlus1SokudoSeigenCand>= 30){30f}else if(xPlus1SokudoSeigenCand<= -30){-30f}else{xPlus1SokudoSeigenCand}
-        //障害物にぶつかっているかどうかを補正したx1候補
 
         val u1CandG = if(mapCheck(map,u1CandF.pos.x,u1CandF.sokudo.x)){
             u1CandF
@@ -111,21 +95,9 @@ class Jiki(var pos: Vec2D) {
           u1CandF.copy(pos= Vec2D(xLimit,u1CandF.pos.y),sokudo = Vec2DF(0f,u1CandF.sokudo.y))
         }
 
-/*
-        val x1CandC = if(mapCheck(map,x1CandB,xPlus1)){
-            x1CandB
-        }else{
-            val xSyougai =  (x1CandB/ 32)*32 //かならず左肩が入る
-            val xLimit = if(xPlus1>0){(xSyougai - ookisa /2)}else if(xPlus1<0){xSyougai + 32 + (ookisa /2)}else{sekaipos.x}
-            xPlus1 = 0f
-            xLimit
-        }
- */
         sekaipos = u1CandG.pos
-//        sekaipos = Vec2D(u1CandG,sekaipos.y)
         sokudo = u1CandG.sokudo
         kasokudo = u1CandG.kasokudo
-//        sokudo = Vec2DF(xPlus1,sokudo.y)
 
     }
 
