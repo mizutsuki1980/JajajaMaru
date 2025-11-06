@@ -20,17 +20,19 @@ class Jiki(var pos: Vec2D) {
 
     fun idoSyori(controller: Controller, map: Map) {
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
-        val u1CandA_M = u0.copy(kasokudo = Vec2DF(kasokudoDush(controller.houkou), u0.kasokudo.y))
-
-        val u01 = Ugoki(sekaipos, sokudo, kasokudo)
-        val u1CandA = u01.copy(kasokudo = Vec2DF(kasokudo.x, kasokudoJump()))
+        val u1CandA_M = u0.copy(kasokudo = Vec2DF(kasokudoDush(controller.houkou), kasokudoJump()))
+//        val u1CandA = u0.copy(kasokudo = Vec2DF(kasokudo.x, kasokudoJump()))
 
         val u1CandB_M = u1CandA_M.copy(
             sokudo = Vec2DF(
                 u1CandA_M.sokudo.x + u1CandA_M.kasokudo.x,
-                u1CandA_M.sokudo.y
+                u1CandA_M.sokudo.y + u1CandA_M.kasokudo.y
             )
         )
+//        val u1CandB =
+  //          u1CandA_M.copy(sokudo = Vec2DF(u1CandA_M.sokudo.x, u1CandA_M.sokudo.y + u1CandA_M.kasokudo.y))
+
+
         val u1CandC_M =
             u1CandB_M.copy(pos = u1CandB_M.pos.copy(x = u1CandB_M.pos.x + u1CandB_M.sokudo.x.toInt()))
         val u1CandD_M =
@@ -69,9 +71,7 @@ class Jiki(var pos: Vec2D) {
 
         //zzzzz
 
-        val u1CandB =
-            u1CandA.copy(sokudo = Vec2DF(u1CandA.sokudo.x, u1CandA.sokudo.y + u1CandA.kasokudo.y))
-        var u1CandC = u1CandB
+        var u1CandC = u1CandB_M
         if (isJump == false) {
             if (controller.houkou == "jump") {
                 isJump = true
