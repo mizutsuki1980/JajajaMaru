@@ -10,13 +10,12 @@ class Jiki(var pos: Vec2D) {
     val ookisa = 100
     val iro = Paint()
 
-    var sekaiy = 400
 
     var sekaipos = Vec2D(360,400)
+    var sokudo = Vec2DF(0f,0f)
+    var kasokudo = Vec2DF(0f,0f)
 
-    var xPlus = 0f
     var isJump = false
-    var yPlus = 0f
 
     fun idoSyori(controller: Controller, map: Map){
         idoMigiHidari(controller,map)       //横移動 x軸
@@ -25,34 +24,58 @@ class Jiki(var pos: Vec2D) {
 
 
     fun idoUeShita(controller: Controller, map: Map){
-        val kasokudoy = kasokudoJump()
-        var yPlusCand = yPlus + kasokudoy
+        // val u0 = Ugoki(pos,sokudo,kasokudo)
+        val u0 = Ugoki(sekaipos,sokudo,kasokudo)
+        val u1CandA = u0.copy(kasokudo= Vec2DF(kasokudo.x,kasokudoJump()))
+        val u1CandB = u1CandA.copy(sokudo= Vec2DF(u1CandA.sokudo.x,u1CandA.sokudo.y + u1CandA.kasokudo.y))
 
         //①最初に、ジャンプをしていなかった場合、ジャンプをする（）
 
+        var u1CandC = u1CandB
         if (isJump == false) {
             if (controller.houkou == "jump") {
                 isJump = true
-                yPlusCand = -45f
+                u1CandC = u1CandC.copy(sokudo = Vec2DF(u1CandC.sokudo.x,-45f))
             }
         }
 
-       val y1CandA = sekaiy + yPlusCand.toInt()
 
+        val u1CandD = u1CandC.copy(pos= Vec2D(u1CandC.pos.x,sekaipos.y + u1CandC.sokudo.y.toInt()))
         //②次の位置を計算する
-       val c = mapCheckY(map, y1CandA)
-       val y1CandB =  if (c){
-           y1CandA
+       val c = mapCheckY(map, u1CandD.pos.y)
+       val u1CandE =  if (c){
+           u1CandD
        }else {
             isJump = false
-           val ySyougai =  (y1CandA/ 32)*32 //かならず上辺が入る
+           val ySyougai =  (u1CandD.pos.y / 32)*32 //かならず上辺が入る
            val yLimit = (ySyougai)
-           yPlusCand = 0f
-           yLimit
+           u1CandD.copy(pos = Vec2D(u1CandD.pos.x,yLimit),sokudo = Vec2DF(u1CandD.sokudo.x,0f))
        }
 
-
+ /*       val y1CandB =  if (c){
+            y1CandA
+        }else {
+            isJump = false
+            val ySyougai =  (y1CandA/ 32)*32 //かならず上辺が入る
+            val yLimit = (ySyougai)
+            yPlusCand = 0f
+            yLimit
+        }
+*/
         //世界の端かどうかを補正したy1候補
+        val u1CandF = if(isJump) {
+             if (u1CandE.pos.y < 96) {
+                 u1CandE.copy(pos = Vec2D(u1CandE.pos.x,96),sokudo = Vec2DF(u1CandE.sokudo.x,0f))
+
+            } else {
+                u1CandE
+            }
+        }else{
+            u1CandE
+        }
+
+/*
+
         val y1CandC = if(isJump) {
              if (y1CandB < 96) {
                  yPlusCand = 0f
@@ -65,9 +88,18 @@ class Jiki(var pos: Vec2D) {
 
         }
 
-        yPlus = yPlusCand
-        sekaiy = y1CandC
+ */
 
+        sokudo = u1CandF.sokudo
+        kasokudo = u1CandF.kasokudo
+
+        pos = pos.copy(y=u1CandF.pos.y)
+        sekaipos = u1CandF.pos
+
+        /*
+        sokudo = Vec2DF(sokudo.x,u1CandF.sokudo.y)
+
+        sekaipos = Vec2D(sekaipos.x,u1CandF.pos.y)
         //③計算した位置が障害物かどうかを判定する
 
 
@@ -75,8 +107,9 @@ class Jiki(var pos: Vec2D) {
 
 
         //最後に代入
-        //        y = sekaiy
-        pos = Vec2D(pos.x,sekaiy)
+        pos = Vec2D(pos.x,sekaipos.y)
+
+         */
 
     //四角を表示するときに、変にプラスをしてたから、なんかズレた表示になっていたのか
     }
@@ -93,8 +126,9 @@ class Jiki(var pos: Vec2D) {
     }
 
     fun idoMigiHidari(controller: Controller, map: Map){
-        val kasokudox = kasokudoX(controller.houkou)
-        val xPlus1Cand = xPlus + kasokudox
+        kasokudo = Vec2DF(kasokudoDush(controller.houkou),kasokudo.y)
+
+        val xPlus1Cand = sokudo.x + kasokudo.x
         val x1CandA = sekaipos.x + xPlus1Cand.toInt()
 
         //世界の端かどうかを補正したx1候補
@@ -112,7 +146,8 @@ class Jiki(var pos: Vec2D) {
             xLimit
         }
         sekaipos = Vec2D(x1CandC,sekaipos.y)
-        xPlus = xPlus1
+        sokudo = Vec2DF(xPlus1,sokudo.y)
+
     }
 
     fun mapCheck(map:Map,x1CandB:Int,xPlus1: Float):Boolean{
@@ -128,8 +163,8 @@ class Jiki(var pos: Vec2D) {
         }
         val masu = map.masu
         //println("cb=$checkBlock,x1cand=$x1CandB,mas[9]=${masu[13][9]},mas[10]=${masu[13][10]},mas[11]=${masu[13][11]}")
-        val yBlock = (sekaiy / 32)-2
-        println("yBlock=$yBlock,sekaiy$sekaiy,isJump=$isJump")
+        val yBlock = (sekaipos.y / 32)-2
+        println("yBlock=$yBlock,sekaipos.y${sekaipos.y},isJump=$isJump")
         return if(map.masu[yBlock][checkBlock+1] == 1){ false }else{true}
     }
 
@@ -138,13 +173,13 @@ class Jiki(var pos: Vec2D) {
 
 
 
-    fun kasokudoX(houkou:String):Float {
+    fun kasokudoDush(houkou:String):Float {
         when (houkou) {
             "migi" -> {return 5.0f }
             "migi" -> {return 5.0f }
             "hidari" -> { return -5.0f }
-            "nashi" -> { if (xPlus == 0f) { return 0.0f }
-                if (xPlus > 0) { return -2.5f } else { return 2.5f } }
+            "nashi" -> { if (sokudo.x == 0f) { return 0.0f }
+                if (sokudo.x > 0) { return -2.5f } else { return 2.5f } }
             else -> return 0f
         }
     }
