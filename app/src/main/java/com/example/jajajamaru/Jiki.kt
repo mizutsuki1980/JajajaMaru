@@ -69,6 +69,11 @@ class Jiki(var pos: Vec2D) {
             u1CandD_M
         }
 
+        val u1CandF = if (isJump && u1CandC2.pos.y < 96) {
+            u1CandC2.copy(pos = Vec2D(u1CandC2.pos.x, 96), sokudo = Vec2DF(u1CandC2.sokudo.x, 0f))
+        } else {
+            u1CandC2
+        }
 
         val u1CandF_M = u1CandE_M.copy(
             sokudo = Vec2DF(
@@ -100,11 +105,6 @@ class Jiki(var pos: Vec2D) {
         //zzzzz
 
         //世界の端かどうかを補正したy1候補
-        val u1CandF = if (isJump && u1CandC2.pos.y < 96) {
-            u1CandC2.copy(pos = Vec2D(u1CandC2.pos.x, 96), sokudo = Vec2DF(u1CandC2.sokudo.x, 0f))
-        } else {
-            u1CandC2
-        }
         sokudo = sokudo.copy(y=u1CandF.sokudo.y)
         kasokudo = kasokudo.copy(y=u1CandF.kasokudo.y)
         pos = pos.copy(y = u1CandF.pos.y)
