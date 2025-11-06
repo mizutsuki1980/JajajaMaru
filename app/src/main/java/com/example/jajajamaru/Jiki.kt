@@ -44,18 +44,32 @@ class Jiki(var pos: Vec2D) {
             u1CandB2.copy(pos = Vec2D(u1CandB_M.pos.x + u1CandB_M.sokudo.x.toInt(), sekaipos.y + u1CandB2.sokudo.y.toInt()))
 
 //        val u1CandC_M =
-            u1CandB_M.copy(pos = u1CandB_M.pos.copy(x = u1CandB_M.pos.x + u1CandB_M.sokudo.x.toInt()))
+//            u1CandB_M.copy(pos = u1CandB_M.pos.copy(x = u1CandB_M.pos.x + u1CandB_M.sokudo.x.toInt()))
 
 
 
+        val u1CandC2 = if (mapCheckY(map, u1CandC_M.pos.y)) {
+            u1CandC_M
+        } else {
+            isJump = false
+            val ySyougai = (u1CandC_M.pos.y / 32) * 32 //かならず上辺が入る
+            val yLimit = (ySyougai)
+            u1CandC_M.copy(pos = Vec2D(u1CandC_M.pos.x, yLimit), sokudo = Vec2DF(u1CandC_M.sokudo.x, 0f))
+        }
 
         val u1CandD_M =
-            u1CandC_M.copy(pos = Vec2D(min(max(0, u1CandC_M.pos.x), 1500), u1CandC_M.pos.y))
+            u1CandC2.copy(pos = Vec2D(min(max(0, u1CandC_M.pos.x), 1500), u1CandC_M.pos.y))
+
+
+
+
         val u1CandE_M = if (u1CandD_M.pos.x == 1500 || u1CandD_M.pos.x == 0) {
             u1CandD_M.copy(sokudo = Vec2DF(0f, u1CandD_M.sokudo.y))
         } else {
             u1CandD_M
         }
+
+
         val u1CandF_M = u1CandE_M.copy(
             sokudo = Vec2DF(
                 min(max(-30f, u1CandE_M.sokudo.x), 30f),
@@ -85,20 +99,11 @@ class Jiki(var pos: Vec2D) {
 
         //zzzzz
 
-        val c = mapCheckY(map, u1CandC_M.pos.y)
-        val u1CandE = if (c) {
-            u1CandC_M
-        } else {
-             isJump = false
-            val ySyougai = (u1CandC_M.pos.y / 32) * 32 //かならず上辺が入る
-            val yLimit = (ySyougai)
-            u1CandC_M.copy(pos = Vec2D(u1CandC_M.pos.x, yLimit), sokudo = Vec2DF(u1CandC_M.sokudo.x, 0f))
-        }
         //世界の端かどうかを補正したy1候補
-        val u1CandF = if (isJump && u1CandE.pos.y < 96) {
-            u1CandE.copy(pos = Vec2D(u1CandE.pos.x, 96), sokudo = Vec2DF(u1CandE.sokudo.x, 0f))
+        val u1CandF = if (isJump && u1CandC2.pos.y < 96) {
+            u1CandC2.copy(pos = Vec2D(u1CandC2.pos.x, 96), sokudo = Vec2DF(u1CandC2.sokudo.x, 0f))
         } else {
-            u1CandE
+            u1CandC2
         }
         sokudo = sokudo.copy(y=u1CandF.sokudo.y)
         kasokudo = kasokudo.copy(y=u1CandF.kasokudo.y)
