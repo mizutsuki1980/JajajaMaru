@@ -35,11 +35,16 @@ class Jiki(var pos: Vec2D) {
             }
         }
 
+        //横方向の補正　1500と０　世界の端？
+        val u1CandC0 =
+            u1CandC.copy(pos = Vec2D(min(max(0, u1CandC.pos.x), 1500), u1CandC.pos.y))
+
+
         val u1CandC1 =
-            u1CandC.copy(pos = Vec2D(u1CandB.pos.x + u1CandB.sokudo.x.toInt(), sekaipos.y + u1CandC.sokudo.y.toInt()))
+            u1CandC0.copy(pos = Vec2D(u1CandC0.pos.x + u1CandC0.sokudo.x.toInt(), sekaipos.y + u1CandC0.sokudo.y.toInt()))
 
 
-
+        //ジャンプ関連？着地？
         val u1CandC2 = if (mapCheckY(map, u1CandC1.pos.y)) {
             u1CandC1
         } else {
@@ -49,16 +54,14 @@ class Jiki(var pos: Vec2D) {
             u1CandC1.copy(pos = Vec2D(u1CandC1.pos.x, yLimit), sokudo = Vec2DF(u1CandC1.sokudo.x, 0f))
         }
 
-        val u1CandD_M =
-            u1CandC2.copy(pos = Vec2D(min(max(0, u1CandC2.pos.x), 1500), u1CandC2.pos.y))
+
+        val u1CandD = u1CandC2
 
 
-
-
-        val u1CandE_M = if (u1CandD_M.pos.x == 1500 || u1CandD_M.pos.x == 0) {
-            u1CandD_M.copy(sokudo = Vec2DF(0f, u1CandD_M.sokudo.y))
+        val u1CandE_M = if (u1CandD.pos.x == 1500 || u1CandD.pos.x == 0) {
+            u1CandD.copy(sokudo = Vec2DF(0f, u1CandD.sokudo.y))
         } else {
-            u1CandD_M
+            u1CandD
         }
 
         val u1CandF = if (isJump && u1CandC2.pos.y < 96) {
