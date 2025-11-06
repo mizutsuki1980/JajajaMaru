@@ -51,67 +51,18 @@ class Jiki(var pos: Vec2D) {
            val yLimit = (ySyougai)
            u1CandD.copy(pos = Vec2D(u1CandD.pos.x,yLimit),sokudo = Vec2DF(u1CandD.sokudo.x,0f))
        }
-
- /*       val y1CandB =  if (c){
-            y1CandA
-        }else {
-            isJump = false
-            val ySyougai =  (y1CandA/ 32)*32 //かならず上辺が入る
-            val yLimit = (ySyougai)
-            yPlusCand = 0f
-            yLimit
-        }
-*/
         //世界の端かどうかを補正したy1候補
-        val u1CandF = if(isJump) {
-             if (u1CandE.pos.y < 96) {
+        val u1CandF = if (isJump && u1CandE.pos.y < 96) {
                  u1CandE.copy(pos = Vec2D(u1CandE.pos.x,96),sokudo = Vec2DF(u1CandE.sokudo.x,0f))
-
             } else {
                 u1CandE
             }
-        }else{
-            u1CandE
-        }
-
-/*
-
-        val y1CandC = if(isJump) {
-             if (y1CandB < 96) {
-                 yPlusCand = 0f
-                96
-            } else {
-                y1CandB
-            }
-        }else{
-            y1CandB
-
-        }
-
- */
 
         sokudo = u1CandF.sokudo
         kasokudo = u1CandF.kasokudo
 
         pos = pos.copy(y=u1CandF.pos.y)
         sekaipos = u1CandF.pos
-
-        /*
-        sokudo = Vec2DF(sokudo.x,u1CandF.sokudo.y)
-
-        sekaipos = Vec2D(sekaipos.x,u1CandF.pos.y)
-        //③計算した位置が障害物かどうかを判定する
-
-
-        //④結果を反映させる
-
-
-        //最後に代入
-        pos = Vec2D(pos.x,sekaipos.y)
-
-         */
-
-    //四角を表示するときに、変にプラスをしてたから、なんかズレた表示になっていたのか
     }
 
     fun mapCheckY(map:Map,y1CandA:Int):Boolean{
