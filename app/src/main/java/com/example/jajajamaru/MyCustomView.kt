@@ -17,7 +17,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     val initialJikiY = 400 //初期位置
     var clickX = initialJikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
-    var jiki = Jiki(initialJikiX, initialJikiY)
+    var vec2d = Vec2D(initialJikiX, initialJikiY)
+    var jiki = Jiki(vec2d)
     var controller = Controller()
     var clickMotionVent1 = ""
     var clickMotionVent2 = ""
@@ -28,7 +29,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun syokikaGameReset(){
-        jiki = Jiki(initialJikiX, initialJikiY)
+        jiki = Jiki(vec2d)
     }
 
     fun beginAnimation() {
@@ -52,7 +53,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jiki.draw(canvas)
         controller.draw(canvas)
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusanpng, BitmapFactory.Options())
-        canvas.drawBitmap(bitmap, jiki.x.toFloat()-40, jiki.y.toFloat()-45, null)
+        canvas.drawBitmap(bitmap, jiki.pos.x.toFloat()-40, jiki.pos.y.toFloat()-45, null)
     }
 
     fun mapCreate(canvas:Canvas){

@@ -5,9 +5,11 @@ import android.graphics.Color.argb
 import android.graphics.Paint
 import android.widget.Toast
 
-class Jiki(var x:Int, var y:Int) {
+class Jiki(var pos: Vec2D) {
+
     val ookisa = 100
     val iro = Paint()
+
     var sekaix = 360    //360にした。有野指令
     var sekaiy = 400
 
@@ -72,9 +74,9 @@ class Jiki(var x:Int, var y:Int) {
 
 
         //最後に代入
-        y = sekaiy
+        //        y = sekaiy
+        pos = Vec2D(pos.x,sekaiy)
 
-        println("y=$y,sekaiy=$sekaiy,y1CandA=$y1CandA,yPlusCand=$yPlusCand,${(y1CandB/32)}")
     //四角を表示するときに、変にプラスをしてたから、なんかズレた表示になっていたのか
     }
 
@@ -150,7 +152,7 @@ class Jiki(var x:Int, var y:Int) {
     fun draw(canvas: Canvas) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
-        canvas.drawCircle(x.toFloat(),(y).toFloat(),(ookisa/2).toFloat(),iro)
+        canvas.drawCircle(pos.x.toFloat(),(pos.y).toFloat(),(ookisa/2).toFloat(),iro)
     }
 
 }
