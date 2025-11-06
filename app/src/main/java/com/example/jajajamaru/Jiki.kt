@@ -21,17 +21,12 @@ class Jiki(var pos: Vec2D) {
     fun idoSyori(controller: Controller, map: Map) {
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
         val u1CandA_M = u0.copy(kasokudo = Vec2DF(kasokudoDush(controller.houkou), kasokudoJump()))
-//        val u1CandA = u0.copy(kasokudo = Vec2DF(kasokudo.x, kasokudoJump()))
-
         val u1CandB_M = u1CandA_M.copy(
             sokudo = Vec2DF(
                 u1CandA_M.sokudo.x + u1CandA_M.kasokudo.x,
                 u1CandA_M.sokudo.y + u1CandA_M.kasokudo.y
             )
         )
-//        val u1CandB =
-  //          u1CandA_M.copy(sokudo = Vec2DF(u1CandA_M.sokudo.x, u1CandA_M.sokudo.y + u1CandA_M.kasokudo.y))
-
         var u1CandB2 = u1CandB_M
         if (isJump == false) {
             if (controller.houkou == "jump") {
@@ -42,9 +37,6 @@ class Jiki(var pos: Vec2D) {
 
         val u1CandC_M =
             u1CandB2.copy(pos = Vec2D(u1CandB_M.pos.x + u1CandB_M.sokudo.x.toInt(), sekaipos.y + u1CandB2.sokudo.y.toInt()))
-
-//        val u1CandC_M =
-//            u1CandB_M.copy(pos = u1CandB_M.pos.copy(x = u1CandB_M.pos.x + u1CandB_M.sokudo.x.toInt()))
 
 
 
@@ -90,7 +82,7 @@ class Jiki(var pos: Vec2D) {
             } else if (u1CandF_M.sokudo.x < 0) {
                 xSyougai + 32 + (ookisa / 2)
             } else {
-                sekaipos.x
+                u1CandF_M.pos.x
             }
             u1CandF_M.copy(
                 pos = Vec2D(xLimit, u1CandF_M.pos.y),
