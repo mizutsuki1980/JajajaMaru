@@ -10,8 +10,9 @@ class Jiki(var pos: Vec2D) {
     val ookisa = 100
     val iro = Paint()
 
-    var sekaix = 360    //360にした。有野指令
     var sekaiy = 400
+
+    var sekaipos = Vec2D(360,400)
 
     var xPlus = 0f
     var isJump = false
@@ -83,7 +84,7 @@ class Jiki(var pos: Vec2D) {
     fun mapCheckY(map:Map,y1CandA:Int):Boolean{
         val checkPointY = y1CandA
         val yBlock = ( checkPointY/ 32)
-        val xBlock = (sekaix/32)
+        val xBlock = (sekaipos.x/32)
         return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
     }
 
@@ -94,7 +95,7 @@ class Jiki(var pos: Vec2D) {
     fun idoMigiHidari(controller: Controller, map: Map){
         val kasokudox = kasokudoX(controller.houkou)
         val xPlus1Cand = xPlus + kasokudox
-        val x1CandA = sekaix + xPlus1Cand.toInt()
+        val x1CandA = sekaipos.x + xPlus1Cand.toInt()
 
         //世界の端かどうかを補正したx1候補
         val x1CandB = if(x1CandA>1500){1500}else if(x1CandA<0){0}else{x1CandA}
@@ -106,11 +107,11 @@ class Jiki(var pos: Vec2D) {
             x1CandB
         }else{
             val xSyougai =  (x1CandB/ 32)*32 //かならず左肩が入る
-            val xLimit = if(xPlus1>0){(xSyougai - ookisa /2)}else if(xPlus1<0){xSyougai + 32 + (ookisa /2)}else{sekaix}
+            val xLimit = if(xPlus1>0){(xSyougai - ookisa /2)}else if(xPlus1<0){xSyougai + 32 + (ookisa /2)}else{sekaipos.x}
             xPlus1 = 0f
             xLimit
         }
-        sekaix  = x1CandC
+        sekaipos = Vec2D(x1CandC,sekaipos.y)
         xPlus = xPlus1
     }
 
