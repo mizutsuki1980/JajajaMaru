@@ -32,9 +32,23 @@ class Jiki(var pos: Vec2D) {
 //        val u1CandB =
   //          u1CandA_M.copy(sokudo = Vec2DF(u1CandA_M.sokudo.x, u1CandA_M.sokudo.y + u1CandA_M.kasokudo.y))
 
+        var u1CandB2 = u1CandB_M
+        if (isJump == false) {
+            if (controller.houkou == "jump") {
+                isJump = true
+                u1CandB2 = u1CandB2.copy(sokudo = Vec2DF(u1CandB2.sokudo.x, -45f))
+            }
+        }
 
         val u1CandC_M =
+            u1CandB2.copy(pos = Vec2D(u1CandB_M.pos.x + u1CandB_M.sokudo.x.toInt(), sekaipos.y + u1CandB2.sokudo.y.toInt()))
+
+//        val u1CandC_M =
             u1CandB_M.copy(pos = u1CandB_M.pos.copy(x = u1CandB_M.pos.x + u1CandB_M.sokudo.x.toInt()))
+
+
+
+
         val u1CandD_M =
             u1CandC_M.copy(pos = Vec2D(min(max(0, u1CandC_M.pos.x), 1500), u1CandC_M.pos.y))
         val u1CandE_M = if (u1CandD_M.pos.x == 1500 || u1CandD_M.pos.x == 0) {
@@ -71,24 +85,14 @@ class Jiki(var pos: Vec2D) {
 
         //zzzzz
 
-        var u1CandC = u1CandB_M
-        if (isJump == false) {
-            if (controller.houkou == "jump") {
-                isJump = true
-                u1CandC = u1CandC.copy(sokudo = Vec2DF(u1CandC.sokudo.x, -45f))
-            }
-        }
-        val u1CandD =
-            u1CandC.copy(pos = Vec2D(u1CandC.pos.x, sekaipos.y + u1CandC.sokudo.y.toInt()))
-        //②次の位置を計算する
-        val c = mapCheckY(map, u1CandD.pos.y)
+        val c = mapCheckY(map, u1CandC_M.pos.y)
         val u1CandE = if (c) {
-            u1CandD
+            u1CandC_M
         } else {
              isJump = false
-            val ySyougai = (u1CandD.pos.y / 32) * 32 //かならず上辺が入る
+            val ySyougai = (u1CandC_M.pos.y / 32) * 32 //かならず上辺が入る
             val yLimit = (ySyougai)
-            u1CandD.copy(pos = Vec2D(u1CandD.pos.x, yLimit), sokudo = Vec2DF(u1CandD.sokudo.x, 0f))
+            u1CandC_M.copy(pos = Vec2D(u1CandC_M.pos.x, yLimit), sokudo = Vec2DF(u1CandC_M.sokudo.x, 0f))
         }
         //世界の端かどうかを補正したy1候補
         val u1CandF = if (isJump && u1CandE.pos.y < 96) {
