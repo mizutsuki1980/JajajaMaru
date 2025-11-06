@@ -54,21 +54,20 @@ class Jiki(var pos: Vec2D) {
             u1CandC1.copy(pos = Vec2D(u1CandC1.pos.x, yLimit), sokudo = Vec2DF(u1CandC1.sokudo.x, 0f))
         }
 
-
-        val u1CandD = u1CandC2
-
-
-        val u1CandE_M = if (u1CandD.pos.x == 1500 || u1CandD.pos.x == 0) {
-            u1CandD.copy(sokudo = Vec2DF(0f, u1CandD.sokudo.y))
-        } else {
-            u1CandD
-        }
-
-        val u1CandF = if (isJump && u1CandC2.pos.y < 96) {
+        val u1CandE = if (isJump && u1CandC2.pos.y < 96) {
             u1CandC2.copy(pos = Vec2D(u1CandC2.pos.x, 96), sokudo = Vec2DF(u1CandC2.sokudo.x, 0f))
         } else {
             u1CandC2
         }
+
+
+
+        val u1CandE_M = if (u1CandE.pos.x == 1500 || u1CandE.pos.x == 0) {
+            u1CandE.copy(sokudo = Vec2DF(0f, u1CandE.sokudo.y))
+        } else {
+            u1CandE
+        }
+
 
         val u1CandF_M = u1CandE_M.copy(
             sokudo = Vec2DF(
@@ -100,10 +99,10 @@ class Jiki(var pos: Vec2D) {
         //zzzzz
 
         //世界の端かどうかを補正したy1候補
-        sokudo = sokudo.copy(y=u1CandF.sokudo.y)
-        kasokudo = kasokudo.copy(y=u1CandF.kasokudo.y)
-        pos = pos.copy(y = u1CandF.pos.y)
-        sekaipos = sekaipos.copy(y=u1CandF.pos.y)
+        sokudo = sokudo.copy(y=u1CandF_M.sokudo.y)
+        kasokudo = kasokudo.copy(y=u1CandF_M.kasokudo.y)
+        pos = pos.copy(y = u1CandF_M.pos.y)
+        sekaipos = sekaipos.copy(y=u1CandF_M.pos.y)
         //縦移動　y軸
     }
 
