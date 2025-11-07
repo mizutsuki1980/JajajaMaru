@@ -38,20 +38,14 @@ class Jiki(var pos: Vec2D) {
         //横方向の補正　1500と０　世界の端？
         val u1CandC0 =
             u1CandC.copy(pos = Vec2D(min(max(0, u1CandC.pos.x), 1500), u1CandC.pos.y))
-
-
         val u1CandC1 =
             u1CandC0.copy(pos = Vec2D(u1CandC0.pos.x + u1CandC0.sokudo.x.toInt(), sekaipos.y + u1CandC0.sokudo.y.toInt()))
-
-
-        //ジャンプ関連？着地？
         val u1CandC2 = if (mapCheckY(map, u1CandC1.pos.y)) {
             u1CandC1
         } else {
             isJump = false
             val ySyougai = (u1CandC1.pos.y / 32) * 32 //かならず上辺が入る
-            val yLimit = (ySyougai)
-            u1CandC1.copy(pos = Vec2D(u1CandC1.pos.x, yLimit), sokudo = Vec2DF(u1CandC1.sokudo.x, 0f))
+            u1CandC1.copy(pos = Vec2D(u1CandC1.pos.x, ySyougai), sokudo = Vec2DF(u1CandC1.sokudo.x, 0f))
         }
 
         val u1CandD = if (isJump && u1CandC2.pos.y < 96) {
@@ -96,7 +90,7 @@ class Jiki(var pos: Vec2D) {
 
 
         //こっから下が問題だとは思う、なんでかはわからん
-        
+
 
         sekaipos = u1CandG.pos
         sokudo = u1CandG.sokudo
