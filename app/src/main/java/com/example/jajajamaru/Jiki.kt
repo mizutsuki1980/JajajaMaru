@@ -75,6 +75,7 @@ class Jiki(var pos: Vec2D) {
                 u1CandE.sokudo.y
             )
         )
+
         val u1CandG = if (mapCheck(map, u1CandF.pos.x, u1CandF.sokudo.x)) {
             u1CandF
         } else {
@@ -91,6 +92,12 @@ class Jiki(var pos: Vec2D) {
                 sokudo = Vec2DF(0f, u1CandF.sokudo.y)
             )
         }
+
+
+
+        //こっから下が問題だとは思う、なんでかはわからん
+        
+
         sekaipos = u1CandG.pos
         sokudo = u1CandG.sokudo
         kasokudo = u1CandG.kasokudo
