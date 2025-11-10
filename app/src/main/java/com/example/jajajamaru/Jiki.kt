@@ -108,8 +108,8 @@ class Jiki(var pos: Vec2D) {
     }
 
 
-    fun mapCheckY(map:Map,y1CandA:Int):Boolean{
-        val checkPointY = y1CandA
+    fun mapCheckY(map:Map,y1Cand:Int):Boolean{
+        val checkPointY = y1Cand
         val yBlock = ( checkPointY/ 32)
         val xBlock = (sekaipos.x/32)
         return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
@@ -119,9 +119,9 @@ class Jiki(var pos: Vec2D) {
         return 5.0f
     }
 
-    fun mapCheck(map:Map,x1CandB:Int,xPlus1: Float):Boolean{
+    fun mapCheck(map:Map,x1Cand:Int,xPlus1: Float):Boolean{
         //mapcheckでxPlusによる左右判定をしていないと予想
-        val checkPoint = x1CandB
+        val checkPoint = x1Cand
         val checkBlock = if(xPlus1>0){
             //右方向だったら
             ( checkPoint/ 32)
@@ -131,9 +131,7 @@ class Jiki(var pos: Vec2D) {
         }else{( checkPoint/ 32)
         }
         val masu = map.masu
-        //println("cb=$checkBlock,x1cand=$x1CandB,mas[9]=${masu[13][9]},mas[10]=${masu[13][10]},mas[11]=${masu[13][11]}")
         val yBlock = (sekaipos.y / 32)-2
-        println("yBlock=$yBlock,sekaipos.y${sekaipos.y},isJump=$isJump")
         return if(map.masu[yBlock][checkBlock+1] == 1){ false }else{true}
     }
 
