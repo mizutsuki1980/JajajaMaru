@@ -10,8 +10,6 @@ class Jiki(var pos: Vec2D) {
 
     val ookisa = 100
     val iro = Paint()
-
-
     var sekaipos = Vec2D(360,400)
     var sokudo = Vec2DF(0f,0f)
     var kasokudo = Vec2DF(0f,0f)
@@ -86,16 +84,9 @@ class Jiki(var pos: Vec2D) {
                 sokudo = Vec2DF(0f, u1CandF.sokudo.y)
             )
         }
-
-
-
-        //こっから下が問題だとは思う、なんでかはわからん
-
-
         sokudo = u1CandG.sokudo
         kasokudo = u1CandG.kasokudo
         sekaipos = u1CandG.pos
-
         pos = pos.copy(y = u1CandG.pos.y)
 
     }
