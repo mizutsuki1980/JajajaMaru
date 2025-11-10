@@ -92,17 +92,19 @@ class Jiki(var pos: Vec2D) {
         //こっから下が問題だとは思う、なんでかはわからん
 
 
-        sekaipos = u1CandG.pos
         sokudo = u1CandG.sokudo
         kasokudo = u1CandG.kasokudo
+        sekaipos = u1CandG.pos
+
         //横移動 x軸
 
         //zzzzz
 
         //世界の端かどうかを補正したy1候補
+        pos = pos.copy(y = u1CandF.pos.y)
+
         sokudo = sokudo.copy(y=u1CandF.sokudo.y)
         kasokudo = kasokudo.copy(y=u1CandF.kasokudo.y)
-        pos = pos.copy(y = u1CandF.pos.y)
         sekaipos = sekaipos.copy(y=u1CandF.pos.y)
         //縦移動　y軸
     }
