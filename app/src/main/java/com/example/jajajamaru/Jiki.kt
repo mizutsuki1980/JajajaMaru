@@ -7,6 +7,12 @@ import kotlin.math.max
 import kotlin.math.min
 
 class Jiki(var pos: Vec2D) {
+    //posがなんなのか調べたい
+    //まず呼ばれるときに作ってる
+    //    var vec2d = Vec2D(360, 400)
+    //    var jiki = Jiki(vec2d)
+    //こんな感じで初期設定位置が入って作られる
+
 
     val ookisa = 100
     val iro = Paint()
@@ -33,11 +39,17 @@ class Jiki(var pos: Vec2D) {
             }
         }
 
+        //val u1CandC0 =　にて、世界の端を設定されている。
+        //val u1CandC1 =　にて　速度がプラスされている
+        //val u1CandC2 = にて　ジャンプだったら、の処理がされている
+        //val u1CandD = にて、世界の上辺を設定されている
+
         //横方向の補正　1500と０　世界の端？
         val u1CandC0 =
             u1CandC.copy(pos = Vec2D(min(max(0, u1CandC.pos.x), 1500), u1CandC.pos.y))
         val u1CandC1 =
             u1CandC0.copy(pos = Vec2D(u1CandC0.pos.x + u1CandC0.sokudo.x.toInt(), sekaipos.y + u1CandC0.sokudo.y.toInt()))
+
         val u1CandC2 = if (mapCheckY(map, u1CandC1.pos.y)) {
             u1CandC1
         } else {
@@ -54,6 +66,9 @@ class Jiki(var pos: Vec2D) {
 
 
 
+
+        //val u1CandE =　でposの値を見て世界の端だったら速度を０にしている。
+
         val u1CandE = if (u1CandD.pos.x == 1500 || u1CandD.pos.x == 0) {
             u1CandD.copy(sokudo = Vec2DF(0f, u1CandD.sokudo.y))
         } else {
@@ -67,6 +82,8 @@ class Jiki(var pos: Vec2D) {
                 u1CandE.sokudo.y
             )
         )
+
+        //val u1CandG =　でposの値を見て障害物か判定している。posの値を修正している。
 
         val u1CandG = if (mapCheck(map, u1CandF.pos.x, u1CandF.sokudo.x)) {
             u1CandF
@@ -84,9 +101,11 @@ class Jiki(var pos: Vec2D) {
                 sokudo = Vec2DF(0f, u1CandF.sokudo.y)
             )
         }
+
         sokudo = u1CandG.sokudo
         kasokudo = u1CandG.kasokudo
         sekaipos = u1CandG.pos
+
         pos = pos.copy(y = u1CandG.pos.y)
 
     }
