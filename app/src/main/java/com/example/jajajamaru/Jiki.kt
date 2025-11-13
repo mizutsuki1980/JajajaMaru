@@ -7,13 +7,6 @@ import kotlin.math.max
 import kotlin.math.min
 
 class Jiki(val initialPos: Vec2D) {
-    //posがなんなのか調べたい
-    //まず呼ばれるときに作ってる
-    //    var vec2d = Vec2D(360, 400)
-    //    var jiki = Jiki(vec2d)
-    //こんな感じで初期設定位置が入って作られる
-
-
     val ookisa = 100
     val iro = Paint()
     var sekaipos = Vec2D(360,400)
@@ -26,16 +19,88 @@ class Jiki(val initialPos: Vec2D) {
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
 
         //加速度更新
-        val u1CandA = u0.copy(kasokudo = Vec2DF(kasokudoDush(controller.houkou), kasokudoJump()))
-
+        val u1CandA = kasokudoKoushin(u0, controller)
 
         //速度更新
-        val u1CandB = u1CandA.copy(
-            sokudo = Vec2DF(
-                u1CandA.sokudo.x + u1CandA.kasokudo.x,
-                u1CandA.sokudo.y + u1CandA.kasokudo.y
+        var u1CandC = sokudoKoushin(u1CandA, controller)
+
+        //posを更新
+        val u1CandC0 = u1CandC.copy(pos = Vec2D(u1CandC.pos.x + u1CandC.sokudo.x.toInt(), sekaipos.y + u1CandC.sokudo.y.toInt()))
+
+        //世界の上下左右端チェック
+        val u1CandC1A = sekaiHashiCheck(u1CandC0)
+
+        //障害物上下左右チェック
+        val u1CandG = shogaibutuJogeSayuu(map, u1CandC1A)
+
+
+        sokudo = u1CandG.sokudo
+        kasokudo = u1CandG.kasokudo
+        sekaipos = u1CandG.pos
+
+    }
+
+    private fun shogaibutuJogeSayuu(map: Map, before: Ugoki): Ugoki {
+        //障害物上下処理
+        val afterJouge = if (mapCheckY(map, before.pos.y)) {
+            before
+        } else {
+            isJump = false
+            val ySyougai = (before.pos.y / 32) * 32 //かならず上辺が入る
+            before.copy(pos = Vec2D(before.pos.x, ySyougai), sokudo = Vec2DF(before.sokudo.x, 0f))
+        }
+
+        //posの値を見て障害物か判定している。posの値を修正している。
+        //障害物左右処理
+        val afterSayuu = if (mapCheck(map, afterJouge.pos.x, afterJouge.sokudo.x)) {
+            afterJouge
+        } else {
+            val xSyougai = (afterJouge.pos.x / 32) * 32 //かならず左肩が入る
+            val xLimit = if (afterJouge.sokudo.x > 0) {
+                (xSyougai - ookisa / 2)
+            } else if (afterJouge.sokudo.x < 0) {
+                xSyougai + 32 + (ookisa / 2)
+            } else {
+                afterJouge.pos.x
+            }
+            afterJouge.copy(
+                pos = Vec2D(xLimit, afterJouge.pos.y),
+                sokudo = Vec2DF(0f, afterJouge.sokudo.y)
             )
-        )
+        }
+        return afterSayuu
+    }
+
+    private fun sekaiHashiCheck(before: Ugoki): Ugoki {
+        //世界の上下チェック
+        val afterJouge = if (isJump && before.pos.y < 96) {
+            before.copy(pos = Vec2D(before.pos.x, 96), sokudo = Vec2DF(before.sokudo.x, 0f))
+        } else {
+            before
+        }
+
+        //横方向の補正　1500と０　世界の端？
+        //世界の左右チェック
+        val afterSayuu =  afterJouge.copy(pos = Vec2D(min(max(0, afterJouge.pos.x), 1500), afterJouge.pos.y))
+
+        //posの値を見て世界の端だったら速度を０にしている。
+        //画面端だったら速度を０に
+        val u1CandC1A = if (afterSayuu.pos.x == 1500 || afterSayuu.pos.x == 0) {
+            afterSayuu.copy(sokudo = Vec2DF(0f, afterSayuu.sokudo.y))
+        } else {
+            afterSayuu
+        }
+        return u1CandC1A
+    }
+
+    /**
+    速度を更新する、まず加速度から速度を計算して、その後に最大速度制限とジャンプの処理をする
+    */
+    private fun sokudoKoushin(
+        before: Ugoki,
+        controller: Controller
+    ): Ugoki {
+        val u1CandB = sokudoKoushin0(before)
 
 
         //速度の上限設定
@@ -55,76 +120,21 @@ class Jiki(val initialPos: Vec2D) {
                 u1CandC = u1CandC.copy(sokudo = Vec2DF(u1CandC.sokudo.x, -45f))
             }
         }
-
-
-        //posを更新
-        val u1CandC0 =
-            u1CandC.copy(pos = Vec2D(u1CandC.pos.x + u1CandC.sokudo.x.toInt(), sekaipos.y + u1CandC.sokudo.y.toInt()))
-
-
-
-        //横方向の補正　1500と０　世界の端？
-        //世界の境界チェック
-        val u1CandC1 =
-            u1CandC0.copy(pos = Vec2D(min(max(0, u1CandC0.pos.x), 1500), u1CandC0.pos.y))
-
-        //val u1CandE =　でposの値を見て世界の端だったら速度を０にしている。
-
-        //画面端だったら速度を０に
-        val u1CandC1A = if (u1CandC1.pos.x == 1500 || u1CandC1.pos.x == 0) {
-            u1CandC1.copy(sokudo = Vec2DF(0f, u1CandC1.sokudo.y))
-        } else {
-            u1CandC1
-        }
-
-
-
-
-        //障害物上下処理
-        val u1CandC2 = if (mapCheckY(map, u1CandC1A.pos.y)) {
-            u1CandC1A
-        } else {
-            isJump = false
-            val ySyougai = (u1CandC1A.pos.y / 32) * 32 //かならず上辺が入る
-            u1CandC1A.copy(pos = Vec2D(u1CandC1A.pos.x, ySyougai), sokudo = Vec2DF(u1CandC1A.sokudo.x, 0f))
-        }
-
-
-        //世界の上端チェック
-        val u1CandF = if (isJump && u1CandC2.pos.y < 96) {
-            u1CandC2.copy(pos = Vec2D(u1CandC2.pos.x, 96), sokudo = Vec2DF(u1CandC2.sokudo.x, 0f))
-        } else {
-            u1CandC2
-        }
-
-
-
-        //val u1CandG =　でposの値を見て障害物か判定している。posの値を修正している。
-
-        //障害物左右処理
-        val u1CandG = if (mapCheck(map, u1CandF.pos.x, u1CandF.sokudo.x)) {
-            u1CandF
-        } else {
-            val xSyougai = (u1CandF.pos.x / 32) * 32 //かならず左肩が入る
-            val xLimit = if (u1CandF.sokudo.x > 0) {
-                (xSyougai - ookisa / 2)
-            } else if (u1CandF.sokudo.x < 0) {
-                xSyougai + 32 + (ookisa / 2)
-            } else {
-                u1CandF.pos.x
-            }
-            u1CandF.copy(
-                pos = Vec2D(xLimit, u1CandF.pos.y),
-                sokudo = Vec2DF(0f, u1CandF.sokudo.y)
-            )
-        }
-
-        sokudo = u1CandG.sokudo
-        kasokudo = u1CandG.kasokudo
-        sekaipos = u1CandG.pos
-
+        return u1CandC
     }
 
+    private fun kasokudoKoushin(u0: Ugoki, controller: Controller): Ugoki {
+        return u0.copy(kasokudo = Vec2DF(kasokudoDush(controller.houkou), kasokudoJump()))
+    }
+
+    private fun sokudoKoushin0(before:Ugoki):Ugoki{
+        return before.copy(
+            sokudo = Vec2DF(
+                before.sokudo.x + before.kasokudo.x,
+                before.sokudo.y + before.kasokudo.y
+            )
+        )
+    }
 
     fun mapCheckY(map:Map,y1Cand:Int):Boolean{
         val checkPointY = y1Cand
