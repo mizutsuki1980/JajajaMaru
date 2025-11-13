@@ -53,7 +53,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jiki.draw(canvas)
         controller.draw(canvas)
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusanpng, BitmapFactory.Options())
-        canvas.drawBitmap(bitmap, jiki.sekaipos.x.toFloat()-40, jiki.sekaipos.y.toFloat()-45, null)
+        canvas.drawBitmap(bitmap, jiki.initialPos.x.toFloat()-40, jiki.sekaipos.y.toFloat()-45, null)
     }
 
     fun mapCreate(canvas:Canvas){

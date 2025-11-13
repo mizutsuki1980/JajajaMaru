@@ -6,7 +6,7 @@ import android.graphics.Paint
 import kotlin.math.max
 import kotlin.math.min
 
-class Jiki(var pos: Vec2D) {
+class Jiki(val initialPos: Vec2D) {
     //posがなんなのか調べたい
     //まず呼ばれるときに作ってる
     //    var vec2d = Vec2D(360, 400)
@@ -106,8 +106,6 @@ class Jiki(var pos: Vec2D) {
         kasokudo = u1CandG.kasokudo
         sekaipos = u1CandG.pos
 
-        pos = pos.copy(y = u1CandG.pos.y)
-
     }
 
 
@@ -158,7 +156,7 @@ class Jiki(var pos: Vec2D) {
     fun draw(canvas: Canvas) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
-        canvas.drawCircle(sekaipos.x.toFloat(),(sekaipos.y).toFloat(),(ookisa/2).toFloat(),iro)
+        canvas.drawCircle(initialPos.x.toFloat(),(sekaipos.y).toFloat(),(ookisa/2).toFloat(),iro)
     }
 
 }
