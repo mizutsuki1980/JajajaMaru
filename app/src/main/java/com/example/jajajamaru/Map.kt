@@ -73,4 +73,8 @@ class Map {
         return masu[row][col]
     }
 
+    //マップの右端を計算する処理
+    fun migiMax():Int{
+        return (masu[0].size-2) * MASU_SIZE
+    }
 }

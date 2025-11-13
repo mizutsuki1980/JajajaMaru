@@ -12,10 +12,15 @@ class Jiki(val initialPos: Vec2D) {
     var sekaipos = Vec2D(360,400)
     var sokudo = Vec2DF(0f,0f)
     var kasokudo = Vec2DF(0f,0f)
+    //ここでマスのサイズとマスの個数で自動でいれたらいいんじゃね
+//    val sekainoHashi = 3500
+
+
 
     var isJump = false
 
     fun idoSyori(controller: Controller, map: Map) {
+
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
 
         //加速度更新
@@ -28,7 +33,7 @@ class Jiki(val initialPos: Vec2D) {
         val u1CandC0 = u1CandC.copy(pos = Vec2D(u1CandC.pos.x + u1CandC.sokudo.x.toInt(), sekaipos.y + u1CandC.sokudo.y.toInt()))
 
         //世界の上下左右端チェック
-        val u1CandC1A = sekaiHashiCheck(u1CandC0)
+        val u1CandC1A = sekaiHashiCheck(map,u1CandC0)
 
         //障害物上下左右チェック
         val u1CandG = shogaibutuJogeSayuu(map, u1CandC1A)
@@ -71,7 +76,7 @@ class Jiki(val initialPos: Vec2D) {
         return afterSayuu
     }
 
-    private fun sekaiHashiCheck(before: Ugoki): Ugoki {
+    private fun sekaiHashiCheck(map:Map,before: Ugoki): Ugoki {
         //世界の上下チェック
         val afterJouge = if (isJump && before.pos.y < 96) {
             before.copy(pos = Vec2D(before.pos.x, 96), sokudo = Vec2DF(before.sokudo.x, 0f))
@@ -79,13 +84,13 @@ class Jiki(val initialPos: Vec2D) {
             before
         }
 
-        //横方向の補正　1500と０　世界の端？
+        //横方向の補正　世界の端？
         //世界の左右チェック
-        val afterSayuu =  afterJouge.copy(pos = Vec2D(min(max(0, afterJouge.pos.x), 1500), afterJouge.pos.y))
+        val afterSayuu =  afterJouge.copy(pos = Vec2D(min(max(0, afterJouge.pos.x), map.migiMax()), afterJouge.pos.y))
 
         //posの値を見て世界の端だったら速度を０にしている。
         //画面端だったら速度を０に
-        val u1CandC1A = if (afterSayuu.pos.x == 1500 || afterSayuu.pos.x == 0) {
+        val u1CandC1A = if (afterSayuu.pos.x == map.migiMax() || afterSayuu.pos.x == 0) {
             afterSayuu.copy(sokudo = Vec2DF(0f, afterSayuu.sokudo.y))
         } else {
             afterSayuu
