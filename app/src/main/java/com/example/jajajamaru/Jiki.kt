@@ -158,7 +158,7 @@ class Jiki(var pos: Vec2D) {
     fun draw(canvas: Canvas) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
-        canvas.drawCircle(pos.x.toFloat(),(pos.y).toFloat(),(ookisa/2).toFloat(),iro)
+        canvas.drawCircle(sekaipos.x.toFloat(),(sekaipos.y).toFloat(),(ookisa/2).toFloat(),iro)
     }
 
 }
