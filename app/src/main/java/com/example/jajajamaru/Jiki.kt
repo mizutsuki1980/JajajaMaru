@@ -24,14 +24,31 @@ class Jiki(val initialPos: Vec2D) {
 
     fun idoSyori(controller: Controller, map: Map) {
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
+
+        //加速度更新
         val u1CandA = u0.copy(kasokudo = Vec2DF(kasokudoDush(controller.houkou), kasokudoJump()))
+
+
+        //速度更新
         val u1CandB = u1CandA.copy(
             sokudo = Vec2DF(
                 u1CandA.sokudo.x + u1CandA.kasokudo.x,
                 u1CandA.sokudo.y + u1CandA.kasokudo.y
             )
         )
-        var u1CandC = u1CandB
+
+
+        //速度の上限設定
+        val u1CandB0 = u1CandB.copy(
+            sokudo = Vec2DF(
+                min(max(-30f, u1CandB.sokudo.x), 30f),
+                u1CandB.sokudo.y
+            )
+        )
+
+
+        //ジャンプ処理
+        var u1CandC = u1CandB0
         if (isJump == false) {
             if (controller.houkou == "jump") {
                 isJump = true
@@ -39,26 +56,42 @@ class Jiki(val initialPos: Vec2D) {
             }
         }
 
-        //val u1CandC0 =　にて、世界の端を設定されている。
-        //val u1CandC1 =　にて　速度がプラスされている
-        //val u1CandC2 = にて　ジャンプだったら、の処理がされている
-        //val u1CandD = にて、世界の上辺を設定されている
+
+        //posを更新
+        val u1CandC0 =
+            u1CandC.copy(pos = Vec2D(u1CandC.pos.x + u1CandC.sokudo.x.toInt(), sekaipos.y + u1CandC.sokudo.y.toInt()))
+
+
 
         //横方向の補正　1500と０　世界の端？
-        val u1CandC0 =
-            u1CandC.copy(pos = Vec2D(min(max(0, u1CandC.pos.x), 1500), u1CandC.pos.y))
+        //世界の境界チェック
         val u1CandC1 =
-            u1CandC0.copy(pos = Vec2D(u1CandC0.pos.x + u1CandC0.sokudo.x.toInt(), sekaipos.y + u1CandC0.sokudo.y.toInt()))
+            u1CandC0.copy(pos = Vec2D(min(max(0, u1CandC0.pos.x), 1500), u1CandC0.pos.y))
 
-        val u1CandC2 = if (mapCheckY(map, u1CandC1.pos.y)) {
-            u1CandC1
+        //val u1CandE =　でposの値を見て世界の端だったら速度を０にしている。
+
+        //画面端だったら速度を０に
+        val u1CandC1A = if (u1CandC1.pos.x == 1500 || u1CandC1.pos.x == 0) {
+            u1CandC1.copy(sokudo = Vec2DF(0f, u1CandC1.sokudo.y))
         } else {
-            isJump = false
-            val ySyougai = (u1CandC1.pos.y / 32) * 32 //かならず上辺が入る
-            u1CandC1.copy(pos = Vec2D(u1CandC1.pos.x, ySyougai), sokudo = Vec2DF(u1CandC1.sokudo.x, 0f))
+            u1CandC1
         }
 
-        val u1CandD = if (isJump && u1CandC2.pos.y < 96) {
+
+
+
+        //障害物上下処理
+        val u1CandC2 = if (mapCheckY(map, u1CandC1A.pos.y)) {
+            u1CandC1A
+        } else {
+            isJump = false
+            val ySyougai = (u1CandC1A.pos.y / 32) * 32 //かならず上辺が入る
+            u1CandC1A.copy(pos = Vec2D(u1CandC1A.pos.x, ySyougai), sokudo = Vec2DF(u1CandC1A.sokudo.x, 0f))
+        }
+
+
+        //世界の上端チェック
+        val u1CandF = if (isJump && u1CandC2.pos.y < 96) {
             u1CandC2.copy(pos = Vec2D(u1CandC2.pos.x, 96), sokudo = Vec2DF(u1CandC2.sokudo.x, 0f))
         } else {
             u1CandC2
@@ -66,25 +99,9 @@ class Jiki(val initialPos: Vec2D) {
 
 
 
-
-        //val u1CandE =　でposの値を見て世界の端だったら速度を０にしている。
-
-        val u1CandE = if (u1CandD.pos.x == 1500 || u1CandD.pos.x == 0) {
-            u1CandD.copy(sokudo = Vec2DF(0f, u1CandD.sokudo.y))
-        } else {
-            u1CandD
-        }
-
-
-        val u1CandF = u1CandE.copy(
-            sokudo = Vec2DF(
-                min(max(-30f, u1CandE.sokudo.x), 30f),
-                u1CandE.sokudo.y
-            )
-        )
-
         //val u1CandG =　でposの値を見て障害物か判定している。posの値を修正している。
 
+        //障害物左右処理
         val u1CandG = if (mapCheck(map, u1CandF.pos.x, u1CandF.sokudo.x)) {
             u1CandF
         } else {
@@ -112,6 +129,7 @@ class Jiki(val initialPos: Vec2D) {
     fun mapCheckY(map:Map,y1Cand:Int):Boolean{
         val checkPointY = y1Cand
         val yBlock = ( checkPointY/ 32)
+        if(yBlock >= map.masu.size) return false
         val xBlock = (sekaipos.x/32)
         return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
     }
