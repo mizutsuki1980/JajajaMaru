@@ -12,11 +12,6 @@ class Jiki(val initialPos: Vec2D) {
     var sekaipos = Vec2D(360,400)
     var sokudo = Vec2DF(0f,0f)
     var kasokudo = Vec2DF(0f,0f)
-    //ここでマスのサイズとマスの個数で自動でいれたらいいんじゃね
-//    val sekainoHashi = 3500
-
-
-
     var isJump = false
 
     fun idoSyori(controller: Controller, map: Map) {
@@ -54,13 +49,13 @@ class Jiki(val initialPos: Vec2D) {
             val yU0 = u0.pos.y
             val yU1 = before.pos.y
             //境界線上にとまらないように、-1と+1している
-            val ySyougai =if(yU0>yU1){ //下から
+            val todomaruIchi =if(yU0>yU1){ //下から
                 -1+32+(before.pos.y / 32) * 32
             }else{//上から
                 isJump = false
                 1+(before.pos.y / 32) * 32
             }
-            before.copy(pos = Vec2D(before.pos.x, ySyougai), sokudo = Vec2DF(before.sokudo.x, 0f))
+            before.copy(pos = Vec2D(before.pos.x, todomaruIchi), sokudo = Vec2DF(before.sokudo.x, 0f))
         }
 
         //posの値を見て障害物か判定している。posの値を修正している。
