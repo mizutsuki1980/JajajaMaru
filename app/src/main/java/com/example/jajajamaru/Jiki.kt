@@ -66,7 +66,7 @@ class Jiki(val initialPos: Vec2D) {
         //posの値を見て障害物か判定している。posの値を修正している。
         //障害物左右処理
 
-        val afterSayuu = if (mapCheckX(map, afterJouge.pos.x,afterJouge.pos.y,u0)) {
+        val afterSayuu = if (mapCheckXandY(map, afterJouge.pos.x,afterJouge.pos.y)) {
             afterJouge
         } else {
             val xU1 = before.pos.x
@@ -85,16 +85,15 @@ class Jiki(val initialPos: Vec2D) {
     }
 
     fun mapCheckXandY(map:Map,x1cand:Int,y1Cand:Int):Boolean{
-        val checkPointY = y1Cand
-        val yBlock = ( checkPointY/ 32)
-        if(yBlock >= map.masu.size) return false
-        val xBlock = (sekaipos.x/32)
+        val yBlock = ( y1Cand/ 32) -2
+        if  (yBlock >= map.masu.size) return false
+        val xBlock = (x1cand/32)
         return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
     }
     fun mapCheckY(map:Map,x1Cand:Int,y1Cand:Int):Boolean{
         val checkPointY = y1Cand
         val yBlock = ( checkPointY/ 32)
-        if(yBlock >= map.masu.size) return false
+        if  (yBlock >= map.masu.size) return false
         val xBlock = (x1Cand/32)
         return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
     }
