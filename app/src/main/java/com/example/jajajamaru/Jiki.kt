@@ -70,7 +70,7 @@ class Jiki(val initialPos: Vec2D) {
         //障害物左右処理
 
 
-        val afterSayuu = if (mapCheck(map, afterJouge.pos.x, afterJouge.sokudo.x)) {
+        val afterSayuu = if (mapCheckX(map, afterJouge.pos.x, afterJouge.sokudo.x,afterJouge.pos.y,u0)) {
             afterJouge
         } else {
             val xSyougai = (afterJouge.pos.x / 32) * 32 //かならず左肩が入る
@@ -80,19 +80,9 @@ class Jiki(val initialPos: Vec2D) {
 
             val xLimit = if(xU0>xU1){//右からきてる
                 -1+32+(before.pos.x / 32) * 32
-
             }else{//左からきてる
                 1+(before.pos.x / 32) * 32
             }
-/*
-            val xLimit = if (afterJouge.sokudo.x > 0) {
-                (xSyougai - ookisa / 2)
-            } else if (afterJouge.sokudo.x < 0) {
-                xSyougai + 32 + (ookisa / 2)
-            } else {
-                afterJouge.pos.x
-            }
-*/
 
             afterJouge.copy(
                 pos = Vec2D(xLimit, afterJouge.pos.y),
@@ -182,19 +172,33 @@ class Jiki(val initialPos: Vec2D) {
         return 7.0f
     }
 
-    fun mapCheck(map:Map,x1Cand:Int,xPlus1: Float):Boolean{
+    fun mapCheckX(map:Map, x1Cand:Int, xPlus1: Float,yCand:Int,u0:Ugoki):Boolean{
         //mapcheckでxPlusによる左右判定をしていないと予想
-        val checkPoint = x1Cand
-        val checkBlock = if(xPlus1>0){
+
+        val xU1 = x1Cand
+        val xU0 = u0.pos.x
+
+        val xLimit = if(xU0>xU1){//右からきてる
+            -1+32+(xU1 / 32) * 32
+        }else{//左からきてる
+            1+(xU1 / 32) * 32
+        }
+
+        val checkPoint = xLimit
+
+
+        val checkBlock = if(xU0>xU1){
             //右方向だったら
             ( checkPoint/ 32)
-        }else if(xPlus1<0){
+        }else{
             //左方向だったら
             ( checkPoint/ 32)-1
-        }else{( checkPoint/ 32)
         }
+
         val masu = map.masu
-        val yBlock = (sekaipos.y / 32)-2
+        val yBlock = (yCand / 32)-2
+
+
         return if(map.masu[yBlock][checkBlock+1] == 1){ false }else{true}
     }
 
