@@ -97,36 +97,7 @@ class Jiki(val initialPos: Vec2D) {
         val xBlock = (x1Cand/32)
         return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
     }
-
-    fun mapCheckX(map:Map, x1Cand:Int,yCand:Int,u0:Ugoki):Boolean{
-        //mapcheckでxPlusによる左右判定をしていないと予想
-
-        val xU1 = x1Cand
-        val xU0 = u0.pos.x
-
-        val xLimit = if(xU0>xU1){//右からきてる
-            -1+32+(xU1 / 32) * 32
-        }else{//左からきてる
-            1+(xU1 / 32) * 32
-        }
-
-        val checkPoint = xLimit
-
-
-        val checkBlock = if(xU0>xU1){
-            //右方向だったら
-            ( checkPoint/ 32)
-        }else{
-            //左方向だったら
-            ( checkPoint/ 32)-1
-        }
-
-        val masu = map.masu
-        val yBlock = (yCand / 32)-2
-
-        return if(map.masu[yBlock][checkBlock] == 1){ false }else{true}
-    }
-
+    
 
     private fun sekaiHashiCheck(map:Map,before: Ugoki): Ugoki {
         //世界の上下チェック
