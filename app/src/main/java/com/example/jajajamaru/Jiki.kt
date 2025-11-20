@@ -69,12 +69,12 @@ class Jiki(val initialPos: Vec2D) {
         val afterSayuu = if (mapCheckXandY(map, afterJouge.pos.x,afterJouge.pos.y)) {
             afterJouge
         } else {
-            val xU1 = before.pos.x
+            val xU1 = afterJouge.pos.x
             val xU0 = u0.pos.x
             val xLimit = if(xU0>xU1){//右からきてる
-                -1+32+(before.pos.x / 32) * 32
+                -1+32+(afterJouge.pos.x / 32) * 32
             }else{//左からきてる
-                1+(before.pos.x / 32) * 32
+                1+(afterJouge.pos.x / 32) * 32
             }
             afterJouge.copy(
                 pos = Vec2D(xLimit, afterJouge.pos.y),
@@ -97,7 +97,7 @@ class Jiki(val initialPos: Vec2D) {
         val xBlock = (x1Cand/32)
         return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
     }
-    
+
 
     private fun sekaiHashiCheck(map:Map,before: Ugoki): Ugoki {
         //世界の上下チェック
