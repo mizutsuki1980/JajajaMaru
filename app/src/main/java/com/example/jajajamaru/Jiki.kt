@@ -73,7 +73,6 @@ class Jiki(val initialPos: Vec2D) {
         val afterSayuu = if (mapCheckX(map, afterJouge.pos.x, afterJouge.sokudo.x,afterJouge.pos.y,u0)) {
             afterJouge
         } else {
-            val xSyougai = (afterJouge.pos.x / 32) * 32 //かならず左肩が入る
 
             val xU1 = before.pos.x
             val xU0 = u0.pos.x
