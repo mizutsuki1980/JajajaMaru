@@ -68,9 +68,12 @@ class Jiki(val initialPos: Vec2D) {
             val xU0 = u0.pos.x
             val xLimit = if(xU0>xU1){//右からきてる
                 1+32+(afterJouge.pos.x / 32) * 32
-            }else{//左からきてる
+            }else if(xU0<xU1){//左からきてる
                 -1+(afterJouge.pos.x / 32) * 32
+            }else{
+                afterJouge.pos.x
             }
+
             afterJouge.copy(
                 pos = Vec2D(xLimit, afterJouge.pos.y),
                 sokudo = Vec2DF(0f, afterJouge.sokudo.y)
