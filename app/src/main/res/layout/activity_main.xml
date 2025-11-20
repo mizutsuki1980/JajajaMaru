@@ -108,17 +108,23 @@
             android:text="TextView" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/resetButton"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/debugButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Debug" />
+        <Button
+            android:id="@+id/resetButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+        <Button
+            android:id="@+id/debugButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Debug" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/sekaixLabel"
