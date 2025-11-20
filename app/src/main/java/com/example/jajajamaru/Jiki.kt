@@ -51,18 +51,15 @@ class Jiki(val initialPos: Vec2D) {
         val afterJouge = if (mapCheckY(map, before.pos.y)) {
             before
         } else {
-
             val yU0 = u0.pos.y
             val yU1 = before.pos.y
-
+            //境界線上にとまらないように、-1と+1している
             val ySyougai =if(yU0>yU1){ //下から
                 -1+32+(before.pos.y / 32) * 32
             }else{//上から
                 isJump = false
                 1+(before.pos.y / 32) * 32
             }
-
-
             before.copy(pos = Vec2D(before.pos.x, ySyougai), sokudo = Vec2DF(before.sokudo.x, 0f))
         }
 
