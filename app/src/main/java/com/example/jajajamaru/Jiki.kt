@@ -195,8 +195,7 @@ class Jiki(val initialPos: Vec2D) {
         }
 
         val masu = map.masu
-        val yBlock = (yCand / 32)-1
-
+        val yBlock = (yCand / 32)
 
         return if(map.masu[yBlock][checkBlock+1] == 1){ false }else{true}
     }
