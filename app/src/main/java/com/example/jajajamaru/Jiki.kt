@@ -51,7 +51,7 @@ class Jiki(val initialPos: Vec2D) {
             before
         } else {
             isJump = false
-            val ySyougai = (before.pos.y / 32) * 32 //かならず上辺が入る
+            val ySyougai = 10+(before.pos.y / 32) * 32 //かならず上辺が入る
             before.copy(pos = Vec2D(before.pos.x, ySyougai), sokudo = Vec2DF(before.sokudo.x, 0f))
         }
 
@@ -157,7 +157,7 @@ class Jiki(val initialPos: Vec2D) {
     }
 
     fun kasokudoJump(): Float {
-        return 5.0f
+        return 7.0f
     }
 
     fun mapCheck(map:Map,x1Cand:Int,xPlus1: Float):Boolean{

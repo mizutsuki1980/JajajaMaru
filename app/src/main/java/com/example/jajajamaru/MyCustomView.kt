@@ -31,7 +31,15 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun syokikaGameReset(){
         jiki = Jiki(vec2d)
     }
+    fun debug() : String{
+        val y = jiki.sekaipos.y
+        val x = jiki.sekaipos.x
+        val masuY = y /32
+        val syougai = map.masu[masuY][x/32]
+        val ikkkoshita = map.masu[masuY+1][x/32]
+        return "y=${y},masuY=${masuY},syogai=${syougai},ikosita=${ikkkoshita}"
 
+    }
     fun beginAnimation() {
         tsugiNoSyori()  //最初に一回だけ呼ばれる
     }

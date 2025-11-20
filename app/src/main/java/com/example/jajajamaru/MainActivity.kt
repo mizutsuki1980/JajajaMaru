@@ -30,6 +30,9 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.resetButton).setOnClickListener{
             custom.post { custom.syokikaGameReset() }
         }
+        findViewById<Button>(R.id.debugButton).setOnClickListener{
+            findViewById<TextView>(R.id.c3houkouLabel).text=custom.debug()
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
