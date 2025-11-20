@@ -70,7 +70,7 @@ class Jiki(val initialPos: Vec2D) {
         //障害物左右処理
 
 
-        val afterSayuu = if (mapCheckX(map, afterJouge.pos.x, afterJouge.sokudo.x,afterJouge.pos.y,u0)) {
+        val afterSayuu = if (mapCheckX(map, afterJouge.pos.x,afterJouge.pos.y,u0)) {
             afterJouge
         } else {
 
@@ -171,7 +171,7 @@ class Jiki(val initialPos: Vec2D) {
         return 7.0f
     }
 
-    fun mapCheckX(map:Map, x1Cand:Int, xPlus1: Float,yCand:Int,u0:Ugoki):Boolean{
+    fun mapCheckX(map:Map, x1Cand:Int,yCand:Int,u0:Ugoki):Boolean{
         //mapcheckでxPlusによる左右判定をしていないと予想
 
         val xU1 = x1Cand
