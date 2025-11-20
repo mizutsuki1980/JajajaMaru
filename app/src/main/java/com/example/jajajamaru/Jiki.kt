@@ -48,7 +48,7 @@ class Jiki(val initialPos: Vec2D) {
     private fun shogaibutuJogeSayuu(map: Map, before: Ugoki,u0: Ugoki): Ugoki {
 
         //障害物上下処理
-        val afterJouge = if (mapCheckY(map, before.pos.y)) {
+        val afterJouge = if (mapCheckY(map, before.pos.x,before.pos.y)) {
             before
         } else {
             val yU0 = u0.pos.y
@@ -89,6 +89,13 @@ class Jiki(val initialPos: Vec2D) {
         val yBlock = ( checkPointY/ 32)
         if(yBlock >= map.masu.size) return false
         val xBlock = (sekaipos.x/32)
+        return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
+    }
+    fun mapCheckY(map:Map,x1Cand:Int,y1Cand:Int):Boolean{
+        val checkPointY = y1Cand
+        val yBlock = ( checkPointY/ 32)
+        if(yBlock >= map.masu.size) return false
+        val xBlock = (x1Cand/32)
         return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
     }
 
@@ -187,13 +194,6 @@ class Jiki(val initialPos: Vec2D) {
         )
     }
 
-    fun mapCheckY(map:Map,y1Cand:Int):Boolean{
-        val checkPointY = y1Cand
-        val yBlock = ( checkPointY/ 32)
-        if(yBlock >= map.masu.size) return false
-        val xBlock = (sekaipos.x/32)
-        return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
-    }
     fun kasokudoJump(): Float {
         return 7.0f
     }
