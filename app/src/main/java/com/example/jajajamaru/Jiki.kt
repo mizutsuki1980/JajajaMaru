@@ -63,36 +63,64 @@ class Jiki(val initialPos: Vec2D) {
             before.copy(pos = Vec2D(before.pos.x, ySyougai), sokudo = Vec2DF(before.sokudo.x, 0f))
         }
 
-
-
-
         //posの値を見て障害物か判定している。posの値を修正している。
         //障害物左右処理
-
 
         val afterSayuu = if (mapCheckX(map, afterJouge.pos.x,afterJouge.pos.y,u0)) {
             afterJouge
         } else {
-
             val xU1 = before.pos.x
             val xU0 = u0.pos.x
-
             val xLimit = if(xU0>xU1){//右からきてる
                 -1+32+(before.pos.x / 32) * 32
             }else{//左からきてる
                 1+(before.pos.x / 32) * 32
             }
-
             afterJouge.copy(
                 pos = Vec2D(xLimit, afterJouge.pos.y),
                 sokudo = Vec2DF(0f, afterJouge.sokudo.y)
             )
         }
-
-
-
         return afterSayuu
     }
+
+    fun mapCheckXandY(map:Map,x1cand:Int,y1Cand:Int):Boolean{
+        val checkPointY = y1Cand
+        val yBlock = ( checkPointY/ 32)
+        if(yBlock >= map.masu.size) return false
+        val xBlock = (sekaipos.x/32)
+        return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
+    }
+
+    fun mapCheckX(map:Map, x1Cand:Int,yCand:Int,u0:Ugoki):Boolean{
+        //mapcheckでxPlusによる左右判定をしていないと予想
+
+        val xU1 = x1Cand
+        val xU0 = u0.pos.x
+
+        val xLimit = if(xU0>xU1){//右からきてる
+            -1+32+(xU1 / 32) * 32
+        }else{//左からきてる
+            1+(xU1 / 32) * 32
+        }
+
+        val checkPoint = xLimit
+
+
+        val checkBlock = if(xU0>xU1){
+            //右方向だったら
+            ( checkPoint/ 32)
+        }else{
+            //左方向だったら
+            ( checkPoint/ 32)-1
+        }
+
+        val masu = map.masu
+        val yBlock = (yCand / 32)-2
+
+        return if(map.masu[yBlock][checkBlock] == 1){ false }else{true}
+    }
+
 
     private fun sekaiHashiCheck(map:Map,before: Ugoki): Ugoki {
         //世界の上下チェック
@@ -166,52 +194,8 @@ class Jiki(val initialPos: Vec2D) {
         val xBlock = (sekaipos.x/32)
         return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
     }
-
     fun kasokudoJump(): Float {
         return 7.0f
-    }
-
-    fun mapCheckX(map:Map, x1Cand:Int,yCand:Int,u0:Ugoki):Boolean{
-        //mapcheckでxPlusによる左右判定をしていないと予想
-
-        val xU1 = x1Cand
-        val xU0 = u0.pos.x
-
-        val xLimit = if(xU0>xU1){//右からきてる
-            -1+32+(xU1 / 32) * 32
-        }else{//左からきてる
-            1+(xU1 / 32) * 32
-        }
-
-        val checkPoint = xLimit
-
-
-        val checkBlock = if(xU0>xU1){
-            //右方向だったら
-            ( checkPoint/ 32)
-        }else{
-            //左方向だったら
-            ( checkPoint/ 32)-1
-        }
-
-        val masu = map.masu
-        val yBlock = (yCand / 32)
-
-        return if(map.masu[yBlock][checkBlock+1] == 1){ false }else{true}
-    }
-
-    fun mapCheckIkkoShita(map:Map,x1Cand:Int,xPlus1: Float):Boolean{
-        val checkPoint = x1Cand
-        val checkBlock = if(xPlus1>0){
-            //右方向だったら
-            ( checkPoint/ 32)
-        }else if(xPlus1<0){
-            //左方向だったら
-            ( checkPoint/ 32)-1
-        }else{( checkPoint/ 32)
-        }
-        val yBlock = (sekaipos.y / 32)-2
-        return if(map.masu[yBlock+1][checkBlock+1] == 1){ false }else{true}
     }
 
 
