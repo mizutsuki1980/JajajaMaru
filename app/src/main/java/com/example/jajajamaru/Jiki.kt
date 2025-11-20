@@ -69,10 +69,22 @@ class Jiki(val initialPos: Vec2D) {
         //posの値を見て障害物か判定している。posの値を修正している。
         //障害物左右処理
 
+
         val afterSayuu = if (mapCheck(map, afterJouge.pos.x, afterJouge.sokudo.x)) {
             afterJouge
         } else {
             val xSyougai = (afterJouge.pos.x / 32) * 32 //かならず左肩が入る
+
+            val xU0 = u0.pos.x
+            val xU1 = before.pos.x
+
+            val xLimit = if(xU0>xU1){//右からきてる
+                -1+32+(before.pos.x / 32) * 32
+
+            }else{//左からきてる
+                1+(before.pos.x / 32) * 32
+            }
+/*
             val xLimit = if (afterJouge.sokudo.x > 0) {
                 (xSyougai - ookisa / 2)
             } else if (afterJouge.sokudo.x < 0) {
@@ -80,6 +92,8 @@ class Jiki(val initialPos: Vec2D) {
             } else {
                 afterJouge.pos.x
             }
+*/
+
             afterJouge.copy(
                 pos = Vec2D(xLimit, afterJouge.pos.y),
                 sokudo = Vec2DF(0f, afterJouge.sokudo.y)
