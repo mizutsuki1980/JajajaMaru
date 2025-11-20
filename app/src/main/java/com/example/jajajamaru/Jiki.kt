@@ -75,8 +75,8 @@ class Jiki(val initialPos: Vec2D) {
         } else {
             val xSyougai = (afterJouge.pos.x / 32) * 32 //かならず左肩が入る
 
-            val xU0 = u0.pos.x
             val xU1 = before.pos.x
+            val xU0 = u0.pos.x
 
             val xLimit = if(xU0>xU1){//右からきてる
                 -1+32+(before.pos.x / 32) * 32
