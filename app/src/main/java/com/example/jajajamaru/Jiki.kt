@@ -95,6 +95,11 @@ class Jiki(val initialPos: Vec2D) {
             afterSayuu
         }
 
+
+        //ぶつかり判定　移動先が「１」だった場合、強制的に元の位置との中間地点にもどす
+        //↑みたいな処理をかけたらいいな
+
+
         return afterRakka
     }
 
