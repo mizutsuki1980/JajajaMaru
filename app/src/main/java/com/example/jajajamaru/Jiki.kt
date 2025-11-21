@@ -99,7 +99,7 @@ class Jiki(val initialPos: Vec2D) {
             afterSayuu
         }
 
-        return afterRakka
+        return afterSayuu
     }
 
     fun mapCheckYRakka(map:Map,x1cand:Int,y1Cand:Int):Boolean{
