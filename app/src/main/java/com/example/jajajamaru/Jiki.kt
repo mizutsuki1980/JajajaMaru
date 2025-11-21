@@ -76,7 +76,6 @@ class Jiki(val initialPos: Vec2D) {
             afterJouge.copy(
                 pos = Vec2D(xLimit, afterJouge.pos.y),
                 sokudo = Vec2DF(0f, afterJouge.sokudo.y)
-
             )
         }
 
@@ -93,10 +92,16 @@ class Jiki(val initialPos: Vec2D) {
 
             val ySokudoBefore = before.sokudo.y
             val yPosBefore = before.pos.y
+
+            //もっかいここで上下処理をする 　//障害物上下処理のコピペ
             afterSayuu.copy(
-                pos = Vec2D(afterSayuu.pos.x, yPosBefore + ySokudoBefore.toInt()),
+                pos = Vec2D(afterSayuu.pos.x, yPosBefore),
                 sokudo = Vec2DF(before.sokudo.x, ySokudoBefore)
             )
+
+
+
+
 
         } else {
             //下が「１」、障害物だったならば、そのまま
