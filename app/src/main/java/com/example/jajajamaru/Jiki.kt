@@ -89,17 +89,22 @@ class Jiki(val initialPos: Vec2D) {
             val ySokudo = before.sokudo.y
             val yPos = before.pos.y
 
+            afterSayuu
+
+            /*
              afterSayuu.copy(
                 pos = Vec2D(afterSayuu.pos.x, (yPos + (ySokudo + yKasokudo)).toInt()),
                 sokudo = Vec2DF(afterSayuu.sokudo.x, (ySokudo + yKasokudo)),
                 kasokudo = Vec2DF(afterSayuu.kasokudo.x,yKasokudo)
             )
+            */
+
         } else {
             //下が「１」、障害物だったならば、そのまま
             afterSayuu
         }
 
-        return afterSayuu
+        return afterRakka
     }
 
     fun mapCheckYRakka(map:Map,x1cand:Int,y1Cand:Int):Boolean{
