@@ -37,12 +37,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val masuY = y /32
         val masuX = x /32
         val genzaichi = map.masu[masuY][masuX]
-        val masuPlus1 = map.masu[masuY+1][masuX+1]
+        val masuMigiPlus1 = map.masu[masuY][masuX+1]
 
 
 
         return "y=${y},masuY=${masuY},x=${x},masuX=${masuX}\n" +
-                "genzaichi=${genzaichi},masuPlus1=${masuPlus1},"
+                "genzaichi=${genzaichi},masuPlus1=${masuMigiPlus1},"
 
     }
     fun beginAnimation() {

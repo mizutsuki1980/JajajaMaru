@@ -83,7 +83,7 @@ class Jiki(val initialPos: Vec2D) {
     }
 
     fun mapCheckX(map:Map,x1cand:Int,y1Cand:Int):Boolean{
-        val yBlock = ( y1Cand/ 32) -2
+        val yBlock = ( y1Cand/ 32) 
         if  (yBlock >= map.masu.size) return false
         val xBlock = (x1cand/32)
         return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
