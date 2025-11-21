@@ -60,7 +60,6 @@ class Jiki(val initialPos: Vec2D) {
 
         //posの値を見て障害物か判定している。posの値を修正している。
         //障害物左右処理
-
         val afterSayuu = if (mapCheckX(map, afterJouge.pos.x,afterJouge.pos.y)) {
             afterJouge
         } else {
@@ -79,7 +78,33 @@ class Jiki(val initialPos: Vec2D) {
                 sokudo = Vec2DF(0f, afterJouge.sokudo.y)
             )
         }
+
+        //ここでもう一回判定をする、止まった位置の下には何かあるか？で落下するか決める。
+        val afterRakka = if (mapCheckYRakka(map, afterSayuu.pos.x,afterSayuu.pos.y)) {
+            //もし静止した位置で下に足場がなかったら
+            //ｙは落下処理する、いったん元の値に戻して、加速して速度を足してＰＯＳを更新する
+            val yKasokudo = before.kasokudo.y
+            val ySokudo = before.sokudo.y
+            val yPos = before.pos.y
+
+             afterSayuu.copy(
+                pos = Vec2D(afterSayuu.pos.x, (yPos + (ySokudo + yKasokudo)).toInt()),
+                sokudo = Vec2DF(0f, (ySokudo + yKasokudo)),
+                kasokudo = Vec2DF(afterSayuu.kasokudo.x,yKasokudo)
+            )
+        } else {
+            afterSayuu
+
+        }
+
         return afterSayuu
+    }
+
+    fun mapCheckYRakka(map:Map,x1cand:Int,y1Cand:Int):Boolean{
+        val yBlock = ( y1Cand/ 32)
+        if  (yBlock >= map.masu.size) return false
+        val xBlock = (x1cand/32)
+        return if(map.masu[yBlock+1][xBlock] == 1){ false }else{true}
     }
 
     fun mapCheckX(map:Map,x1cand:Int,y1Cand:Int):Boolean{
@@ -98,27 +123,6 @@ class Jiki(val initialPos: Vec2D) {
     }
 
 
-    private fun sekaiHashiCheck(map:Map,before: Ugoki): Ugoki {
-        //世界の上下チェック
-        val afterJouge = if (isJump && before.pos.y < 96) {
-            before.copy(pos = Vec2D(before.pos.x, 96), sokudo = Vec2DF(before.sokudo.x, 0f))
-        } else {
-            before
-        }
-
-        //横方向の補正　世界の端？
-        //世界の左右チェック
-        val afterSayuu =  afterJouge.copy(pos = Vec2D(min(max(0, afterJouge.pos.x), map.migiMax()), afterJouge.pos.y))
-
-        //posの値を見て世界の端だったら速度を０にしている。
-        //画面端だったら速度を０に
-        val u1Cand = if (afterSayuu.pos.x == map.migiMax() || afterSayuu.pos.x == 0) {
-            afterSayuu.copy(sokudo = Vec2DF(0f, afterSayuu.sokudo.y))
-        } else {
-            afterSayuu
-        }
-        return u1Cand
-    }
 
     /**
     速度を更新する、まず加速度から速度を計算して、その後に最大速度制限とジャンプの処理をする
@@ -184,6 +188,27 @@ class Jiki(val initialPos: Vec2D) {
         }
     }
 
+    private fun sekaiHashiCheck(map:Map,before: Ugoki): Ugoki {
+        //世界の上下チェック
+        val afterJouge = if (isJump && before.pos.y < 96) {
+            before.copy(pos = Vec2D(before.pos.x, 96), sokudo = Vec2DF(before.sokudo.x, 0f))
+        } else {
+            before
+        }
+
+        //横方向の補正　世界の端？
+        //世界の左右チェック
+        val afterSayuu =  afterJouge.copy(pos = Vec2D(min(max(0, afterJouge.pos.x), map.migiMax()), afterJouge.pos.y))
+
+        //posの値を見て世界の端だったら速度を０にしている。
+        //画面端だったら速度を０に
+        val u1Cand = if (afterSayuu.pos.x == map.migiMax() || afterSayuu.pos.x == 0) {
+            afterSayuu.copy(sokudo = Vec2DF(0f, afterSayuu.sokudo.y))
+        } else {
+            afterSayuu
+        }
+        return u1Cand
+    }
 
     fun draw(canvas: Canvas) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
