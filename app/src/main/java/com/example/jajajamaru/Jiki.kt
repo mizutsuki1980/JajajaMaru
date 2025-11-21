@@ -173,7 +173,6 @@ class Jiki(val initialPos: Vec2D) {
     fun kasokudoX(houkou:String):Float {
         when (houkou) {
             "migi" -> {return 5.0f }
-            "migi" -> {return 5.0f }
             "hidari" -> { return -5.0f }
             "nashi" -> { if (sokudo.x == 0f) { return 0.0f }
                 if (sokudo.x > 0) { return -2.5f } else { return 2.5f } }
