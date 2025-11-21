@@ -24,8 +24,12 @@ class Jiki(val initialPos: Vec2D) {
         //速度更新
         var u1CandC = sokudoKoushin(u1CandA, controller)
 
+
+
         //posを更新
         val u1CandD = u1CandC.copy(pos = Vec2D(u1CandC.pos.x + u1CandC.sokudo.x.toInt(), sekaipos.y + u1CandC.sokudo.y.toInt()))
+
+
 
         //世界の上下左右端チェック
         val u1CandE = sekaiHashiCheck(map,u1CandD)
@@ -151,7 +155,7 @@ class Jiki(val initialPos: Vec2D) {
     }
 
     private fun kasokudoKoushin(u0: Ugoki, controller: Controller): Ugoki {
-        return u0.copy(kasokudo = Vec2DF(kasokudoX(controller.houkou), kasokudoY()))
+        return u0.copy(kasokudo = Vec2DF(kasokudoX(controller.houkou,u0), kasokudoY()))
     }
 
     private fun sokudoKoushin0(before:Ugoki):Ugoki{
@@ -170,12 +174,19 @@ class Jiki(val initialPos: Vec2D) {
 
 
 
-    fun kasokudoX(houkou:String):Float {
+    fun kasokudoX(houkou:String,u0: Ugoki):Float {
         when (houkou) {
             "migi" -> {return 5.0f }
             "hidari" -> { return -5.0f }
-            "nashi" -> { if (sokudo.x == 0f) { return 0.0f }
-                if (sokudo.x > 0) { return -2.5f } else { return 2.5f } }
+            "nashi" -> {
+                if (sokudo.x == 0f) { return 0.0f }
+                if (sokudo.x > 0) {
+                    return -2.5f
+                } else {
+                    return 2.5f
+                }
+            }
+
             else -> return 0f
         }
     }
