@@ -79,6 +79,8 @@ class Jiki(val initialPos: Vec2D) {
             )
         }
 
+
+
         //ここでもう一回判定をする、止まった位置の下には何かあるか？で落下するか決める。
         val afterRakka = if (mapCheckYRakka(map, afterSayuu.pos.x,afterSayuu.pos.y)) {
             //もし静止した位置で下に足場がなかったら
@@ -89,22 +91,23 @@ class Jiki(val initialPos: Vec2D) {
 
              afterSayuu.copy(
                 pos = Vec2D(afterSayuu.pos.x, (yPos + (ySokudo + yKasokudo)).toInt()),
-                sokudo = Vec2DF(0f, (ySokudo + yKasokudo)),
+                sokudo = Vec2DF(afterSayuu.sokudo.x, (ySokudo + yKasokudo)),
                 kasokudo = Vec2DF(afterSayuu.kasokudo.x,yKasokudo)
             )
         } else {
+            //下が「１」、障害物だったならば、そのまま
             afterSayuu
-
         }
 
-        return afterSayuu
+        return afterRakka
     }
 
     fun mapCheckYRakka(map:Map,x1cand:Int,y1Cand:Int):Boolean{
-        val yBlock = ( y1Cand/ 32)
+        //ひとつ下のブロックを判定する
+        val yBlock = ( y1Cand/ 32) + 1
         if  (yBlock >= map.masu.size) return false
         val xBlock = (x1cand/32)
-        return if(map.masu[yBlock+1][xBlock] == 1){ false }else{true}
+        return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
     }
 
     fun mapCheckX(map:Map,x1cand:Int,y1Cand:Int):Boolean{
