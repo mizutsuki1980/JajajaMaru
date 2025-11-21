@@ -81,30 +81,17 @@ class Jiki(val initialPos: Vec2D) {
 
 
 
-        //ここでもう一回判定をする、止まった位置の下には何かあるか？で落下するか決める。
+        //落下の判定をする、止まった位置の下には何かあるか？で落下するか決める。
         val afterRakka = if (mapCheckYRakka(map, afterSayuu.pos.x,afterSayuu.pos.y)) {
-            //もし静止した位置で下に足場がなかったら
-            //ｙは落下処理する、いったん元の値に戻して、加速して速度を足してＰＯＳを更新する
-            //多分、ここにはちゃんと来れている。更新作業がうまくいってないような気がする。
-
-            //いったん過去のデータを引っ張り出す
-            //beforeにはu1のデータが入っている。before=u1
-
+            //もし静止した位置で下に足場がなかったら落下する
             val ySokudoBefore = before.sokudo.y
             val yPosBefore = before.pos.y
-
-            //もっかいここで上下処理をする 　//障害物上下処理のコピペ
             afterSayuu.copy(
                 pos = Vec2D(afterSayuu.pos.x, yPosBefore),
                 sokudo = Vec2DF(before.sokudo.x, ySokudoBefore)
             )
-
-
-
-
-
         } else {
-            //下が「１」、障害物だったならば、そのまま
+            //下が「１」、障害物だったならばそのまま
             afterSayuu
         }
 
