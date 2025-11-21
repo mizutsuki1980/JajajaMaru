@@ -125,6 +125,8 @@ class Jiki(val initialPos: Vec2D) {
     */
     private fun sokudoKoushin(before: Ugoki, controller: Controller): Ugoki {
 
+        //ここで速度を入れてるのは間違いない、加速度ｙか速度ｙに０が入ってるんじゃないかな？
+        //速度の更新
         val u1CandA = before.copy(
             sokudo = Vec2DF(
                 before.sokudo.x + before.kasokudo.x,
@@ -140,7 +142,6 @@ class Jiki(val initialPos: Vec2D) {
                 u1CandA.sokudo.y
             )
         )
-
 
         //ジャンプ処理
         var u1CandC = u1CandB
