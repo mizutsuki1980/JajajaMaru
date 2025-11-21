@@ -76,6 +76,7 @@ class Jiki(val initialPos: Vec2D) {
             afterJouge.copy(
                 pos = Vec2D(xLimit, afterJouge.pos.y),
                 sokudo = Vec2DF(0f, afterJouge.sokudo.y)
+
             )
         }
 
@@ -88,29 +89,14 @@ class Jiki(val initialPos: Vec2D) {
             //多分、ここにはちゃんと来れている。更新作業がうまくいってないような気がする。
 
             //いったん過去のデータを引っ張り出す
-            val yKasokudoBefore = before.kasokudo.y
+            //beforeにはu1のデータが入っている。before=u1
+
             val ySokudoBefore = before.sokudo.y
             val yPosBefore = before.pos.y
-
-            //もっかいここで上下処理をする 　//障害物上下処理のコピペ
-
-            val yU0 = u0.pos.y
-            val yU1 = before.pos.y
-            //境界線上にとまらないように、-1と+1している
-            val yLimit =if(yU0>yU1){ //上昇中
-                1+32+(yU1 / 32) * 32
-            }else{//下降中
-                isJump = false
-                -1+(yU1 / 32) * 32
-            }
-
-
-            afterSayuu.copy(pos = Vec2D(afterSayuu.pos.x, yPosBefore + ySokudoBefore.toInt()), sokudo = Vec2DF(before.sokudo.x, ySokudoBefore))
-
-
-
-
-            afterSayuu
+            afterSayuu.copy(
+                pos = Vec2D(afterSayuu.pos.x, yPosBefore + ySokudoBefore.toInt()),
+                sokudo = Vec2DF(before.sokudo.x, ySokudoBefore)
+            )
 
         } else {
             //下が「１」、障害物だったならば、そのまま
