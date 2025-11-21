@@ -24,12 +24,8 @@ class Jiki(val initialPos: Vec2D) {
         //速度更新
         var u1CandC = sokudoKoushin(u1CandA, controller)
 
-
-
         //posを更新
-        val u1CandD = u1CandC.copy(pos = Vec2D(u1CandC.pos.x + u1CandC.sokudo.x.toInt(), sekaipos.y + u1CandC.sokudo.y.toInt()))
-
-
+        val u1CandD = u1CandC.copy(pos = Vec2D(u1CandC.pos.x + u1CandC.sokudo.x.toInt(), u1CandC.pos.y + u1CandC.sokudo.y.toInt()))
 
         //世界の上下左右端チェック
         val u1CandE = sekaiHashiCheck(map,u1CandD)
