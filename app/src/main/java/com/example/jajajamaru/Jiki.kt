@@ -88,6 +88,7 @@ class Jiki(val initialPos: Vec2D) {
         val xBlock = (x1cand/32)
         return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
     }
+
     fun mapCheckY(map:Map,x1Cand:Int,y1Cand:Int):Boolean{
         val checkPointY = y1Cand
         val yBlock = ( checkPointY/ 32)
@@ -150,7 +151,7 @@ class Jiki(val initialPos: Vec2D) {
     }
 
     private fun kasokudoKoushin(u0: Ugoki, controller: Controller): Ugoki {
-        return u0.copy(kasokudo = Vec2DF(kasokudoDush(controller.houkou), kasokudoJump()))
+        return u0.copy(kasokudo = Vec2DF(kasokudoX(controller.houkou), kasokudoY()))
     }
 
     private fun sokudoKoushin0(before:Ugoki):Ugoki{
@@ -162,14 +163,14 @@ class Jiki(val initialPos: Vec2D) {
         )
     }
 
-    fun kasokudoJump(): Float {
+    fun kasokudoY(): Float {
         return 4.0f
     }
 
 
 
 
-    fun kasokudoDush(houkou:String):Float {
+    fun kasokudoX(houkou:String):Float {
         when (houkou) {
             "migi" -> {return 5.0f }
             "migi" -> {return 5.0f }
