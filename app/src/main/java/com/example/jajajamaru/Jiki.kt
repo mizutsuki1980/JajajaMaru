@@ -85,19 +85,32 @@ class Jiki(val initialPos: Vec2D) {
         val afterRakka = if (mapCheckYRakka(map, afterSayuu.pos.x,afterSayuu.pos.y)) {
             //もし静止した位置で下に足場がなかったら
             //ｙは落下処理する、いったん元の値に戻して、加速して速度を足してＰＯＳを更新する
-            val yKasokudo = before.kasokudo.y
-            val ySokudo = before.sokudo.y
-            val yPos = before.pos.y
+            //多分、ここにはちゃんと来れている。更新作業がうまくいってないような気がする。
+
+            //いったん過去のデータを引っ張り出す
+            val yKasokudoBefore = before.kasokudo.y
+            val ySokudoBefore = before.sokudo.y
+            val yPosBefore = before.pos.y
+
+            //もっかいここで上下処理をする 　//障害物上下処理のコピペ
+
+            val yU0 = u0.pos.y
+            val yU1 = before.pos.y
+            //境界線上にとまらないように、-1と+1している
+            val yLimit =if(yU0>yU1){ //上昇中
+                1+32+(yU1 / 32) * 32
+            }else{//下降中
+                isJump = false
+                -1+(yU1 / 32) * 32
+            }
+
+
+            afterSayuu.copy(pos = Vec2D(afterSayuu.pos.x, yPosBefore + ySokudoBefore.toInt()), sokudo = Vec2DF(before.sokudo.x, ySokudoBefore))
+
+
+
 
             afterSayuu
-
-            /*
-             afterSayuu.copy(
-                pos = Vec2D(afterSayuu.pos.x, (yPos + (ySokudo + yKasokudo)).toInt()),
-                sokudo = Vec2DF(afterSayuu.sokudo.x, (ySokudo + yKasokudo)),
-                kasokudo = Vec2DF(afterSayuu.kasokudo.x,yKasokudo)
-            )
-            */
 
         } else {
             //下が「１」、障害物だったならば、そのまま
