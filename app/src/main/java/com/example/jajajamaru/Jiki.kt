@@ -123,24 +123,27 @@ class Jiki(val initialPos: Vec2D) {
     /**
     速度を更新する、まず加速度から速度を計算して、その後に最大速度制限とジャンプの処理をする
     */
-    private fun sokudoKoushin(
-        before: Ugoki,
-        controller: Controller
-    ): Ugoki {
-        val u1CandB = sokudoKoushin0(before)
+    private fun sokudoKoushin(before: Ugoki, controller: Controller): Ugoki {
+
+        val u1CandA = before.copy(
+            sokudo = Vec2DF(
+                before.sokudo.x + before.kasokudo.x,
+                before.sokudo.y + before.kasokudo.y
+            )
+        )
 
 
         //速度の上限設定
-        val u1CandB0 = u1CandB.copy(
+        val u1CandB = u1CandA.copy(
             sokudo = Vec2DF(
-                min(max(-30f, u1CandB.sokudo.x), 30f),
-                u1CandB.sokudo.y
+                min(max(-30f, u1CandA.sokudo.x), 30f),
+                u1CandA.sokudo.y
             )
         )
 
 
         //ジャンプ処理
-        var u1CandC = u1CandB0
+        var u1CandC = u1CandB
         if (isJump == false) {
             if (controller.houkou == "jump") {
                 isJump = true
@@ -154,15 +157,6 @@ class Jiki(val initialPos: Vec2D) {
         return u0.copy(kasokudo = Vec2DF(kasokudoX(controller.houkou,u0), kasokudoY()))
         //左右にキーを入れていると、加速度が2.5か-2.5が返っている
         //だから何？
-    }
-
-    private fun sokudoKoushin0(before:Ugoki):Ugoki{
-        return before.copy(
-            sokudo = Vec2DF(
-                before.sokudo.x + before.kasokudo.x,
-                before.sokudo.y + before.kasokudo.y
-            )
-        )
     }
 
     fun kasokudoY(): Float {
