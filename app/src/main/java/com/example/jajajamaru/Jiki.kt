@@ -156,6 +156,8 @@ class Jiki(val initialPos: Vec2D) {
 
     private fun kasokudoKoushin(u0: Ugoki, controller: Controller): Ugoki {
         return u0.copy(kasokudo = Vec2DF(kasokudoX(controller.houkou,u0), kasokudoY()))
+        //左右にキーを入れていると、加速度が2.5か-2.5が返っている
+        //だから何？
     }
 
     private fun sokudoKoushin0(before:Ugoki):Ugoki{
