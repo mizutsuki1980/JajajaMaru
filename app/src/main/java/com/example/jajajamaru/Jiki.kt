@@ -49,13 +49,13 @@ class Jiki(val initialPos: Vec2D) {
             val yU0 = u0.pos.y
             val yU1 = before.pos.y
             //境界線上にとまらないように、-1と+1している
-            val todomaruIchi =if(yU0>yU1){ //上昇中
+            val yLimit =if(yU0>yU1){ //上昇中
                 1+32+(yU1 / 32) * 32
             }else{//下降中
                 isJump = false
                 -1+(yU1 / 32) * 32
             }
-            before.copy(pos = Vec2D(before.pos.x, todomaruIchi), sokudo = Vec2DF(before.sokudo.x, 0f))
+            before.copy(pos = Vec2D(before.pos.x, yLimit), sokudo = Vec2DF(before.sokudo.x, 0f))
         }
 
         //posの値を見て障害物か判定している。posの値を修正している。
@@ -143,7 +143,7 @@ class Jiki(val initialPos: Vec2D) {
         if (isJump == false) {
             if (controller.houkou == "jump") {
                 isJump = true
-                u1CandC = u1CandC.copy(sokudo = Vec2DF(u1CandC.sokudo.x, -45f))
+                u1CandC = u1CandC.copy(sokudo = Vec2DF(u1CandC.sokudo.x, -35f))
             }
         }
         return u1CandC
