@@ -112,20 +112,30 @@ class Jiki(val initialPos: Vec2D) {
         //↑みたいな処理をかけたらいいな
         //これって、落下の時しか発生しないのでは？という予測
         val afterGenzaichi = if (mapCheckGenzaichi(map, afterRakka.pos.x,afterRakka.pos.y)) {
-             val yU0 = u0.pos.y
-             val yU1 = afterRakka.pos.y
-             val xU0 = u0.pos.x
-             val xU1 = afterRakka.pos.x
-
-             var yHosei = afterRakka.pos.y
-             var xHosei = afterRakka.pos.x
-
-
-             afterRakka.copy(
-                 pos = Vec2D(xHosei, yHosei),
-             )
+            afterRakka
          }else{
-           afterRakka
+            val yU0 = u0.pos.y
+            val yU1 = afterRakka.pos.y
+            val xU0 = u0.pos.x
+            val xU1 = afterRakka.pos.x
+
+            var yHosei = afterRakka.pos.y
+            var xHosei = afterRakka.pos.x
+
+
+            if (yU0<yU1){//下降中
+                //戻すのは１つ上で最下辺にしなければいけない
+                yHosei = 32-1+(yU0 / 32) * 32
+
+
+                //yHosei = u0.pos.y//から一つ進んで１番下
+
+
+            }
+
+            afterRakka.copy(
+                pos = Vec2D(xHosei, yHosei),
+            )
         }
 
         return afterGenzaichi
