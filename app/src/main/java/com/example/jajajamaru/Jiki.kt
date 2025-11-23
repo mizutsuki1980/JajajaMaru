@@ -111,9 +111,37 @@ class Jiki(val initialPos: Vec2D) {
         //ぶつかり判定　移動先が「１」だった場合、強制的に元の位置との中間地点にもどす
         //↑みたいな処理をかけたらいいな
         //これって、落下の時しか発生しないのでは？という予測
-        val afterMerikomi = if (mapCheckGenzaichi(map, afterRakka.pos.x,afterRakka.pos.y)) {
-           afterRakka
-        }else{
+        val afterGenzaichi = if (mapCheckGenzaichi(map, afterRakka.pos.x,afterRakka.pos.y)) {
+             val yU0 = u0.pos.y
+             val yU1 = afterRakka.pos.y
+             val xU0 = u0.pos.x
+             val xU1 = afterRakka.pos.x
+
+             var yHosei = 0
+             var xHosei = 0
+
+             if(yU0<yU1) { //上昇
+                 yHosei =  1+32+(yU0 / 32) * 32
+            }else if(yU0>yU1){ //下降
+                 yHosei = -1+(yU0 / 32) * 32
+            }else{
+                 yHosei = afterRakka.pos.y
+            }
+
+
+             if(xU0<xU1) { //右へ
+                 xHosei = -1+(xU0 / 32) * 32
+             }else if(xU0>xU1){ //左へ
+                 xHosei = 1+32+(xU0 / 32) * 32
+             }else{
+                 xHosei = afterRakka.pos.x
+             }
+
+
+             afterRakka.copy(
+                 pos = Vec2D(xHosei, yHosei),
+             )
+         }else{
            afterRakka
         }
 
