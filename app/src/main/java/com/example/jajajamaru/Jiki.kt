@@ -117,25 +117,8 @@ class Jiki(val initialPos: Vec2D) {
              val xU0 = u0.pos.x
              val xU1 = afterRakka.pos.x
 
-             var yHosei = 0
-             var xHosei = 0
-
-             if(yU0<yU1) { //上昇
-                 yHosei =  1+32+(yU0 / 32) * 32
-            }else if(yU0>yU1){ //下降
-                 yHosei = -1+(yU0 / 32) * 32
-            }else{
-                 yHosei = afterRakka.pos.y
-            }
-
-
-             if(xU0<xU1) { //右へ
-                 xHosei = -1+(xU0 / 32) * 32
-             }else if(xU0>xU1){ //左へ
-                 xHosei = 1+32+(xU0 / 32) * 32
-             }else{
-                 xHosei = afterRakka.pos.x
-             }
+             var yHosei = afterRakka.pos.y
+             var xHosei = afterRakka.pos.x
 
 
              afterRakka.copy(
@@ -145,7 +128,7 @@ class Jiki(val initialPos: Vec2D) {
            afterRakka
         }
 
-        return afterRakka
+        return afterGenzaichi
     }
 
     fun mapCheckGenzaichi(map:Map,x1cand:Int,y1Cand:Int):Boolean{
