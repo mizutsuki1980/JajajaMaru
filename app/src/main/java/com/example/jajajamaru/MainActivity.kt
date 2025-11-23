@@ -33,6 +33,9 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.debugButton).setOnClickListener{
             findViewById<TextView>(R.id.c3houkouLabel).text=custom.debug()
         }
+        findViewById<Button>(R.id.stage1Button).setOnClickListener{
+            custom.map.stage1()
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
