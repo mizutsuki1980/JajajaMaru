@@ -126,11 +126,6 @@ class Jiki(val initialPos: Vec2D) {
             if (yU0<yU1){//下降中
                 //戻すのは１つ上で最下辺にしなければいけない
                 yHosei = 32-1+(yU0 / 32) * 32
-
-
-                //yHosei = u0.pos.y//から一つ進んで１番下
-
-
             }
 
             afterRakka.copy(
