@@ -9,8 +9,6 @@ import android.graphics.Rect
 class Controller {
 
     var houkou = "nashi"
-    var isJumpButton = false
-    var isJump = false
 
     //ここにボタンが増えただけ色の設定も置かなきゃいけないのかー、面倒だなぁ
     var hidariButtonIro = Paint()
