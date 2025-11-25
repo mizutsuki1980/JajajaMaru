@@ -18,40 +18,6 @@ class Controller {
     var buttonPushIro = Paint()
     var hyoujiIro =  Paint()
 
-    init{
-        buttonSyokika()
-
-        jumpButtonIro.style = Paint.Style.FILL
-        jumpButtonIro.color = argb(200, 0, 0, 150)
-
-        buttonIro.style = Paint.Style.FILL
-        buttonIro.color = argb(200, 0, 0, 150)
-
-        buttonPushIro.style = Paint.Style.FILL
-        buttonPushIro.color = argb(100, 0, 0, 150)
-
-
-        hyoujiIro.style = Paint.Style.FILL
-        hyoujiIro.color = Color.BLUE
-        hyoujiIro.textSize = 100.toFloat()
-
-    }
-    fun buttonSyokika(){
-        hidariButtonIro.style = Paint.Style.FILL
-        hidariButtonIro.color = argb(200, 0, 0, 150)
-
-        migiButtonIro.style = Paint.Style.FILL
-        migiButtonIro.color = argb(200, 0, 0, 150)
-
-        jumpButtonIro.style = Paint.Style.FILL
-        jumpButtonIro.color = argb(200, 0, 0, 150)
-
-
-    }
-
-    //ボタンっていうクラスを作る？
-    //三つだけだし、決め打ちでいいかー
-
     val buttonHidariX = 30
     val buttonHidariY = 920
     val buttonHidariOokisa = 150
@@ -67,6 +33,42 @@ class Controller {
     val buttonHidariRect = buttonRect(buttonHidariX.toInt() ,buttonHidariY.toInt(),buttonHidariOokisa,1)
     val buttonMigiRect = buttonRect(buttonMigiX.toInt() ,buttonMigiY.toInt(),buttonMigiOokisa,1)
     val buttonJumpRect = buttonRect(buttonJumpX.toInt() ,buttonJumpY.toInt(),buttonJumpOokisa,2)
+
+
+    init{
+        buttonSyokika()
+        buttonIroSettei()
+    }
+
+
+
+    private fun buttonIroSettei() {
+        jumpButtonIro.style = Paint.Style.FILL
+        jumpButtonIro.color = argb(200, 0, 0, 150)
+
+        buttonIro.style = Paint.Style.FILL
+        buttonIro.color = argb(200, 0, 0, 150)
+
+        buttonPushIro.style = Paint.Style.FILL
+        buttonPushIro.color = argb(100, 0, 0, 150)
+
+
+        hyoujiIro.style = Paint.Style.FILL
+        hyoujiIro.color = Color.BLUE
+        hyoujiIro.textSize = 100.toFloat()
+    }
+
+
+    private fun buttonSyokika(){
+        hidariButtonIro.style = Paint.Style.FILL
+        hidariButtonIro.color = argb(200, 0, 0, 150)
+
+        migiButtonIro.style = Paint.Style.FILL
+        migiButtonIro.color = argb(200, 0, 0, 150)
+
+        jumpButtonIro.style = Paint.Style.FILL
+        jumpButtonIro.color = argb(200, 0, 0, 150)
+    }
 
 
     fun clickPointCheck(clickX:Int,clickY:Int,clickState:String){
