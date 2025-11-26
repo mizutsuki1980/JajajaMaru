@@ -6,7 +6,13 @@ import android.graphics.Color.argb
 import android.graphics.Paint
 import android.graphics.Rect
 
+
+//そもそも、なんかまとめらそうだよなぁ、、、、。データクラス？かな？
 class Controller {
+
+    val hidari = Button(30,920,150,150,Paint())
+    val migi = Button(30+170+170+170,920,150,150,Paint())
+    val jump = Button(30+170,920,300,150,Paint())
 
     var houkou = "nashi"
 
@@ -30,7 +36,7 @@ class Controller {
     val buttonJumpY = 920
     val buttonJumpOokisa = 300
 
-    val buttonHidariRect = buttonMake(buttonHidariX.toInt() ,buttonHidariY.toInt(),buttonHidariOokisa)
+    val buttonHidariRect = buttonMake(hidari.x.toInt() ,hidari.y.toInt(),buttonHidariOokisa)
     val buttonMigiRect = buttonMake(buttonMigiX.toInt() ,buttonMigiY.toInt(),buttonMigiOokisa)
     val buttonJumpRect = buttonMake(buttonJumpX.toInt() ,buttonJumpY.toInt(),buttonJumpOokisa)
 
@@ -40,7 +46,6 @@ class Controller {
         buttonIroSettei()
     }
 
-    //とりあえずジャンプボタンをちょっと上にするか
 
     private fun buttonIroSettei() {
         jumpButtonIro.style = Paint.Style.FILL
