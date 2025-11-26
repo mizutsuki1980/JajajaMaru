@@ -10,9 +10,13 @@ import android.graphics.Rect
 //そもそも、なんかまとめらそうだよなぁ、、、、。データクラス？かな？
 class Controller {
 
-    var hidari = Button(30,920,150,150,Paint())
-    var migi = Button(30+170+170+170,920,150,150,Paint())
-    var jump = Button(30+170,920,300,150,Paint())
+    var hidari = Button(30,920,150,150,Paint(),Rect(0, 0, 0,0))
+    var migi = Button(30+170+170+170,920,150,150,Paint(),Rect(0, 0, 0,0))
+    var jump = Button(30+170,920,300,150,Paint(),Rect(0, 0, 0,0))
+
+    val hidariRect = buttonMakeXOokisaYOokisa(hidari.x.toInt() ,hidari.y.toInt(),hidari.xOokisa,hidari.yOokisa)
+    val migiRect = buttonMakeXOokisaYOokisa(migi.x.toInt() ,migi.y.toInt(),migi.xOokisa,migi.yOokisa)
+    val jumpRect = buttonMakeXOokisaYOokisa(jump.x.toInt() ,jump.y.toInt(),jump.xOokisa,jump.yOokisa)
 
     var houkou = "nashi"
 
@@ -24,22 +28,16 @@ class Controller {
     var buttonPushIro = Paint()
     var hyoujiIro =  Paint()
 
-    val buttonHidariX = 30
-    val buttonHidariY = 920
 
-    val buttonMigiX = 30+170+170+170
-    val buttonMigiY = 920
-
-    val buttonJumpX = 30+170
-    val buttonJumpY = 920
-
-    val buttonHidariRect = buttonMakeXOokisaYOokisa(hidari.x.toInt() ,hidari.y.toInt(),hidari.xOokisa,hidari.yOokisa)
-    val buttonMigiRect = buttonMakeXOokisaYOokisa(migi.x.toInt() ,migi.y.toInt(),migi.xOokisa,migi.yOokisa)
-    val buttonJumpRect = buttonMakeXOokisaYOokisa(jump.x.toInt() ,jump.y.toInt(),jump.xOokisa,jump.yOokisa)
 
     init{
         buttonSyokika()
         buttonIroSettei()
+
+        hidari.rect =  hidariRect
+        migi.rect =  migiRect
+        jump.rect =  jumpRect
+
     }
 
 
@@ -82,6 +80,22 @@ class Controller {
     }
 
 
+
+    fun pushButtonCheck() {
+        if(houkou == "hidari"){
+            hidariButtonIro.color = argb(100, 100, 100, 200)
+            hidari.paint.color = argb(100, 100, 100, 200)
+        }
+        if(houkou == "migi"){
+            migiButtonIro.color = argb(100, 100, 100, 200)
+            migi.paint.color = argb(100, 100, 100, 200)
+        }
+        if(houkou == "jump"){
+            jumpButtonIro.color = argb(100, 100, 100, 200)
+            jump.paint.color = argb(100, 100, 100, 200)
+        }
+    }
+
     fun clickPointCheck(clickX:Int,clickY:Int,clickState:String){
         houkou = "nashi"
          if (clickState == "ACTION_UP"){houkou = "nashi"}
@@ -109,30 +123,14 @@ class Controller {
         }
     }
 
-
-    fun pushButtonCheck() {
-        if(houkou == "hidari"){
-            hidariButtonIro.color = argb(100, 100, 100, 200)
-            hidari.paint.color = argb(100, 100, 100, 200)
-        }
-        if(houkou == "migi"){
-            migiButtonIro.color = argb(100, 100, 100, 200)
-            migi.paint.color = argb(100, 100, 100, 200)
-        }
-        if(houkou == "jump"){
-            jumpButtonIro.color = argb(100, 100, 100, 200)
-            jump.paint.color = argb(100, 100, 100, 200)
-        }
-    }
-
     fun draw(canvas: Canvas){
         buttonSyokika()
         pushButtonCheck()
-        canvas.drawRect( buttonHidariRect, hidariButtonIro)   //
+        canvas.drawRect( hidariRect, hidari.paint)   //
         canvas.drawText("←",(hidari.x+20).toFloat(),(hidari.y+115).toFloat(),hyoujiIro)
-        canvas.drawRect( buttonMigiRect, migiButtonIro)   //
+        canvas.drawRect( migiRect, migi.paint)   //
         canvas.drawText("→",(migi.x+20).toFloat(),(migi.y+115).toFloat(),hyoujiIro)
-        canvas.drawRect( buttonJumpRect, jumpButtonIro)   //
+        canvas.drawRect( jumpRect, jump.paint)   //
         canvas.drawText("Jump!",(jump.x+20).toFloat(),(jump.y+115).toFloat(),hyoujiIro)
     }
 
