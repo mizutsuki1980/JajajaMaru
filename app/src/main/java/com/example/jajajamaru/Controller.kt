@@ -27,7 +27,7 @@ class Controller {
     val buttonMigiOokisa = 150
 
     val buttonJumpX = 30+170
-    val buttonJumpY = 920+170
+    val buttonJumpY = 920
     val buttonJumpOokisa = 150
 
     val buttonHidariRect = buttonRect(buttonHidariX.toInt() ,buttonHidariY.toInt(),buttonHidariOokisa,1)
@@ -90,7 +90,7 @@ class Controller {
             }
         }
         if(clickX > (30+170) && clickX <(30+170+170+150)){
-            if(clickY > 920+170 && clickY < 1070+170) {
+            if(clickY > 920 && clickY < 1070) {
                 if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
                     houkou = "jump"
                 }
