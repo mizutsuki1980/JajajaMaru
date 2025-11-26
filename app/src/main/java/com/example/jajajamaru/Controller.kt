@@ -40,7 +40,7 @@ class Controller {
         buttonIroSettei()
     }
 
-
+    //とりあえずジャンプボタンをちょっと上にするか
 
     private fun buttonIroSettei() {
         jumpButtonIro.style = Paint.Style.FILL
