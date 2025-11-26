@@ -26,20 +26,16 @@ class Controller {
 
     val buttonHidariX = 30
     val buttonHidariY = 920
-    val buttonHidariOokisa = 150
 
     val buttonMigiX = 30+170+170+170
     val buttonMigiY = 920
-    val buttonMigiOokisa = 150
 
     val buttonJumpX = 30+170
     val buttonJumpY = 920
-    val buttonJumpOokisa = 300
 
-    val buttonHidariRect = buttonMake(hidari.x.toInt() ,hidari.y.toInt(),buttonHidariOokisa)
-    val buttonMigiRect = buttonMake(buttonMigiX.toInt() ,buttonMigiY.toInt(),buttonMigiOokisa)
-    val buttonJumpRect = buttonMake(buttonJumpX.toInt() ,buttonJumpY.toInt(),buttonJumpOokisa)
-
+    val buttonHidariRect = buttonMakeXOokisaYOokisa(hidari.x.toInt() ,hidari.y.toInt(),hidari.xOokisa,hidari.yOokisa)
+    val buttonMigiRect = buttonMakeXOokisaYOokisa(migi.x.toInt() ,migi.y.toInt(),migi.xOokisa,migi.yOokisa)
+    val buttonJumpRect = buttonMakeXOokisaYOokisa(jump.x.toInt() ,jump.y.toInt(),jump.xOokisa,jump.yOokisa)
 
     init{
         buttonSyokika()
@@ -133,14 +129,22 @@ class Controller {
         buttonSyokika()
         pushButtonCheck()
         canvas.drawRect( buttonHidariRect, hidariButtonIro)   //
-        canvas.drawText("←",(buttonHidariX+20).toFloat(),(buttonHidariY+115).toFloat(),hyoujiIro)
+        canvas.drawText("←",(hidari.x+20).toFloat(),(hidari.y+115).toFloat(),hyoujiIro)
         canvas.drawRect( buttonMigiRect, migiButtonIro)   //
-        canvas.drawText("→",(buttonMigiX+20).toFloat(),(buttonMigiY+115).toFloat(),hyoujiIro)
+        canvas.drawText("→",(migi.x+20).toFloat(),(migi.y+115).toFloat(),hyoujiIro)
         canvas.drawRect( buttonJumpRect, jumpButtonIro)   //
-        canvas.drawText("Jump!",(buttonJumpX+20).toFloat(),(buttonJumpY+115).toFloat(),hyoujiIro)
+        canvas.drawText("Jump!",(jump.x+20).toFloat(),(jump.y+115).toFloat(),hyoujiIro)
     }
 
 
+    fun buttonMakeXOokisaYOokisa(xxx:Int,yyy:Int,xOkisa:Int,yOokisa:Int): Rect {
+        val left = xxx
+        val right = xxx  + xOkisa
+        val top = yyy
+        val bottom = yyy + yOokisa
+        val m = Rect(left, top, right,bottom)
+        return m
+    }
 
     fun buttonMake(xxx:Int,yyy:Int,ooookisa:Int): Rect {
         //なんだbairituって、、、倍率？
