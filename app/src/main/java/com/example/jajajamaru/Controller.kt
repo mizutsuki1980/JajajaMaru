@@ -10,9 +10,9 @@ import android.graphics.Rect
 //そもそも、なんかまとめらそうだよなぁ、、、、。データクラス？かな？
 class Controller {
 
-    var hidari = Button(30,920,150,150,Paint(),Rect(0, 0, 0,0))
-    var migi = Button(30+170+170+170,920,150,150,Paint(),Rect(0, 0, 0,0))
-    var jump = Button(30+170,920,300,150,Paint(),Rect(0, 0, 0,0))
+    var hidari = Button(30,820,150,400,Paint(),Rect(0, 0, 0,0))
+    var migi = Button(540,820,150,400,Paint(),Rect(0, 0, 0,0))
+    var jump = Button(200,820,320,400,Paint(),Rect(0, 0, 0,0))
 
     val hidariRect = buttonMakeXOokisaYOokisa(hidari.x.toInt() ,hidari.y.toInt(),hidari.xOokisa,hidari.yOokisa)
     val migiRect = buttonMakeXOokisaYOokisa(migi.x.toInt() ,migi.y.toInt(),migi.xOokisa,migi.yOokisa)
@@ -21,101 +21,69 @@ class Controller {
     var houkou = "nashi"
 
     //ここにボタンが増えただけ色の設定も置かなきゃいけないのかー、面倒だなぁ
-    var hidariButtonIro = Paint()
-    var migiButtonIro = Paint()
-    var jumpButtonIro = Paint()
-    var buttonIro = Paint()
-    var buttonPushIro = Paint()
+    val buttonPushIro = Paint()
+    val buttonNormalIro = Paint()
     var hyoujiIro =  Paint()
 
 
 
     init{
-        buttonSyokika()
-        buttonIroSettei()
-
+        //最初の所で設定できいないのでここでRectを設定している
         hidari.rect =  hidariRect
         migi.rect =  migiRect
         jump.rect =  jumpRect
 
+        //ボタンの初期化、文字の色設定
+        buttonIroSettei()
+        mozinoIroSettei()
     }
 
 
-    private fun buttonIroSettei() {
-
-        jump.paint.style = Paint.Style.FILL
-        jump.paint.color = argb(200, 0, 0, 150)
-
-        migi.paint.style = Paint.Style.FILL
-        migi.paint.color = argb(200, 0, 0, 150)
-
-        hidari.paint.style = Paint.Style.FILL
-        hidari.paint.color = argb(200, 0, 0, 150)
-
-        jumpButtonIro.style = Paint.Style.FILL
-        jumpButtonIro.color = argb(200, 0, 0, 150)
-
-        buttonIro.style = Paint.Style.FILL
-        buttonIro.color = argb(200, 0, 0, 150)
-
-        buttonPushIro.style = Paint.Style.FILL
-        buttonPushIro.color = argb(100, 0, 0, 150)
-
+    private fun mozinoIroSettei(){
         hyoujiIro.style = Paint.Style.FILL
         hyoujiIro.color = Color.BLUE
         hyoujiIro.textSize = 100.toFloat()
-
     }
 
+    private fun buttonIroSettei() {
+        buttonPushIro.style = Paint.Style.FILL
+        buttonPushIro.color = argb(100, 100, 100, 150)
+        buttonNormalIro.style = Paint.Style.FILL
+        buttonNormalIro.color = argb(200, 0, 0, 150)
 
-    private fun buttonSyokika(){
-        hidariButtonIro.style = Paint.Style.FILL
-        hidariButtonIro.color = argb(200, 0, 0, 150)
 
-        migiButtonIro.style = Paint.Style.FILL
-        migiButtonIro.color = argb(200, 0, 0, 150)
+        jump.paint = buttonNormalIro
+        migi.paint = buttonNormalIro
+        hidari.paint = buttonNormalIro
 
-        jumpButtonIro.style = Paint.Style.FILL
-        jumpButtonIro.color = argb(200, 0, 0, 150)
     }
-
-
 
     fun pushButtonCheck() {
-        if(houkou == "hidari"){
-            hidariButtonIro.color = argb(100, 100, 100, 200)
-            hidari.paint.color = argb(100, 100, 100, 200)
-        }
-        if(houkou == "migi"){
-            migiButtonIro.color = argb(100, 100, 100, 200)
-            migi.paint.color = argb(100, 100, 100, 200)
-        }
-        if(houkou == "jump"){
-            jumpButtonIro.color = argb(100, 100, 100, 200)
-            jump.paint.color = argb(100, 100, 100, 200)
-        }
+        if(houkou == "hidari"){ hidari.paint = buttonPushIro }
+        if(houkou == "migi"){ migi.paint = buttonPushIro }
+        if(houkou == "jump"){ jump.paint = buttonPushIro }
     }
 
     fun clickPointCheck(clickX:Int,clickY:Int,clickState:String){
         houkou = "nashi"
          if (clickState == "ACTION_UP"){houkou = "nashi"}
 
-        if(clickX > 50 && clickX <150){
-            if(clickY > 920 && clickY <1070) {
+        if(clickX > hidari.x && clickX <(hidari.x+hidari.xOokisa)){
+            if(clickY > hidari.y && clickY <(hidari.y+hidari.yOokisa)) {
                 if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
                     houkou = "hidari"
                 }
             }
         }
-        if(clickX > (30+170+170+170) && clickX <(30+170+170+170+150)){
-            if(clickY > 920 && clickY < 1070) {
+        if(clickX > (migi.x) && clickX <(migi.x+migi.xOokisa)){
+            if(clickY > migi.y && clickY < (migi.y + migi.yOokisa)) {
                 if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
                     houkou = "migi"
                 }
             }
         }
-        if(clickX > (30+170) && clickX <(30+170+170+150)){
-            if(clickY > 920 && clickY < 1070) {
+        if(clickX > (jump.x) && clickX <(jump.x + jump.xOokisa)){
+            if(clickY > jump.y && clickY < (jump.y + jump.yOokisa)) {
                 if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
                     houkou = "jump"
                 }
@@ -124,7 +92,7 @@ class Controller {
     }
 
     fun draw(canvas: Canvas){
-        buttonSyokika()
+        buttonIroSettei()
         pushButtonCheck()
         canvas.drawRect( hidariRect, hidari.paint)   //
         canvas.drawText("←",(hidari.x+20).toFloat(),(hidari.y+115).toFloat(),hyoujiIro)
@@ -143,18 +111,4 @@ class Controller {
         val m = Rect(left, top, right,bottom)
         return m
     }
-
-    fun buttonMake(xxx:Int,yyy:Int,ooookisa:Int): Rect {
-        //なんだbairituって、、、倍率？
-        //よくわかんねぇもんで大きくすんなよ
-
-        //大きさを増やすと縦横等倍に増えてくのか、、、使えねぇなぁ
-        val left = xxx
-        val right = xxx  + ooookisa
-        val top = yyy
-        val bottom = yyy + ooookisa
-        val m = Rect(left, top, right,bottom)
-        return m
-    }
-
 }
