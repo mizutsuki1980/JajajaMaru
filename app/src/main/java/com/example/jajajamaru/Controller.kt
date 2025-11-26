@@ -28,11 +28,11 @@ class Controller {
 
     val buttonJumpX = 30+170
     val buttonJumpY = 920
-    val buttonJumpOokisa = 150
+    val buttonJumpOokisa = 300
 
-    val buttonHidariRect = buttonRect(buttonHidariX.toInt() ,buttonHidariY.toInt(),buttonHidariOokisa,1)
-    val buttonMigiRect = buttonRect(buttonMigiX.toInt() ,buttonMigiY.toInt(),buttonMigiOokisa,1)
-    val buttonJumpRect = buttonRect(buttonJumpX.toInt() ,buttonJumpY.toInt(),buttonJumpOokisa,2)
+    val buttonHidariRect = buttonMake(buttonHidariX.toInt() ,buttonHidariY.toInt(),buttonHidariOokisa)
+    val buttonMigiRect = buttonMake(buttonMigiX.toInt() ,buttonMigiY.toInt(),buttonMigiOokisa)
+    val buttonJumpRect = buttonMake(buttonJumpX.toInt() ,buttonJumpY.toInt(),buttonJumpOokisa)
 
 
     init{
@@ -117,9 +117,14 @@ class Controller {
     }
 
 
-    fun buttonRect(xxx:Int,yyy:Int,ooookisa:Int,bairitu:Int): Rect {
+
+    fun buttonMake(xxx:Int,yyy:Int,ooookisa:Int): Rect {
+        //なんだbairituって、、、倍率？
+        //よくわかんねぇもんで大きくすんなよ
+
+        //大きさを増やすと縦横等倍に増えてくのか、、、使えねぇなぁ
         val left = xxx
-        val right = xxx*bairitu  + ooookisa
+        val right = xxx  + ooookisa
         val top = yyy
         val bottom = yyy + ooookisa
         val m = Rect(left, top, right,bottom)
