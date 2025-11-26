@@ -10,9 +10,9 @@ import android.graphics.Rect
 //そもそも、なんかまとめらそうだよなぁ、、、、。データクラス？かな？
 class Controller {
 
-    val hidari = Button(30,920,150,150,Paint())
-    val migi = Button(30+170+170+170,920,150,150,Paint())
-    val jump = Button(30+170,920,300,150,Paint())
+    var hidari = Button(30,920,150,150,Paint())
+    var migi = Button(30+170+170+170,920,150,150,Paint())
+    var jump = Button(30+170,920,300,150,Paint())
 
     var houkou = "nashi"
 
@@ -48,6 +48,16 @@ class Controller {
 
 
     private fun buttonIroSettei() {
+
+        jump.paint.style = Paint.Style.FILL
+        jump.paint.color = argb(200, 0, 0, 150)
+
+        migi.paint.style = Paint.Style.FILL
+        migi.paint.color = argb(200, 0, 0, 150)
+
+        hidari.paint.style = Paint.Style.FILL
+        hidari.paint.color = argb(200, 0, 0, 150)
+
         jumpButtonIro.style = Paint.Style.FILL
         jumpButtonIro.color = argb(200, 0, 0, 150)
 
@@ -57,10 +67,10 @@ class Controller {
         buttonPushIro.style = Paint.Style.FILL
         buttonPushIro.color = argb(100, 0, 0, 150)
 
-
         hyoujiIro.style = Paint.Style.FILL
         hyoujiIro.color = Color.BLUE
         hyoujiIro.textSize = 100.toFloat()
+
     }
 
 
@@ -105,9 +115,18 @@ class Controller {
 
 
     fun pushButtonCheck() {
-        if(houkou == "hidari"){ hidariButtonIro.color = argb(100, 100, 100, 200) }
-        if(houkou == "migi"){migiButtonIro.color = argb(100, 100, 100, 200) }
-        if(houkou == "jump"){jumpButtonIro.color = argb(100, 100, 100, 200) }
+        if(houkou == "hidari"){
+            hidariButtonIro.color = argb(100, 100, 100, 200)
+            hidari.paint.color = argb(100, 100, 100, 200)
+        }
+        if(houkou == "migi"){
+            migiButtonIro.color = argb(100, 100, 100, 200)
+            migi.paint.color = argb(100, 100, 100, 200)
+        }
+        if(houkou == "jump"){
+            jumpButtonIro.color = argb(100, 100, 100, 200)
+            jump.paint.color = argb(100, 100, 100, 200)
+        }
     }
 
     fun draw(canvas: Canvas){
