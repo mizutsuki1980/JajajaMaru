@@ -76,22 +76,17 @@ class Map {
         val goalIro = Paint()
         goalIro.style = Paint.Style.FILL
         goalIro.color = argb(255, 255, 30, 30)
-
         val xx = MASU_SIZE*118+xZurasu
         val yy = MASU_SIZE*3
-
         canvas.drawRect(shikakuRectXY(xx,yy,MASU_SIZE),goalIro)
     }
 
     fun drawMap(canvas: Canvas, row:Int, col:Int, masushurui:Int, xZurasu: Int){
         //呼ばれるときに、360-sekaixってなってるのはなんだろうか？　まぁいまんとこはいいか。
         // map.drawMap(canvas,i,j,map.masShurui(i,j),360-jiki.sekaipos.x)
-
         val iro = Paint()
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 30, 30, 30)
-
-
         when (masushurui) {
             TYPE_SORA -> { iro.color = argb(255, 155, 155, 250) }
             TYPE_ISHI -> { iro.color = argb(255, 80, 80, 80)}
