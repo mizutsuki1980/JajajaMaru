@@ -4,7 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Color.argb
 import android.graphics.Paint
 import android.graphics.Rect
-
+import kotlin.text.toDouble
 
 
 class Map {
@@ -72,12 +72,29 @@ class Map {
         )
     }
 
+    //ゴールがどのマスにあるのか
+    val goalXMasu = 118
+    val goalYmasu = 3
+
+    fun goalCheck(jiki:Jiki,x:Int,y:Int):Boolean {
+            val vx = x
+            val vy = y
+            val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
+            //ホーミング避けるのきつくね？ということで、すこし小さくします
+            val atarikyori = (jiki.ookisa-5).toDouble()
+            if (kyori < atarikyori){
+                return true
+            }else{
+                return false
+            }
+    }
+
     fun drawMapGoal(canvas: Canvas,x:Int,y:Int, xZurasu: Int){
         val goalIro = Paint()
         goalIro.style = Paint.Style.FILL
         goalIro.color = argb(255, 255, 30, 30)
-        val xx = MASU_SIZE*118+xZurasu
-        val yy = MASU_SIZE*3
+        val xx = MASU_SIZE*goalXMasu+xZurasu
+        val yy = MASU_SIZE*goalYmasu
         canvas.drawRect(shikakuRectXY(xx,yy,MASU_SIZE),goalIro)
     }
 
