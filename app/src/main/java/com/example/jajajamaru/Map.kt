@@ -81,7 +81,7 @@ class Map {
 
     fun drawMap(canvas: Canvas, row:Int, col:Int, masushurui:Int, jiki:Jiki){
         //呼ばれるときに、360-sekaixってなってるのはなんだろうか？　まぁいまんとこはいいか。
-        // map.drawMap(canvas,i,j,map.masShurui(i,j),360-jiki.sekaipos.x)
+        // map.drawMap(canvas,i,j,map.masShurui(i,j),360-jiki.sekaipos.x)//
         val iro = Paint()
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 30, 30, 30)
