@@ -70,11 +70,11 @@ class Map {
         canvas.drawText("Game Claer", (220).toFloat(), (400).toFloat(), iroMoji)
     }
 
-    fun drawMapGoal(canvas: Canvas,x:Int,y:Int, xZurasu: Int){
+    fun drawMapGoal(canvas: Canvas,x:Int,y:Int,jiki:Jiki){
         val goalIro = Paint()
         goalIro.style = Paint.Style.FILL
         goalIro.color = argb(255, 255, 30, 30)
-        val xx = MASU_SIZE*goalXMasu+xZurasu
+        val xx = MASU_SIZE*goalXMasu+(360-jiki.sekaipos.x)
         val yy = MASU_SIZE*goalYmasu
         canvas.drawRect(shikakuRectXY(xx,yy,MASU_SIZE),goalIro)
     }

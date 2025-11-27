@@ -77,7 +77,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 map.drawMap(canvas,i,j,map.masShurui(i,j),jiki)
             }
         }
-        map.drawMapGoal(canvas,0,0,360-jiki.sekaipos.x)
+        map.drawMapGoal(canvas,0,0,jiki)
     }
 
     var clickNitenmeX = 0
