@@ -53,9 +53,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun tsugiNoSyori() {
         controller.clickPointCheck(clickX,clickY,clickState)
         jiki.idoSyori(controller,map)
-        frame += 1  //繰り返し処理はここでやってる
-        invalidate()
-        handler.postDelayed({ tsugiNoSyori() }, 100)
+        if(map.goalCheck(jiki)) {
+
+            invalidate()
+        }else {
+          frame += 1  //繰り返し処理はここでやってる
+            invalidate()
+            handler.postDelayed({ tsugiNoSyori() }, 100)
+        }
     }
 
     override fun onDraw(canvas: Canvas) {
