@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Color.argb
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -67,6 +68,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         controller.draw(canvas)
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusanpng, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, jiki.initialPos.x.toFloat()-40, jiki.sekaipos.y.toFloat()-45, null)
+        if(map.goalCheck(jiki)) {
+            val iroMoji = Paint()
+            iroMoji.style = Paint.Style.FILL
+            iroMoji.color = argb(255, 255, 255, 255)
+            iroMoji.textSize = 62.toFloat()
+            canvas.drawText("Game Claer", (220).toFloat(), (400).toFloat(), iroMoji)
+        }
     }
 
     fun mapCreate(canvas:Canvas){

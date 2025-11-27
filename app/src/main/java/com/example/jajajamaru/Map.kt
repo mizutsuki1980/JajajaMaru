@@ -73,20 +73,27 @@ class Map {
     }
 
     //ゴールがどのマスにあるのか
-    val goalXMasu = 118
-    val goalYmasu = 3
+//    val goalXMasu = 118
+    val goalXMasu = 15
+    val goalYmasu = 13
 
-    fun goalCheck(jiki:Jiki,x:Int,y:Int):Boolean {
-            val vx = x
-            val vy = y
-            val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
+    fun goalCheck(jiki:Jiki):Boolean {
+//        val xZurasu = 360-jiki.sekaipos.x
+        val xx = MASU_SIZE*goalXMasu
+        val yy = MASU_SIZE*goalYmasu
+
+        val vx = xx - jiki.sekaipos.x
+        val vy = yy - jiki.sekaipos.y
+
+        val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
             //ホーミング避けるのきつくね？ということで、すこし小さくします
-            val atarikyori = (jiki.ookisa-5).toDouble()
-            if (kyori < atarikyori){
-                return true
-            }else{
-                return false
-            }
+        val atarikyori = (jiki.ookisa/4).toDouble()
+
+        if (kyori < atarikyori){
+            return true
+        }else{
+            return false
+        }
     }
 
     fun drawMapGoal(canvas: Canvas,x:Int,y:Int, xZurasu: Int){
