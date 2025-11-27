@@ -68,13 +68,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         controller.draw(canvas)
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusanpng, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, jiki.initialPos.x.toFloat()-40, jiki.sekaipos.y.toFloat()-45, null)
-        if(map.goalCheck(jiki)) {
-            val iroMoji = Paint()
-            iroMoji.style = Paint.Style.FILL
-            iroMoji.color = argb(255, 255, 255, 255)
-            iroMoji.textSize = 62.toFloat()
-            canvas.drawText("Game Claer", (220).toFloat(), (400).toFloat(), iroMoji)
-        }
+        if(map.goalCheck(jiki)) { map.drawMapGoalHoyuzi(canvas) }
     }
 
     fun mapCreate(canvas:Canvas){
