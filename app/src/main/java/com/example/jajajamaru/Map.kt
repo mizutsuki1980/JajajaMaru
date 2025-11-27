@@ -68,7 +68,6 @@ class Map {
         iroMoji.color = argb(255, 255, 255, 255)
         iroMoji.textSize = 62.toFloat()
         canvas.drawText("Game Claer", (220).toFloat(), (400).toFloat(), iroMoji)
-
     }
 
     fun drawMapGoal(canvas: Canvas,x:Int,y:Int, xZurasu: Int){
