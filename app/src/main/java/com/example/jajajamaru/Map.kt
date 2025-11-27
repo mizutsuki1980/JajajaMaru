@@ -79,7 +79,7 @@ class Map {
         canvas.drawRect(shikakuRectXY(xx,yy,MASU_SIZE),goalIro)
     }
 
-    fun drawMap(canvas: Canvas, row:Int, col:Int, masushurui:Int, xZurasu: Int){
+    fun drawMap(canvas: Canvas, row:Int, col:Int, masushurui:Int, jiki:Jiki){
         //呼ばれるときに、360-sekaixってなってるのはなんだろうか？　まぁいまんとこはいいか。
         // map.drawMap(canvas,i,j,map.masShurui(i,j),360-jiki.sekaipos.x)
         val iro = Paint()
@@ -90,7 +90,12 @@ class Map {
             TYPE_ISHI -> { iro.color = argb(255, 80, 80, 80)}
         }
         //ここまでは色の設定
-        val xx = MASU_SIZE*col+xZurasu
+
+        // jikiにvar sekaipos = Vec2D(360,400)として、作るときに360を与えている。
+        //それを引いてるのかな？
+        // map.drawMap(canvas,i,j,map.masShurui(i,j),360-jiki.sekaipos.x)
+
+        val xx = MASU_SIZE*col+(360-jiki.sekaipos.x)
         val yy = MASU_SIZE*row
         canvas.drawRect(shikakuRectXY(xx,yy,MASU_SIZE),iro)
     }

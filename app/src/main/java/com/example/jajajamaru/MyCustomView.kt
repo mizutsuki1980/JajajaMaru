@@ -74,7 +74,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun mapCreate(canvas:Canvas){
         for (i in 0 until map.masu.size) {
             for (j in 0 until map.masu[i].size) {
-                map.drawMap(canvas,i,j,map.masShurui(i,j),360-jiki.sekaipos.x)
+                map.drawMap(canvas,i,j,map.masShurui(i,j),jiki)
             }
         }
         map.drawMapGoal(canvas,0,0,360-jiki.sekaipos.x)
