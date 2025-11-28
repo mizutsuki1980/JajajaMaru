@@ -16,9 +16,14 @@ class GameCounter {
         iroMoji.style = Paint.Style.FILL
         iroMoji.color = argb(255, 255, 255, 255)
         iroMoji.textSize = 30.toFloat()
+        if(isClear){        iroMoji.color = argb(255, 255, 100, 100)
+        }
 
         canvas.drawText("Time",(210).toFloat(),(24).toFloat(),iroMoji)
         canvas.drawText(zerohuyasu(time.toString()),(285).toFloat(),(24).toFloat(),iroMoji)
+
+
+        if(isClear) { map.drawMapGoalHoyuzi(canvas) }
 
     }
     private fun zerohuyasu(text:String):String{

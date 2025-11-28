@@ -58,7 +58,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         frame += 1  //繰り返し処理はここでやってる
         invalidate()
-
+        // クリアすると自動的に何秒後かに次のステージに進ようにする。
         handler.postDelayed({ tsugiNoSyori() }, 100)
 
     }
@@ -74,7 +74,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusanpng, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, jiki.initialPos.x.toFloat()-40, jiki.sekaipos.y.toFloat()-45, null)
         gameCounter.draw(canvas,frame,jiki,map)
-        if(map.goalCheck(jiki)) { map.drawMapGoalHoyuzi(canvas) }
     }
 
 
