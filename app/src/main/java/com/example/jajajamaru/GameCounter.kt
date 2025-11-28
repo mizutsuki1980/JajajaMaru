@@ -16,16 +16,26 @@ class GameCounter {
         iroMoji.style = Paint.Style.FILL
         iroMoji.color = argb(255, 255, 255, 255)
         iroMoji.textSize = 30.toFloat()
-        if(isClear){        iroMoji.color = argb(255, 255, 100, 100)
+        if(isClear){
+            iroMoji.color = argb(255, 255, 100, 100)
+            drawMapGoalHoyuzi(canvas)
         }
 
         canvas.drawText("Time",(210).toFloat(),(24).toFloat(),iroMoji)
         canvas.drawText(zerohuyasu(time.toString()),(285).toFloat(),(24).toFloat(),iroMoji)
 
 
-        if(isClear) { map.drawMapGoalHoyuzi(canvas) }
 
     }
+
+    fun drawMapGoalHoyuzi(canvas: Canvas) {
+        val iroMoji = Paint()
+        iroMoji.style = Paint.Style.FILL
+        iroMoji.color = argb(255, 255, 255, 255)
+        iroMoji.textSize = 62.toFloat()
+        canvas.drawText("Game Claer", (220).toFloat(), (400).toFloat(), iroMoji)
+    }
+
     private fun zerohuyasu(text:String):String{
         val ketasuu = 8 //今回は８桁に固定
         val length = text.length
