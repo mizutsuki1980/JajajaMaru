@@ -20,6 +20,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var vec2d = Vec2D(initialJikiX, initialJikiY)
     var jiki = Jiki(vec2d)
+    var counter = GameCounter()
     var controller = Controller()
     var clickMotionVent1 = ""
     var clickMotionVent2 = ""
@@ -73,27 +74,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         controller.draw(canvas)
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusanpng, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, jiki.initialPos.x.toFloat()-40, jiki.sekaipos.y.toFloat()-45, null)
-
-        val iroMoji = Paint()
-        iroMoji.style = Paint.Style.FILL
-        iroMoji.color = argb(255, 255, 255, 255)
-        iroMoji.textSize = 30.toFloat()
-        canvas.drawText(zerohuyasu(frame.toString()),(x+9+200).toFloat(),(y+44).toFloat(),iroMoji)
-        canvas.drawText("time",(20+200).toFloat(),(19).toFloat(),iroMoji)
+        counter.draw(canvas,frame,jiki,map)
         if(map.goalCheck(jiki)) { map.drawMapGoalHoyuzi(canvas) }
     }
 
 
-    fun zerohuyasu(text:String):String{
-        val ketasuu = 8 //今回は８桁に固定
-        val length = text.length
-        var newtext = ""
-        for (a in 0..<(ketasuu-length)) {
-            newtext = "0" + newtext
-        }
-        newtext = newtext + text
-        return newtext
-    }
 
 
     fun mapCreate(canvas:Canvas){
