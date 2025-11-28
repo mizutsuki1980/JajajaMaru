@@ -18,7 +18,7 @@ class GameCounter {
         iroMoji.textSize = 30.toFloat()
         if(isClear){
             iroMoji.color = argb(255, 255, 100, 100)
-            drawMapGoalHoyuzi(canvas)
+            goalHyouzi(canvas)
         }
 
         canvas.drawText("Time",(210).toFloat(),(24).toFloat(),iroMoji)
@@ -28,7 +28,7 @@ class GameCounter {
 
     }
 
-    fun drawMapGoalHoyuzi(canvas: Canvas) {
+    fun goalHyouzi(canvas: Canvas) {
         val iroMoji = Paint()
         iroMoji.style = Paint.Style.FILL
         iroMoji.color = argb(255, 255, 255, 255)
