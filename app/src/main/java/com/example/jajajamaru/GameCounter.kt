@@ -5,6 +5,11 @@ import android.graphics.Color.argb
 import android.graphics.Paint
 
 class GameCounter {
+    var isClear = false
+    var time = 0
+    fun clearCheck(){
+
+    }
 
     fun draw(canvas: Canvas,frame:Int,jiki:Jiki,map:Map) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         val iroMoji = Paint()
@@ -13,15 +18,10 @@ class GameCounter {
         iroMoji.textSize = 30.toFloat()
 
         canvas.drawText("Time",(210).toFloat(),(24).toFloat(),iroMoji)
-        canvas.drawText(zerohuyasu(frame.toString()),(285).toFloat(),(24).toFloat(),iroMoji)
+        canvas.drawText(zerohuyasu(time.toString()),(285).toFloat(),(24).toFloat(),iroMoji)
 
     }
-
-
-
-
-
-    fun zerohuyasu(text:String):String{
+    private fun zerohuyasu(text:String):String{
         val ketasuu = 8 //今回は８桁に固定
         val length = text.length
         var newtext = ""
@@ -31,5 +31,7 @@ class GameCounter {
         newtext = newtext + text
         return newtext
     }
+
+
 
 }

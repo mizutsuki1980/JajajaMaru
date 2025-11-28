@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.Color.argb
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -20,7 +19,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
     var vec2d = Vec2D(initialJikiX, initialJikiY)
     var jiki = Jiki(vec2d)
-    var counter = GameCounter()
+    var gameCounter = GameCounter()
     var controller = Controller()
     var clickMotionVent1 = ""
     var clickMotionVent2 = ""
@@ -54,15 +53,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun tsugiNoSyori() {
         controller.clickPointCheck(clickX,clickY,clickState)
         jiki.idoSyori(controller,map)
-        //ここで面が変わる処理ができたら、一応完成？
-        if(map.goalCheck(jiki)) {
+        if(map.goalCheck(jiki)) {gameCounter.isClear = true}
+        if(gameCounter.isClear){}else{gameCounter.time += 1}
 
-            invalidate()
-        }else {
-          frame += 1  //繰り返し処理はここでやってる
-            invalidate()
-            handler.postDelayed({ tsugiNoSyori() }, 100)
-        }
+        frame += 1  //繰り返し処理はここでやってる
+        invalidate()
+
+        handler.postDelayed({ tsugiNoSyori() }, 100)
+
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -75,7 +73,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         controller.draw(canvas)
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusanpng, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, jiki.initialPos.x.toFloat()-40, jiki.sekaipos.y.toFloat()-45, null)
-        counter.draw(canvas,frame,jiki,map)
+        gameCounter.draw(canvas,frame,jiki,map)
         if(map.goalCheck(jiki)) { map.drawMapGoalHoyuzi(canvas) }
     }
 
