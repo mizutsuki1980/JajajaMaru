@@ -12,8 +12,8 @@ class GameCounter {
         iroMoji.color = argb(255, 255, 255, 255)
         iroMoji.textSize = 30.toFloat()
 
-        canvas.drawText(zerohuyasu(frame.toString()),(9+200).toFloat(),(44).toFloat(),iroMoji)
-        canvas.drawText("time",(20+200).toFloat(),(19).toFloat(),iroMoji)
+        canvas.drawText("Time",(210).toFloat(),(24).toFloat(),iroMoji)
+        canvas.drawText(zerohuyasu(frame.toString()),(285).toFloat(),(24).toFloat(),iroMoji)
 
     }
 
