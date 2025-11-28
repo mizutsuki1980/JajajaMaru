@@ -54,6 +54,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun tsugiNoSyori() {
         controller.clickPointCheck(clickX,clickY,clickState)
         jiki.idoSyori(controller,map)
+        //ここで面が変わる処理ができたら、一応完成？
         if(map.goalCheck(jiki)) {
 
             invalidate()
