@@ -20,12 +20,8 @@ class GameCounter {
             iroMoji.color = argb(255, 255, 100, 100)
             goalHyouzi(canvas)
         }
-
         canvas.drawText("Time",(210).toFloat(),(24).toFloat(),iroMoji)
         canvas.drawText(zerohuyasu(time.toString()),(285).toFloat(),(24).toFloat(),iroMoji)
-
-
-
     }
 
     fun goalHyouzi(canvas: Canvas) {

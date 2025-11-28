@@ -31,7 +31,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun syokikaGameReset(){
         jiki = Jiki(vec2d)
+        gameCounter = GameCounter()
     }
+
+
     fun debug() : String{
         val y = jiki.sekaipos.y
         val x = jiki.sekaipos.x
@@ -55,12 +58,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jiki.idoSyori(controller,map)
         if(map.goalCheck(jiki)) {gameCounter.isClear = true}
         if(gameCounter.isClear){}else{gameCounter.time += 1}
-
         frame += 1  //繰り返し処理はここでやってる
-        invalidate()
-        // クリアすると自動的に何秒後かに次のステージに進ようにする。
-        handler.postDelayed({ tsugiNoSyori() }, 100)
+        //100フレーム後にリセットだとすると
+        if(frame-gameCounter.time==15){
+            syokikaGameReset()
+        }
 
+        invalidate()
+        handler.postDelayed({ tsugiNoSyori() }, 100)
     }
 
     override fun onDraw(canvas: Canvas) {
