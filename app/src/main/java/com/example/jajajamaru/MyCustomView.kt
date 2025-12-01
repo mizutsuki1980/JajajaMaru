@@ -30,6 +30,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
     fun syokikaGameReset(){
+        frame = 0
         jiki = Jiki(vec2d)
         gameCounter = GameCounter()
     }
@@ -61,8 +62,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         frame += 1  //繰り返し処理はここでやってる
 
         //一回クリアした後に、もう一回クリアすると、へんな風になっている気がする。
-        //100フレーム後にリセットだとすると
+        //フレームがリセットされていないので、二回目以降はクリア後に自動ですすまない
 
+        //100フレーム後にリセットだとすると
         if(frame-gameCounter.time==15){
             syokikaGameReset()
         }
