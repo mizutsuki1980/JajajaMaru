@@ -59,7 +59,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if(map.goalCheck(jiki)) {gameCounter.isClear = true}
         if(gameCounter.isClear){}else{gameCounter.time += 1}
         frame += 1  //繰り返し処理はここでやってる
+
+        //一回クリアした後に、もう一回クリアすると、へんな風になっている気がする。
         //100フレーム後にリセットだとすると
+
         if(frame-gameCounter.time==15){
             syokikaGameReset()
         }
