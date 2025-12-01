@@ -197,7 +197,7 @@ class Jiki(val initialPos: Vec2D) {
         if (isJump == false) {
             if (controller.houkou == "jump") {
                 isJump = true
-                u1CandC = u1CandC.copy(sokudo = Vec2DF(u1CandC.sokudo.x, -35f))
+                u1CandC = u1CandC.copy(sokudo = Vec2DF(u1CandC.sokudo.x, -60f))
             }
         }
         return u1CandC
@@ -209,8 +209,9 @@ class Jiki(val initialPos: Vec2D) {
         //だから何？
     }
 
+    //ジャンプの加速度
     fun kasokudoY(): Float {
-        return 4.0f
+        return 10.0f
     }
 
 
