@@ -63,6 +63,7 @@ class Controller {
         if(houkou == "migi"){ migi.paint = buttonPushIro }
         if(houkou == "jump"){ jump.paint = buttonPushIro }
     }
+    //ここでどんな処理をしているんだろうか？
 
     fun clickPointCheck(clickX:Int,clickY:Int,clickState:String){
         houkou = "nashi"
