@@ -15,8 +15,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickState = ""
     val initialJikiX = 360 //初期位置
     val initialJikiY = 400 //初期位置
-    var clickX = initialJikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
-    var clickY = initialJikiY  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
+
     var vec2d = Vec2D(initialJikiX, initialJikiY)
     var jiki = Jiki(vec2d)
     var gameCounter = GameCounter()
@@ -49,9 +48,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun tsugiNoSyori() {
-        controller.clickPointCheck(clickX,clickY,clickState)
-
-        //controller.clickPointCheckButtonKai(clickX,clickY)
+        controller.clickPointCheck(controller.clickX,controller.clickY,clickState)
 
         jiki.idoSyori(controller,map)
         if(map.goalCheck(jiki)) {gameCounter.isClear = true}
@@ -103,9 +100,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         if (event.action == MotionEvent.ACTION_UP) { clickState = "ACTION_UP"}
         if (event.action == MotionEvent.ACTION_MOVE) { clickState = "ACTION_MOVE" }
 
-        clickX = event.x.toInt()
-        clickY = event.y.toInt()
 
+        controller.clickX = event.x.toInt()
+        controller.clickY = event.y.toInt()
 
         //あとでここで2本押された時の処理を描く、というか何本でもいいようにかく
         for (i in 0 until pointerCount) {

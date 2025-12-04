@@ -45,11 +45,7 @@ class MainActivity : AppCompatActivity() {
         mainTsugiNoSyori()
     }
     fun mainTsugiNoSyori() {
-        findViewById<TextView>(R.id.textLabelX).text=custom.clickX.toString()
-        findViewById<TextView>(R.id.textLabelY).text=custom.clickY.toString()
         findViewById<TextView>(R.id.clickJohoLabel).text=custom.clickState.toString()
-        //findViewById<TextView>(R.id.wcxlabel).text=custom.worldOffsetCharacterX.toString()
-        //findViewById<TextView>(R.id.wcyLabel).text=custom.worldOffsetCharacterY.toString()
         findViewById<TextView>(R.id.c1houkouLabel).text=custom.controller.houkou.toString()
         findViewById<TextView>(R.id.c2houkouLabel).text=custom.nitenmeButton.toString()
         findViewById<TextView>(R.id.sekaixLabel).text=custom.jiki.sekaipos.x.toString()
