@@ -22,9 +22,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var gameCounter = GameCounter()
     var controller = Controller()
     val map = Map()
-    var worldOffsetCharacterX = map.MASU_SIZE * 7   //マスサイズ32
-    var worldOffsetCharacterY = 0
 
+    var  pointerCount = 0
+    var nitenmeButton = "nashi"
 
     fun syokikaGameReset(){
         frame = 0
@@ -95,13 +95,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         map.drawMapGoal(canvas,0,0,jiki)
     }
 
-    var clickNitenmeX = 0
-    var clickNitenmeY = 0
-    var clickNitenmeState = ""
-
-    var clickNitenmeMotionTyp = ""
-    var  pointerCount = 0
-    var nitenmeButton = "nashi"
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         pointerCount = event.pointerCount
