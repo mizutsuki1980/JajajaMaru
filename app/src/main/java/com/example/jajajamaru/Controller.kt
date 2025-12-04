@@ -14,6 +14,11 @@ class Controller {
     val jumpRect = buttonMakeXOokisaYOokisa(jump.x.toInt() ,jump.y.toInt(),jump.xOokisa,jump.yOokisa)
     var houkou = "nashi"
 
+    var pushCheck = "nashi"
+
+    var pushedButton = "nashi"
+    var pushedJumpButton = false
+
     //ここにボタンが増えただけ色の設定も置かなきゃいけないのかー、面倒だなぁ
     val buttonPushIro = Paint()
     val buttonNormalIro = Paint()
@@ -53,27 +58,32 @@ class Controller {
     fun pushButtonCheck() {
         if(houkou == "hidari"){ hidari.paint = buttonPushIro }
         if(houkou == "migi"){ migi.paint = buttonPushIro }
-        if(houkou == "jump"){ jump.paint = buttonPushIro }
+        if(pushedJumpButton == true){ jump.paint = buttonPushIro }
     }
     //ここでどんな処理をしているんだろうか？
 
-    fun clickPointCheckButtonKai(x:Int, y:Int):String{
+    fun clickPointCheckButtonKai():String{
         var returnString = "nashi"
-        if(x > hidari.x && x <(hidari.x+hidari.xOokisa)){
-            if(y > hidari.y && y <(hidari.y+hidari.yOokisa)) {
+        if(clickX > hidari.x && clickX <(hidari.x+hidari.xOokisa)){
+            if(clickY > hidari.y && clickY <(hidari.y+hidari.yOokisa)) {
                 returnString = "hidari"
             }
         }
-        if(x > (migi.x) && x <(migi.x+migi.xOokisa)){
-            if(y > migi.y && y < (migi.y + migi.yOokisa)) {
+        if(clickX > (migi.x) && clickX <(migi.x+migi.xOokisa)){
+            if(clickY > migi.y && clickY < (migi.y + migi.yOokisa)) {
                 returnString = "migi"
             }
         }
-        if(x > (jump.x) && x <(jump.x + jump.xOokisa)){
-            if(y > jump.y && y < (jump.y + jump.yOokisa)) {
+        if(clickX > (jump.x) && clickX <(jump.x + jump.xOokisa)){
+            if(clickY > jump.y && clickY < (jump.y + jump.yOokisa)) {
                 returnString = "jump"
             }
         }
+
+        if(returnString=="migi"){pushedButton = "migi"}
+        if(returnString=="hidari"){pushedButton = "hidari"}
+        if(returnString=="jump"){pushedJumpButton = true}
+
         return returnString
     }
 

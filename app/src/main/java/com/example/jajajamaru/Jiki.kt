@@ -195,7 +195,7 @@ class Jiki(val initialPos: Vec2D) {
         //ジャンプ処理
         var u1CandC = u1CandB
         if (isJump == false) {
-            if (controller.houkou == "jump") {
+            if (controller.pushedJumpButton == true) {
                 isJump = true
                 u1CandC = u1CandC.copy(sokudo = Vec2DF(u1CandC.sokudo.x, -60f))
             }
