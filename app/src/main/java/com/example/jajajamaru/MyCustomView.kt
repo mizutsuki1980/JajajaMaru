@@ -21,8 +21,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var gameCounter = GameCounter()
     var controller = Controller()
     val map = Map()
-
-    var  pointerCount = 0
+    var pointerCount = 0
     var nitenmeButton = "nashi"
 
     fun syokikaGameReset(){
@@ -95,19 +94,16 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         pointerCount = event.pointerCount
-
         if (event.action == MotionEvent.ACTION_DOWN) { clickState = "ACTION_DOWN"}
         if (event.action == MotionEvent.ACTION_UP) { clickState = "ACTION_UP"}
         if (event.action == MotionEvent.ACTION_MOVE) { clickState = "ACTION_MOVE" }
 
-
-        controller.clickX = event.x.toInt()
-        controller.clickY = event.y.toInt()
-
         //あとでここで2本押された時の処理を描く、というか何本でもいいようにかく
         for (i in 0 until pointerCount) {
-
-
+            val xx = event.getX(i)
+            val yy = event.getY(i)
+            controller.clickX = xx.toInt()
+            controller.clickY = yy.toInt()
         }
 
 
