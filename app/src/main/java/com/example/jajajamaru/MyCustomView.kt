@@ -12,7 +12,7 @@ import android.view.View
 
 class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     var frame = 0
-    var clickState = "nashi"
+    var clickState = ""
     val initialJikiX = 360 //初期位置
     val initialJikiY = 400 //初期位置
     var clickX = initialJikiX  //自機の位置は覚えておかないといけないので必要 最初だけ初期位置
@@ -97,6 +97,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     var clickNitenmeX = 0
     var clickNitenmeY = 0
+    var clickNitenmeState = ""
     var clickNitenmeMotionTyp = ""
     var  pointerCount = 0
     var nitenmeButton = "nashi"
@@ -118,6 +119,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                     val y2 = event.getY(1)
                     clickNitenmeX =  x2.toInt()
                     clickNitenmeY =  y2.toInt()
+
                 }
             }
         }
