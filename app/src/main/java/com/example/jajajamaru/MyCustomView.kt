@@ -40,19 +40,19 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val masuX = x /32
         val genzaichi = map.masu[masuY][masuX]
         val masuMigiPlus1 = map.masu[masuY][masuX+1]
-
-
-
         return "y=${y},masuY=${masuY},x=${x},masuX=${masuX}\n" +
                 "genzaichi=${genzaichi},masuPlus1=${masuMigiPlus1},"
-
     }
+
     fun beginAnimation() {
         tsugiNoSyori()  //最初に一回だけ呼ばれる
     }
 
     fun tsugiNoSyori() {
         controller.clickPointCheck(clickX,clickY,clickState)
+
+        //controller.clickPointCheckButtonKai(clickX,clickY)
+
         jiki.idoSyori(controller,map)
         if(map.goalCheck(jiki)) {gameCounter.isClear = true}
         if(gameCounter.isClear){}else{gameCounter.time += 1}
@@ -106,29 +106,15 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         clickX = event.x.toInt()
         clickY = event.y.toInt()
 
-        return true
 
-        /*
-        when (event.actionMasked) {
-            MotionEvent.ACTION_DOWN,
-            MotionEvent.ACTION_MOVE -> {
-                // 画面に触れている指の数
-                pointerCount = event.pointerCount
-                if (event.actionMasked == MotionEvent.ACTION_DOWN) { clickNitenmeMotionTyp = "ACTION_DOWN" }
-                if (event.actionMasked == MotionEvent.ACTION_POINTER_DOWN) { clickNitenmeMotionTyp = "ACTION_DOWN" }
-                if (event.actionMasked == MotionEvent.ACTION_POINTER_UP) {clickNitenmeMotionTyp = "ACTION_UP" }
-                if (event.actionMasked == MotionEvent.ACTION_MOVE) {clickNitenmeMotionTyp = "ACTION_MOVE" }
-                if (pointerCount >= 2) {
-                    val pointerIndex = 1  // 2本目の指
-                    // 2本目の指のインデックスは 1
-                    val x2 = event.getX(1)
-                    val y2 = event.getY(1)
-                    clickNitenmeX =  x2.toInt()
-                    clickNitenmeY =  y2.toInt()
-                }
-            }
+        //あとでここで2本押された時の処理を描く、というか何本でもいいようにかく
+        for (i in 0 until pointerCount) {
+
+
         }
-        */
+
+
+        return true
     }
 }
 

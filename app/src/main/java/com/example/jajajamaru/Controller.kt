@@ -5,19 +5,13 @@ import android.graphics.Color
 import android.graphics.Color.argb
 import android.graphics.Paint
 import android.graphics.Rect
-
-
-//そもそも、なんかまとめらそうだよなぁ、、、、。データクラス？かな？
 class Controller {
-
     var hidari = Button(30,820,150,400,Paint(),Rect(0, 0, 0,0))
     var migi = Button(540,820,150,400,Paint(),Rect(0, 0, 0,0))
     var jump = Button(200,820,320,400,Paint(),Rect(0, 0, 0,0))
-
     val hidariRect = buttonMakeXOokisaYOokisa(hidari.x.toInt() ,hidari.y.toInt(),hidari.xOokisa,hidari.yOokisa)
     val migiRect = buttonMakeXOokisaYOokisa(migi.x.toInt() ,migi.y.toInt(),migi.xOokisa,migi.yOokisa)
     val jumpRect = buttonMakeXOokisaYOokisa(jump.x.toInt() ,jump.y.toInt(),jump.xOokisa,jump.yOokisa)
-
     var houkou = "nashi"
 
     //ここにボタンが増えただけ色の設定も置かなきゃいけないのかー、面倒だなぁ
@@ -25,7 +19,8 @@ class Controller {
     val buttonNormalIro = Paint()
     var hyoujiIro =  Paint()
 
-
+    var controllerClickX = 0
+    var controllerClickY = 0
 
     init{
         //最初の所で設定できいないのでここでRectを設定している
@@ -50,12 +45,9 @@ class Controller {
         buttonPushIro.color = argb(100, 100, 100, 150)
         buttonNormalIro.style = Paint.Style.FILL
         buttonNormalIro.color = argb(200, 0, 0, 150)
-
-
         jump.paint = buttonNormalIro
         migi.paint = buttonNormalIro
         hidari.paint = buttonNormalIro
-
     }
 
     fun pushButtonCheck() {
@@ -65,9 +57,30 @@ class Controller {
     }
     //ここでどんな処理をしているんだろうか？
 
+    fun clickPointCheckButtonKai(x:Int, y:Int):String{
+        var returnString = "nashi"
+        if(x > hidari.x && x <(hidari.x+hidari.xOokisa)){
+            if(y > hidari.y && y <(hidari.y+hidari.yOokisa)) {
+                returnString = "hidari"
+            }
+        }
+        if(x > (migi.x) && x <(migi.x+migi.xOokisa)){
+            if(y > migi.y && y < (migi.y + migi.yOokisa)) {
+                returnString = "migi"
+            }
+        }
+        if(x > (jump.x) && x <(jump.x + jump.xOokisa)){
+            if(y > jump.y && y < (jump.y + jump.yOokisa)) {
+                returnString = "jump"
+            }
+        }
+        return returnString
+    }
+
+
     fun clickPointCheck(clickX:Int,clickY:Int,clickState:String){
         houkou = "nashi"
-         if (clickState == "ACTION_UP"){houkou = "nashi"}
+        if (clickState == "ACTION_UP"){houkou = "nashi"}
 
         if(clickX > hidari.x && clickX <(hidari.x+hidari.xOokisa)){
             if(clickY > hidari.y && clickY <(hidari.y+hidari.yOokisa)) {
