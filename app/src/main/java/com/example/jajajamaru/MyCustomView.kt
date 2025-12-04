@@ -101,25 +101,32 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickNitenmeMotionTyp = ""
     var  pointerCount = 0
     var nitenmeButton = "nashi"
+
     override fun onTouchEvent(event: MotionEvent): Boolean {
+
+
         when (event.actionMasked) {
+
+
             MotionEvent.ACTION_DOWN,
-            MotionEvent.ACTION_POINTER_DOWN,
-            MotionEvent.ACTION_POINTER_UP,
             MotionEvent.ACTION_MOVE -> {
                 // 画面に触れている指の数
                 pointerCount = event.pointerCount
+
                 if (event.actionMasked == MotionEvent.ACTION_DOWN) { clickNitenmeMotionTyp = "ACTION_DOWN" }
                 if (event.actionMasked == MotionEvent.ACTION_POINTER_DOWN) { clickNitenmeMotionTyp = "ACTION_DOWN" }
                 if (event.actionMasked == MotionEvent.ACTION_POINTER_UP) {clickNitenmeMotionTyp = "ACTION_UP" }
                 if (event.actionMasked == MotionEvent.ACTION_MOVE) {clickNitenmeMotionTyp = "ACTION_MOVE" }
                 if (pointerCount >= 2) {
+
+
+                    val pointerIndex = 1  // 2本目の指
+
                     // 2本目の指のインデックスは 1
                     val x2 = event.getX(1)
                     val y2 = event.getY(1)
                     clickNitenmeX =  x2.toInt()
                     clickNitenmeY =  y2.toInt()
-
                 }
             }
         }
