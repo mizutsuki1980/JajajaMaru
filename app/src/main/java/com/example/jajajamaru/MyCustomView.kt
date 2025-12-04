@@ -98,30 +98,35 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var clickNitenmeX = 0
     var clickNitenmeY = 0
     var clickNitenmeState = ""
+
     var clickNitenmeMotionTyp = ""
     var  pointerCount = 0
     var nitenmeButton = "nashi"
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        pointerCount = event.pointerCount
 
+        if (event.action == MotionEvent.ACTION_DOWN) { clickState = "ACTION_DOWN"}
+        if (event.action == MotionEvent.ACTION_UP) { clickState = "ACTION_UP"}
+        if (event.action == MotionEvent.ACTION_MOVE) { clickState = "ACTION_MOVE" }
 
+        clickX = event.x.toInt()
+        clickY = event.y.toInt()
+
+        return true
+
+        /*
         when (event.actionMasked) {
-
-
             MotionEvent.ACTION_DOWN,
             MotionEvent.ACTION_MOVE -> {
                 // 画面に触れている指の数
                 pointerCount = event.pointerCount
-
                 if (event.actionMasked == MotionEvent.ACTION_DOWN) { clickNitenmeMotionTyp = "ACTION_DOWN" }
                 if (event.actionMasked == MotionEvent.ACTION_POINTER_DOWN) { clickNitenmeMotionTyp = "ACTION_DOWN" }
                 if (event.actionMasked == MotionEvent.ACTION_POINTER_UP) {clickNitenmeMotionTyp = "ACTION_UP" }
                 if (event.actionMasked == MotionEvent.ACTION_MOVE) {clickNitenmeMotionTyp = "ACTION_MOVE" }
                 if (pointerCount >= 2) {
-
-
                     val pointerIndex = 1  // 2本目の指
-
                     // 2本目の指のインデックスは 1
                     val x2 = event.getX(1)
                     val y2 = event.getY(1)
@@ -130,28 +135,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                 }
             }
         }
-
-        if (event.action == MotionEvent.ACTION_DOWN) {
-            clickState = "ACTION_DOWN"
-            clickX = event.x.toInt()
-            clickY = event.y.toInt()
-            return true // 処理した場合はtrueを返す約束
-        }
-
-        if (event.action == MotionEvent.ACTION_UP) {
-            clickState = "ACTION_UP"
-            clickX = event.x.toInt()
-            clickY = event.y.toInt()
-            return true // 処理した場合はtrueを返す約束
-        }
-
-        if (event.action == MotionEvent.ACTION_MOVE) {
-            clickState = "ACTION_MOVE"
-            clickX = event.x.toInt()
-            clickY = event.y.toInt()
-            return true // 処理した場合はtrueを返す約束
-        }
-        return super.onTouchEvent(event)
+        */
     }
 }
 
