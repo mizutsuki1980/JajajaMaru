@@ -21,9 +21,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var jiki = Jiki(vec2d)
     var gameCounter = GameCounter()
     var controller = Controller()
-    var clickMotionVent1 = ""
-    var clickMotionVent2 = ""
-    var clickMotionVent3 = ""
     val map = Map()
     var worldOffsetCharacterX = map.MASU_SIZE * 7   //マスサイズ32
     var worldOffsetCharacterY = 0
@@ -111,7 +108,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             MotionEvent.ACTION_MOVE -> {
                 // 画面に触れている指の数
                 pointerCount = event.pointerCount
-                clickMotionVent1 = pointerCount.toString()
                 if (event.actionMasked == MotionEvent.ACTION_DOWN) { clickNitenmeMotionTyp = "ACTION_DOWN" }
                 if (event.actionMasked == MotionEvent.ACTION_POINTER_DOWN) { clickNitenmeMotionTyp = "ACTION_DOWN" }
                 if (event.actionMasked == MotionEvent.ACTION_POINTER_UP) {clickNitenmeMotionTyp = "ACTION_UP" }
@@ -120,8 +116,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
                     // 2本目の指のインデックスは 1
                     val x2 = event.getX(1)
                     val y2 = event.getY(1)
-                    clickMotionVent2 =  x2.toString()
-                    clickMotionVent3 =  y2.toString()
                     clickNitenmeX =  x2.toInt()
                     clickNitenmeY =  y2.toInt()
                 }
