@@ -13,6 +13,7 @@ class Controller {
     val migiRect = buttonMakeXOokisaYOokisa(migi.x.toInt() ,migi.y.toInt(),migi.xOokisa,migi.yOokisa)
     val jumpRect = buttonMakeXOokisaYOokisa(jump.x.toInt() ,jump.y.toInt(),jump.xOokisa,jump.yOokisa)
     var houkou = "nashi"
+    //コメント修正
 
     //ここにボタンが増えただけ色の設定も置かなきゃいけないのかー、面倒だなぁ
     val buttonPushIro = Paint()
