@@ -57,8 +57,8 @@ class Controller {
     }
 
     fun pushButtonCheck() {
-        if(houkou == "hidari"){ hidari.paint = buttonPushIro }
-        if(houkou == "migi"){ migi.paint = buttonPushIro }
+        if(pushedSayuButton == "hidari"){ hidari.paint = buttonPushIro }
+        if(pushedSayuButton == "migi"){ migi.paint = buttonPushIro }
         if(pushedJumpButton == true){ jump.paint = buttonPushIro }
     }
     //ここでどんな処理をしているんだろうか？
