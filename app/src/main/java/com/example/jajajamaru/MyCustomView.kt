@@ -47,6 +47,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun tsugiNoSyori() {
 
+        //clickState = "ACTION_UP"
 
         jiki.idoSyori(controller,map)
         if(map.goalCheck(jiki)) {gameCounter.isClear = true}
@@ -55,6 +56,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         //一回クリアした後に、もう一回クリアすると、へんな風になっている気がする。
         //フレームがリセットされていないので、二回目以降はクリア後に自動ですすまない
+
+
 
         //100フレーム後にリセットだとすると
         if(frame-gameCounter.time==15){
@@ -104,6 +107,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             controller.clickY = event.getY(i).toInt()
             controller.pushCheck = controller.clickPointCheckButtonKai()
         }
+
+        //二本目の指が離れたら？という判定はどうなるんだろうか？
+        if(clickState == "ACTION_UP"){
+
+        }
+
         return true
     }
 }
