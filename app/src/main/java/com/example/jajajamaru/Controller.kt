@@ -16,7 +16,7 @@ class Controller {
 
     var pushCheck = "nashi"
 
-    var pushedButton = "nashi"
+    var pushedSayuButton = "nashi"
     var pushedJumpButton = false
 //コメント修正
 
@@ -81,8 +81,8 @@ class Controller {
             }
         }
 
-        if(returnString=="migi"){pushedButton = "migi"}
-        if(returnString=="hidari"){pushedButton = "hidari"}
+        if(returnString=="migi"){pushedSayuButton = "migi"}
+        if(returnString=="hidari"){pushedSayuButton = "hidari"}
         if(returnString=="jump"){pushedJumpButton = true}
 
         return returnString

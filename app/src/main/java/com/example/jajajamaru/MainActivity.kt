@@ -45,9 +45,8 @@ class MainActivity : AppCompatActivity() {
         mainTsugiNoSyori()
     }
     fun mainTsugiNoSyori() {
-        findViewById<TextView>(R.id.clickJohoLabel).text=custom.clickState.toString()
-        findViewById<TextView>(R.id.c1houkouLabel).text=custom.controller.houkou.toString()
-        findViewById<TextView>(R.id.c2houkouLabel).text=custom.nitenmeButton.toString()
+
+
         findViewById<TextView>(R.id.sekaixLabel).text=custom.jiki.sekaipos.x.toString()
 
         handler.postDelayed( { mainTsugiNoSyori() }, 100)
