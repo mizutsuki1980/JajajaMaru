@@ -37,6 +37,15 @@ class Controller {
         mozinoIroSettei()
     }
 
+    fun syokika(){
+        pushCheck = "nashi"
+        pushedSayuButton = "nashi"
+        pushedJumpButton = false
+
+        clickX = 0
+        clickY = 0
+
+    }
 
     private fun mozinoIroSettei(){
         hyoujiIro.style = Paint.Style.FILL

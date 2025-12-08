@@ -110,7 +110,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         //二本目の指が離れたら？という判定はどうなるんだろうか？
         if(clickState == "ACTION_UP"){
-
+            controller.syokika()
         }
 
         return true
