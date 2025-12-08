@@ -18,6 +18,7 @@ class Controller {
 
     var pushedButton = "nashi"
     var pushedJumpButton = false
+//コメント修正
 
     //ここにボタンが増えただけ色の設定も置かなきゃいけないのかー、面倒だなぁ
     val buttonPushIro = Paint()
