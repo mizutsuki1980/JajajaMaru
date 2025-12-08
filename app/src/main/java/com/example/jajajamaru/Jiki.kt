@@ -40,6 +40,9 @@ class Jiki(val initialPos: Vec2D) {
 
     }
 
+
+    //落下中にすり抜けてしまう。開始位置から上り坂を降りるところのＪ字型の場所には、落下で止まれない。
+    //予想、２マス分したに行ってしまっている？加速制限をつけると解決する？
     private fun shogaibutuJogeSayuu(map: Map, before: Ugoki,u0: Ugoki): Ugoki {
 
         //障害物上下処理
