@@ -46,8 +46,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun tsugiNoSyori() {
-        controller.clickPointCheck(controller.clickX,controller.clickY,clickState)
 
+        
         jiki.idoSyori(controller,map)
         if(map.goalCheck(jiki)) {gameCounter.isClear = true}
         if(gameCounter.isClear){}else{gameCounter.time += 1}

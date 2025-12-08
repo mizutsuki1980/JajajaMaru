@@ -89,32 +89,6 @@ class Controller {
     }
 
 
-    fun clickPointCheck(clickX:Int,clickY:Int,clickState:String){
-        houkou = "nashi"
-        if (clickState == "ACTION_UP"){houkou = "nashi"}
-
-        if(clickX > hidari.x && clickX <(hidari.x+hidari.xOokisa)){
-            if(clickY > hidari.y && clickY <(hidari.y+hidari.yOokisa)) {
-                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
-                    houkou = "hidari"
-                }
-            }
-        }
-        if(clickX > (migi.x) && clickX <(migi.x+migi.xOokisa)){
-            if(clickY > migi.y && clickY < (migi.y + migi.yOokisa)) {
-                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
-                    houkou = "migi"
-                }
-            }
-        }
-        if(clickX > (jump.x) && clickX <(jump.x + jump.xOokisa)){
-            if(clickY > jump.y && clickY < (jump.y + jump.yOokisa)) {
-                if (clickState == "ACTION_DOWN" || clickState == "ACTION_MOVE") {
-                    houkou = "jump"
-                }
-            }
-        }
-    }
 
     fun draw(canvas: Canvas){
         buttonIroSettei()
