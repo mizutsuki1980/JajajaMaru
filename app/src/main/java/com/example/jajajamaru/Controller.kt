@@ -12,10 +12,8 @@ class Controller {
     val hidariRect = buttonMakeXOokisaYOokisa(hidari.x.toInt() ,hidari.y.toInt(),hidari.xOokisa,hidari.yOokisa)
     val migiRect = buttonMakeXOokisaYOokisa(migi.x.toInt() ,migi.y.toInt(),migi.xOokisa,migi.yOokisa)
     val jumpRect = buttonMakeXOokisaYOokisa(jump.x.toInt() ,jump.y.toInt(),jump.xOokisa,jump.yOokisa)
-    var houkou = "nashi"
 
     var pushCheck = "nashi"
-
     var pushedSayuButton = "nashi"
     var pushedJumpButton = false
 //コメント修正
