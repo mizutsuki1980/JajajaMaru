@@ -191,7 +191,7 @@ class Jiki(val initialPos: Vec2D) {
         val u1CandB = u1CandA.copy(
             sokudo = Vec2DF(
                 min(max(-30f, u1CandA.sokudo.x), 30f),
-                u1CandA.sokudo.y
+                min(max(-30f, u1CandA.sokudo.y), 45f)
             )
         )
 
