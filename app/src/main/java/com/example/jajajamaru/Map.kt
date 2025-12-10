@@ -40,11 +40,21 @@ class Map {
     )
 
 
+
+
+    fun drawTree(canvas: Canvas,jiki:Jiki,col:Int,row:Int){
+
+        val blockIro = Paint()
+        blockIro.color = argb(255, 80, 80, 80)
+        val xx = MASU_SIZE*col+(360-jiki.sekaipos.x)
+        val yy = MASU_SIZE*row
+        canvas.drawRect(shikakuRectXY(xx,yy,MASU_SIZE),blockIro)
+    }
+
     //ゴールがどのマスにあるのか
     //ゴールチェックとゴール表示に必要
     val goalXMasu = 118
     val goalYmasu = 4
-
     fun goalCheck(jiki:Jiki):Boolean {
         val xx = MASU_SIZE*goalXMasu
         val yy = MASU_SIZE*goalYmasu
