@@ -52,6 +52,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         frame += 1  //繰り返し処理はここでやってる
         //30フレーム後にリセットだとすると
         if(frame-gameCounter.time==30){ syokikaGameReset() }
+        //ここでフレームとカウンター処理で３０の差がつくと初期化するようにしている
+        //ここに面が変わる処理をつければいいのでは
+
         invalidate()
         handler.postDelayed({ tsugiNoSyori() }, 100)
     }
