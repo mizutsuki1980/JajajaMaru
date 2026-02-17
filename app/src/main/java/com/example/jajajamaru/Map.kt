@@ -43,7 +43,7 @@ class Map {
 
 
     fun drawTree(canvas: Canvas,jiki:Jiki,col:Int,row:Int){
-
+//コメント修正
         val blockIro = Paint()
         blockIro.color = argb(255, 80, 80, 80)
         val xx = MASU_SIZE*col+(360-jiki.sekaipos.x)
