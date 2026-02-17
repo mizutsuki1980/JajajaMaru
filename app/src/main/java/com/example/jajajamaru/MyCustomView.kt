@@ -17,6 +17,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     val initialJikiY = 400 //初期位置
     var vec2d = Vec2D(initialJikiX, initialJikiY)
     var jiki = Jiki(vec2d)
+    var teki = Teki()
     var gameCounter = GameCounter()
     var controller = Controller()
     val map = Map()
@@ -66,6 +67,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bgPaint)
         mapCreate(canvas)
         jiki.draw(canvas)
+        teki.draw(canvas)
         controller.draw(canvas)
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusanpng, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, jiki.initialPos.x.toFloat()-40, jiki.sekaipos.y.toFloat()-75, null)
