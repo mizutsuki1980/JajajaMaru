@@ -30,20 +30,43 @@ class Controller {
     var zenkaiHoukou = ""
 
     var nikaimeJump = false
-
+    var isFirstNidanJump = false
+    var osippnasiJump = false
 
     fun jumpButtonOsiTuduketeirukaCheck(){
+        //①下降中に「一度だけ」もう一回ジャンプする
+        //②２回目以降は無視する。
+
+
         //まず最初に、ボタンが押しっぱなしどうか？を判定する仕組みを作る。
         val konkaiHoukou = pushedSayuButton
         val konkaiJump = pushedJumpButton
 
         if (konkaiJump == zenkaiJump){
-            //jump同一
+            //jump同一 おしっぱなし
+            osippnasiJump = true
+            if(konkaiJump){ nikaimeJump  = false}
+
+        }else{
+            //jump不一致
+            //jumpの場合は二段ジャンプする
+            if(konkaiJump){
+                nikaimeJump  = true
+
+                if(isFirstNidanJump){}else {
+                    isFirstNidanJump = true
+                }
+
+
+            }
         }
 
         if(konkaiHoukou == konkaiHoukou){
             //方向、同一
+        }else{
+            //方向、不一致
         }
+
 
         zenkaiHoukou  = konkaiHoukou
         zenkaiJump =  konkaiJump
