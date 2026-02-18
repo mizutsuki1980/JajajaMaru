@@ -31,27 +31,22 @@ class Controller {
 
     var nikaimeJump = false
 
-    fun jumpButtonOsiTuduketeirukaCheck(jiki:Jiki){
 
+    fun jumpButtonOsiTuduketeirukaCheck(){
         //まず最初に、ボタンが押しっぱなしどうか？を判定する仕組みを作る。
-        if(jiki.isJump) {
-            if (nikaimeJump == false) {
-                if (zenkaiJump == pushedJumpButton) {
-                } else {
-                    nikaimeJump = true
-                }
-            }
-            if (nikaimeJump){
-                if (zenkaiJump == pushedJumpButton) {
-                    nikaimeJump = false
-                }
-            }
+        val konkaiHoukou = pushedSayuButton
+        val konkaiJump = pushedJumpButton
 
-
+        if (konkaiJump == zenkaiJump){
+            //jump同一
         }
 
-        zenkaiHoukou  = pushedSayuButton
-        zenkaiJump =  pushedJumpButton
+        if(konkaiHoukou == konkaiHoukou){
+            //方向、同一
+        }
+
+        zenkaiHoukou  = konkaiHoukou
+        zenkaiJump =  konkaiJump
 
 
     }
