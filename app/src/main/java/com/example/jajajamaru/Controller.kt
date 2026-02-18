@@ -32,6 +32,8 @@ class Controller {
     var nikaimeJump = false
 
     fun jumpButtonOsiTuduketeirukaCheck(jiki:Jiki){
+
+        //まず最初に、ボタンが押しっぱなしどうか？を判定する仕組みを作る。
         if(jiki.isJump) {
             if (nikaimeJump == false) {
                 if (zenkaiJump == pushedJumpButton) {
