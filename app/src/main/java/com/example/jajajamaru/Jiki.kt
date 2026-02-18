@@ -3,6 +3,7 @@ package com.example.jajajamaru
 import android.graphics.Canvas
 import android.graphics.Color.argb
 import android.graphics.Paint
+import kotlin.contracts.contract
 import kotlin.math.max
 import kotlin.math.min
 
@@ -259,7 +260,7 @@ class Jiki(val initialPos: Vec2D) {
         return u1Cand
     }
 
-    fun draw(canvas: Canvas) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
+    fun draw(canvas: Canvas,controller: Controller) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
 
         if(isJump) {
@@ -270,6 +271,11 @@ class Jiki(val initialPos: Vec2D) {
             }else{
                 iro.color = argb(255, 150, 150, 150) //飛んでる、ちょうど０
             }
+            if(controller.nikaimeJump){
+                iro.color = argb(255, 0, 0, 0) //二段ジャンプ！
+
+            }
+
         }else{
 
             iro.color = argb(255, 255, 150, 150)//飛んでないとき赤

@@ -26,6 +26,35 @@ class Controller {
     var clickX = 0
     var clickY = 0
 
+    var zenkaiJump = false
+    var zenkaiHoukou = ""
+
+    var nikaimeJump = false
+
+    fun jumpButtonOsiTuduketeirukaCheck(jiki:Jiki){
+        if(jiki.isJump) {
+            if (nikaimeJump == false) {
+                if (zenkaiJump == pushedJumpButton) {
+                } else {
+                    nikaimeJump = true
+                }
+            }
+            if (nikaimeJump){
+                if (zenkaiJump == pushedJumpButton) {
+                    nikaimeJump = false
+                }
+            }
+
+
+        }
+
+        zenkaiHoukou  = pushedSayuButton
+        zenkaiJump =  pushedJumpButton
+
+
+    }
+
+
     init{
         //最初の所で設定できいないのでここでRectを設定している
         hidari.rect =  hidariRect
@@ -36,6 +65,7 @@ class Controller {
         buttonIroSettei()
         mozinoIroSettei()
     }
+
 
     fun syokika(){
         pushCheck = "nashi"

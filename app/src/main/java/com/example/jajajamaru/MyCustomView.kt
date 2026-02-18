@@ -22,7 +22,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var controller = Controller()
     val map = Map()
     var pointerCount = 0
-    var nitenmeButton = "nashi"
 
     fun syokikaGameReset(){
         frame = 0
@@ -47,6 +46,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun tsugiNoSyori() {
+        controller.jumpButtonOsiTuduketeirukaCheck(jiki)
         jiki.idoSyori(controller,map)
         if(map.goalCheck(jiki)) {gameCounter.isClear = true}
         if(gameCounter.isClear){}else{gameCounter.time += 1}
@@ -66,7 +66,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         bgPaint.style = Paint.Style.FILL
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bgPaint)
         mapCreate(canvas)
-        jiki.draw(canvas)
+        jiki.draw(canvas,controller)
         teki.draw(canvas)
         controller.draw(canvas)
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusanpng, BitmapFactory.Options())
