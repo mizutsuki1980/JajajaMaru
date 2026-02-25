@@ -14,6 +14,36 @@ class Teki {
     var y = 100
     var xx = 100
 
+    fun idoSyori(controller: Controller, map:Map) {
+
+        val u0 = Ugoki(sekaipos, sokudo, kasokudo)
+
+        //加速度更新
+        val u1CandA = kasokudoKoushin(u0, controller)
+
+        //速度更新
+      //  var u1CandB = sokudoKoushin(u1CandA, controller)
+
+        //posを更新
+    //    val u1CandC = u1CandB.copy(pos = Vec2D(u1CandB.pos.x + u1CandB.sokudo.x.toInt(), u1CandB.pos.y + u1CandB.sokudo.y.toInt()))
+
+        //世界の上下左右端チェック
+       // val u1CandE = sekaiHashiCheck(map,u1CandD)
+
+        //障害物上下左右チェック
+        //val u1CandF = shogaibutuJogeSayuu(map, u1CandE,u0)
+
+
+//        sokudo = u1CandC.sokudo
+  //      kasokudo = u1CandC.kasokudo
+    //    sekaipos = u1CandC.pos
+    }
+
+
+
+    fun kasokudoKoushin(u0:Ugoki, controller:Controller){}
+    fun sokudoKoushin(u0:Ugoki, controller:Controller){}
+
     fun draw(canvas: Canvas,jiki:Jiki) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
