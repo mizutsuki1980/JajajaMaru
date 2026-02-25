@@ -26,20 +26,16 @@ class Controller {
     var clickX = 0
     var clickY = 0
 
-    var zenkaiJump = false
-    var zenkaiHoukou = ""
-
     var nikaimeJump = false
-    var isFirstNidanJump = false
-    var osippnasiJump = false
 
-    fun jumpButtonOsiTuduketeirukaCheck(){
+    fun jumpButtonOsiTuduketeirukaCheck(jiki:Jiki){
         //①下降中に「一度だけ」もう一回ジャンプする
         //②２回目以降は無視する。
 
 
-
     }
+
+
 
     init{
         //最初の所で設定できいないのでここでRectを設定している

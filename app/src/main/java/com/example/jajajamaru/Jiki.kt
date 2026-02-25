@@ -274,21 +274,15 @@ class Jiki(val initialPos: Vec2D) {
             }else{
                 iro.color = argb(255, 150, 150, 150) //飛んでる、ちょうど０
             }
-            if(controller.nikaimeJump){
-                iro.color = argb(255, 0, 0, 0) //二段ジャンプ！
-
-            }
-
         }else{
 
             iro.color = argb(255, 255, 150, 150)//飛んでないとき赤
-
         }
 
         if(controller.pushedJumpButton) {
-            iroTestYou.color = argb(255, 255, 150, 150)//飛んでないとき赤
+            iroTestYou.color = argb(255, 255, 255, 255)//飛んでる時　白
         }else{
-            iroTestYou.color = argb(255, 0, 0, 0)//飛んでないとき赤
+            iroTestYou.color = argb(255, 0, 0, 0)//飛んでないとき　黒
         }
         canvas.drawCircle(initialPos.x.toFloat(),(sekaipos.y).toFloat(),(ookisa/5).toFloat(),iro)
 
