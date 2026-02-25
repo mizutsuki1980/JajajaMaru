@@ -205,7 +205,15 @@ class Jiki(val initialPos: Vec2D) {
                 isJump = true
                 u1CandC = u1CandC.copy(sokudo = Vec2DF(u1CandC.sokudo.x, -60f))
             }
+        }else{
+            //多段ジャンプの場合
+            if(controller.nikaimeJump){
+                controller.nikaimeJump = false
+                u1CandC = u1CandC.copy(sokudo = Vec2DF(u1CandC.sokudo.x, -60f))
+            }
         }
+
+
         return u1CandC
     }
 

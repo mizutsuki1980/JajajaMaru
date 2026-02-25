@@ -31,6 +31,16 @@ class Controller {
     fun jumpButtonOsiTuduketeirukaCheck(jiki:Jiki){
         //①下降中に「一度だけ」もう一回ジャンプする
         //②２回目以降は無視する。
+        if(jiki.isJump){
+
+            if(pushedJumpButton) {
+                nikaimeJump = true
+            }
+
+        }else{
+            nikaimeJump = false
+        }
+
 
 
     }
