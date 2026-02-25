@@ -10,6 +10,8 @@ import kotlin.math.min
 class Jiki(val initialPos: Vec2D) {
     val ookisa = 100
     val iro = Paint()
+    val iroTestYou = Paint()
+
     var sekaipos = Vec2D(360,400)
     var sokudo = Vec2DF(0f,0f)
     var kasokudo = Vec2DF(0f,0f)
@@ -262,6 +264,7 @@ class Jiki(val initialPos: Vec2D) {
 
     fun draw(canvas: Canvas,controller: Controller) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
+        iroTestYou.style = Paint.Style.FILL
 
         if(isJump) {
             if(sokudo.y<0f) {
@@ -282,7 +285,16 @@ class Jiki(val initialPos: Vec2D) {
 
         }
 
+        if(controller.pushedJumpButton) {
+            iroTestYou.color = argb(255, 255, 150, 150)//飛んでないとき赤
+        }else{
+            iroTestYou.color = argb(255, 0, 0, 0)//飛んでないとき赤
+        }
         canvas.drawCircle(initialPos.x.toFloat(),(sekaipos.y).toFloat(),(ookisa/5).toFloat(),iro)
+
+        //テスト用　頭の上に色付きの〇を表示する
+        canvas.drawCircle(initialPos.x.toFloat(),(sekaipos.y-100).toFloat(),(ookisa/5).toFloat(),iroTestYou)
+
     }
 
 }

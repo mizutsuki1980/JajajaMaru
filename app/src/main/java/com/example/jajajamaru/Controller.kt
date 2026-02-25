@@ -41,7 +41,6 @@ class Controller {
 
     }
 
-
     init{
         //最初の所で設定できいないのでここでRectを設定している
         hidari.rect =  hidariRect
