@@ -48,6 +48,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun tsugiNoSyori() {
         controller.jumpButtonOsiTuduketeirukaCheck(jiki)
         jiki.idoSyori(controller,map)
+        teki.tekiTuginoSyori(jiki,map)
+
         if(map.goalCheck(jiki)) {gameCounter.isClear = true}
         if(gameCounter.isClear){}else{gameCounter.time += 1}
         frame += 1  //繰り返し処理はここでやってる
@@ -67,10 +69,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bgPaint)
         mapCreate(canvas)
         jiki.draw(canvas,controller)
-        teki.draw(canvas,jiki)
-        controller.draw(canvas)
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusanpng, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, jiki.initialPos.x.toFloat()-40, jiki.sekaipos.y.toFloat()-75, null)
+        teki.draw(canvas,jiki)
+        val bitmapTeki = BitmapFactory.decodeResource(resources, R.drawable.mtouka, BitmapFactory.Options())
+        canvas.drawBitmap(bitmapTeki, teki.xx.toFloat()-40, teki.y.toFloat()-75, null)
+
+
+        controller.draw(canvas)
         gameCounter.draw(canvas,frame,jiki,map)
     }
 

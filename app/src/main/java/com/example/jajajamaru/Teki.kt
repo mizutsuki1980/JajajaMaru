@@ -12,13 +12,17 @@ class Teki {
     var kasokudo = Vec2DF(0f,0f)
     var x = 100
     var y = 100
+    var xx = 100
 
     fun draw(canvas: Canvas,jiki:Jiki) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
-        val xx = (360-jiki.sekaipos.x)
+        xx = (360-jiki.sekaipos.x) + x
 
         canvas.drawCircle(xx.toFloat(),(sekaipos.y).toFloat(),(ookisa/5).toFloat(),iro)
+    }
+    fun tekiTuginoSyori(jiki: Jiki,map: Map){
+        x += 10
     }
 
 }
