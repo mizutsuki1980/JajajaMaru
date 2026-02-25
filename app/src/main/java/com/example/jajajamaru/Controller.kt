@@ -28,8 +28,10 @@ class Controller {
 
     var nikaimeJump = false
     var zenkaiPushJump = false
-//二段ジャンプの回数を指定できる。
-    var nidanJumpKaisuu = 5
+    //二段ジャンプの回数を指定できる。
+    var nidanJunpKiasuuDefault = 20
+    
+    var nidanJumpKaisuu = nidanJunpKiasuuDefault
 
     fun jumpButtonOsiTuduketeirukaCheck(jiki:Jiki){
         //①下降中に「一度だけ」もう一回ジャンプする
@@ -47,7 +49,7 @@ class Controller {
 
         }else{
             nikaimeJump = false
-            nidanJumpKaisuu = 1
+            nidanJumpKaisuu = nidanJunpKiasuuDefault
         }
         zenkaiPushJump = pushedJumpButton
     }
