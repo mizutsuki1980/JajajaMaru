@@ -43,8 +43,14 @@ class Teki {
 
 
     fun kasokudoKoushin(u0:Ugoki, controller:Controller):Ugoki{
-//        return u0.copy(sekaipos = Vec2D(10,u0.sekaipos.y))
-        return u0.copy(sekaipos = Vec2D(10,20))
+        //  return u0.copy(sekaipos = Vec2D(10,u0.sekaipos.y))
+        // これの書き方の何が間違ってるのさー！
+//        val uuu = u0.copy(kasokudo=Vec2DF(10f,20f))
+        //こっちはいくのか。なんでー？
+  //      val u1 = u0.copy(pos = )
+        //あ、sekaiposじゃなくてposっぽい。なーんだ。
+
+        return u0.copy(pos = Vec2D(u0.pos.x + 10,u0.pos.y))
     }
 
 
@@ -53,12 +59,13 @@ class Teki {
     fun draw(canvas: Canvas,jiki:Jiki) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
-        xx = (360-jiki.sekaipos.x) + x
+        xx = (360-jiki.sekaipos.x) + sekaipos.x
 
         canvas.drawCircle(xx.toFloat(),(sekaipos.y).toFloat(),(ookisa/5).toFloat(),iro)
     }
+
     fun tekiTuginoSyori(jiki: Jiki,map: Map){
-        x += 10
+    //    x += 10
     }
 
 }
