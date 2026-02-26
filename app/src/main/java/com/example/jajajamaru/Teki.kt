@@ -9,7 +9,7 @@ class Teki {
     val iro = Paint()
     var sekaipos = Vec2D(360,400)
     var sokudo = Vec2DF(0f,0f)
-    var kasokudo = Vec2DF(0f,0f)
+    var kasokudo = Vec2DF(1f,0f)
     var x = 100
     var y = 100
     var xx = 100
@@ -19,42 +19,45 @@ class Teki {
     //Ugokiを使っているのか。じゃぁそれでやるか。
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
 
-        //加速度更新　（コントローラーはいらない）
+        //加速度更新　（コントローラーはない）
         val u1CandA = kasokudoKoushin(u0, controller)
 
         //速度更新
-      //  var u1CandB = sokudoKoushin(u1CandA, controller)
+        var u1CandB = sokudoKoushin(u1CandA, controller)
 
         //posを更新
-    //    val u1CandC = u1CandB.copy(pos = Vec2D(u1CandB.pos.x + u1CandB.sokudo.x.toInt(), u1CandB.pos.y + u1CandB.sokudo.y.toInt()))
+        val u1CandC = u1CandB.copy(pos = Vec2D(u1CandB.pos.x + u1CandB.sokudo.x.toInt(), u1CandB.pos.y + u1CandB.sokudo.y.toInt()))
 
-        //世界の上下左右端チェック
-       // val u1CandE = sekaiHashiCheck(map,u1CandD)
+        //自機から離れすぎないように左右端チェック
+        val u1CandD = sekaiHashiCheck(map,u1CandC)
 
         //障害物上下左右チェック
         //val u1CandF = shogaibutuJogeSayuu(map, u1CandE,u0)
 
 
-       sokudo = u1CandA.sokudo
-        kasokudo = u1CandA.kasokudo
-        sekaipos = u1CandA.pos
+        sokudo = u1CandC.sokudo
+        kasokudo = u1CandC.kasokudo
+        sekaipos = u1CandC.pos
     }
 
 
 
     fun kasokudoKoushin(u0:Ugoki, controller:Controller):Ugoki{
-        //  return u0.copy(sekaipos = Vec2D(10,u0.sekaipos.y))
-        // これの書き方の何が間違ってるのさー！
-//        val uuu = u0.copy(kasokudo=Vec2DF(10f,20f))
-        //こっちはいくのか。なんでー？
-  //      val u1 = u0.copy(pos = )
-        //あ、sekaiposじゃなくてposっぽい。なーんだ。
-
-        return u0.copy(pos = Vec2D(u0.pos.x + 10,u0.pos.y))
+        return u0.copy(kasokudo= Vec2DF(u0.kasokudo.x,u0.sokudo.y))
+    }
+    fun sekaiHashiCheck(map:Map,u1CandD:Ugoki):Ugoki{
+        return u1CandD
     }
 
 
-    fun sokudoKoushin(u0:Ugoki, controller:Controller){}
+    fun sokudoKoushin(u0:Ugoki, controller:Controller):Ugoki{
+        //速度制限　20fになったら0fに戻る
+        return if(u0.sokudo.x>=20f){
+            u0.copy(sokudo = Vec2DF(0f,u0.sokudo.y))
+        }else{u0.copy(sokudo = Vec2DF(u0.sokudo.x+u0.kasokudo.x,u0.sokudo.y))}
+
+
+    }
 
     fun draw(canvas: Canvas,jiki:Jiki) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
@@ -65,7 +68,8 @@ class Teki {
     }
 
     fun tekiTuginoSyori(jiki: Jiki,map: Map){
-    //    x += 10
+
+
     }
 
 }
