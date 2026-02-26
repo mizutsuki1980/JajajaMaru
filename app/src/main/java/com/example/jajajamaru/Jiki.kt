@@ -288,12 +288,12 @@ class Jiki(val initialPos: Vec2D) {
         if(controller.pushedJumpButton) {
             iroTestYou.color = argb(255, 255, 255, 255)//飛んでる時　白
         }else{
-            iroTestYou.color = argb(255, 0, 0, 0)//飛んでないとき　黒
+            iroTestYou.color = argb(255, 220, 220, 220)//飛んでないとき　黒
         }
         //canvas.drawCircle(initialPos.x.toFloat(),(sekaipos.y).toFloat(),(ookisa/5).toFloat(),iro)
 
         //テスト用　頭の上に色付きの〇を表示する
-        //canvas.drawCircle(initialPos.x.toFloat(),(sekaipos.y-100).toFloat(),(ookisa/5).toFloat(),iroTestYou)
+        canvas.drawCircle(initialPos.x.toFloat()+5,(sekaipos.y-50).toFloat(),(15).toFloat(),iroTestYou)
 
     }
 
