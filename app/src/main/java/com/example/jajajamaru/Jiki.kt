@@ -180,7 +180,6 @@ class Jiki(val initialPos: Vec2D) {
     */
     private fun sokudoKoushin(before: Ugoki, controller: Controller): Ugoki {
 
-        //ここで速度を入れてるのは間違いない、加速度ｙか速度ｙに０が入ってるんじゃないかな？
         //速度の更新
         val u1CandA = before.copy(
             sokudo = Vec2DF(
@@ -220,7 +219,6 @@ class Jiki(val initialPos: Vec2D) {
     private fun kasokudoKoushin(u0: Ugoki, controller: Controller): Ugoki {
         return u0.copy(kasokudo = Vec2DF(kasokudoX(controller.pushedSayuButton,u0), kasokudoY()))
         //左右にキーを入れていると、加速度が2.5か-2.5が返っている
-        //だから何？
     }
 
     //ジャンプの加速度

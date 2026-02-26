@@ -16,9 +16,10 @@ class Teki {
 
     fun idoSyori(controller: Controller, map:Map) {
 
+    //Ugokiを使っているのか。じゃぁそれでやるか。
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
 
-        //加速度更新
+        //加速度更新　（コントローラーはいらない）
         val u1CandA = kasokudoKoushin(u0, controller)
 
         //速度更新
@@ -34,14 +35,19 @@ class Teki {
         //val u1CandF = shogaibutuJogeSayuu(map, u1CandE,u0)
 
 
-//        sokudo = u1CandC.sokudo
-  //      kasokudo = u1CandC.kasokudo
-    //    sekaipos = u1CandC.pos
+       sokudo = u1CandA.sokudo
+        kasokudo = u1CandA.kasokudo
+        sekaipos = u1CandA.pos
     }
 
 
 
-    fun kasokudoKoushin(u0:Ugoki, controller:Controller){}
+    fun kasokudoKoushin(u0:Ugoki, controller:Controller):Ugoki{
+//        return u0.copy(sekaipos = Vec2D(10,u0.sekaipos.y))
+        return u0.copy(sekaipos = Vec2D(10,20))
+    }
+
+
     fun sokudoKoushin(u0:Ugoki, controller:Controller){}
 
     fun draw(canvas: Canvas,jiki:Jiki) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
