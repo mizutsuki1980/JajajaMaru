@@ -9,9 +9,13 @@ class Controller {
     //ボタンの位置を離してみたら、押しっぱなし問題は解決するのだろうか？
     //やってみよう
 
-    var hidari = Button(30,820,150,400,Paint(),Rect(0, 0, 0,0))
-    var migi = Button(540,820,150,400,Paint(),Rect(0, 0, 0,0))
+    //ボタンの位置を決めるのはここで調節できる
+    var hidari = Button(30,820,120,200,Paint(),Rect(0, 0, 0,0))
+    var migi = Button(570,820,120,200,Paint(),Rect(0, 0, 0,0))
     var jump = Button(200,820,320,400,Paint(),Rect(0, 0, 0,0))
+
+
+
     val hidariRect = buttonMakeXOokisaYOokisa(hidari.x.toInt() ,hidari.y.toInt(),hidari.xOokisa,hidari.yOokisa)
     val migiRect = buttonMakeXOokisaYOokisa(migi.x.toInt() ,migi.y.toInt(),migi.xOokisa,migi.yOokisa)
     val jumpRect = buttonMakeXOokisaYOokisa(jump.x.toInt() ,jump.y.toInt(),jump.xOokisa,jump.yOokisa)
@@ -102,7 +106,6 @@ class Controller {
         if(pushedSayuButton == "migi"){ migi.paint = buttonPushIro }
         if(pushedJumpButton == true){ jump.paint = buttonPushIro }
     }
-    //ここでどんな処理をしているんだろうか？
 
     fun clickPointCheckButtonKai():String{
         var returnString = "nashi"
