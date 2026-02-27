@@ -6,6 +6,9 @@ import android.graphics.Color.argb
 import android.graphics.Paint
 import android.graphics.Rect
 class Controller {
+    //ボタンの位置を離してみたら、押しっぱなし問題は解決するのだろうか？
+    //やってみよう
+
     var hidari = Button(30,820,150,400,Paint(),Rect(0, 0, 0,0))
     var migi = Button(540,820,150,400,Paint(),Rect(0, 0, 0,0))
     var jump = Button(200,820,320,400,Paint(),Rect(0, 0, 0,0))
