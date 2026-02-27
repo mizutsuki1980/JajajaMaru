@@ -45,12 +45,7 @@ class Controller {
     var nidanJumpKaisuu = nidanJunpKiasuuDefault
 
     fun jumpButtonOsiTuduketeirukaCheck(jiki:Jiki) {
-        //ここで押し続けているチェックをしなければいけないのかもしれない。
-        //右を押し続けてい状態で、ジャンプを押す、そのあとに離す
-        //というのをこの中で疑似的にでも行えば解決するんじゃないだろうか？と考える
-
-        //強制的に一回ジャンプを解除しちゃえばいいんじゃないの？と思った。
-
+        //直らないものとして諦めるとする
 
         //①下降中に「一度だけ」もう一回ジャンプする
         //②２回目以降は無視する。
