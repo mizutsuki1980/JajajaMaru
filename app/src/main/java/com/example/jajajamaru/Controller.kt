@@ -54,12 +54,6 @@ class Controller {
 
         //①下降中に「一度だけ」もう一回ジャンプする
         //②２回目以降は無視する。
-        if (jiki.isJump) {}else{
-            if (pushedSayuButton == "nashi") {
-            } else {
-                pushedJumpButton = false
-            }
-        }
 
         if(jiki.isJump){
             if(zenkaiPushJump){
