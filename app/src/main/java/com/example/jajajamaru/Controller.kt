@@ -12,9 +12,13 @@ class Controller {
     //ボタンの位置を決めるのはここで調節できる
     var hidari = Button(30,820,120,200,Paint(),Rect(0, 0, 0,0))
     var migi = Button(570,820,120,200,Paint(),Rect(0, 0, 0,0))
-    var jump = Button(200,820,320,400,Paint(),Rect(0, 0, 0,0))
+    var jump = Button(200,1020,320,200,Paint(),Rect(0, 0, 0,0))
 
-
+    //なるほど、まず条件を確認
+    //①右を押しっぱなしにする
+    //②ジャンプをちょっとだけ押しっぱなしにする。
+    //③ジャンプだけはなして、まった指をうごかさないようにする。
+    //たぶんこれで再現する。①で押した右をちょっとでも動かすと反応して修正しているように見える。
 
     val hidariRect = buttonMakeXOokisaYOokisa(hidari.x.toInt() ,hidari.y.toInt(),hidari.xOokisa,hidari.yOokisa)
     val migiRect = buttonMakeXOokisaYOokisa(migi.x.toInt() ,migi.y.toInt(),migi.xOokisa,migi.yOokisa)
