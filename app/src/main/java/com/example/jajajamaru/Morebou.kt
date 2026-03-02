@@ -3,15 +3,15 @@ package com.example.jajajamaru
 import android.graphics.Canvas
 import android.graphics.Color.argb
 import android.graphics.Paint
-import kotlin.collections.Map
 import kotlin.math.max
 import kotlin.math.min
 
-class Morebou(val initialPos: Vec2D) {
+class Morebou(initialPos: Vec2D) {
+    //Morebouの中ではContloller使ってない気がする。
+    //どっかで加速させてるのかなー？
 
     val ookisa = 100
     val iro = Paint()
-    val iroTestYou = Paint()
 
     //sekaiposに初期位置を入れる
     var sekaipos = initialPos
@@ -19,15 +19,14 @@ class Morebou(val initialPos: Vec2D) {
     var kasokudo = Vec2DF(0f,0f)
     var isJump = false
 
-    fun idoSyori(controller: Controller, map: com.example.jajajamaru.Map) {
-        // controllerは使わずにもれぼう君を操作したい。
+    fun idoSyori( map:Map) {
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
 
         //加速度更新
         val u1CandA = kasokudoKoushin(u0)
 
         //速度更新
-        var u1CandC = sokudoKoushin(u1CandA, controller.pushedJumpButton)
+        var u1CandC = sokudoKoushin(u1CandA, true)
 
         //posを更新
         val u1CandD = u1CandC.copy(pos = Vec2D(u1CandC.pos.x + u1CandC.sokudo.x.toInt(), u1CandC.pos.y + u1CandC.sokudo.y.toInt()))
@@ -48,7 +47,7 @@ class Morebou(val initialPos: Vec2D) {
 
     //落下中にすり抜けてしまう。開始位置から上り坂を降りるところのＪ字型の場所には、落下で止まれない。
     //予想、２マス分したに行ってしまっている？加速制限をつけると解決する？
-    private fun shogaibutuJogeSayuu(map:com.example.jajajamaru.Map, before: Ugoki, u0: Ugoki): Ugoki {
+    private fun shogaibutuJogeSayuu(map:Map, before: Ugoki, u0: Ugoki): Ugoki {
 
         //障害物上下処理
         val afterJouge = if (mapCheckY(map, before.pos.x,before.pos.y)) {
@@ -144,7 +143,7 @@ class Morebou(val initialPos: Vec2D) {
         return afterGenzaichi
     }
 
-    fun mapCheckGenzaichi(map: com.example.jajajamaru.Map, x1cand:Int, y1Cand:Int):Boolean{
+    fun mapCheckGenzaichi(map:Map, x1cand:Int, y1Cand:Int):Boolean{
         //現在のブロックを判定する
         val yBlock = ( y1Cand/ 32)
         if  (yBlock >= map.masu.size) return false
@@ -152,7 +151,7 @@ class Morebou(val initialPos: Vec2D) {
         return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
     }
 
-    fun mapCheckYRakka(map: com.example.jajajamaru.Map, x1cand:Int, y1Cand:Int):Boolean{
+    fun mapCheckYRakka(map:Map, x1cand:Int, y1Cand:Int):Boolean{
         //ひとつ下のブロックを判定する
         val yBlock = ( y1Cand/ 32) + 1
         if  (yBlock >= map.masu.size) return false
@@ -160,14 +159,14 @@ class Morebou(val initialPos: Vec2D) {
         return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
     }
 
-    fun mapCheckX(map: com.example.jajajamaru.Map, x1cand:Int, y1Cand:Int):Boolean{
+    fun mapCheckX(map:Map, x1cand:Int, y1Cand:Int):Boolean{
         val yBlock = ( y1Cand/ 32)
         if  (yBlock >= map.masu.size) return false
         val xBlock = (x1cand/32)
         return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
     }
 
-    fun mapCheckY(map: com.example.jajajamaru.Map, x1Cand:Int, y1Cand:Int):Boolean{
+    fun mapCheckY(map:Map, x1Cand:Int, y1Cand:Int):Boolean{
         val checkPointY = y1Cand
         val yBlock = ( checkPointY/ 32)
         if  (yBlock >= map.masu.size) return false
@@ -181,7 +180,6 @@ class Morebou(val initialPos: Vec2D) {
     速度を更新する、まず加速度から速度を計算して、その後に最大速度制限とジャンプの処理をする
      */
     private fun sokudoKoushin(before: Ugoki, flag: Boolean): Ugoki {
-//        val flag = controller.pushedJumpButton
         //速度の更新
         val u1CandA = before.copy(
             sokudo = Vec2DF(
@@ -242,7 +240,7 @@ class Morebou(val initialPos: Vec2D) {
         }
     }
 
-    private fun sekaiHashiCheck(map: com.example.jajajamaru.Map, before: Ugoki): Ugoki {
+    private fun sekaiHashiCheck(map:Map, before: Ugoki): Ugoki {
         //世界の上下チェック
         val afterJouge = if (isJump && before.pos.y < 96) {
             before.copy(pos = Vec2D(before.pos.x, 96), sokudo = Vec2DF(before.sokudo.x, 0f))
@@ -266,10 +264,8 @@ class Morebou(val initialPos: Vec2D) {
 
     fun draw(canvas: Canvas) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
-        iroTestYou.style = Paint.Style.FILL
         iro.color = argb(255, 255, 150, 150)//飛んでないとき赤
-        iroTestYou.color = argb(255, 255, 255, 255)//飛んでる時　白
-        canvas.drawCircle(sekaipos.x.toFloat()+5,(sekaipos.y-50).toFloat(),(15).toFloat(),iroTestYou)
+        canvas.drawCircle(sekaipos.x.toFloat()+5,(sekaipos.y-50).toFloat(),(15).toFloat(),iro)
     }
 
 }

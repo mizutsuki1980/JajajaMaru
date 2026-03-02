@@ -30,6 +30,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun syokikaGameReset(){
         frame = 0
         jiki = Jiki(vec2d)
+        vec2dMorebou = Vec2D(initialJikiX-100, initialJikiY)
+        morebou = Morebou(vec2dMorebou)
+
         gameCounter = GameCounter()
     }
 
@@ -52,7 +55,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun tsugiNoSyori() {
         controller.jumpButtonOsiTuduketeirukaCheck(jiki)
         jiki.idoSyori(controller,map)
-        morebou.idoSyori(controller,map)
+        morebou.idoSyori(map)
 
 
         teki.tekiTuginoSyori(jiki,map)
@@ -79,6 +82,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jiki.draw(canvas,controller)
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusanpng, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, jiki.initialPos.x.toFloat()-40, jiki.sekaipos.y.toFloat()-75, null)
+        //jiki.initialPos.x.toFloat()-40
+        //自機の描画でこんな表記がある
+        //これが原因だと思う。だってsekaipos.xのはずだからね。
+        //たぶん真ん中に描画したいから、常に一定の値になっているんだと思う。
+        //なんでsekaipos.xから中心を割り出して
+        //そこから動いた分だけ加える
+        //みたいにしないとズレてい行くんだと思う。
 
         morebou.draw(canvas)
         val bitmapMorebou = BitmapFactory.decodeResource(resources, R.drawable.moretyuu, BitmapFactory.Options())
