@@ -80,7 +80,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusanpng, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, jiki.initialPos.x.toFloat()-40, jiki.sekaipos.y.toFloat()-75, null)
 
-        morebou.draw(canvas,controller)
+        morebou.draw(canvas)
         val bitmapMorebou = BitmapFactory.decodeResource(resources, R.drawable.moretyuu, BitmapFactory.Options())
         canvas.drawBitmap(bitmapMorebou, morebou.sekaipos.x.toFloat()-40, morebou.sekaipos.y.toFloat()-75, null)
 

@@ -8,9 +8,6 @@ import kotlin.math.max
 import kotlin.math.min
 
 class Morebou(val initialPos: Vec2D) {
-    //いまはjikiをもとに上下の障害物を判定している。
-    //これはjikiをMorebouに変えればいけるだろう。
-    //やってみる
 
     val ookisa = 100
     val iro = Paint()
@@ -24,16 +21,13 @@ class Morebou(val initialPos: Vec2D) {
 
     fun idoSyori(controller: Controller, map: com.example.jajajamaru.Map) {
         // controllerは使わずにもれぼう君を操作したい。
-
-
-
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
 
         //加速度更新
-        val u1CandA = kasokudoKoushin(u0, controller)
+        val u1CandA = kasokudoKoushin(u0)
 
         //速度更新
-        var u1CandC = sokudoKoushin(u1CandA, controller)
+        var u1CandC = sokudoKoushin(u1CandA, controller.pushedJumpButton)
 
         //posを更新
         val u1CandD = u1CandC.copy(pos = Vec2D(u1CandC.pos.x + u1CandC.sokudo.x.toInt(), u1CandC.pos.y + u1CandC.sokudo.y.toInt()))
@@ -186,8 +180,8 @@ class Morebou(val initialPos: Vec2D) {
     /**
     速度を更新する、まず加速度から速度を計算して、その後に最大速度制限とジャンプの処理をする
      */
-    private fun sokudoKoushin(before: Ugoki, controller: Controller): Ugoki {
-
+    private fun sokudoKoushin(before: Ugoki, flag: Boolean): Ugoki {
+//        val flag = controller.pushedJumpButton
         //速度の更新
         val u1CandA = before.copy(
             sokudo = Vec2DF(
@@ -209,25 +203,17 @@ class Morebou(val initialPos: Vec2D) {
         //ジャンプ処理
         var u1CandC = u1CandB
         if (isJump == false) {
-            if (controller.pushedJumpButton == true) {
+            if (flag) {
                 isJump = true
-                u1CandC = u1CandC.copy(sokudo = Vec2DF(u1CandC.sokudo.x, -60f))
-            }
-        }else{
-            //多段ジャンプの場合
-            if(controller.nikaimeJump){
-                controller.nikaimeJump = false
                 u1CandC = u1CandC.copy(sokudo = Vec2DF(u1CandC.sokudo.x, -60f))
             }
         }
 
-
         return u1CandC
     }
 
-    private fun kasokudoKoushin(u0: Ugoki, controller: Controller): Ugoki {
+    private fun kasokudoKoushin(u0: Ugoki): Ugoki {
         return u0.copy(kasokudo = Vec2DF(kasokudoX("migi",u0), kasokudoY()))
-        //左右にキーを入れていると、加速度が2.5か-2.5が返っている
     }
 
     //ジャンプの加速度
@@ -278,13 +264,12 @@ class Morebou(val initialPos: Vec2D) {
         return u1Cand
     }
 
-    fun draw(canvas: Canvas, controller: Controller) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
+    fun draw(canvas: Canvas) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
         iroTestYou.style = Paint.Style.FILL
         iro.color = argb(255, 255, 150, 150)//飛んでないとき赤
         iroTestYou.color = argb(255, 255, 255, 255)//飛んでる時　白
         canvas.drawCircle(sekaipos.x.toFloat()+5,(sekaipos.y-50).toFloat(),(15).toFloat(),iroTestYou)
-
     }
 
 }
