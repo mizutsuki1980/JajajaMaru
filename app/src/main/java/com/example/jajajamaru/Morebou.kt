@@ -16,12 +16,16 @@ class Morebou(val initialPos: Vec2D) {
     val iro = Paint()
     val iroTestYou = Paint()
 
-    var sekaipos = Vec2D(360,400)
+    //sekaiposに初期位置を入れる
+    var sekaipos = initialPos
     var sokudo = Vec2DF(0f,0f)
     var kasokudo = Vec2DF(0f,0f)
     var isJump = false
 
     fun idoSyori(controller: Controller, map: com.example.jajajamaru.Map) {
+        // controllerは使わずにもれぼう君を操作したい。
+
+
 
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
 
@@ -195,8 +199,9 @@ class Morebou(val initialPos: Vec2D) {
 
         //速度の上限設定
         val u1CandB = u1CandA.copy(
+            //もれぼう君ように数値設定
             sokudo = Vec2DF(
-                min(max(-30f, u1CandA.sokudo.x), 30f),
+                min(max(-10f, u1CandA.sokudo.x), 10f),
                 min(max(-30f, u1CandA.sokudo.y), 45f)
             )
         )
@@ -221,7 +226,7 @@ class Morebou(val initialPos: Vec2D) {
     }
 
     private fun kasokudoKoushin(u0: Ugoki, controller: Controller): Ugoki {
-        return u0.copy(kasokudo = Vec2DF(kasokudoX(controller.pushedSayuButton,u0), kasokudoY()))
+        return u0.copy(kasokudo = Vec2DF(kasokudoX("migi",u0), kasokudoY()))
         //左右にキーを入れていると、加速度が2.5か-2.5が返っている
     }
 
@@ -234,15 +239,16 @@ class Morebou(val initialPos: Vec2D) {
 
 
     fun kasokudoX(houkou:String,u0: Ugoki):Float {
+            //もれぼう君ようにちょっと減らしてある
         when (houkou) {
-            "migi" -> {return 5.0f }
-            "hidari" -> { return -5.0f }
+            "migi" -> {return 0.5f }
+            "hidari" -> { return -0.5f }
             "nashi" -> {
                 if (u0.sokudo.x == 0f) { return 0.0f }
                 if (u0.sokudo.x > 0) {
-                    return -2.5f
+                    return -0.5f
                 } else {
-                    return 2.5f
+                    return 0.5f
                 }
             }
 
@@ -275,28 +281,8 @@ class Morebou(val initialPos: Vec2D) {
     fun draw(canvas: Canvas, controller: Controller) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
         iroTestYou.style = Paint.Style.FILL
-
-        if(isJump) {
-            if(sokudo.y<0f) {
-                iro.color = argb(255, 255, 255, 150) //飛んでる,上昇中
-            }else if (sokudo.y>0f) {
-                iro.color = argb(255, 150, 150, 150) //飛んでる、下降中
-            }else{
-                iro.color = argb(255, 150, 150, 150) //飛んでる、ちょうど０
-            }
-        }else{
-
-            iro.color = argb(255, 255, 150, 150)//飛んでないとき赤
-        }
-
-        if(controller.pushedJumpButton) {
-            iroTestYou.color = argb(255, 255, 255, 255)//飛んでる時　白
-        }else{
-            iroTestYou.color = argb(255, 220, 220, 220)//飛んでないとき　黒
-        }
-        //canvas.drawCircle(initialPos.x.toFloat(),(sekaipos.y).toFloat(),(ookisa/5).toFloat(),iro)
-
-        //テスト用　頭の上に色付きの〇を表示する
+        iro.color = argb(255, 255, 150, 150)//飛んでないとき赤
+        iroTestYou.color = argb(255, 255, 255, 255)//飛んでる時　白
         canvas.drawCircle(initialPos.x.toFloat()+5,(sekaipos.y-50).toFloat(),(15).toFloat(),iroTestYou)
 
     }
