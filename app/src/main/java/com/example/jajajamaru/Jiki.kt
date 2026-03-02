@@ -16,7 +16,7 @@ class Jiki(val initialPos: Vec2D) {
     var sokudo = Vec2DF(0f,0f)
     var kasokudo = Vec2DF(0f,0f)
     var isJump = false
-
+    var zure = 0
     fun idoSyori(controller: Controller, map: Map) {
 
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
@@ -40,7 +40,7 @@ class Jiki(val initialPos: Vec2D) {
         sokudo = u1CandF.sokudo
         kasokudo = u1CandF.kasokudo
         sekaipos = u1CandF.pos
-
+        zure = initialPos.x - sekaipos.x
     }
 
 

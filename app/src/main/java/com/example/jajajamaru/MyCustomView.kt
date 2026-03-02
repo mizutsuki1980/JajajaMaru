@@ -82,17 +82,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jiki.draw(canvas,controller)
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusanpng, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, jiki.initialPos.x.toFloat()-40, jiki.sekaipos.y.toFloat()-75, null)
-        //jiki.initialPos.x.toFloat()-40
-        //自機の描画でこんな表記がある
-        //これが原因だと思う。だってsekaipos.xのはずだからね。
-        //たぶん真ん中に描画したいから、常に一定の値になっているんだと思う。
-        //なんでsekaipos.xから中心を割り出して
-        //そこから動いた分だけ加える
-        //みたいにしないとズレてい行くんだと思う。
-
-        morebou.draw(canvas)
+        morebou.draw(canvas,jiki)
         val bitmapMorebou = BitmapFactory.decodeResource(resources, R.drawable.moretyuu, BitmapFactory.Options())
-        canvas.drawBitmap(bitmapMorebou, morebou.sekaipos.x.toFloat()-40, morebou.sekaipos.y.toFloat()-75, null)
+        canvas.drawBitmap(bitmapMorebou, morebou.sekaipos.x.toFloat()-40+jiki.zure, morebou.sekaipos.y.toFloat()-75, null)
 
         teki.draw(canvas,jiki)
         val bitmapTeki = BitmapFactory.decodeResource(resources, R.drawable.teki, BitmapFactory.Options())

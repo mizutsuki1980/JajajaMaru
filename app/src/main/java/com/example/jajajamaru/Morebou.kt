@@ -262,10 +262,10 @@ class Morebou(initialPos: Vec2D) {
         return u1Cand
     }
 
-    fun draw(canvas: Canvas) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
+    fun draw(canvas: Canvas,jiki:Jiki) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 150, 150)//飛んでないとき赤
-        canvas.drawCircle(sekaipos.x.toFloat()+5,(sekaipos.y-50).toFloat(),(15).toFloat(),iro)
+      //  canvas.drawCircle(sekaipos.x.toFloat()+5+ jiki.zure,(sekaipos.y-50).toFloat(),(15).toFloat(),iro)
     }
 
 }
