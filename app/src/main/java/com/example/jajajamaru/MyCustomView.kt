@@ -18,6 +18,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     var vec2d = Vec2D(initialJikiX, initialJikiY)
     var jiki = Jiki(vec2d)
     var teki = Teki()
+
+    var vec2dMorebou = Vec2D(initialJikiX-100, initialJikiY)
+    var morebou = Morebou(vec2dMorebou)
+
     var gameCounter = GameCounter()
     var controller = Controller()
     val map = Map()
@@ -48,6 +52,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun tsugiNoSyori() {
         controller.jumpButtonOsiTuduketeirukaCheck(jiki)
         jiki.idoSyori(controller,map)
+        morebou.idoSyori(controller,map)
+
+
         teki.tekiTuginoSyori(jiki,map)
         teki.idoSyori(controller,map)
 
@@ -72,6 +79,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jiki.draw(canvas,controller)
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusanpng, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, jiki.initialPos.x.toFloat()-40, jiki.sekaipos.y.toFloat()-75, null)
+
+        morebou.draw(canvas,controller)
+        val bitmapMorebou = BitmapFactory.decodeResource(resources, R.drawable.moretyuu, BitmapFactory.Options())
+        canvas.drawBitmap(bitmapMorebou, morebou.initialPos.x.toFloat()-40, morebou.sekaipos.y.toFloat()-75, null)
+
         teki.draw(canvas,jiki)
         val bitmapTeki = BitmapFactory.decodeResource(resources, R.drawable.teki, BitmapFactory.Options())
         canvas.drawBitmap(bitmapTeki, teki.xx.toFloat()-40, teki.sekaipos.y.toFloat()-75, null)
