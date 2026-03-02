@@ -8,6 +8,9 @@ import kotlin.math.max
 import kotlin.math.min
 
 class Morebou(val initialPos: Vec2D) {
+    //いまはjikiをもとに上下の障害物を判定している。
+    //これはjikiをMorebouに変えればいけるだろう。
+    //やってみる
 
     val ookisa = 100
     val iro = Paint()
