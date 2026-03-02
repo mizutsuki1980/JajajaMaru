@@ -201,7 +201,7 @@ class Morebou(val initialPos: Vec2D) {
         val u1CandB = u1CandA.copy(
             //もれぼう君ように数値設定
             sokudo = Vec2DF(
-                min(max(-10f, u1CandA.sokudo.x), 10f),
+                min(max(-5f, u1CandA.sokudo.x), 5f),
                 min(max(-30f, u1CandA.sokudo.y), 45f)
             )
         )
@@ -283,7 +283,7 @@ class Morebou(val initialPos: Vec2D) {
         iroTestYou.style = Paint.Style.FILL
         iro.color = argb(255, 255, 150, 150)//飛んでないとき赤
         iroTestYou.color = argb(255, 255, 255, 255)//飛んでる時　白
-        canvas.drawCircle(initialPos.x.toFloat()+5,(sekaipos.y-50).toFloat(),(15).toFloat(),iroTestYou)
+        canvas.drawCircle(sekaipos.x.toFloat()+5,(sekaipos.y-50).toFloat(),(15).toFloat(),iroTestYou)
 
     }
 
