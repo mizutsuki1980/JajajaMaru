@@ -5,6 +5,9 @@ import android.graphics.Color.argb
 import android.graphics.Paint
 
 class Teki {
+    //もれぼうくんは敵ではない
+    //もれぼうくんも床を歩きたい。
+
     val ookisa = 100
     val iro = Paint()
     var sekaipos = Vec2D(360,400)
