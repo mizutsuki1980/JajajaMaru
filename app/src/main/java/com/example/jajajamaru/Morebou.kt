@@ -18,6 +18,8 @@ class Morebou(initialPos: Vec2D) {
     var sokudo = Vec2DF(0f,0f)
     var kasokudo = Vec2DF(0f,0f)
     var isJump = false
+    var jumpFlag = false
+    var moretime = 1
 
     fun idoSyori( map:Map) {
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
@@ -26,7 +28,7 @@ class Morebou(initialPos: Vec2D) {
         val u1CandA = kasokudoKoushin(u0)
 
         //速度更新
-        var u1CandC = sokudoKoushin(u1CandA, true)
+        var u1CandC = sokudoKoushin(u1CandA, jumpFlag)
 
         //posを更新
         val u1CandD = u1CandC.copy(pos = Vec2D(u1CandC.pos.x + u1CandC.sokudo.x.toInt(), u1CandC.pos.y + u1CandC.sokudo.y.toInt()))
@@ -42,6 +44,18 @@ class Morebou(initialPos: Vec2D) {
         kasokudo = u1CandF.kasokudo
         sekaipos = u1CandF.pos
 
+        moretime ++
+
+        if(moretime>10){
+            if(jumpFlag==false){
+                jumpFlag=true
+            }else{
+                jumpFlag=false
+            }
+            moretime = 1
+
+        }else{
+        }
     }
 
 
