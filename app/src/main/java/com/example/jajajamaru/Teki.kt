@@ -5,8 +5,6 @@ import android.graphics.Color.argb
 import android.graphics.Paint
 
 class Teki {
-    //もれぼうくんは敵ではない
-    //もれぼうくんも床を歩きたい。
 
     val ookisa = 100
     val iro = Paint()
@@ -17,10 +15,24 @@ class Teki {
     var y = 100
     var xx = 100
     var yarareHantei = false
+    var shibou = false
     var mutekiTime = 10
+
+    fun syokika(){
+        sekaipos = Vec2D(500,500)
+        yarareHantei = false
+        shibou = false
+    }
+
     fun idoSyori(controller: Controller, map:Map,jiki:Jiki) {
 
-    //Ugokiを使っているのか。じゃぁそれでやるか。
+        if (shibou) {
+            shibousyori()
+            if (sekaipos.y>=1200){ syokika()}
+            return
+        }
+
+        //Ugokiを使っているのか。じゃぁそれでやるか。
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
 
         //加速度更新　（コントローラーはない）
@@ -30,10 +42,15 @@ class Teki {
         var u1CandB = sokudoKoushin(u1CandA, controller)
 
         //posを更新
-        val u1CandC = u1CandB.copy(pos = Vec2D(u1CandB.pos.x + u1CandB.sokudo.x.toInt(), u1CandB.pos.y + u1CandB.sokudo.y.toInt()))
+        val u1CandC = u1CandB.copy(
+            pos = Vec2D(
+                u1CandB.pos.x + u1CandB.sokudo.x.toInt(),
+                u1CandB.pos.y + u1CandB.sokudo.y.toInt()
+            )
+        )
 
         //自機から離れすぎないように左右端チェック
-        val u1CandD = sekaiHashiCheck(map,u1CandC)
+        val u1CandD = sekaiHashiCheck(map, u1CandC)
 
         //障害物上下左右チェック
         //val u1CandF = shogaibutuJogeSayuu(map, u1CandE,u0)
@@ -44,19 +61,25 @@ class Teki {
         sekaipos = u1CandC.pos
 
         val flag = sibouCheck(jiki)
-        if (yarareHantei==false){yarareHantei=flag}
-
-        if(yarareHantei){
-            mutekiTime --
-            if(mutekiTime  <= 1){
-                if(flag){
-                    sekaipos = Vec2D(500,500)
+        if (yarareHantei == false) {
+            yarareHantei = flag
+        }
+        if (yarareHantei) {
+            mutekiTime--
+            if (mutekiTime <= 1) {
+                if (flag) {
+                    shibou = true
                     mutekiTime = 10
-
                 }
             }
         }
     }
+
+    fun shibousyori(){
+        sekaipos = sekaipos.copy(sekaipos.x,sekaipos.y+20)
+    }
+
+
 
     fun sibouCheck(jiki:Jiki):Boolean{
         //jikiと近かったらtrueを返す

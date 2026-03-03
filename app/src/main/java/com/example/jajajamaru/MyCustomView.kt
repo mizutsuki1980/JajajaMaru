@@ -90,9 +90,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         teki.draw(canvas,jiki)
         val bitmapTeki = if(teki.yarareHantei) {
-            BitmapFactory.decodeResource(resources, R.drawable.ninjakawasaki, BitmapFactory.Options())
+            if(teki.shibou) {
+                BitmapFactory.decodeResource(resources,R.drawable.ninjayarare,BitmapFactory.Options())
+            }else{
+                BitmapFactory.decodeResource(resources,R.drawable.ninjakawasaki,BitmapFactory.Options())
+            }
         }else{
-            BitmapFactory.decodeResource(resources, R.drawable.teki, BitmapFactory.Options())
+
+            BitmapFactory.decodeResource(resources, R.drawable.ninjakakure, BitmapFactory.Options())
         }
 
         canvas.drawBitmap(bitmapTeki, teki.xx.toFloat()-40, teki.sekaipos.y.toFloat()-75, null)
