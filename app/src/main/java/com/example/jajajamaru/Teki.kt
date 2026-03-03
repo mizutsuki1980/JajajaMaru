@@ -17,7 +17,7 @@ class Teki {
     var y = 100
     var xx = 100
     var yarareHantei = false
-
+    var mutekiTime = 10
     fun idoSyori(controller: Controller, map:Map,jiki:Jiki) {
 
     //Ugokiを使っているのか。じゃぁそれでやるか。
@@ -45,6 +45,17 @@ class Teki {
 
         val flag = sibouCheck(jiki)
         if (yarareHantei==false){yarareHantei=flag}
+
+        if(yarareHantei){
+            mutekiTime --
+            if(mutekiTime  <= 1){
+                if(flag){
+                    sekaipos = Vec2D(500,500)
+                    mutekiTime = 10
+
+                }
+            }
+        }
     }
 
     fun sibouCheck(jiki:Jiki):Boolean{
