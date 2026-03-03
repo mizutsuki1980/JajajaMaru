@@ -82,7 +82,14 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bgPaint)
         mapCreate(canvas)
         jiki.draw(canvas,controller)
-        val bitmap = BitmapFactory.decodeResource(resources, R.drawable.kirerusanpng, BitmapFactory.Options())
+
+        val bitmap = if(teki.panchiHantei){
+            BitmapFactory.decodeResource(resources, R.drawable.panchi, BitmapFactory.Options())
+        }else{
+            BitmapFactory.decodeResource(resources, R.drawable.kirerusanpng, BitmapFactory.Options())
+        }
+
+
         canvas.drawBitmap(bitmap, jiki.initialPos.x.toFloat()-40, jiki.sekaipos.y.toFloat()-75, null)
         morebou.draw(canvas,jiki)
         val bitmapMorebou = BitmapFactory.decodeResource(resources, R.drawable.moretyuu, BitmapFactory.Options())

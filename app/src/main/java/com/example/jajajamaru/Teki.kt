@@ -16,6 +16,7 @@ class Teki {
     var xx = 100
     var yarareHantei = false
     var shibou = false
+    var panchiHantei = false
     var mutekiTime = 10
 
     fun syokika(){
@@ -60,7 +61,7 @@ class Teki {
         kasokudo = u1CandC.kasokudo
         sekaipos = u1CandC.pos
 
-        val flag = sibouCheck(jiki)
+        val flag = tikazukiCheck(jiki)
         if (yarareHantei == false) {
             yarareHantei = flag
         }
@@ -81,7 +82,7 @@ class Teki {
 
 
 
-    fun sibouCheck(jiki:Jiki):Boolean{
+    fun tikazukiCheck(jiki:Jiki):Boolean{
         //jikiと近かったらtrueを返す
          val xx = sekaipos.x
         val yy = sekaipos.y
@@ -92,11 +93,25 @@ class Teki {
             val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
             val atarikyori = (jiki.ookisa/4).toDouble()
 
+            val panchikyori = (jiki.ookisa).toDouble()
+        if (kyori < panchikyori){
+            panchiHantei = true
+        }else{
+            panchiHantei = false
+        }
+
+
+
+
             if (kyori < atarikyori){
                 return true
             }else{
                 return false
             }
+
+
+
+
     }
 
 
