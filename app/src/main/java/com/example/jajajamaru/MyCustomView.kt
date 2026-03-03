@@ -59,7 +59,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
 
         teki.tekiTuginoSyori(jiki,map)
-        teki.idoSyori(controller,map)
+        teki.idoSyori(controller,map,jiki)
 
         //ゴールは指定されたポイントにいけばいい、という判定
         //これが敵だとして、動くとするとどーする？
@@ -89,7 +89,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawBitmap(bitmapMorebou, morebou.sekaipos.x.toFloat()-40+jiki.zure, morebou.sekaipos.y.toFloat()-75, null)
 
         teki.draw(canvas,jiki)
-        val bitmapTeki = BitmapFactory.decodeResource(resources, R.drawable.teki, BitmapFactory.Options())
+        val bitmapTeki = if(teki.yarareHantei) {
+            BitmapFactory.decodeResource(resources, R.drawable.ninjakawasaki, BitmapFactory.Options())
+        }else{
+            BitmapFactory.decodeResource(resources, R.drawable.teki, BitmapFactory.Options())
+        }
+
         canvas.drawBitmap(bitmapTeki, teki.xx.toFloat()-40, teki.sekaipos.y.toFloat()-75, null)
 
 

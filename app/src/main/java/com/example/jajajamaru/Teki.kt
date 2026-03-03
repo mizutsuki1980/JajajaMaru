@@ -10,14 +10,15 @@ class Teki {
 
     val ookisa = 100
     val iro = Paint()
-    var sekaipos = Vec2D(360,400)
+    var sekaipos = Vec2D(500,500)
     var sokudo = Vec2DF(0f,0f)
     var kasokudo = Vec2DF(1f,0f)
     var x = 100
     var y = 100
     var xx = 100
+    var yarareHantei = false
 
-    fun idoSyori(controller: Controller, map:Map) {
+    fun idoSyori(controller: Controller, map:Map,jiki:Jiki) {
 
     //Ugokiを使っているのか。じゃぁそれでやるか。
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
@@ -41,8 +42,28 @@ class Teki {
         sokudo = u1CandC.sokudo
         kasokudo = u1CandC.kasokudo
         sekaipos = u1CandC.pos
+
+        val flag = sibouCheck(jiki)
+        if (yarareHantei==false){yarareHantei=flag}
     }
 
+    fun sibouCheck(jiki:Jiki):Boolean{
+        //jikiと近かったらtrueを返す
+         val xx = sekaipos.x
+        val yy = sekaipos.y
+
+            val vx = xx - jiki.sekaipos.x
+            val vy = yy - jiki.sekaipos.y
+
+            val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
+            val atarikyori = (jiki.ookisa/4).toDouble()
+
+            if (kyori < atarikyori){
+                return true
+            }else{
+                return false
+            }
+    }
 
 
     fun kasokudoKoushin(u0:Ugoki, controller:Controller):Ugoki{
