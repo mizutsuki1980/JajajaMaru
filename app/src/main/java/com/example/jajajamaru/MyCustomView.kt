@@ -61,6 +61,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         teki.tekiTuginoSyori(jiki,map)
         teki.idoSyori(controller,map)
 
+        //ゴールは指定されたポイントにいけばいい、という判定
+        //これが敵だとして、動くとするとどーする？
         if(map.goalCheck(jiki)) {gameCounter.isClear = true}
         if(gameCounter.isClear){}else{gameCounter.time += 1}
         frame += 1  //繰り返し処理はここでやってる
