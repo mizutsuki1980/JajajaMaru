@@ -96,17 +96,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawBitmap(bitmapMorebou, morebou.sekaipos.x.toFloat()-40+jiki.zure, morebou.sekaipos.y.toFloat()-75, null)
 
         teki.draw(canvas,jiki)
-        val illustTeki = if(teki.yarareHantei) {
-            if(teki.shibou) {
-                R.drawable.ninjayarare
-            }else{
-                R.drawable.ninjakawasaki
-            }
-        }else{
-             R.drawable.ninjakakure
-        }
-
-        val bitmapTeki = BitmapFactory.decodeResource(resources, illustTeki, BitmapFactory.Options())
+        val bitmapTeki = BitmapFactory.decodeResource(resources, tekiIll(teki), BitmapFactory.Options())
         canvas.drawBitmap(bitmapTeki, teki.xx.toFloat()-40, teki.sekaipos.y.toFloat()-75, null)
 
 
@@ -114,6 +104,18 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         gameCounter.draw(canvas,frame,jiki,map)
     }
 
+    fun tekiIll(teki:Teki):Int{
+        if(teki.yarareHantei) {
+            if(teki.shibou) {
+                R.drawable.ninjayarare
+            }else{
+                R.drawable.ninjakawasaki
+            }
+        }else{
+            R.drawable.ninjakakure
+        }
+
+    }
 
 
 
