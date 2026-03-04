@@ -96,17 +96,17 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawBitmap(bitmapMorebou, morebou.sekaipos.x.toFloat()-40+jiki.zure, morebou.sekaipos.y.toFloat()-75, null)
 
         teki.draw(canvas,jiki)
-        val bitmapTeki = if(teki.yarareHantei) {
+        val illustTeki = if(teki.yarareHantei) {
             if(teki.shibou) {
-                BitmapFactory.decodeResource(resources,R.drawable.ninjayarare,BitmapFactory.Options())
+                R.drawable.ninjayarare
             }else{
-                BitmapFactory.decodeResource(resources,R.drawable.ninjakawasaki,BitmapFactory.Options())
+                R.drawable.ninjakawasaki
             }
         }else{
-
-            BitmapFactory.decodeResource(resources, R.drawable.ninjakakure, BitmapFactory.Options())
+             R.drawable.ninjakakure
         }
 
+        val bitmapTeki = BitmapFactory.decodeResource(resources, illustTeki, BitmapFactory.Options())
         canvas.drawBitmap(bitmapTeki, teki.xx.toFloat()-40, teki.sekaipos.y.toFloat()-75, null)
 
 
