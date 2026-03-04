@@ -5,7 +5,7 @@ import android.graphics.Color.argb
 import android.graphics.Paint
 
 class Teki {
-
+    //敵がやられたときに点滅するようにしたい。
     val ookisa = 100
     val iro = Paint()
     var sekaipos = Vec2D(500,500)
