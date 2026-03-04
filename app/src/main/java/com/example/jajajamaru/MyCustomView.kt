@@ -81,10 +81,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         bgPaint.style = Paint.Style.FILL
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bgPaint)
         mapCreate(canvas)
+
         jiki.draw(canvas,controller)
-
         val bitmap = BitmapFactory.decodeResource(resources, jikiIll(teki), BitmapFactory.Options())
-
         canvas.drawBitmap(bitmap, jiki.initialPos.x.toFloat()-40, jiki.sekaipos.y.toFloat()-75, null)
         morebou.draw(canvas,jiki)
         val bitmapMorebou = BitmapFactory.decodeResource(resources, R.drawable.moretyuu, BitmapFactory.Options())
@@ -100,22 +99,22 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun jikiIll(teki:Teki) :Int{
-        if (teki.panchiHantei) {
-            return R.drawable.panchi
+        return if (teki.panchiHantei) {
+             R.drawable.panchi
         } else {
-            return R.drawable.kirerusanpng
+             R.drawable.kirerusanpng
         }
     }
 
     fun tekiIll(teki:Teki):Int{
-        if(teki.yarareHantei) {
+        return if(teki.yarareHantei) {
             if(teki.shibou) {
-               return  R.drawable.ninjayarare
+                 R.drawable.ninjayarare
             }else{
-                return R.drawable.ninjakawasaki
+                 R.drawable.ninjakawasaki
             }
         }else{
-            return R.drawable.ninjakakure
+             R.drawable.ninjakakure
         }
 
     }
