@@ -61,8 +61,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         teki.tekiTuginoSyori(jiki,map)
         teki.idoSyori(controller,map,jiki)
 
-        //ゴールは指定されたポイントにいけばいい、という判定
-        //これが敵だとして、動くとするとどーする？
         if(map.goalCheck(jiki)) {gameCounter.isClear = true}
         if(gameCounter.isClear){}else{gameCounter.time += 1}
         frame += 1  //繰り返し処理はここでやってる
@@ -92,7 +90,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         teki.draw(canvas,jiki)
         val bitmapTeki = BitmapFactory.decodeResource(resources, tekiIll(teki), BitmapFactory.Options())
         canvas.drawBitmap(bitmapTeki, teki.xx.toFloat()-40, teki.sekaipos.y.toFloat()-75, null)
-
 
         controller.draw(canvas)
         gameCounter.draw(canvas,frame,jiki,map)
