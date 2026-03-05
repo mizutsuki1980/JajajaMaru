@@ -58,7 +58,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         morebou.idoSyori(map)
 
 
-        teki.tekiTuginoSyori(jiki,map)
         teki.idoSyori(controller,map,jiki)
 
         if(map.goalCheck(jiki)) {gameCounter.isClear = true}

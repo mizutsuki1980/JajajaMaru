@@ -50,16 +50,16 @@ class Teki {
             )
         )
 
-        //自機から離れすぎないように左右端チェック
+        //自機から離れすぎないように左右端チェック //とくになにもやってない
         val u1CandD = sekaiHashiCheck(map, u1CandC)
 
         //障害物上下左右チェック
-        //val u1CandF = shogaibutuJogeSayuu(map, u1CandE,u0)
+        val u1CandF = shogaibutuJogeSayuu(map, u1CandD,u0)
 
 
-        sokudo = u1CandC.sokudo
-        kasokudo = u1CandC.kasokudo
-        sekaipos = u1CandC.pos
+        sokudo = u1CandF.sokudo
+        kasokudo = u1CandF.kasokudo
+        sekaipos = u1CandF.pos
 
         val flag = tikazukiCheck(jiki)
         if (yarareHantei == false) {
@@ -74,6 +74,63 @@ class Teki {
                 }
             }
         }
+    }
+
+    private fun shogaibutuJogeSayuu(map:Map, before: Ugoki, u0: Ugoki): Ugoki {
+        //障害物上下処理
+        val afterJouge = if (mapCheckY(map, before.pos.x, before.pos.y)) {
+            before
+        } else {
+            val yU0 = u0.pos.y
+            val yU1 = before.pos.y
+            //境界線上にとまらないように、-1と+1している
+            val yLimit = if (yU0 > yU1) { //上昇中
+                1 + 32 + (yU1 / 32) * 32
+            } else {//下降中
+                // isJump = false
+                -1 + (yU1 / 32) * 32
+            }
+            before.copy(pos = Vec2D(before.pos.x, yLimit), sokudo = Vec2DF(before.sokudo.x, 0f))
+        }
+
+        //posの値を見て障害物か判定している。posの値を修正している。
+        //障害物左右処理
+
+        val afterSayuu = if (mapCheckX(map, afterJouge.pos.x, afterJouge.pos.y)) {
+            afterJouge
+        } else {
+            val xU1 = afterJouge.pos.x
+            val xU0 = u0.pos.x
+            val xLimit = if (xU0 > xU1) {//右からきてる
+                1 + 32 + (afterJouge.pos.x / 32) * 32
+            } else if (xU0 < xU1) {//左からきてる
+                -1 + (afterJouge.pos.x / 32) * 32
+            } else {
+                afterJouge.pos.x
+            }
+
+            afterJouge.copy(
+                pos = Vec2D(xLimit, afterJouge.pos.y),
+                sokudo = Vec2DF(0f, afterJouge.sokudo.y)
+            )
+        }
+        return afterSayuu
+    }
+
+
+    fun mapCheckX(map: Map, x1cand:Int, y1Cand:Int):Boolean{
+        val yBlock = ( y1Cand/ 32)
+        if  (yBlock >= map.masu.size) return false
+        val xBlock = (x1cand/32)
+        return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
+    }
+
+    fun mapCheckY(map: Map, x1Cand:Int, y1Cand:Int):Boolean{
+        val checkPointY = y1Cand
+        val yBlock = ( checkPointY/ 32)
+        if  (yBlock >= map.masu.size) return false
+        val xBlock = (x1Cand/32)
+        return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
     }
 
     fun shibousyori(){
@@ -136,13 +193,6 @@ class Teki {
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
         xx = (360-jiki.sekaipos.x) + sekaipos.x
-
         canvas.drawCircle(xx.toFloat(),(sekaipos.y).toFloat(),(ookisa/5).toFloat(),iro)
     }
-
-    fun tekiTuginoSyori(jiki: Jiki,map: Map){
-
-
-    }
-
 }
