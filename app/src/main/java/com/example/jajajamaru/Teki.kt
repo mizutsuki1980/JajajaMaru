@@ -10,7 +10,8 @@ class Teki {
     val iro = Paint()
     var sekaipos = Vec2D(500,500)
     var sokudo = Vec2DF(0f,0f)
-    var kasokudo = Vec2DF(1f,0f)
+    //ここに加速度が右に入っているから右に動いているだけ
+    var kasokudo = Vec2DF(0.5f,0f)
     var x = 100
     var y = 100
     var xx = 100
@@ -33,7 +34,6 @@ class Teki {
             return
         }
 
-        //Ugokiを使っているのか。じゃぁそれでやるか。
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
 
         //加速度更新　（コントローラーはない）
