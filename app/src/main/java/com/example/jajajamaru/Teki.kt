@@ -10,8 +10,12 @@ class Teki {
     val iro = Paint()
     var sekaipos = Vec2D(500,500)
     var sokudo = Vec2DF(0f,0f)
+
     //ここに加速度が右に入っているから右に動いているだけ
-    var kasokudo = Vec2DF(0.5f,0f)
+    var kasokudo = Vec2DF(0f,0f)
+
+    var ugokiHoukou = "hidari"
+
     var x = 100
     var y = 100
     var xx = 100
@@ -27,7 +31,10 @@ class Teki {
     }
 
     fun idoSyori(controller: Controller, map:Map,jiki:Jiki) {
-
+       //なるほどsaekaiposはマイナスはあり得ないのかな
+        if(sekaipos.x>700){ugokiHoukou="hidari"}
+        if(sekaipos.x<395){ugokiHoukou="migi"}
+// なるほど、勢いがついてくるとposが０以下になって止まっているのか
         if (shibou) {
             shibousyori()
             if (sekaipos.y>=1200){ syokika()}
@@ -76,6 +83,20 @@ class Teki {
         }
     }
 
+    fun kasokudoKoushin(u0:Ugoki, controller:Controller):Ugoki{
+        val u1cand = if (ugokiHoukou=="migi"){
+            u0.copy(kasokudo= Vec2DF(0.5f,u0.sokudo.y))
+        }else  if (ugokiHoukou=="hidari") {
+            u0.copy(kasokudo= Vec2DF(-0.5f,u0.sokudo.y))
+        }else{
+            u0.copy(kasokudo= Vec2DF(u0.kasokudo.x,u0.sokudo.y))
+        }
+
+        return u1cand
+    }
+    fun sekaiHashiCheck(map:Map,u1CandD:Ugoki):Ugoki{
+        return u1CandD
+    }
     private fun shogaibutuJogeSayuu(map:Map, before: Ugoki, u0: Ugoki): Ugoki {
         //障害物上下処理
         val afterJouge = if (mapCheckY(map, before.pos.x, before.pos.y)) {
@@ -172,12 +193,6 @@ class Teki {
     }
 
 
-    fun kasokudoKoushin(u0:Ugoki, controller:Controller):Ugoki{
-        return u0.copy(kasokudo= Vec2DF(u0.kasokudo.x,u0.sokudo.y))
-    }
-    fun sekaiHashiCheck(map:Map,u1CandD:Ugoki):Ugoki{
-        return u1CandD
-    }
 
 
     fun sokudoKoushin(u0:Ugoki, controller:Controller):Ugoki{
