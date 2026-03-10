@@ -31,10 +31,9 @@ class Teki {
     }
 
     fun idoSyori(controller: Controller, map:Map,jiki:Jiki) {
-       //なるほどsaekaiposはマイナスはあり得ないのかな
         if(sekaipos.x>700){ugokiHoukou="hidari"}
         if(sekaipos.x<395){ugokiHoukou="migi"}
-// なるほど、勢いがついてくるとposが０以下になって止まっているのか
+        // なるほど、勢いがついてくるとposのｘが０よりマイナスになって止まっているのか
         if (shibou) {
             shibousyori()
             if (sekaipos.y>=1200){ syokika()}
