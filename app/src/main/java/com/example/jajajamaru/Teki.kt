@@ -31,6 +31,10 @@ class Teki {
     }
 
     fun idoSyori(controller: Controller, map:Map,jiki:Jiki) {
+        //敵には状態遷移を導入しなければいけないと思う。
+        //そもそもわけわかんなくなってるし。
+
+
         if(sekaipos.x>700){ugokiHoukou="hidari"}
         if(sekaipos.x<395){ugokiHoukou="migi"}
         // なるほど、勢いがついてくるとposのｘが０よりマイナスになって止まっているのか
