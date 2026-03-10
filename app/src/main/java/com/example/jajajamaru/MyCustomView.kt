@@ -57,8 +57,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jiki.idoSyori(controller,map)
         morebou.idoSyori(map)
 
-
-        teki.idoSyori(controller,map,jiki)
+        teki.nextFrame(controller,map,jiki)
 
         if(map.goalCheck(jiki)) {gameCounter.isClear = true}
         if(gameCounter.isClear){}else{gameCounter.time += 1}
