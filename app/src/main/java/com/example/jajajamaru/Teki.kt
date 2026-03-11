@@ -54,6 +54,7 @@ class Teki {
                         }
                     }
                 }else{
+                    //ここに書いてるからだと思う、idoSyoriが。
                     idoSyori(controller, map,jiki)
                 }
 
