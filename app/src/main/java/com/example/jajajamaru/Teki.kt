@@ -26,38 +26,35 @@ class Teki {
 
 
     //敵の状態遷移の準備。
-    val TAMA_NASI_STATE = 1
-    val NORMAL_STATE = 2
-    val TAMA_HIT_STATE = 3
-    val TAMA_HIT_END_STATE = 4
+    val TEKI_NASI_STATE = 1
+    val TEKI_NORMAL_STATE = 2
+    val TEKI_HIT_STATE = 3
+    val TEKI_HIT_END_STATE = 4
 
-    var status = TAMA_NASI_STATE // 最初は玉が画面内に無い状態
+    var status = TEKI_NASI_STATE // 最初は玉が画面内に無い状態
 
-    /*
-    fun nextFrame(jiki:Jiki,teki:Teki) {
+    fun nextFrame(controller:Controller,map:Map,jiki:Jiki) {
+
+        idoSyori(controller, map,jiki)
+
         when(status) {
-            TAMA_NASI_STATE -> {
-                tekiKaraStart(teki)         //最初のリセット処理
+            TEKI_NASI_STATE -> {
+
             }
-            NORMAL_STATE -> {
-                moveOne(jiki)                //自機にひとつ近づくように弾を移動
-                if(attaterukaCheck(jiki)) {                     //自機に当たっているかチェック
-                    gotoHitState()
-                }
-                //画面外なら、最初へ状態遷移
-                if (x > 690 || x < 0 || y > 1050 || y < 0){ status = TAMA_NASI_STATE }
+            TEKI_NORMAL_STATE -> {
+
+
+             status = TEKI_HIT_STATE
             }
-            TAMA_HIT_STATE -> {
-                moveOne(jiki)   //めりこむ感じ
-                hitCountSyori() //ヒット処理して次へ
+            TEKI_HIT_STATE -> {
+
+
             }
-            TAMA_HIT_END_STATE -> {
-                moveOne(jiki)   //めりこむ感じ
-                motoniModosu()  // もとに戻す
+            TEKI_HIT_END_STATE -> {
+
             }
         }
     }
-    */
 
 
     fun syokika(){
