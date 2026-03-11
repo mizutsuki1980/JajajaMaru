@@ -35,47 +35,41 @@ class Teki {
 
     fun nextFrame(controller:Controller,map:Map,jiki:Jiki) {
 
-
         when(status) {
-            TEKI_NASI_STATE -> {
-                status = TEKI_NORMAL_STATE
-            }
+            TEKI_NASI_STATE -> { status = TEKI_NORMAL_STATE }
             TEKI_NORMAL_STATE -> {
                 if(sekaipos.x>700){ugokiHoukou="hidari"}
                 if(sekaipos.x<395){ugokiHoukou="migi"}
-
-                idoSyori(controller, map,jiki)
-
                 val flag = tikazukiCheck(jiki)
+                if (yarareHantei == false) { yarareHantei = flag }
 
-                if (yarareHantei == false) {
-                    yarareHantei = flag
-                }
+//やられた判定入った直後に動かなくなる。別にこれでいいけど、書き方はもうちょっとある気がする。
                 if (yarareHantei) {
                     mutekiTime--
                     if (mutekiTime <= 1) {
                         if (flag) {
                             shibou = true
                             mutekiTime = 10
-
                             status = TEKI_HIT_STATE
-
                         }
                     }
+                }else{
+                    idoSyori(controller, map,jiki)
                 }
 
             }
+
+
             TEKI_HIT_STATE -> {
                 idoSyori(controller, map,jiki)
+                if (shibou) { status = TEKI_HIT_END_STATE }
             }
             TEKI_HIT_END_STATE -> {
-
-                if (shibou) {
-                    shibousyori()
-                    if (sekaipos.y>=1200){ syokika()}
-                    return
+                shibousyori()
+                if (sekaipos.y>=1200){
+                    syokika()
+                    status = TEKI_NASI_STATE
                 }
-
             }
         }
     }
