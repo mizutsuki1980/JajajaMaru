@@ -35,22 +35,46 @@ class Teki {
 
     fun nextFrame(controller:Controller,map:Map,jiki:Jiki) {
 
-        idoSyori(controller, map,jiki)
 
         when(status) {
             TEKI_NASI_STATE -> {
-
+                status = TEKI_NORMAL_STATE
             }
             TEKI_NORMAL_STATE -> {
+                if(sekaipos.x>700){ugokiHoukou="hidari"}
+                if(sekaipos.x<395){ugokiHoukou="migi"}
 
+                idoSyori(controller, map,jiki)
 
-             status = TEKI_HIT_STATE
+                val flag = tikazukiCheck(jiki)
+
+                if (yarareHantei == false) {
+                    yarareHantei = flag
+                }
+                if (yarareHantei) {
+                    mutekiTime--
+                    if (mutekiTime <= 1) {
+                        if (flag) {
+                            shibou = true
+                            mutekiTime = 10
+
+                            status = TEKI_HIT_STATE
+
+                        }
+                    }
+                }
+
             }
             TEKI_HIT_STATE -> {
-
-
+                idoSyori(controller, map,jiki)
             }
             TEKI_HIT_END_STATE -> {
+
+                if (shibou) {
+                    shibousyori()
+                    if (sekaipos.y>=1200){ syokika()}
+                    return
+                }
 
             }
         }
@@ -64,18 +88,6 @@ class Teki {
     }
 
     fun idoSyori(controller: Controller, map:Map,jiki:Jiki) {
-        //敵には状態遷移を導入しなければいけないと思う。
-        //そもそもわけわかんなくなってるし。
-
-
-        if(sekaipos.x>700){ugokiHoukou="hidari"}
-        if(sekaipos.x<395){ugokiHoukou="migi"}
-        // なるほど、勢いがついてくるとposのｘが０よりマイナスになって止まっているのか
-        if (shibou) {
-            shibousyori()
-            if (sekaipos.y>=1200){ syokika()}
-            return
-        }
 
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
 
@@ -104,19 +116,6 @@ class Teki {
         kasokudo = u1CandF.kasokudo
         sekaipos = u1CandF.pos
 
-        val flag = tikazukiCheck(jiki)
-        if (yarareHantei == false) {
-            yarareHantei = flag
-        }
-        if (yarareHantei) {
-            mutekiTime--
-            if (mutekiTime <= 1) {
-                if (flag) {
-                    shibou = true
-                    mutekiTime = 10
-                }
-            }
-        }
     }
 
     fun kasokudoKoushin(u0:Ugoki, controller:Controller):Ugoki{
