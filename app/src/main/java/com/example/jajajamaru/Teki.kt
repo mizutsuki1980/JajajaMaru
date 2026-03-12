@@ -43,17 +43,8 @@ class Teki {
                 if(sekaipos.x<395){ugokiHoukou="migi"}
                 val flag = tikazukiCheck(jiki)
                 if (yarareHantei == false) { yarareHantei = flag }
-                if (yarareHantei) {
-                    status = TEKI_HIT_STATE
-                }else{
-                    idoSyori(controller, map,jiki)
-                }
-            }
 
-
-            TEKI_HIT_STATE -> {
-                val flag = tikazukiCheck(jiki)
-                if (yarareHantei == false) { yarareHantei = flag }
+//やられた判定入った直後に動かなくなる。別にこれでいいけど、書き方はもうちょっとある気がする。
                 if (yarareHantei) {
                     mutekiTime--
                     if (mutekiTime <= 1) {
@@ -63,16 +54,24 @@ class Teki {
                             status = TEKI_HIT_STATE
                         }
                     }
+                }else{
+                    //ここに書いてるからだと思う、idoSyoriが。
+                    //なんで無敵時間に入ると動かなくなる。
+                    //これを一つの状態遷移の状態にすればいいんじゃないかな。
+                    idoSyori(controller, map,jiki)
                 }
+
+            }
+
+
+            TEKI_HIT_STATE -> {
+                idoSyori(controller, map,jiki)
+                if (shibou) { status = TEKI_HIT_END_STATE }
             }
 
             TEKI_HIT_YARARE_STATE -> {
-
-
-                if (shibou) { status = TEKI_HIT_END_STATE }
-
             }
-
+            
             TEKI_HIT_END_STATE -> {
                 shibousyori()
                 if (sekaipos.y>=1200){
