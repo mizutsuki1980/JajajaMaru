@@ -29,7 +29,8 @@ class Teki {
     val TEKI_NASI_STATE = 1
     val TEKI_NORMAL_STATE = 2
     val TEKI_HIT_STATE = 3
-    val TEKI_HIT_END_STATE = 4
+    val TEKI_HIT_YARARE_STATE = 4
+    val TEKI_HIT_END_STATE = 5
 
     var status = TEKI_NASI_STATE // 最初は玉が画面内に無い状態
 
@@ -42,8 +43,17 @@ class Teki {
                 if(sekaipos.x<395){ugokiHoukou="migi"}
                 val flag = tikazukiCheck(jiki)
                 if (yarareHantei == false) { yarareHantei = flag }
+                if (yarareHantei) {
+                    status = TEKI_HIT_STATE
+                }else{
+                    idoSyori(controller, map,jiki)
+                }
+            }
 
-//やられた判定入った直後に動かなくなる。別にこれでいいけど、書き方はもうちょっとある気がする。
+
+            TEKI_HIT_STATE -> {
+                val flag = tikazukiCheck(jiki)
+                if (yarareHantei == false) { yarareHantei = flag }
                 if (yarareHantei) {
                     mutekiTime--
                     if (mutekiTime <= 1) {
@@ -53,18 +63,16 @@ class Teki {
                             status = TEKI_HIT_STATE
                         }
                     }
-                }else{
-                    //ここに書いてるからだと思う、idoSyoriが。
-                    idoSyori(controller, map,jiki)
                 }
-
             }
 
+            TEKI_HIT_YARARE_STATE -> {
 
-            TEKI_HIT_STATE -> {
-                idoSyori(controller, map,jiki)
+
                 if (shibou) { status = TEKI_HIT_END_STATE }
+
             }
+
             TEKI_HIT_END_STATE -> {
                 shibousyori()
                 if (sekaipos.y>=1200){
