@@ -39,38 +39,28 @@ class Teki {
 
         when(status) {
             TEKI_NASI_STATE -> { status = TEKI_NORMAL_STATE }
+
             TEKI_NORMAL_STATE -> {
                 if(sekaipos.x>700){ugokiHoukou="hidari"}
                 if(sekaipos.x<395){ugokiHoukou="migi"}
-
                 val flag = tikazukiCheck(jiki)//近づかれたら、やられた判定
-
-                //やられた判定がfalseならtrueへ
-                if (yarareHantei == false) { yarareHantei = flag }
-
-                //やられた判定がtrueなら
-                if (yarareHantei) {
-                    //ここで状態遷移すればいいのでは？
+                if (yarareHantei == false) { yarareHantei = flag }   //やられた判定がfalseならtrueへ
+                if (yarareHantei) {                //やられた判定がtrueなら
                     status = TEKI_BARETA_STATE
                 }else{
                     idoSyori(controller, map,jiki)
                 }
-
             }
 
-
             TEKI_BARETA_STATE -> {
-                mutekiTime--
+                mutekiTime--    //10フレームだけ無敵    var mutekiTime = 10
                 if (mutekiTime <= 1) {  //無敵が切れたら
-                    if (tikazukiCheck(jiki)) {  //もう一度食らったら
-                        //ここで抜ける
+                    if (tikazukiCheck(jiki)) {  //もう一度食らったら、ここで抜ける
                         shibou = true
-                        mutekiTime = 10
                         status = TEKI_BARETE_HIT_STATE
                     }
                 }
-
-                idoSyori(controller, map,jiki)
+//                idoSyori(controller, map,jiki)
                 if (shibou) { status = TEKI_BARETE_HIT_STATE }
             }
 
@@ -93,6 +83,7 @@ class Teki {
         sekaipos = Vec2D(500,500)
         yarareHantei = false
         shibou = false
+        mutekiTime = 10
     }
 
     fun idoSyori(controller: Controller, map:Map,jiki:Jiki) {
