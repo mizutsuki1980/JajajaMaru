@@ -54,6 +54,7 @@ class Teki {
             }
 
             TEKI_BARETA_MUTEKI_STATE -> {
+                //ここでの状態がわかりづらいので、なにか変化をさせたい。
                 mutekiTime--    //10フレームだけ無敵    var mutekiTime = 10
                 if (mutekiTime <= 1) {status = TEKI_BARETA_NORMAL_STATE }
             }
