@@ -28,10 +28,11 @@ class Teki {
     //敵の状態遷移の準備。
     val TEKI_NASI_STATE = 1
     val TEKI_NORMAL_STATE = 2
-    val TEKI_BARETA_STATE = 3
-    val TEKI_BARETE_HIT_STATE = 4
-    val TEKI_BARETE_HIT_YARARE_STATE = 5
-    val TEKI_HIT_END_STATE = 6
+    val TEKI_BARETA_MUTEKI_STATE = 3
+    val TEKI_BARETA_NORMAL_STATE = 4
+    val TEKI_BARETE_HIT_STATE = 5
+    val TEKI_BARETE_HIT_YARARE_STATE = 6
+    val TEKI_HIT_END_STATE = 7
 
     var status = TEKI_NASI_STATE // 最初は玉が画面内に無い状態
 
@@ -46,23 +47,24 @@ class Teki {
                 val flag = tikazukiCheck(jiki)//近づかれたら、やられた判定
                 if (yarareHantei == false) { yarareHantei = flag }   //やられた判定がfalseならtrueへ
                 if (yarareHantei) {                //やられた判定がtrueなら
-                    status = TEKI_BARETA_STATE
+                    status = TEKI_BARETA_MUTEKI_STATE
                 }else{
                     idoSyori(controller, map,jiki)
                 }
             }
 
-            TEKI_BARETA_STATE -> {
+            TEKI_BARETA_MUTEKI_STATE -> {
                 mutekiTime--    //10フレームだけ無敵    var mutekiTime = 10
-                if (mutekiTime <= 1) {  //無敵が切れたら
-                    if (tikazukiCheck(jiki)) {  //もう一度食らったら、ここで抜ける
-                        shibou = true
-                        status = TEKI_BARETE_HIT_STATE
-                    }
-                }
-//                idoSyori(controller, map,jiki)
-                if (shibou) { status = TEKI_BARETE_HIT_STATE }
+                if (mutekiTime <= 1) {status = TEKI_BARETA_NORMAL_STATE }
             }
+
+            TEKI_BARETA_NORMAL_STATE     -> {
+                if (tikazukiCheck(jiki)) {  //もう一度食らった
+                    shibou = true
+                    status = TEKI_BARETE_HIT_STATE
+                }
+            }
+
 
             TEKI_BARETE_HIT_STATE -> {
                 status = TEKI_HIT_END_STATE
