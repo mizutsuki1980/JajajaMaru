@@ -87,7 +87,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         teki.draw(canvas,jiki)
         val bitmapTeki = BitmapFactory.decodeResource(resources, tekiIll(teki), BitmapFactory.Options())
-        canvas.drawBitmap(bitmapTeki, teki.xx.toFloat()-40, teki.sekaipos.y.toFloat()-75, null)
+        val tekipaint = Paint()
+        tekipaint.alpha = 128
+        canvas.drawBitmap(bitmapTeki, teki.xx.toFloat()-40, teki.sekaipos.y.toFloat()-75,tekipaint)
+
+
 
         controller.draw(canvas)
         gameCounter.draw(canvas,frame,jiki,map)
