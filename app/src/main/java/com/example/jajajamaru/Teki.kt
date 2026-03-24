@@ -11,6 +11,8 @@ class Teki {
     var sekaipos = Vec2D(500,500)
     var sokudo = Vec2DF(0f,0f)
 
+    val tekipaint = Paint()
+
     //ここに加速度が右に入っているから右に動いているだけ
     var kasokudo = Vec2DF(0f,0f)
 
@@ -36,6 +38,10 @@ class Teki {
 
     var status = TEKI_NASI_STATE // 最初は玉が画面内に無い状態
 
+    init{
+        tekipaint.alpha = 255
+    }
+
     fun nextFrame(controller:Controller,map:Map,jiki:Jiki) {
 
         when(status) {
@@ -56,7 +62,11 @@ class Teki {
             TEKI_BARETA_MUTEKI_STATE -> {
                 //ここでの状態がわかりづらいので、なにか変化をさせたい。
                 mutekiTime--    //10フレームだけ無敵    var mutekiTime = 10
-                if (mutekiTime <= 1) {status = TEKI_BARETA_NORMAL_STATE }
+                tekipaint.alpha = 128
+                if (mutekiTime <= 1) {
+                    tekipaint.alpha = 255
+                    status = TEKI_BARETA_NORMAL_STATE
+                }
             }
 
             TEKI_BARETA_NORMAL_STATE     -> {
