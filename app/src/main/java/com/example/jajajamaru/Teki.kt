@@ -45,7 +45,10 @@ class Teki {
     fun nextFrame(controller:Controller,map:Map,jiki:Jiki) {
 
         when(status) {
-            TEKI_NASI_STATE -> { status = TEKI_NORMAL_STATE }
+            TEKI_NASI_STATE -> {
+                status = TEKI_NORMAL_STATE
+                tekipaint.alpha = 255   //一応、透明度を元に戻しておこう
+            }
 
             TEKI_NORMAL_STATE -> {
                 if(sekaipos.x>700){ugokiHoukou="hidari"}
