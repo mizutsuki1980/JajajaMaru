@@ -23,7 +23,6 @@ class Teki {
     var xx = 100
     var yarareHantei = false
     var shibou = false
-    var panchiHantei = false
     var mutekiTime = 10
 
 
@@ -221,12 +220,6 @@ class Teki {
             val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
             val atarikyori = (jiki.ookisa/4).toDouble()
 
-            val panchikyori = (jiki.ookisa).toDouble()
-        if (kyori < panchikyori){
-            panchiHantei = true
-        }else{
-            panchiHantei = false
-        }
 
 
 
