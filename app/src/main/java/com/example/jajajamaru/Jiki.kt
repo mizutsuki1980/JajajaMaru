@@ -31,10 +31,19 @@ class Jiki(val initialPos: Vec2D) {
 
     fun idoSyori(controller: Controller, map: Map,teki:Teki) {
 
-        jikiIll = if (teki.panchiHantei) {
-            R.drawable.panchi
+         if (teki.panchiHantei) {
+            status = JIKI_NORMAL_STATE
         } else {
-            R.drawable.kirerusanpng
+            status = JIKI_ATTACK_STATE
+        }
+
+        when(status) {
+            JIKI_NORMAL_STATE -> {
+                jikiIll = R.drawable.kirerusanpng
+            }
+            JIKI_ATTACK_STATE -> {
+                jikiIll = R.drawable.panchi
+            }
         }
 
 
