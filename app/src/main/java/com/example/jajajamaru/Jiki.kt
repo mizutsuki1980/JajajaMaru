@@ -11,6 +11,9 @@ class Jiki(val initialPos: Vec2D) {
     val ookisa = 100
     val iro = Paint()
     val iroTestYou = Paint()
+    var jikiIll = R.drawable.kirerusanpng
+
+
 
     var sekaipos = Vec2D(360,400)
     var sokudo = Vec2DF(0f,0f)
@@ -26,7 +29,7 @@ class Jiki(val initialPos: Vec2D) {
 
 
 
-    fun idoSyori(controller: Controller, map: Map) {
+    fun idoSyori(controller: Controller, map: Map,teki:Teki) {
 
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
 
@@ -37,21 +40,33 @@ class Jiki(val initialPos: Vec2D) {
         var u1CandC = sokudoKoushin(u1CandA, controller)
 
         //posを更新
-        val u1CandD = u1CandC.copy(pos = Vec2D(u1CandC.pos.x + u1CandC.sokudo.x.toInt(), u1CandC.pos.y + u1CandC.sokudo.y.toInt()))
+        val u1CandD = u1CandC.copy(
+            pos = Vec2D(
+                u1CandC.pos.x + u1CandC.sokudo.x.toInt(),
+                u1CandC.pos.y + u1CandC.sokudo.y.toInt()
+            )
+        )
 
         //世界の上下左右端チェック
-        val u1CandE = sekaiHashiCheck(map,u1CandD)
+        val u1CandE = sekaiHashiCheck(map, u1CandD)
 
         //障害物上下左右チェック
-        val u1CandF = shogaibutuJogeSayuu(map, u1CandE,u0)
+        val u1CandF = shogaibutuJogeSayuu(map, u1CandE, u0)
 
 
         sokudo = u1CandF.sokudo
         kasokudo = u1CandF.kasokudo
         sekaipos = u1CandF.pos
         zure = initialPos.x - sekaipos.x
-    }
 
+
+        jikiIll = if (teki.panchiHantei) {
+            R.drawable.panchi
+        } else {
+            R.drawable.kirerusanpng
+        }
+
+    }
 
     //落下中にすり抜けてしまう。開始位置から上り坂を降りるところのＪ字型の場所には、落下で止まれない。
     //予想、２マス分したに行ってしまっている？加速制限をつけると解決する？

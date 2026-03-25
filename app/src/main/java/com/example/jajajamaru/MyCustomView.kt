@@ -54,7 +54,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun tsugiNoSyori() {
         controller.jumpButtonOsiTuduketeirukaCheck(jiki)
-        jiki.idoSyori(controller,map)
+        jiki.idoSyori(controller,map,teki)
         morebou.idoSyori(map)
 
         teki.nextFrame(controller,map,jiki)
@@ -79,7 +79,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         mapCreate(canvas)
 
         jiki.draw(canvas,controller)
-        val bitmap = BitmapFactory.decodeResource(resources, jikiIll(teki), BitmapFactory.Options())
+        val bitmap = BitmapFactory.decodeResource(resources, jiki.jikiIll, BitmapFactory.Options())
         canvas.drawBitmap(bitmap, jiki.initialPos.x.toFloat()-40, jiki.sekaipos.y.toFloat()-75, null)
 
         morebou.draw(canvas,jiki)
