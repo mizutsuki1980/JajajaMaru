@@ -25,11 +25,18 @@ class Jiki(val initialPos: Vec2D) {
     //自機の状態遷移。
     val JIKI_NORMAL_STATE = 1
     val JIKI_ATTACK_STATE = 2
-    var status = JIKI_NORMAL_STATE // 最初は玉が画面内に無い状態
+    var status = JIKI_NORMAL_STATE // 最初はtekiが近くにいない無い状態
 
 
 
     fun idoSyori(controller: Controller, map: Map,teki:Teki) {
+
+        jikiIll = if (teki.panchiHantei) {
+            R.drawable.panchi
+        } else {
+            R.drawable.kirerusanpng
+        }
+
 
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
 
@@ -58,13 +65,6 @@ class Jiki(val initialPos: Vec2D) {
         kasokudo = u1CandF.kasokudo
         sekaipos = u1CandF.pos
         zure = initialPos.x - sekaipos.x
-
-
-        jikiIll = if (teki.panchiHantei) {
-            R.drawable.panchi
-        } else {
-            R.drawable.kirerusanpng
-        }
 
     }
 

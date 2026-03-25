@@ -96,15 +96,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         controller.draw(canvas)
         gameCounter.draw(canvas,frame,jiki,map)
     }
-
-    fun jikiIll(teki:Teki) :Int{
-        return if (teki.panchiHantei) {
-             R.drawable.panchi
-        } else {
-             R.drawable.kirerusanpng
-        }
-    }
-
+    
     fun tekiIll(teki:Teki):Int{
         return if(teki.yarareHantei) {
             if(teki.shibou) {
