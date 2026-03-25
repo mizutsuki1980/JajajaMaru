@@ -17,6 +17,15 @@ class Jiki(val initialPos: Vec2D) {
     var kasokudo = Vec2DF(0f,0f)
     var isJump = false
     var zure = 0
+
+
+    //自機の状態遷移。
+    val JIKI_NORMAL_STATE = 1
+    val JIKI_ATTACK_STATE = 2
+    var status = JIKI_NORMAL_STATE // 最初は玉が画面内に無い状態
+
+
+
     fun idoSyori(controller: Controller, map: Map) {
 
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
