@@ -28,7 +28,7 @@ class Jiki(val initialPos: Vec2D) {
     var status = JIKI_NORMAL_STATE // 最初はtekiが近くにいない無い状態
 
 
-    fun tikazukiCheck(teki:Teki):Boolean{
+    fun jikiToTekiTikazukiCheck(teki:Teki):Boolean{
         //jikiと近かったらtrueを返す
         val xx = sekaipos.x
         val yy = sekaipos.y
@@ -49,7 +49,7 @@ class Jiki(val initialPos: Vec2D) {
 
     fun idoSyori(controller: Controller, map: Map,teki:Teki) {
 
-         if (tikazukiCheck(teki)) {
+         if (jikiToTekiTikazukiCheck(teki)) {
              status = JIKI_ATTACK_STATE
         } else {
              status = JIKI_NORMAL_STATE
