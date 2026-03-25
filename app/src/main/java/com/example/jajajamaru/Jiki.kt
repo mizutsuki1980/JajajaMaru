@@ -28,13 +28,31 @@ class Jiki(val initialPos: Vec2D) {
     var status = JIKI_NORMAL_STATE // 最初はtekiが近くにいない無い状態
 
 
+    fun tikazukiCheck(teki:Teki):Boolean{
+        //jikiと近かったらtrueを返す
+        val xx = sekaipos.x
+        val yy = sekaipos.y
+        val vx = xx - teki.sekaipos.x
+        val vy = yy - teki.sekaipos.y
+
+        val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
+        val atarikyori = (ookisa/4).toDouble()
+
+        if (kyori < atarikyori){
+            return true
+        }else{
+            return false
+        }
+    }
+
+
 
     fun idoSyori(controller: Controller, map: Map,teki:Teki) {
 
-         if (teki.panchiHantei) {
-            status = JIKI_NORMAL_STATE
+         if (tikazukiCheck(teki)) {
+             status = JIKI_ATTACK_STATE
         } else {
-            status = JIKI_ATTACK_STATE
+             status = JIKI_NORMAL_STATE
         }
 
         when(status) {
