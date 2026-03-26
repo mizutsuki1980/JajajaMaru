@@ -136,7 +136,8 @@ class Teki {
 
         sokudo = u1CandF.sokudo
         kasokudo = u1CandF.kasokudo
-        sekaipos = u1CandF.pos
+
+        sekaipos = Vec2D(u1CandF.pos.x,sekaipos.y)
 
     }
 
@@ -168,7 +169,6 @@ class Teki {
                 1 + 32 + (yU1 / 32) * 32
             } else {//下降中
                 // isJump = false
-                //ここでー１を消したら敵が動かなくなった。なんでー？
                 -1 + (yU1 / 32) * 32
             }
 
