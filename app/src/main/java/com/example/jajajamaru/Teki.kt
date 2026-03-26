@@ -255,7 +255,12 @@ class Teki {
     fun draw(canvas: Canvas,jiki:Jiki) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
+
+        //jikiの世界ｘは自機の視点で表示（自機を操作）していれば、そこだけ考えればいい
+        //敵は自機と離れているので、その分を計算しなければいけないんだなー
         hyouziYouX = (360-jiki.sekaipos.x) + sekaipos.x
+
+
         canvas.drawCircle(hyouziYouX.toFloat(),(sekaipos.y).toFloat(),(ookisa/5).toFloat(),iro)
     }
 }
