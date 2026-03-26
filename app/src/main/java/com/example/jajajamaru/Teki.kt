@@ -24,6 +24,7 @@ class Teki {
     var yarareHantei = false
     var shibou = false
     var mutekiTime = 10
+    var kieruTime = 10
 
 
     //敵の状態遷移の準備。
@@ -80,13 +81,23 @@ class Teki {
 
 
             TEKI_BARETE_HIT_STATE -> {
+
                 status = TEKI_HIT_END_STATE
+
             }
+
 
             TEKI_HIT_END_STATE -> {
                 shibousyori()
-                if (sekaipos.y>=1200){
-                    syokika()
+                kieruTime--    //10フレームだけ無敵    var mutekiTime = 10
+
+                tekipaint.alpha = tekipaint.alpha - 10
+
+
+
+                if (kieruTime <= 1) {
+                    tekipaint.alpha = 255
+                    kieruTime = 10
                     status = TEKI_NASI_STATE
                 }
             }
