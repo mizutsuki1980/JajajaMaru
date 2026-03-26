@@ -4,21 +4,20 @@ import android.graphics.Canvas
 import android.graphics.Color.argb
 import android.graphics.Paint
 
-class Teki {
+class Teki(var x:Int,var y:Int) {
 
     //敵を増やしてみる方向性でやってみる
 
     val ookisa = 100
     val iro = Paint()
-    var sekaipos = Vec2D(500,500)
+    var sekaipos = Vec2D(x,y)
     var sokudo = Vec2DF(0f,0f)
     val tekipaint = Paint()
     var kasokudo = Vec2DF(0f,0f)
 
     var ugokiHoukou = "hidari"
-
-    var x = 100
-    var y = 100
+    // var x = 100
+   // var y = 100
 
     var hyouziYouX = 100
 
