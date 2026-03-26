@@ -208,15 +208,12 @@ class Teki {
         return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
     }
 
-    fun shibousyori(){
-        sekaipos = sekaipos.copy(sekaipos.x,sekaipos.y+20)
-    }
 
 
 
     fun tikazukiCheck(jiki:Jiki):Boolean{
         //jikiと近かったらtrueを返す
-         val xx = sekaipos.x
+        val xx = sekaipos.x
         val yy = sekaipos.y
 
             val vx = xx - jiki.sekaipos.x
