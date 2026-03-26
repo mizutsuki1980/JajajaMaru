@@ -89,7 +89,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         teki.draw(canvas,jiki)
         val bitmapTeki = BitmapFactory.decodeResource(resources, tekiIll(teki), BitmapFactory.Options())
 
-        canvas.drawBitmap(bitmapTeki, teki.xx.toFloat()-40, teki.sekaipos.y.toFloat()-75,teki.tekipaint)
+        canvas.drawBitmap(bitmapTeki, teki.hyouziYouX.toFloat()-40, teki.sekaipos.y.toFloat()-75,teki.tekipaint)
 
 
 

@@ -17,8 +17,8 @@ class Teki {
     var x = 100
     var y = 100
 
-    //xxってなんだ？となった
-    var xx = 100
+    var hyouziYouX = 100
+
     var yarareHantei = false
     var shibou = false
     var mutekiTime = 10
@@ -255,9 +255,7 @@ class Teki {
     fun draw(canvas: Canvas,jiki:Jiki) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
-
-        //xxってなんだ？となった
-        xx = (360-jiki.sekaipos.x) + sekaipos.x
-        canvas.drawCircle(xx.toFloat(),(sekaipos.y).toFloat(),(ookisa/5).toFloat(),iro)
+        hyouziYouX = (360-jiki.sekaipos.x) + sekaipos.x
+        canvas.drawCircle(hyouziYouX.toFloat(),(sekaipos.y).toFloat(),(ookisa/5).toFloat(),iro)
     }
 }
