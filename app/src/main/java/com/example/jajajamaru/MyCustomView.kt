@@ -17,7 +17,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     val initialJikiY = 400 //初期位置
     var vec2d = Vec2D(initialJikiX, initialJikiY)
     var jiki = Jiki(vec2d)
-    var teki = Teki(500,500)
+    var teki = Teki(500,480)
 
     //こんな感じでリストを作るのか。初期位置をきめないといけないなー
     var tekiList = listOf<Teki>(Teki(1,1),Teki(2,2),Teki(3,3),Teki(4,4),Teki(5,5))

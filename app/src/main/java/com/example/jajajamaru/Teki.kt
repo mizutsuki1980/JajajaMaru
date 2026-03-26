@@ -8,6 +8,8 @@ class Teki(var x:Int,var y:Int) {
 
     //敵を増やしてみる方向性でやってみる
 
+    //最初のx,yは初期位置　更新されず、ずっとそこから生成される
+    
     val ookisa = 100
     val iro = Paint()
     var sekaipos = Vec2D(x,y)
@@ -16,8 +18,6 @@ class Teki(var x:Int,var y:Int) {
     var kasokudo = Vec2DF(0f,0f)
 
     var ugokiHoukou = "hidari"
-    // var x = 100
-   // var y = 100
 
     var hyouziYouX = 100
 
@@ -105,7 +105,7 @@ class Teki(var x:Int,var y:Int) {
         //なんで再生されるたびに上方向にいっちゃうんだろうなー
         //どうも「壁に当たって上がる」を繰り返している。
 
-        sekaipos = Vec2D(500,500)
+        sekaipos = Vec2D(x,y)
         yarareHantei = false
         shibou = false
         mutekiTime = 10
@@ -138,7 +138,6 @@ class Teki(var x:Int,var y:Int) {
 
         sokudo = u1CandF.sokudo
         kasokudo = u1CandF.kasokudo
-
         sekaipos = Vec2D(u1CandF.pos.x,sekaipos.y)
 
     }
