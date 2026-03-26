@@ -261,6 +261,6 @@ class Teki {
         hyouziYouX = (360-jiki.sekaipos.x) + sekaipos.x
 
 
-        canvas.drawCircle(hyouziYouX.toFloat(),(sekaipos.y).toFloat(),(ookisa/5).toFloat(),iro)
+       // canvas.drawCircle(hyouziYouX.toFloat(),(sekaipos.y).toFloat(),(ookisa/5).toFloat(),iro)
     }
 }
