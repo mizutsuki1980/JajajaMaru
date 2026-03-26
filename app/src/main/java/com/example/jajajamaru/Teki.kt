@@ -100,6 +100,7 @@ class Teki {
 
 
     fun syokika(){
+        //なんで再生されるたびに上方向にいっちゃうんだろうなー
         sekaipos = Vec2D(500,500)
         yarareHantei = false
         shibou = false
@@ -256,7 +257,6 @@ class Teki {
         //jikiの世界ｘは自機の視点で表示（自機を操作）していれば、そこだけ考えればいい
         //敵は自機と離れているので、その分を計算しなければいけないんだなー
         hyouziYouX = (360-jiki.sekaipos.x) + sekaipos.x
-
 
        // canvas.drawCircle(hyouziYouX.toFloat(),(sekaipos.y).toFloat(),(ookisa/5).toFloat(),iro)
     }
