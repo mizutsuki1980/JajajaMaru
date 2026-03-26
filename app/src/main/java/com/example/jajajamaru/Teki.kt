@@ -5,6 +5,9 @@ import android.graphics.Color.argb
 import android.graphics.Paint
 
 class Teki {
+
+    //敵を増やしてみる方向性でやってみる
+
     val ookisa = 100
     val iro = Paint()
     var sekaipos = Vec2D(500,500)
