@@ -5,21 +5,19 @@ import android.graphics.Color.argb
 import android.graphics.Paint
 
 class Teki {
-    //敵がやられたときに点滅するようにしたい。
     val ookisa = 100
     val iro = Paint()
     var sekaipos = Vec2D(500,500)
     var sokudo = Vec2DF(0f,0f)
-
     val tekipaint = Paint()
-
-    //ここに加速度が右に入っているから右に動いているだけ
     var kasokudo = Vec2DF(0f,0f)
 
     var ugokiHoukou = "hidari"
 
     var x = 100
     var y = 100
+
+    //xxってなんだ？となった
     var xx = 100
     var yarareHantei = false
     var shibou = false
@@ -43,13 +41,11 @@ class Teki {
     }
 
     fun nextFrame(controller:Controller,map:Map,jiki:Jiki) {
-
         when(status) {
             TEKI_NASI_STATE -> {
                 status = TEKI_NORMAL_STATE
                 tekipaint.alpha = 255   //一応、透明度を元に戻しておこう
             }
-
             TEKI_NORMAL_STATE -> {
                 if(sekaipos.x>700){ugokiHoukou="hidari"}
                 if(sekaipos.x<395){ugokiHoukou="migi"}
@@ -88,7 +84,6 @@ class Teki {
                     kieruTime = 50
                     status = TEKI_HIT_END_STATE
                 }
-
             }
 
 
@@ -260,6 +255,8 @@ class Teki {
     fun draw(canvas: Canvas,jiki:Jiki) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
+
+        //xxってなんだ？となった
         xx = (360-jiki.sekaipos.x) + sekaipos.x
         canvas.drawCircle(xx.toFloat(),(sekaipos.y).toFloat(),(ookisa/5).toFloat(),iro)
     }
