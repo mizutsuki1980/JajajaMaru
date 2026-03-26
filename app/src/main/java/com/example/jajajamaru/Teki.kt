@@ -101,6 +101,8 @@ class Teki {
 
     fun syokika(){
         //なんで再生されるたびに上方向にいっちゃうんだろうなー
+        //どうも「壁に当たって上がる」を繰り返している。
+
         sekaipos = Vec2D(500,500)
         yarareHantei = false
         shibou = false
@@ -159,13 +161,17 @@ class Teki {
         } else {
             val yU0 = u0.pos.y
             val yU1 = before.pos.y
+
+            //ここだけ書き換えれば解決するんじゃね？
             //境界線上にとまらないように、-1と+1している
             val yLimit = if (yU0 > yU1) { //上昇中
                 1 + 32 + (yU1 / 32) * 32
             } else {//下降中
                 // isJump = false
+                //ここでー１を消したら敵が動かなくなった。なんでー？
                 -1 + (yU1 / 32) * 32
             }
+
             before.copy(pos = Vec2D(before.pos.x, yLimit), sokudo = Vec2DF(before.sokudo.x, 0f))
         }
 
