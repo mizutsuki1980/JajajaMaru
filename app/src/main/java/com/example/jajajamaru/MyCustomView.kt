@@ -61,9 +61,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jiki.idoSyori(controller,map,teki)
         morebou.idoSyori(map)
 
-  //      for (i in tekiList) {
-    //        i.nextFrame(controller,map,jiki)
-    //}
+        //リストの個数を数えて処理する
+        for(a in 0..<tekiList.size){
+            tekiList[a]
+        }
+
+
 
         //敵のイラストと
         //自機のイラストが、どーすんだ、となった
