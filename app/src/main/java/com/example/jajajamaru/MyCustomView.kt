@@ -20,7 +20,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     //じゃ、やってみましょう
     //こんな感じでリストを作るのか。初期位置をきめないといけないなー
-    var tekiList = listOf<Teki>(Teki(500,480),Teki(700,300),Teki(2500,300),Teki(2700,480))
+    var tekiList = listOf<Teki>(Teki(500,480),Teki(700,300),Teki(800,600),Teki(1000,480))
 
     var vec2dMorebou = Vec2D(initialJikiX-100, initialJikiY)
     var morebou = Morebou(vec2dMorebou)

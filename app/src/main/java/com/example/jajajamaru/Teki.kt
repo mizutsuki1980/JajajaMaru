@@ -49,6 +49,10 @@ class Teki(var x:Int,var y:Int) {
                 tekipaint.alpha = 255   //一応、透明度を元に戻しておこう
             }
             TEKI_NORMAL_STATE -> {
+
+                //なるほど、ｘで左右を決めていたから、方向がかわらなかったのか。
+                //なんだろう、加速度とかにすればいいのか？
+                
                 if(sekaipos.x>700){ugokiHoukou="hidari"}
                 if(sekaipos.x<395){ugokiHoukou="migi"}
                 val flag = tikazukiCheck(jiki)//近づかれたら、やられた判定
