@@ -58,7 +58,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun tsugiNoSyori() {
         controller.jumpButtonOsiTuduketeirukaCheck(jiki)
-        jiki.idoSyori(controller,map,teki)
+        jiki.idoSyori(controller,map,tekiList[0])
         morebou.idoSyori(map)
 
         //リストの個数を数えて処理する
@@ -70,7 +70,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         //敵のイラストと
         //自機のイラストが、どーすんだ、となった
-        teki.nextFrame(controller,map,jiki)
+        tekiList[0].nextFrame(controller,map,jiki)
 
         if(map.goalCheck(jiki)) {gameCounter.isClear = true}
         if(gameCounter.isClear){}else{gameCounter.time += 1}
@@ -99,10 +99,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val bitmapMorebou = BitmapFactory.decodeResource(resources, R.drawable.moretyuu, BitmapFactory.Options())
         canvas.drawBitmap(bitmapMorebou, morebou.sekaipos.x.toFloat()-40+jiki.zure, morebou.sekaipos.y.toFloat()-75, null)
 
-        teki.draw(canvas,jiki)
-        val bitmapTeki = BitmapFactory.decodeResource(resources, tekiIll(teki), BitmapFactory.Options())
+        tekiList[0].draw(canvas,jiki)
+        val bitmapTeki = BitmapFactory.decodeResource(resources, tekiIll(tekiList[0]), BitmapFactory.Options())
 
-        canvas.drawBitmap(bitmapTeki, teki.hyouziYouX.toFloat()-40, teki.sekaipos.y.toFloat()-75,teki.tekipaint)
+        canvas.drawBitmap(bitmapTeki, tekiList[0].hyouziYouX.toFloat()-40, teki.sekaipos.y.toFloat()-75,teki.tekipaint)
 
 
 
@@ -110,9 +110,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         gameCounter.draw(canvas,frame,jiki,map)
     }
 
-    fun tekiIll(teki:Teki):Int{
-        return if(teki.yarareHantei) {
-            if(teki.shibou) {
+    fun tekiIll(a:Teki):Int{
+        return if(a.yarareHantei) {
+            if(a.shibou) {
                  R.drawable.ninjayarare
             }else{
                  R.drawable.ninjakawasaki
