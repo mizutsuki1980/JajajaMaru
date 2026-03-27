@@ -21,7 +21,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     //じゃ、やってみましょう
     //こんな感じでリストを作るのか。初期位置をきめないといけないなー
-    var tekiList = listOf<Teki>(Teki(1,1),Teki(2,2),Teki(3,3),Teki(4,4),Teki(5,5))
+    var tekiList = listOf<Teki>(Teki(500,400),Teki(2,2),Teki(3,3),Teki(4,4),Teki(5,5))
 
     var vec2dMorebou = Vec2D(initialJikiX-100, initialJikiY)
     var morebou = Morebou(vec2dMorebou)
@@ -61,6 +61,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jiki.idoSyori(controller,map,teki)
         morebou.idoSyori(map)
 
+  //      for (i in tekiList) {
+    //        i.nextFrame(controller,map,jiki)
+    //}
+
+        //敵のイラストと
+        //自機のイラストが、どーすんだ、となった
         teki.nextFrame(controller,map,jiki)
 
         if(map.goalCheck(jiki)) {gameCounter.isClear = true}
