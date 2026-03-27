@@ -17,11 +17,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     val initialJikiY = 400 //初期位置
     var vec2d = Vec2D(initialJikiX, initialJikiY)
     var jiki = Jiki(vec2d)
-    var teki = Teki(500,480)
 
     //じゃ、やってみましょう
     //こんな感じでリストを作るのか。初期位置をきめないといけないなー
-    var tekiList = listOf<Teki>(Teki(500,400),Teki(2,2),Teki(3,3),Teki(4,4),Teki(5,5))
+    var tekiList = listOf<Teki>(Teki(500,480),Teki(700,300))
 
     var vec2dMorebou = Vec2D(initialJikiX-100, initialJikiY)
     var morebou = Morebou(vec2dMorebou)
@@ -101,7 +100,6 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         tekiList[0].draw(canvas,jiki)
         val bitmapTeki = BitmapFactory.decodeResource(resources, tekiIll(tekiList[0]), BitmapFactory.Options())
-
         canvas.drawBitmap(bitmapTeki, tekiList[0].hyouziYouX.toFloat()-40, tekiList[0].sekaipos.y.toFloat()-75,tekiList[0].tekipaint)
 
 
