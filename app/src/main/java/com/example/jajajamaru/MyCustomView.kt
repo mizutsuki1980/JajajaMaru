@@ -57,7 +57,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun tsugiNoSyori() {
         controller.jumpButtonOsiTuduketeirukaCheck(jiki)
-        jiki.idoSyori(controller,map,tekiList[0])
+
+        //ここだけどうしよ
+        jiki.idoSyori(controller,map,tekiList[0],tekiList)
         morebou.idoSyori(map)
 
         //リストの個数を数えて処理する
@@ -69,7 +71,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         //敵のイラストと
         //自機のイラストが、どーすんだ、となった
-        tekiList[0].nextFrame(controller,map,jiki)
+        for(a in 0..<tekiList.size){
+            tekiList[a].nextFrame(controller,map,jiki)
+        }
 
         if(map.goalCheck(jiki)) {gameCounter.isClear = true}
         if(gameCounter.isClear){}else{gameCounter.time += 1}
@@ -98,9 +102,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val bitmapMorebou = BitmapFactory.decodeResource(resources, R.drawable.moretyuu, BitmapFactory.Options())
         canvas.drawBitmap(bitmapMorebou, morebou.sekaipos.x.toFloat()-40+jiki.zure, morebou.sekaipos.y.toFloat()-75, null)
 
-        tekiList[0].draw(canvas,jiki)
-        val bitmapTeki = BitmapFactory.decodeResource(resources, tekiIll(tekiList[0]), BitmapFactory.Options())
-        canvas.drawBitmap(bitmapTeki, tekiList[0].hyouziYouX.toFloat()-40, tekiList[0].sekaipos.y.toFloat()-75,tekiList[0].tekipaint)
+        for(a in 0..<tekiList.size){
+            tekiList[a].draw(canvas,jiki)
+            val bitmapTeki = BitmapFactory.decodeResource(resources, tekiIll(tekiList[a]), BitmapFactory.Options())
+            canvas.drawBitmap(bitmapTeki, tekiList[a].hyouziYouX.toFloat()-40, tekiList[a].sekaipos.y.toFloat()-75,tekiList[a].tekipaint)
+        }
 
 
 
