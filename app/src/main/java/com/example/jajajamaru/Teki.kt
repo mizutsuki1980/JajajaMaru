@@ -24,7 +24,7 @@ class Teki(var x:Int,var y:Int) {
     var yarareHantei = false
     var shibou = false
 
-    var idouTime = 10
+    var idouTime = 20
 
     var mutekiTime = 10
     var kieruTime = 50
@@ -56,8 +56,16 @@ class Teki(var x:Int,var y:Int) {
                 //なるほど、ｘで左右を決めていたから、方向がかわらなかったのか。
                 //なんだろう、加速度とかにすればいいのか？
                 if(idouTime ==0){
-                    if(ugokiHoukou=="hidari"){ugokiHoukou="migi"}else{ugokiHoukou="hidari"}
-                    idouTime = 10
+
+                    if(ugokiHoukou=="hidari"){
+                        ugokiHoukou="migi"
+                    }else if(ugokiHoukou=="migi"){
+                        ugokiHoukou="hidari"
+                    }else{
+                        ugokiHoukou="hidari"
+                    }
+
+                    idouTime = 20
                 }
 
 
