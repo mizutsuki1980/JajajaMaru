@@ -5,6 +5,8 @@ import android.graphics.Color.argb
 import android.graphics.Paint
 
 class Teki(var x:Int,var y:Int) {
+    //古いマスターにチェックアウトして、最新のコミットにマージした。
+    //これであってるんだろうか？
 
     //敵を増やしてみる方向性でやってみる
 
