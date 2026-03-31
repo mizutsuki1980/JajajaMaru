@@ -26,7 +26,7 @@ class Teki(var x:Int,var y:Int) {
     var yarareHantei = false
     var shibou = false
 
-    var idouTime = 20
+    var idouTime = 30
 
     var mutekiTime = 10
     var kieruTime = 50
@@ -54,27 +54,27 @@ class Teki(var x:Int,var y:Int) {
                 tekipaint.alpha = 255   //一応、透明度を元に戻しておこう
             }
             TEKI_NORMAL_STATE -> {
+
+
                 idouTime --
                 //なるほど、ｘで左右を決めていたから、方向がかわらなかったのか。
                 //なんだろう、加速度とかにすればいいのか？
                 if(idouTime ==0){
-
                     if(ugokiHoukou=="hidari"){
-                        ugokiHoukou="migi"
-                    }else if(ugokiHoukou=="migi"){
-                        ugokiHoukou="hidari"
-                    }else{
-                        ugokiHoukou="hidari"
+                        ugokiHoukou = "migi"
                     }
+                }
 
-                    idouTime = 20
+                if(idouTime ==-60){
+                    ugokiHoukou = "hidari"
+                }
+                if(idouTime ==-90) {
+                    idouTime = 30
                 }
 
 
 
-
-
-                val flag = tikazukiCheck(jiki)//近づかれたら、やられた判定
+                    val flag = tikazukiCheck(jiki)//近づかれたら、やられた判定
                 if (yarareHantei == false) { yarareHantei = flag }   //やられた判定がfalseならtrueへ
                 if (yarareHantei) {                //やられた判定がtrueなら
                     status = TEKI_BARETA_MUTEKI_STATE
@@ -82,6 +82,8 @@ class Teki(var x:Int,var y:Int) {
                     idoSyori(controller, map,jiki)
                 }
             }
+
+
 
             TEKI_BARETA_MUTEKI_STATE -> {
                 //ここでの状態がわかりづらいので、なにか変化をさせたい。
