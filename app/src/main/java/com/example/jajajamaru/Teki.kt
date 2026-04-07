@@ -5,13 +5,9 @@ import android.graphics.Color.argb
 import android.graphics.Paint
 
 class Teki(var x:Int,var y:Int) {
-    //古いマスターにチェックアウトして、最新のコミットにマージした。
-    //これであってるんだろうか？
+    //Tekiが画面外に行くのが原因で止まるのを防ぎたい
 
-    //敵を増やしてみる方向性でやってみる
 
-    //最初のx,yは初期位置　更新されず、ずっとそこから生成される
-    
     val ookisa = 100
     val iro = Paint()
     var sekaipos = Vec2D(x,y)
