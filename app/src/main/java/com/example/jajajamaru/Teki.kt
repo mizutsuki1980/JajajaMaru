@@ -6,7 +6,7 @@ import android.graphics.Paint
 
 class Teki(var x:Int,var y:Int) {
     //Tekiが画面外に行くのが原因で止まるのを防ぎたい
-
+    //加速度を調整して少なくしたが、ずっと待っていると画面の左端に到達してしまう
 
     val ookisa = 100
     val iro = Paint()
@@ -165,9 +165,9 @@ class Teki(var x:Int,var y:Int) {
 
     fun kasokudoKoushin(u0:Ugoki, controller:Controller):Ugoki{
         val u1cand = if (ugokiHoukou=="migi"){
-            u0.copy(kasokudo= Vec2DF(0.5f,u0.sokudo.y))
+            u0.copy(kasokudo= Vec2DF(0.3f,u0.sokudo.y))
         }else  if (ugokiHoukou=="hidari") {
-            u0.copy(kasokudo= Vec2DF(-0.5f,u0.sokudo.y))
+            u0.copy(kasokudo= Vec2DF(-0.3f,u0.sokudo.y))
         }else{
             u0.copy(kasokudo= Vec2DF(u0.kasokudo.x,u0.sokudo.y))
         }
