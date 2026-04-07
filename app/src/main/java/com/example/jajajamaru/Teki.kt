@@ -15,7 +15,7 @@ class Teki(var x:Int,var y:Int) {
     val tekipaint = Paint()
     var kasokudo = Vec2DF(0f,0f)
 
-    var ugokiHoukou = "hidari"
+    var ugokiHoukou = "migi"
 
     var hyouziYouX = 100
 
@@ -56,18 +56,19 @@ class Teki(var x:Int,var y:Int) {
                 //なるほど、ｘで左右を決めていたから、方向がかわらなかったのか。
                 //なんだろう、加速度とかにすればいいのか？
                 if(idouTime ==0){
-                    if(ugokiHoukou=="hidari"){
-                        ugokiHoukou = "migi"
+                    if(ugokiHoukou=="migi"){
+                        ugokiHoukou = "hidari"
+                        sokudo = Vec2DF(0f,0f)
                     }
                 }
 
-                if(idouTime ==-60){
-                    ugokiHoukou = "hidari"
-                }
-                if(idouTime ==-90) {
+                if(idouTime ==-30){
+                    ugokiHoukou = "migi"
+                    sokudo = Vec2DF(0f,0f)
                     idouTime = 30
                 }
 
+                //なんかこのへんな気がする。
 
 
                     val flag = tikazukiCheck(jiki)//近づかれたら、やられた判定
