@@ -17,7 +17,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     val initialJikiY = 400 //初期位置
     var vec2d = Vec2D(initialJikiX, initialJikiY)
     var jiki = Jiki(vec2d)
-    var teki = Teki()
+
+    //じゃ、やってみましょう
+    //こんな感じでリストを作るのか。初期位置をきめないといけないなー
+    var tekiList = listOf<Teki>(Teki(500,480),Teki(700,300),Teki(800,600),Teki(1000,480))
 
     var vec2dMorebou = Vec2D(initialJikiX-100, initialJikiY)
     var morebou = Morebou(vec2dMorebou)
@@ -54,10 +57,23 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun tsugiNoSyori() {
         controller.jumpButtonOsiTuduketeirukaCheck(jiki)
-        jiki.idoSyori(controller,map,teki)
+
+        //ここだけどうしよ
+        jiki.idoSyori(controller,map,tekiList[0],tekiList)
         morebou.idoSyori(map)
 
-        teki.nextFrame(controller,map,jiki)
+        //リストの個数を数えて処理する
+        for(a in 0..<tekiList.size){
+            tekiList[a]
+        }
+
+
+
+        //敵のイラストと
+        //自機のイラストが、どーすんだ、となった
+        for(a in 0..<tekiList.size){
+            tekiList[a].nextFrame(controller,map,jiki)
+        }
 
         if(map.goalCheck(jiki)) {gameCounter.isClear = true}
         if(gameCounter.isClear){}else{gameCounter.time += 1}
@@ -86,10 +102,11 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         val bitmapMorebou = BitmapFactory.decodeResource(resources, R.drawable.moretyuu, BitmapFactory.Options())
         canvas.drawBitmap(bitmapMorebou, morebou.sekaipos.x.toFloat()-40+jiki.zure, morebou.sekaipos.y.toFloat()-75, null)
 
-        teki.draw(canvas,jiki)
-        val bitmapTeki = BitmapFactory.decodeResource(resources, tekiIll(teki), BitmapFactory.Options())
-
-        canvas.drawBitmap(bitmapTeki, teki.xx.toFloat()-40, teki.sekaipos.y.toFloat()-75,teki.tekipaint)
+        for(a in 0..<tekiList.size){
+            tekiList[a].draw(canvas,jiki)
+            val bitmapTeki = BitmapFactory.decodeResource(resources, tekiIll(tekiList[a]), BitmapFactory.Options())
+            canvas.drawBitmap(bitmapTeki, tekiList[a].hyouziYouX.toFloat()-40, tekiList[a].sekaipos.y.toFloat()-75,tekiList[a].tekipaint)
+        }
 
 
 
@@ -97,9 +114,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         gameCounter.draw(canvas,frame,jiki,map)
     }
 
-    fun tekiIll(teki:Teki):Int{
-        return if(teki.yarareHantei) {
-            if(teki.shibou) {
+    fun tekiIll(a:Teki):Int{
+        return if(a.yarareHantei) {
+            if(a.shibou) {
                  R.drawable.ninjayarare
             }else{
                  R.drawable.ninjakawasaki

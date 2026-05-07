@@ -47,13 +47,25 @@ class Jiki(val initialPos: Vec2D) {
 
 
 
-    fun idoSyori(controller: Controller, map: Map,teki:Teki) {
+    fun idoSyori(controller: Controller, map: Map,teki:Teki,tekiList:List<Teki>) {
 
+<<<<<<< HEAD
          if (jikiToTekiTikazukiCheck(teki)) {
              status = JIKI_ATTACK_STATE
         } else {
              status = JIKI_NORMAL_STATE
+=======
+
+        //ここだけ敵がリストになったときの処理をしないとなー
+        for(a in 0..<tekiList.size) {
+            if (jikiToTekiTikazukiCheck(tekiList[a])) {
+                status = JIKI_ATTACK_STATE
+            } else {
+                status = JIKI_NORMAL_STATE
+            }
+>>>>>>> origin/master
         }
+
 
         when(status) {
             JIKI_NORMAL_STATE -> {
@@ -349,4 +361,3 @@ class Jiki(val initialPos: Vec2D) {
     }
 
 }
-

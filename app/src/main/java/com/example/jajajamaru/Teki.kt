@@ -4,26 +4,28 @@ import android.graphics.Canvas
 import android.graphics.Color.argb
 import android.graphics.Paint
 
-class Teki {
-    //敵がやられたときに点滅するようにしたい。
+class Teki(var x:Int,var y:Int) {
+    //Tekiが画面外に行くのが原因で止まるのを防ぎたい
+    //加速度を調整して少なくしたが、ずっと待っていると画面の左端に到達してしまう
+
     val ookisa = 100
     val iro = Paint()
-    var sekaipos = Vec2D(500,500)
+    var sekaipos = Vec2D(x,y)
     var sokudo = Vec2DF(0f,0f)
-
     val tekipaint = Paint()
-
-    //ここに加速度が右に入っているから右に動いているだけ
     var kasokudo = Vec2DF(0f,0f)
 
-    var ugokiHoukou = "hidari"
+    var ugokiHoukou = "migi"
 
-    var x = 100
-    var y = 100
-    var xx = 100
+    var hyouziYouX = 100
+
     var yarareHantei = false
     var shibou = false
+
+    var idouTime = 30
+
     var mutekiTime = 10
+    var kieruTime = 50
 
 
     //敵の状態遷移の準備。
@@ -42,17 +44,34 @@ class Teki {
     }
 
     fun nextFrame(controller:Controller,map:Map,jiki:Jiki) {
-
         when(status) {
             TEKI_NASI_STATE -> {
                 status = TEKI_NORMAL_STATE
                 tekipaint.alpha = 255   //一応、透明度を元に戻しておこう
             }
-
             TEKI_NORMAL_STATE -> {
-                if(sekaipos.x>700){ugokiHoukou="hidari"}
-                if(sekaipos.x<395){ugokiHoukou="migi"}
-                val flag = tikazukiCheck(jiki)//近づかれたら、やられた判定
+
+
+                idouTime --
+                //なるほど、ｘで左右を決めていたから、方向がかわらなかったのか。
+                //なんだろう、加速度とかにすればいいのか？
+                if(idouTime ==0){
+                    if(ugokiHoukou=="migi"){
+                        ugokiHoukou = "hidari"
+                        sokudo = Vec2DF(0f,0f)
+                    }
+                }
+
+                if(idouTime ==-30){
+                    ugokiHoukou = "migi"
+                    sokudo = Vec2DF(0f,0f)
+                    idouTime = 30
+                }
+
+                //なんかこのへんな気がする。
+
+
+                    val flag = tikazukiCheck(jiki)//近づかれたら、やられた判定
                 if (yarareHantei == false) { yarareHantei = flag }   //やられた判定がfalseならtrueへ
                 if (yarareHantei) {                //やられた判定がtrueなら
                     status = TEKI_BARETA_MUTEKI_STATE
@@ -60,6 +79,8 @@ class Teki {
                     idoSyori(controller, map,jiki)
                 }
             }
+
+
 
             TEKI_BARETA_MUTEKI_STATE -> {
                 //ここでの状態がわかりづらいので、なにか変化をさせたい。
@@ -80,11 +101,19 @@ class Teki {
 
 
             TEKI_BARETE_HIT_STATE -> {
-                status = TEKI_HIT_END_STATE
+                kieruTime--    //10フレームだけ徐々に透明
+                sekaipos = sekaipos.copy(sekaipos.x,sekaipos.y+20) //落下
+                tekipaint.alpha = tekipaint.alpha - 5 //透明化
+                if (kieruTime <= 1) {
+                    kieruTime = 50
+                    status = TEKI_HIT_END_STATE
+                }
             }
 
+
             TEKI_HIT_END_STATE -> {
-                shibousyori()
+                sekaipos = sekaipos.copy(sekaipos.x,sekaipos.y+20) //落下
+
                 if (sekaipos.y>=1200){
                     syokika()
                     status = TEKI_NASI_STATE
@@ -95,7 +124,10 @@ class Teki {
 
 
     fun syokika(){
-        sekaipos = Vec2D(500,500)
+        //なんで再生されるたびに上方向にいっちゃうんだろうなー
+        //どうも「壁に当たって上がる」を繰り返している。
+
+        sekaipos = Vec2D(x,y)
         yarareHantei = false
         shibou = false
         mutekiTime = 10
@@ -128,15 +160,15 @@ class Teki {
 
         sokudo = u1CandF.sokudo
         kasokudo = u1CandF.kasokudo
-        sekaipos = u1CandF.pos
+        sekaipos = Vec2D(u1CandF.pos.x,sekaipos.y)
 
     }
 
     fun kasokudoKoushin(u0:Ugoki, controller:Controller):Ugoki{
         val u1cand = if (ugokiHoukou=="migi"){
-            u0.copy(kasokudo= Vec2DF(0.5f,u0.sokudo.y))
+            u0.copy(kasokudo= Vec2DF(0.3f,u0.sokudo.y))
         }else  if (ugokiHoukou=="hidari") {
-            u0.copy(kasokudo= Vec2DF(-0.5f,u0.sokudo.y))
+            u0.copy(kasokudo= Vec2DF(-0.3f,u0.sokudo.y))
         }else{
             u0.copy(kasokudo= Vec2DF(u0.kasokudo.x,u0.sokudo.y))
         }
@@ -153,6 +185,8 @@ class Teki {
         } else {
             val yU0 = u0.pos.y
             val yU1 = before.pos.y
+
+            //ここだけ書き換えれば解決するんじゃね？
             //境界線上にとまらないように、-1と+1している
             val yLimit = if (yU0 > yU1) { //上昇中
                 1 + 32 + (yU1 / 32) * 32
@@ -160,6 +194,7 @@ class Teki {
                 // isJump = false
                 -1 + (yU1 / 32) * 32
             }
+
             before.copy(pos = Vec2D(before.pos.x, yLimit), sokudo = Vec2DF(before.sokudo.x, 0f))
         }
 
@@ -203,15 +238,12 @@ class Teki {
         return if(map.masu[yBlock][xBlock] == 1){ false }else{true}
     }
 
-    fun shibousyori(){
-        sekaipos = sekaipos.copy(sekaipos.x,sekaipos.y+20)
-    }
 
 
 
     fun tikazukiCheck(jiki:Jiki):Boolean{
         //jikiと近かったらtrueを返す
-         val xx = sekaipos.x
+        val xx = sekaipos.x
         val yy = sekaipos.y
 
             val vx = xx - jiki.sekaipos.x
@@ -250,7 +282,11 @@ class Teki {
     fun draw(canvas: Canvas,jiki:Jiki) { //わかりやすいように戻した、自機の位置を黄色いマルで表示
         iro.style = Paint.Style.FILL
         iro.color = argb(255, 255, 255, 150)
-        xx = (360-jiki.sekaipos.x) + sekaipos.x
-        canvas.drawCircle(xx.toFloat(),(sekaipos.y).toFloat(),(ookisa/5).toFloat(),iro)
+
+        //jikiの世界ｘは自機の視点で表示（自機を操作）していれば、そこだけ考えればいい
+        //敵は自機と離れているので、その分を計算しなければいけないんだなー
+        hyouziYouX = (360-jiki.sekaipos.x) + sekaipos.x
+
+       // canvas.drawCircle(hyouziYouX.toFloat(),(sekaipos.y).toFloat(),(ookisa/5).toFloat(),iro)
     }
 }
