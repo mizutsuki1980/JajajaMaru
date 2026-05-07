@@ -49,12 +49,6 @@ class Jiki(val initialPos: Vec2D) {
 
     fun idoSyori(controller: Controller, map: Map,teki:Teki,tekiList:List<Teki>) {
 
-<<<<<<< HEAD
-         if (jikiToTekiTikazukiCheck(teki)) {
-             status = JIKI_ATTACK_STATE
-        } else {
-             status = JIKI_NORMAL_STATE
-=======
 
         //ここだけ敵がリストになったときの処理をしないとなー
         for(a in 0..<tekiList.size) {
@@ -63,7 +57,6 @@ class Jiki(val initialPos: Vec2D) {
             } else {
                 status = JIKI_NORMAL_STATE
             }
->>>>>>> origin/master
         }
 
 
@@ -162,10 +155,10 @@ class Jiki(val initialPos: Vec2D) {
 
             //ここは落下中にしか判定しない。上昇中はぶつかった判定にする為。
             if(yU0<yU1){
-            afterSayuu.copy(
-                pos = Vec2D(afterSayuu.pos.x, yPosBefore),
-                sokudo = Vec2DF(before.sokudo.x, ySokudoBefore)
-            )
+                afterSayuu.copy(
+                    pos = Vec2D(afterSayuu.pos.x, yPosBefore),
+                    sokudo = Vec2DF(before.sokudo.x, ySokudoBefore)
+                )
             }else{
                 afterSayuu
             }
@@ -182,7 +175,7 @@ class Jiki(val initialPos: Vec2D) {
         //これって、落下の時しか発生しないのでは？という予測
         val afterGenzaichi = if (mapCheckGenzaichi(map, afterRakka.pos.x,afterRakka.pos.y)) {
             afterRakka
-         }else{
+        }else{
             val yU0 = u0.pos.y
             val yU1 = afterRakka.pos.y
             val xU0 = u0.pos.x
@@ -240,7 +233,7 @@ class Jiki(val initialPos: Vec2D) {
 
     /**
     速度を更新する、まず加速度から速度を計算して、その後に最大速度制限とジャンプの処理をする
-    */
+     */
     private fun sokudoKoushin(before: Ugoki, controller: Controller): Ugoki {
 
         //速度の更新
@@ -361,3 +354,4 @@ class Jiki(val initialPos: Vec2D) {
     }
 
 }
+
