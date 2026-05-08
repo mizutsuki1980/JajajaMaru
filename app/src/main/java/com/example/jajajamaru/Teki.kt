@@ -8,6 +8,8 @@ class Teki(var x:Int,var y:Int) {
     //Tekiが画面外に行くのが原因で止まるのを防ぎたい
     //加速度を調整して少なくしたが、ずっと待っていると画面の左端に到達してしまう
 
+    //もっと敵を倒しやすくする
+
     val ookisa = 100
     val iro = Paint()
     var sekaipos = Vec2D(x,y)
