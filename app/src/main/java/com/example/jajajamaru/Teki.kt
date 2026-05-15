@@ -5,6 +5,9 @@ import android.graphics.Color.argb
 import android.graphics.Paint
 
 class Teki(var x:Int,var y:Int) {
+    //スマホによって解像度は違うけど、表示される画像のサイズは一緒なのか
+    //画像がでっかく表示されてしまう
+
     //Tekiが画面外に行くのが原因で止まるのを防ぎたい
     //加速度を調整して少なくしたが、ずっと待っていると画面の左端に到達してしまう
 
