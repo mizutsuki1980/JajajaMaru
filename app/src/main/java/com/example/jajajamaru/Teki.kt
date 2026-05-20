@@ -48,6 +48,7 @@ class Teki(var x:Int,var y:Int) {
         tekipaint.alpha = 255
     }
 
+
     fun nextFrame(controller:Controller,map:Map,jiki:Jiki) {
         when(status) {
             TEKI_NASI_STATE -> {

@@ -123,6 +123,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun tekiIll(a:Teki):Int{
     //なるほど、ここでやってんのか。これTekiに収納できないのかな？
 
+
         return if(a.yarareHantei) {
             if(a.shibou) {
                  R.drawable.ninjayarare
