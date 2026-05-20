@@ -106,6 +106,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             tekiList[a].draw(canvas,jiki)
 
             // ここで敵の画像を指定している。onDrawの中。どうやって別ける？
+            //tekiIll()←どうもこれで判定してるっぽいぞ
+
             val bitmapTeki = BitmapFactory.decodeResource(resources, tekiIll(tekiList[a]), BitmapFactory.Options())
 
 
@@ -119,6 +121,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun tekiIll(a:Teki):Int{
+    //なるほど、ここでやってんのか。これTekiに収納できないのかな？
+
         return if(a.yarareHantei) {
             if(a.shibou) {
                  R.drawable.ninjayarare
