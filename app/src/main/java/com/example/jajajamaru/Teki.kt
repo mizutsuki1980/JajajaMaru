@@ -256,7 +256,9 @@ class Teki(var x:Int,var y:Int) {
             val vy = yy - jiki.sekaipos.y
 
             val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
-            val atarikyori = (jiki.ookisa/4).toDouble()
+            //当たり距離をひろげよう
+//        val atarikyori = (jiki.ookisa/4).toDouble()
+        val atarikyori = (jiki.ookisa/2).toDouble()
 
 
 
