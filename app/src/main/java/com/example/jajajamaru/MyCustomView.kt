@@ -105,9 +105,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         for(a in 0..<tekiList.size){
             tekiList[a].draw(canvas,jiki)
 
-            // ここで敵の画像を指定している。onDrawの中。どうやって別ける？
-            //tekiIll()←どうもこれで判定してるっぽいぞ
-
+            //tekiIll()で画像を指定するように変更した、川崎と浦和をどうわけようか？
+            
             val bitmapTeki = BitmapFactory.decodeResource(resources, tekiList[a].tekiIll(), BitmapFactory.Options())
 
 
@@ -120,7 +119,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         gameCounter.draw(canvas,frame,jiki,map)
     }
 
- 
+
 
 
     fun mapCreate(canvas:Canvas){
