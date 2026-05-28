@@ -1,6 +1,7 @@
 package com.example.jajajamaru
 
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Color.argb
 import android.graphics.Paint
 
@@ -41,27 +42,48 @@ class Teki(var x:Int,var y:Int) {
     val TEKI_BARETE_HIT_STATE = 5
     val TEKI_BARETE_HIT_YARARE_STATE = 6
     val TEKI_HIT_END_STATE = 7
-
+    var tekiType = "Kawasaki"
     var status = TEKI_NASI_STATE // 最初は玉が画面内に無い状態
 
     init{
         tekipaint.alpha = 255
+        val tekiList = listOf<String>("Kawasaki","Kawasaki")
+        tekiType = tekiList.random()
+
+
     }
 
     fun tekiIll():Int{
         //なるほど、ここでやってんのか。これTekiに収納できないのかな？
 
+        var a  = R.drawable.ninjakakure
 
-        return if(yarareHantei) {
-            if(shibou) {
-                R.drawable.ninjayarare
-            }else{
-                R.drawable.ninjakawasaki
+        if(tekiType=="Urawa") {
+            val a = if (yarareHantei) {
+                if (shibou) {
+                    R.drawable.ninjayarare
+                } else {
+                    R.drawable.ninjakawasaki
+                }
+            } else {
+                R.drawable.ninjakakure
             }
-        }else{
-            R.drawable.ninjakakure
+        }else if(tekiType=="Kawasaki") {
+
+            val a = if (yarareHantei) {
+                if (shibou) {
+                    R.drawable.ninjayarare
+                } else {
+                    R.drawable.ninjakawasaki
+                }
+            } else {
+                R.drawable.ninjakakure
+            }
         }
 
+
+
+    return a
     }
 
     fun nextFrame(controller:Controller,map:Map,jiki:Jiki) {
