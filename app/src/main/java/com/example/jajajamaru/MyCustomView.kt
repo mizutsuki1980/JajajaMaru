@@ -108,7 +108,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
             // ここで敵の画像を指定している。onDrawの中。どうやって別ける？
             //tekiIll()←どうもこれで判定してるっぽいぞ
 
-            val bitmapTeki = BitmapFactory.decodeResource(resources, tekiIll(tekiList[a]), BitmapFactory.Options())
+            val bitmapTeki = BitmapFactory.decodeResource(resources, tekiList[a].tekiIll(), BitmapFactory.Options())
 
 
             canvas.drawBitmap(bitmapTeki, tekiList[a].hyouziYouX.toFloat()-40, tekiList[a].sekaipos.y.toFloat()-75,tekiList[a].tekipaint)

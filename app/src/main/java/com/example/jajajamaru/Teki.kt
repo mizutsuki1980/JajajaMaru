@@ -48,6 +48,21 @@ class Teki(var x:Int,var y:Int) {
         tekipaint.alpha = 255
     }
 
+    fun tekiIll():Int{
+        //なるほど、ここでやってんのか。これTekiに収納できないのかな？
+
+
+        return if(yarareHantei) {
+            if(shibou) {
+                R.drawable.ninjayarare
+            }else{
+                R.drawable.ninjakawasaki
+            }
+        }else{
+            R.drawable.ninjakakure
+        }
+
+    }
 
     fun nextFrame(controller:Controller,map:Map,jiki:Jiki) {
         when(status) {
