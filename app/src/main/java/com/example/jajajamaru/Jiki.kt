@@ -49,7 +49,7 @@ class Jiki(val initialPos: Vec2D) {
 
     fun idoSyori(controller: Controller, map: Map,teki:Teki,tekiList:List<Teki>) {
 
-
+// キレる君がパンチしてないのはここのせい？
         //ここだけ敵がリストになったときの処理をしないとなー
         for(a in 0..<tekiList.size) {
             if (jikiToTekiTikazukiCheck(tekiList[a])) {
