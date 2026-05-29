@@ -42,13 +42,13 @@ class Teki(var x:Int,var y:Int) {
     val TEKI_BARETE_HIT_STATE = 5
     val TEKI_BARETE_HIT_YARARE_STATE = 6
     val TEKI_HIT_END_STATE = 7
-    var tekiType = "Kawasaki"
+//    var tekiType = "Kawasaki"
     var status = TEKI_NASI_STATE // 最初は玉が画面内に無い状態
 
     init{
         tekipaint.alpha = 255
         val tekiList = listOf<String>("Kawasaki","Kawasaki")
-        tekiType = tekiList.random()
+  //      tekiType = tekiList.random()
 
 
     }
@@ -56,9 +56,7 @@ class Teki(var x:Int,var y:Int) {
     fun tekiIll():Int{
         //なるほど、ここでやってんのか。これTekiに収納できないのかな？
 
-        var a  = R.drawable.ninjakakure
-
-        if(tekiType=="Urawa") {
+        
             val a = if (yarareHantei) {
                 if (shibou) {
                     R.drawable.ninjayarare
@@ -68,22 +66,8 @@ class Teki(var x:Int,var y:Int) {
             } else {
                 R.drawable.ninjakakure
             }
-        }else if(tekiType=="Kawasaki") {
 
-            val a = if (yarareHantei) {
-                if (shibou) {
-                    R.drawable.ninjayarare
-                } else {
-                    R.drawable.ninjakawasaki
-                }
-            } else {
-                R.drawable.ninjakakure
-            }
-        }
-
-
-
-    return a
+        return a
     }
 
     fun nextFrame(controller:Controller,map:Map,jiki:Jiki) {
