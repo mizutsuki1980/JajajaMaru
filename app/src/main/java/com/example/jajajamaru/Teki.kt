@@ -56,8 +56,8 @@ class Teki(var x:Int,var y:Int) {
     fun tekiIll():Int{
         //なるほど、ここでやってんのか。これTekiに収納できないのかな？
 
-        
-            val a = if (yarareHantei) {
+        var a : Int
+            a = if (yarareHantei) {
                 if (shibou) {
                     R.drawable.ninjayarare
                 } else {
