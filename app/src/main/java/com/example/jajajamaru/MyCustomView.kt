@@ -22,6 +22,8 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     //こんな感じでリストを作るのか。初期位置をきめないといけないなー
     var tekiList = listOf<Teki>(Teki(500,480),Teki(700,300),Teki(800,600),Teki(1000,480))
 
+
+
     var vec2dMorebou = Vec2D(initialJikiX-100, initialJikiY)
     var morebou = Morebou(vec2dMorebou)
 
@@ -35,8 +37,12 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         jiki = Jiki(vec2d)
         vec2dMorebou = Vec2D(initialJikiX-100, initialJikiY)
         morebou = Morebou(vec2dMorebou)
-
         gameCounter = GameCounter()
+        //敵に属性を設定
+        for(a in 0..<tekiList.size){
+            tekiList[a].tekiType = tekiList[a].tekiList.random()
+        }
+
     }
 
 
@@ -52,6 +58,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     }
 
     fun beginAnimation() {
+        syokikaGameReset()
         tsugiNoSyori()  //最初に一回だけ呼ばれる
     }
 
