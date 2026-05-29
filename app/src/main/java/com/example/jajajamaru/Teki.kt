@@ -68,7 +68,17 @@ class Teki(var x:Int,var y:Int) {
             R.drawable.ninjakakure
         }
         if (tekiType=="Urawa"){
-          a =  R.drawable.ninjayarare
+            a = if (yarareHantei) {
+                if (shibou) {
+                    R.drawable.ninja_urawa_yarare
+                } else {
+                    R.drawable.ninja_urawa_toujou
+                }
+            } else {
+                R.drawable.ninjakakure
+            }
+
+
         }
 
         return a
