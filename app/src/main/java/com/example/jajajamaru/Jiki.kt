@@ -66,6 +66,9 @@ class Jiki(val initialPos: Vec2D) {
             } else {
                 status = JIKI_NORMAL_STATE
             }
+            if (status == JIKI_ATTACK_STATE){
+                return
+            }
         }
 
 
