@@ -64,32 +64,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
     fun tsugiNoSyori() {
         controller.jumpButtonOsiTuduketeirukaCheck(jiki)
-
-        //ここだけどうしよ
         jiki.idoSyori(controller,map,tekiList[0],tekiList)
         morebou.idoSyori(map)
-
-        //リストの個数を数えて処理する
-        for(a in 0..<tekiList.size){
-            tekiList[a]
-        }
-
-
-
-        //敵のイラストと
-        //自機のイラストが、どーすんだ、となった
-        for(a in 0..<tekiList.size){
-            tekiList[a].nextFrame(controller,map,jiki)
-        }
-
+        for(a in 0..<tekiList.size){ tekiList[a].nextFrame(controller,map,jiki) }
         if(map.goalCheck(jiki)) {gameCounter.isClear = true}
         if(gameCounter.isClear){}else{gameCounter.time += 1}
         frame += 1  //繰り返し処理はここでやってる
-        //30フレーム後にリセットだとすると
-        if(frame-gameCounter.time==30){ syokikaGameReset() }
-        //ここでフレームとカウンター処理で３０の差がつくと初期化するようにしている
-        //ここに面が変わる処理をつければいいのでは
-
+        if(frame-gameCounter.time==30){ syokikaGameReset() } //30フレーム後にリセット //ここでフレームとカウンター処理で３０の差がつくと初期化する
         invalidate()
         handler.postDelayed({ tsugiNoSyori() }, 100)
     }
