@@ -293,8 +293,8 @@ class Teki(var x:Int,var y:Int) {
             val vy = yy - jiki.sekaipos.y
 
             val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
-            //当たり距離をひろげよう
-//        val atarikyori = (jiki.ookisa/4).toDouble()
+
+        //ここの値が重要！敵にあたる距離の設定
         val atarikyori = (jiki.ookisa/2).toDouble()
 
 

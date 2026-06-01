@@ -35,7 +35,10 @@ class Jiki(val initialPos: Vec2D) {
         val vy = yy - teki.sekaipos.y
 
         val kyori = Math.sqrt((vx * vx) + (vy * vy) .toDouble())
-        val atarikyori = (ookisa/4).toDouble()
+
+        //TekiのtikazukiCheckのatarikyoriと基本は同じだが、ちょっとJikiの方を大きく設定することで
+        //パンチ出してる感が増してる
+        val atarikyori = (ookisa/1.5).toDouble()
 
         if (kyori < atarikyori){
             return true
@@ -60,8 +63,13 @@ class Jiki(val initialPos: Vec2D) {
 
 // キレる君がパンチしてないのはここのせい？
         //ここだけ敵がリストになったときの処理をしないとなー
+        status = JIKI_NORMAL_STATE
+        var flag = false
         for(a in 0..<tekiList.size) {
-//            if (jikiToTekiTikazukiCheck(tekiList[a])) {
+            if (jikiToTekiTikazukiCheck(tekiList[a])) {
+                flag = true
+                status = JIKI_ATTACK_STATE
+            }
         }
 
 
