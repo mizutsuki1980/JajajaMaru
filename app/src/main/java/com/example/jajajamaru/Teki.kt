@@ -46,17 +46,15 @@ class Teki(var x:Int,var y:Int) {
     var status = TEKI_NASI_STATE // 最初は玉が画面内に無い状態
     val tekiList = listOf<String>("Kawasaki","Urawa")
 
+    //initって呼ばれてないのか？よくわかんねー
+    //敵を倒すたびに、浦和か川崎か抽選をやりたい
+
     init{
         tekipaint.alpha = 255
-//おそらくこれが聞いてない
-    //       tekiType = tekiList.random()
-
 
     }
 
     fun tekiIll():Int{
-        //なるほど、ここでやってんのか。これTekiに収納できないのかな？
-
         var a : Int
         a = if (yarareHantei) {
             if (shibou) {
@@ -77,12 +75,11 @@ class Teki(var x:Int,var y:Int) {
             } else {
                 R.drawable.ninjakakure
             }
-
-
         }
-
         return a
     }
+
+
 
     fun nextFrame(controller:Controller,map:Map,jiki:Jiki) {
         when(status) {
