@@ -66,9 +66,12 @@ class Jiki(val initialPos: Vec2D) {
             } else {
                 status = JIKI_NORMAL_STATE
             }
-            if (status == JIKI_ATTACK_STATE){
-                return
-            }
+
+            // ここで変更しているはずだが、実際はちゃんと動いてない。
+            //多分、消しても挙動はそんな変わんないんじゃないかなー
+//            if (status == JIKI_ATTACK_STATE){
+  //              return
+    //        }
         }
 
 
