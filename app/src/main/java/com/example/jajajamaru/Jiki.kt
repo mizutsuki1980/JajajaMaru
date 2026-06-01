@@ -11,7 +11,6 @@ class Jiki(val initialPos: Vec2D) {
     val ookisa = 100
     val iro = Paint()
     val iroTestYou = Paint()
-    var jikiIll = R.drawable.kirerusanpng
 
 
 
@@ -72,10 +71,10 @@ class Jiki(val initialPos: Vec2D) {
 
         when(status) {
             JIKI_NORMAL_STATE -> {
-                jikiIll = R.drawable.kirerusanpng
+
             }
             JIKI_ATTACK_STATE -> {
-                jikiIll = R.drawable.panchi
+
             }
         }
 
