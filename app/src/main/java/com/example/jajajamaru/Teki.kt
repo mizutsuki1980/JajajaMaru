@@ -169,6 +169,10 @@ class Teki(var x:Int,var y:Int) {
         yarareHantei = false
         shibou = false
         mutekiTime = 10
+
+//ここでやっているのと、MyCustomViewでやっているのと重複するなー
+        tekiType = tekiList.random()
+
     }
 
     fun idoSyori(controller: Controller, map:Map,jiki:Jiki) {
