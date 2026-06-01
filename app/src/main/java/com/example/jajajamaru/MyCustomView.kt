@@ -38,9 +38,9 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         vec2dMorebou = Vec2D(initialJikiX-100, initialJikiY)
         morebou = Morebou(vec2dMorebou)
         gameCounter = GameCounter()
-        //敵に属性を設定
+        //ここをTekiのsyokikaにすればいいんじゃね？//敵に属性を設定
         for(a in 0..<tekiList.size){
-            tekiList[a].tekiType = tekiList[a].tekiList.random()
+            tekiList[a].syokika()//tekiType = tekiList[a].tekiList.random()
         }
 
     }
