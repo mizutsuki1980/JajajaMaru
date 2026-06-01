@@ -21,6 +21,9 @@ class Morebou(initialPos: Vec2D) {
     var jumpFlag = false
     var moretime = 1
 
+
+    //もれぼう君をきれる君にホーミングさせるようにした。
+    //Jikiの位置をみて、その方向にいくとか？
     fun idoSyori( map:Map) {
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
 
