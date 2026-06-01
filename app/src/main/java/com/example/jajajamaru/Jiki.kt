@@ -61,17 +61,7 @@ class Jiki(val initialPos: Vec2D) {
 // キレる君がパンチしてないのはここのせい？
         //ここだけ敵がリストになったときの処理をしないとなー
         for(a in 0..<tekiList.size) {
-            if (jikiToTekiTikazukiCheck(tekiList[a])) {
-                status = JIKI_ATTACK_STATE
-            } else {
-                status = JIKI_NORMAL_STATE
-            }
-
-            // ここで変更しているはずだが、実際はちゃんと動いてない。
-            //多分、消しても挙動はそんな変わんないんじゃないかなー
-//            if (status == JIKI_ATTACK_STATE){
-  //              return
-    //        }
+//            if (jikiToTekiTikazukiCheck(tekiList[a])) {
         }
 
 
