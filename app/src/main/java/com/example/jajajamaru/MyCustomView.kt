@@ -83,7 +83,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         mapCreate(canvas)
 
         jiki.draw(canvas,controller)
-        val bitmap = BitmapFactory.decodeResource(resources, jiki.jikiIll, BitmapFactory.Options())
+        val bitmap = BitmapFactory.decodeResource(resources, jiki.jikiIll(), BitmapFactory.Options())
         canvas.drawBitmap(bitmap, jiki.initialPos.x.toFloat()-40, jiki.sekaipos.y.toFloat()-75, null)
 
         morebou.draw(canvas,jiki)
@@ -92,12 +92,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
 
         for(a in 0..<tekiList.size){
             tekiList[a].draw(canvas,jiki)
-
-            //tekiIll()で画像を指定するように変更した、川崎と浦和をどうわけようか？
-            
             val bitmapTeki = BitmapFactory.decodeResource(resources, tekiList[a].tekiIll(), BitmapFactory.Options())
-
-
             canvas.drawBitmap(bitmapTeki, tekiList[a].hyouziYouX.toFloat()-40, tekiList[a].sekaipos.y.toFloat()-75,tekiList[a].tekipaint)
         }
 

@@ -45,6 +45,16 @@ class Jiki(val initialPos: Vec2D) {
         }
     }
 
+    fun jikiIll():Int{
+        var a : Int
+        a = if(status == 2){
+            R.drawable.panchi
+        }else{
+            R.drawable.kirerusanpng
+        }
+
+        return a
+    }
 
 
     fun idoSyori(controller: Controller, map: Map,teki:Teki,tekiList:List<Teki>) {
