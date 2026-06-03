@@ -65,10 +65,7 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun tsugiNoSyori() {
         controller.jumpButtonOsiTuduketeirukaCheck(jiki)
         jiki.idoSyori(controller,map,tekiList[0],tekiList)
-
         morebou.idoSyori(map,jiki)
-
-
         for(a in 0..<tekiList.size){ tekiList[a].nextFrame(controller,map,jiki) }
         if(map.goalCheck(jiki)) {gameCounter.isClear = true}
         if(gameCounter.isClear){}else{gameCounter.time += 1}
@@ -85,13 +82,13 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bgPaint)
         mapCreate(canvas)
 
+        morebou.draw(canvas,jiki)//jikiより先にもれぼう君を描画、後ろにいるため
+        val bitmapMorebou = BitmapFactory.decodeResource(resources, R.drawable.moretyuu, BitmapFactory.Options())
+        canvas.drawBitmap(bitmapMorebou, morebou.sekaipos.x.toFloat()-40+jiki.zure, morebou.sekaipos.y.toFloat()-75, null)
+
         jiki.draw(canvas,controller)
         val bitmap = BitmapFactory.decodeResource(resources, jiki.jikiIll(), BitmapFactory.Options())
         canvas.drawBitmap(bitmap, jiki.initialPos.x.toFloat()-40, jiki.sekaipos.y.toFloat()-75, null)
-
-        morebou.draw(canvas,jiki)
-        val bitmapMorebou = BitmapFactory.decodeResource(resources, R.drawable.moretyuu, BitmapFactory.Options())
-        canvas.drawBitmap(bitmapMorebou, morebou.sekaipos.x.toFloat()-40+jiki.zure, morebou.sekaipos.y.toFloat()-75, null)
 
         for(a in 0..<tekiList.size){
             tekiList[a].draw(canvas,jiki)
