@@ -65,7 +65,10 @@ class MyCustomView(context: Context?, attrs: AttributeSet?) : View(context, attr
     fun tsugiNoSyori() {
         controller.jumpButtonOsiTuduketeirukaCheck(jiki)
         jiki.idoSyori(controller,map,tekiList[0],tekiList)
-        morebou.idoSyori(map)
+
+        morebou.idoSyori(map,jiki)
+
+
         for(a in 0..<tekiList.size){ tekiList[a].nextFrame(controller,map,jiki) }
         if(map.goalCheck(jiki)) {gameCounter.isClear = true}
         if(gameCounter.isClear){}else{gameCounter.time += 1}

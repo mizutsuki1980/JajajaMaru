@@ -20,11 +20,21 @@ class Morebou(initialPos: Vec2D) {
     var isJump = false
     var jumpFlag = false
     var moretime = 1
-
+    var houkou = "migi"
 
     //もれぼう君をきれる君にホーミングさせるようにした。
     //Jikiの位置をみて、その方向にいくとか？
-    fun idoSyori( map:Map) {
+    fun idoSyori( map:Map,jiki:Jiki) {
+
+        //ここでjikiとの差をみればいいんじゃね？
+        val hantei = jiki.sekaipos.x - sekaipos.x
+            if(hantei>0){
+            houkou = "migi"
+        }else{
+            houkou = "hidari"
+        }
+
+
         val u0 = Ugoki(sekaipos, sokudo, kasokudo)
 
         //加速度更新
@@ -228,7 +238,7 @@ class Morebou(initialPos: Vec2D) {
     }
 
     private fun kasokudoKoushin(u0: Ugoki): Ugoki {
-        return u0.copy(kasokudo = Vec2DF(kasokudoX("migi",u0), kasokudoY()))
+        return u0.copy(kasokudo = Vec2DF(kasokudoX(houkou,u0), kasokudoY()))
     }
 
     //ジャンプの加速度
